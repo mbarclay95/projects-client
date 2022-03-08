@@ -1,0 +1,8 @@
+<div>
+  <div class="w-100 d-flex justify-content-end mb-2">
+    <button nz-button nzType="primary" (click)="createNewGoal()">New Goal</button>
+  </div>
+  <app-goals-table [goals]="goalsQuery.goals$ | async"></app-goals-table>
+</div>
+
+<app-create-edit-goal-modal [openModal]="openGoalModal.asObservable()"></app-create-edit-goal-modal>

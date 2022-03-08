@@ -1,0 +1,16 @@
+<nz-table #goalsTableTag [nzData]="_goals">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Title</th>
+    <th>Created At</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of usersTable?.data">
+    <td></td>
+    <td>{{user.title}}</td>
+    <td>{{user.createdAt | date}}</td>
+  </tr>
+  </tbody>
+</nz-table>

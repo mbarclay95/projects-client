@@ -1,0 +1,49 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(goal?.id === 0 ? 'Create' : 'Edit') + ' Goal'" nzWidth="800px"
+          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveGoal()"
+          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving">
+
+  <ng-container *nzModalContent>
+
+    <div *ngIf="goal">
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Title:</div>
+
+        <input nz-input [(ngModel)]="goal.title" class="w-100">
+
+      </div>
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Describe your goal:</div>
+
+        <div class="d-flex align-items-center">
+
+          <span class="me-2" style="font-style: italic">I want to</span>
+
+          <input nz-input class="me-2" style="width: 125px" placeholder="verb" [(ngModel)]="goal.verb">
+
+          <nz-select class="me-2" style="width: 125px" [(ngModel)]="goal.equality"
+                     [nzOptions]="equalityDrownDown"></nz-select>
+
+          <nz-input-number class="me-2" style="width: 75px" nzPlaceHolder="amount" [(ngModel)]="goal.expectedAmount"
+                           [nzMin]="1"></nz-input-number>
+
+          <input nz-input class="me-2" style="width: 125px" placeholder="singular unit" [(ngModel)]="goal.unit">
+
+          <span class="me-2" style="font-style: italic">per</span>
+
+          <nz-select style="width: 150px" nzPlaceHolder="length of time" [(ngModel)]="goal.lengthOfTime"
+                     [nzOptions]="lengthOfTimeDrownDown"></nz-select>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+
+</nz-modal>

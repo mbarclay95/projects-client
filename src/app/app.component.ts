@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {faBullseye, faHome, faUsers} from "@fortawesome/free-solid-svg-icons";
+import {faBullseye, faHome, faUpload, faUsers} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-root',
@@ -11,4 +11,5 @@ export class AppComponent {
   home = faHome;
   goals = faBullseye;
   users = faUsers;
+  upload = faUpload;
 }

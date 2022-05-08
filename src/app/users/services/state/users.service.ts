@@ -15,10 +15,17 @@ export class UsersService {
   ) {
   }
 
-  async getUsers() {
+  async getUsers(): Promise<void> {
     await firstValueFrom(this.http.get<User[]>(`${environment.apiUrl}/users`).pipe(
       map(users => users.map(user => createUser(user))),
       tap(users => this.usersStore.set(users))
+    ));
+  }
+
+  async updateUser(newState: User): Promise<void> {
+    await firstValueFrom(this.http.put<User>(`${environment.apiUrl}/users/${newState.id}`, newState).pipe(
+      map(user => createUser(user)),
+      tap(user => this.usersStore.update(user.id, user))
     ));
   }
 

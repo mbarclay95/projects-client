@@ -10,7 +10,12 @@
   </thead>
   <tbody>
   <tr *ngFor="let user of usersTable?.data">
-    <td></td>
+    <td>
+      <button nz-button class="ant-btn-icon-only" nzType="default"
+              (click)="openUserModal.next(user)">
+        <fa-icon [icon]="edit"></fa-icon>
+      </button>
+    </td>
     <td>{{user.id}}</td>
     <td>{{user.name}}</td>
     <td>{{user.lastLoggedInAt | date : 'short'}}</td>
@@ -19,3 +24,5 @@
   </tbody>
 
 </nz-table>
+
+<app-create-edit-user-modal [openModal]="openUserModal.asObservable()"></app-create-edit-user-modal>

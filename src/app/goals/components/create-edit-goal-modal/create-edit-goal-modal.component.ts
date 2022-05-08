@@ -30,7 +30,7 @@ export class CreateEditGoalModalComponent implements OnInit, OnDestroy {
     ).subscribe((goal) => {
       this.goal = goal.id === 0 ? goal : createGoal(goal);
       this.isVisible = true;
-    })
+    });
   }
 
   ngOnDestroy(): void {
@@ -47,6 +47,7 @@ export class CreateEditGoalModalComponent implements OnInit, OnDestroy {
       this.saving = false;
       return;
     }
+    this.saving = false;
     this.isVisible = false;
   }
 }

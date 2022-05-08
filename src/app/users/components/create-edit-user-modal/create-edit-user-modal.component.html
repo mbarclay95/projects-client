@@ -1,0 +1,33 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(user?.id === 0 ? 'Create' : 'Edit') + ' User'" nzWidth="800px"
+          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveUser()"
+          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
+
+  <ng-container *nzModalContent>
+
+    <div *ngIf="user">
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Name:</div>
+
+        <input nz-input [(ngModel)]="user.name" class="w-100">
+
+      </div>
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Roles:</div>
+
+        <nz-select [ngModel]="user.roles | rolesToIds" class="w-100" nzMode="multiple"
+                   (ngModelChange)="updateUsersRoles($event)">
+          <nz-option *ngFor="let role of rolesQuery.roles$ | async" [nzValue]="role.id" [nzLabel]="role.name"></nz-option>
+        </nz-select>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+
+</nz-modal>

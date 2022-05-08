@@ -5,6 +5,7 @@ import {AuthLayoutComponent} from "./auth/auth-layout/auth-layout.component";
 import {AuthGuard} from "./auth/services/auth.guard";
 import {Permissions} from "./auth/permissions";
 import {GoalsLayoutComponent} from "./goals/goals-layout/goals-layout.component";
+import {BackupsLayoutComponent} from "./backups/backups-layout/backups-layout.component";
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: 'goals', component: GoalsLayoutComponent, data: {permission: Permissions.GOALS_PAGE},
         loadChildren: () => import('./goals/goals.module').then(m => m.GoalsModule)
+      },
+      {
+        path: 'backups', component: BackupsLayoutComponent, data: {permission: Permissions.BACKUPS_PAGE},
+        loadChildren: () => import('./backups/backups.module').then(m => m.BackupsModule)
       }
     ]
   },

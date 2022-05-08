@@ -1,0 +1,42 @@
+<nz-table #backupsTableTag [nzData]="_backups">
+  <thead>
+  <tr>
+    <th nzWidth="60px"></th>
+    <th>Backup Name</th>
+    <th>Started At</th>
+    <th>Run time</th>
+    <th nzWidth="80px">Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let backup of backupsTable?.data">
+    <tr>
+      <td [nzExpand]="expandSet.has(backup.id)" (nzExpandChange)="onExpandChange(backup.id, $event)"></td>
+      <td>{{backup.id}}</td>
+      <td>{{backup.startedAt | date}}</td>
+      <td>{{backup.completedAt}}</td>
+      <td class="w-100 d-flex justify-content-center">
+        <ng-container *ngIf="backup.completedAt">
+          <fa-icon [icon]="completed" class="text-success"></fa-icon>
+        </ng-container>
+        <ng-container *ngIf="backup.erroredAt">
+          <fa-icon [icon]="error" class=""></fa-icon>
+        </ng-container>
+        <ng-container *ngIf="backup.startedAt">
+          <fa-icon [spin]="true" [icon]="inProgress" class="text-primary"></fa-icon>
+        </ng-container>
+        <ng-container *ngIf="!backup.startedAt">
+          <fa-icon [icon]="queued" class="text-warning"></fa-icon>
+        </ng-container>
+      </td>
+    </tr>
+    <tr [nzExpand]="expandSet.has(backup.id)">
+      <nz-steps [nzCurrent]="1" nzDirection="vertical">
+        <nz-step *ngFor="let backupStep of backup.backupSteps" [nzTitle]="backupStep.name"></nz-step>
+      </nz-steps>
+    </tr>
+  </ng-container>
+  </tbody>
+
+</nz-table>
+

@@ -6,6 +6,7 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import {UsersService} from "./services/state/users.service";
+import {RolesService} from "./services/roles/state/roles.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,13 @@ import {UsersService} from "./services/state/users.service";
 export class UserResolver implements Resolve<void> {
 
   constructor(
-    private usersService: UsersService
+    private usersService: UsersService,
+    private rolesService : RolesService
   ) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
     await this.usersService.getUsers();
+    await this.rolesService.getRoles();
   }
 }

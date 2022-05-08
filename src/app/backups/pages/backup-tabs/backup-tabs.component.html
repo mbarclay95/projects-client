@@ -1,0 +1,14 @@
+<nz-tabset [nzTabBarExtraContent]="createButton" nzSize="large">
+  <nz-tab nzTitle="Backup Jobs" (nzClick)="selectedTab = 'Backup Job'">
+    <app-backups-page></app-backups-page>
+  </nz-tab>
+  <nz-tab nzTitle="Scheduled Backup Jobs" (nzClick)="selectedTab = 'Scheduled Backup Job'">
+    <app-scheduled-backups-page></app-scheduled-backups-page>
+  </nz-tab>
+</nz-tabset>
+
+<ng-template #createButton>
+  <button nz-button nzType="primary" (click)="createJob()">Create {{selectedTab}}</button>
+</ng-template>
+
+<app-create-edit-backups-drawer [openModal]="openBackupsDrawer.asObservable()"></app-create-edit-backups-drawer>

@@ -17,6 +17,7 @@ import {NzLayoutModule} from "ng-zorro-antd/layout";
 import {NzMenuModule} from "ng-zorro-antd/menu";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {AuthInterceptor} from "./auth/services/auth.interceptor";
+import {NzMessageModule} from "ng-zorro-antd/message";
 
 registerLocaleData(en);
 
@@ -34,7 +35,8 @@ registerLocaleData(en);
     FontAwesomeModule,
     NzLayoutModule,
     NzMenuModule,
-    NzIconModule
+    NzIconModule,
+    NzMessageModule
   ],
   providers: [
     {provide: NZ_I18N, useValue: en_US},

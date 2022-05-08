@@ -1,0 +1,97 @@
+<nz-drawer [nzClosable]="false" [nzVisible]="isVisible" nzPlacement="right" nzTitle="Create Backup Job" nzWidth="33%"
+           [nzMaskClosable]="false" [nzFooter]="footer">
+  <ng-container *nzDrawerContent>
+
+    <div class="drawer-container" *ngIf="backup">
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-1">Backup Name:</div>
+
+        <input nz-input [(ngModel)]="backup.name" class="w-100">
+
+      </div>
+
+      <div class="p-3 border-radius" style="border: 1px solid #606060">
+
+        <div class="mb-4" style="border-bottom: 1px solid #606060">Backup Steps:</div>
+
+        <ng-container *ngFor="let backupStep of backup.backupSteps">
+
+          <div class="d-flex align-items-center ps-1 mb-4 pb-4" style="border-bottom: 1px solid #606060">
+
+            <fa-icon [icon]="grip" class="me-4"></fa-icon>
+
+            <div>
+
+              <div class="w-100 mb-2">
+
+                <div class="mb-1">Backup Step Name:</div>
+
+                <input nz-input [(ngModel)]="backupStep.name" class="w-100">
+
+              </div>
+
+              <div class="w-100 mb-2 mt-3 d-flex justify-content-between">
+
+                <div class="mb-1">Full Backup:</div>
+
+                <nz-switch [(ngModel)]="backupStep.fullBackup"></nz-switch>
+
+              </div>
+
+              <div class="w-100 mb-2">
+
+                <div class="mb-1">Source Directory:</div>
+
+                <input nz-input [(ngModel)]="backupStep.sourceDir" class="w-100">
+
+              </div>
+
+              <div class="w-100 mb-2">
+
+                <div class="mb-1">Target Directory:</div>
+
+                <nz-select [(ngModel)]="backupStep.target" class="w-100" [compareWith]="targetCompare"
+                           [nzDropdownRender]="addTarget">
+                  <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target"
+                             [nzLabel]="target.name"></nz-option>
+                </nz-select>
+
+                <ng-template #addTarget>
+                  <nz-divider class="my-1"></nz-divider>
+                  <div class="d-flex justify-content-center w-100 align-items-center">
+                    <button nz-button nzType="primary" (click)="createNewTarget(backupStep.id)">Create New Target</button>
+                  </div>
+                </ng-template>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </ng-container>
+
+        <button nz-button nzType="primary" (click)="addBackupStep()" class="">
+          <fa-icon [icon]="plus" class="me-2"></fa-icon>Add Backup Step
+        </button>
+
+      </div>
+
+
+
+    </div>
+
+  </ng-container>
+
+  <ng-template #footer>
+    <div>
+      <button nz-button nzType="primary" class="me-2" (click)="saveBackup()">Save</button>
+      <button nz-button nzType="default" (click)="isVisible = false">Cancel</button>
+    </div>
+  </ng-template>
+</nz-drawer>
+
+<app-create-edit-target-modal [openModal]="openTargetModal.asObservable()"
+                              [selectNewTarget]="selectNewTarget"></app-create-edit-target-modal>

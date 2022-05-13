@@ -11,7 +11,10 @@ export class AuthStorageService {
   }
 
   private loadAuthToken(): void {
-    this.authToken = JSON.parse(localStorage.getItem('token') ?? '');
+    let token = localStorage.getItem('token');
+    if (token) {
+      this.authToken = JSON.parse(token);
+    }
   }
 
   setAuthToken(token: string): void {

@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8000/api'
+  // apiUrl: 'https://projects-api.bigmike.dev/api'
 };
 
 /*

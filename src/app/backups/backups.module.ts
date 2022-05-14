@@ -22,6 +22,8 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 import { BackupsTableComponent } from './components/backups-table/backups-table.component';
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NzStepsModule} from "ng-zorro-antd/steps";
+import { BackupStatusPipe } from './pipes/backup-status.pipe';
+import { BackupRunTimePipe } from './pipes/backup-run-time.pipe';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import {NzStepsModule} from "ng-zorro-antd/steps";
     BackupTabsComponent,
     CreateEditBackupsDrawerComponent,
     CreateEditTargetModalComponent,
-    BackupsTableComponent
+    BackupsTableComponent,
+    BackupStatusPipe,
+    BackupRunTimePipe
   ],
     imports: [
         CommonModule,

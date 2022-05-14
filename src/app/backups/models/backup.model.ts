@@ -21,3 +21,5 @@ export function createBackup(params: Partial<Backup>) {
     backupSteps: params.backupSteps?.map(backupStep => createBackupStep(backupStep)) ?? [],
   } as Backup;
 }
+
+export type BackupStatus = 'queued' | 'inProgress' | 'completed' | 'errored';

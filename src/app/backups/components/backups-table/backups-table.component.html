@@ -13,19 +13,19 @@
     <tr>
       <td [nzExpand]="expandSet.has(backup.id)" (nzExpandChange)="onExpandChange(backup.id, $event)"></td>
       <td>{{backup.id}}</td>
-      <td>{{backup.startedAt | date}}</td>
-      <td>{{backup.completedAt}}</td>
-      <td class="w-100 d-flex justify-content-center">
-        <ng-container *ngIf="backup.completedAt">
+      <td>{{backup.startedAt | date : 'medium'}}</td>
+      <td>{{backup | backupRunTime}}</td>
+      <td class="w-100 d-flex justify-content-center" [ngSwitch]="backup | backupStatus">
+        <ng-container *ngSwitchCase="'completed'">
           <fa-icon [icon]="completed" class="text-success"></fa-icon>
         </ng-container>
-        <ng-container *ngIf="backup.erroredAt">
+        <ng-container *ngSwitchCase="'errored'">
           <fa-icon [icon]="error" class=""></fa-icon>
         </ng-container>
-        <ng-container *ngIf="backup.startedAt">
+        <ng-container *ngSwitchCase="'inProgress'">
           <fa-icon [spin]="true" [icon]="inProgress" class="text-primary"></fa-icon>
         </ng-container>
-        <ng-container *ngIf="!backup.startedAt">
+        <ng-container *ngSwitchCase="'queued'">
           <fa-icon [icon]="queued" class="text-warning"></fa-icon>
         </ng-container>
       </td>

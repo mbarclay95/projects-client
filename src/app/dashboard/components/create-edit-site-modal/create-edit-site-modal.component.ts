@@ -60,7 +60,7 @@ export class CreateEditSiteModalComponent implements OnInit {
   }
 
   getUploadPath(): string {
-    return `${environment.apiUrl}/site-image`;
+    return `${environment.apiUrl}/site-images`;
   }
 
   handleChange({file}: NzUploadChangeParam): void {

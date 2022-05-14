@@ -18,12 +18,14 @@ import {NzMenuModule} from "ng-zorro-antd/menu";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {AuthInterceptor} from "./auth/services/auth.interceptor";
 import {NzMessageModule} from "ng-zorro-antd/message";
+import { SideMenuComponent } from './side-menu/side-menu.component';
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
     AppComponent,
+    SideMenuComponent,
   ],
   imports: [
     BrowserModule,

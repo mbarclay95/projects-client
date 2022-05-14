@@ -6,6 +6,7 @@ import {AuthGuard} from "./auth/services/auth.guard";
 import {Permissions} from "./auth/permissions";
 import {GoalsLayoutComponent} from "./goals/goals-layout/goals-layout.component";
 import {BackupsLayoutComponent} from "./backups/backups-layout/backups-layout.component";
+import {DashboardLayoutComponent} from "./dashboard/dashboard-layout/dashboard-layout.component";
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   },
   {
     path: 'app', canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [
+      {
+        path: 'dashboard', component: DashboardLayoutComponent, data: {permission: Permissions.DASHBOARD_PAGE},
+        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
       {
         path: 'users', component: UsersLayoutComponent, data: {permission: Permissions.USERS_PAGE},
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule)

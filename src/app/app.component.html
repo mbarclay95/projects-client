@@ -1,25 +1,22 @@
 <nz-layout>
 
-  <nz-sider nzCollapsible nzWidth="200px">
-    <ul nz-menu nzMode="inline">
-      <li nz-menu-item [nzMatchRouter]="true">
-        <fa-icon class="anticon" [icon]="home"></fa-icon>
-        <span>Dashboard</span>
-      </li>
-      <li nz-menu-item routerLink="app/goals" [nzMatchRouter]="true">
-        <fa-icon class="anticon" [icon]="goals"></fa-icon>
-        <span>Goals</span>
-      </li>
-      <li nz-menu-item routerLink="app/users" [nzMatchRouter]="true">
-        <fa-icon class="anticon" [icon]="users"></fa-icon>
-        <span>Users</span>
-      </li>
-      <li nz-menu-item routerLink="app/backups" [nzMatchRouter]="true">
-        <fa-icon class="anticon" [icon]="upload"></fa-icon>
-        <span>Backups</span>
-      </li>
-    </ul>
-  </nz-sider>
+  <ng-container *ngIf="authQuery.isLoggedIn$ | async">
+    <nz-sider *ngIf="sideMenuClosed !== undefined" nzCollapsible [(nzCollapsed)]="sideMenuClosed"
+              (nzCollapsedChange)="authService.updateUserConfig({sideMenuOpen: !$event})" nzWidth="200px">
+      <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed"></app-side-menu>
+<!--      <ng-container *ngFor="let route of permissionsService.usersRoutes$ | async">-->
+<!--        <ul nz-menu nzMode="inline" nzTheme="dark"-->
+<!--            [ngClass]="{'ant-menu-vertical ant-menu-inline-collapsed': sideMenuClosed}"-->
+<!--            >{{sideMenuClosed}}-->
+<!--          <li nz-menu-item [routerLink]="route.url" [nzMatchRouter]="true" style="padding-left: 24px">-->
+<!--            <fa-icon class="anticon" [icon]="route.icon" style="padding-left: 9px"></fa-icon>-->
+<!--            <span>{{route.title}}</span>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </ng-container>-->
+    </nz-sider>
+
+  </ng-container>
 
   <nz-layout>
 

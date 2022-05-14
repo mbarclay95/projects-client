@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-end w-100 px-2" *ngIf="foldersQuery.editMode$ | async">
+
+  <button nz-button nzType="primary" (click)="createFolder()">
+
+    Create Folder
+
+    <fa-icon class="ms-2" [icon]="add"></fa-icon>
+
+  </button>
+
+</div>
+
+<div class="mt-2 w-100 d-flex responsive-layout">
+
+  <div *ngFor="let folderColumn of foldersQuery.gridFormattedFolders$ | async"
+       class="d-flex flex-column responsive-width">
+
+    <div class="w-100" *ngFor="let folder of folderColumn">
+
+      <app-folder (openFolderModal)="openFolderModal.next($event)" (openSiteModal)="openSiteModal.next($event)"
+                  [folder]="folder" [editMode]="(foldersQuery.editMode$ | async) ?? false"></app-folder>
+
+    </div>
+
+  </div>
+
+</div>
+
+<app-create-edit-folder-modal [openModal]="openFolderModal.asObservable()"></app-create-edit-folder-modal>
+
+<app-create-edit-site-modal [openModal]="openSiteModal.asObservable()"></app-create-edit-site-modal>
+

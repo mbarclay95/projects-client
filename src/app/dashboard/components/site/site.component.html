@@ -1,0 +1,42 @@
+<div class="d-flex py-3 px-2 justify-content-between align-items-center w-100 site-box" cdkDrag
+     [cdkDragDisabled]="!editMode">
+
+  <button nz-button *ngIf="editMode" nzType="text" class="me-2" style="cursor: move" cdkDragHandle>
+
+    <fa-icon [icon]="grip"></fa-icon>
+
+  </button>
+
+  <a target="_blank" [href]="site.url" style="color: rgba(255, 255, 255, 0.85); text-decoration: none;"
+     class="d-flex w-100">
+
+    <img *ngIf="site.siteImage" [src]="site.siteImage.imagePath" class="me-3" style="height: 40px">
+
+    <div>
+
+      {{site.name}}
+
+      <div style="font-size: 12px">{{site.description}}</div>
+
+    </div>
+
+  </a>
+
+  <div *ngIf="editMode" class="d-flex">
+
+    <button nz-button (click)="openSiteModal.emit(site)">
+
+      <fa-icon [icon]="edit"></fa-icon>
+
+    </button>
+
+    <button nz-button nz-popconfirm nzPopconfirmTitle="Are you sure you want to delete this site?"
+            (nzOnConfirm)="foldersService.deleteSite(site.folderId, site.id)">
+
+      <fa-icon [icon]="trash"></fa-icon>
+
+    </button>
+
+  </div>
+
+</div>

@@ -1,6 +1,6 @@
 <nz-modal [(nzVisible)]="isVisible" [nzTitle]="(target?.id === 0 ? 'Create' : 'Edit') + ' Target'" nzWidth="800px"
           (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveTarget()"
-          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving">
+          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
 
   <ng-container *nzModalContent>
 
@@ -16,7 +16,7 @@
 
       <div class="w-100 mb-4">
 
-        <div class="mb-2">Target Url:</div>
+        <div class="mb-2">Target Path:</div>
 
         <input nz-input [(ngModel)]="target.targetUrl" class="w-100">
 

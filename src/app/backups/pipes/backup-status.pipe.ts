@@ -1,12 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import {Backup, BackupStatus} from "../models/backup.model";
+import {BackupStep} from "../models/backup-step.model";
 
 @Pipe({
   name: 'backupStatus'
 })
 export class BackupStatusPipe implements PipeTransform {
 
-  transform(backup: Backup, ...args: unknown[]): BackupStatus {
+  transform(backup: Backup|BackupStep, ...args: unknown[]): BackupStatus {
     if (backup.erroredAt) {
       return 'errored';
     }

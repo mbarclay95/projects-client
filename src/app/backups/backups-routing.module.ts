@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '', resolve: {BackupsResolver}, children: [
       {
-        path: '', component: BackupTabsComponent
+        path: '', component: BackupTabsComponent, data: {tab: 'test'}
       }
     ]
   }

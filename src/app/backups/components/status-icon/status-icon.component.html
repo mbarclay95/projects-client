@@ -1,0 +1,14 @@
+<ng-container [ngSwitch]="status">
+  <ng-container *ngSwitchCase="'completed'">
+    <fa-icon [icon]="completed" [size]="iconSize" class="text-success"></fa-icon>
+  </ng-container>
+  <ng-container *ngSwitchCase="'errored'">
+    <fa-icon [icon]="error" [size]="iconSize"  class=""></fa-icon>
+  </ng-container>
+  <ng-container *ngSwitchCase="'inProgress'">
+    <fa-icon [spin]="true" [size]="iconSize" [icon]="inProgress" class="text-primary"></fa-icon>
+  </ng-container>
+  <ng-container *ngSwitchCase="'queued'">
+    <fa-icon [icon]="queued" [size]="iconSize" class="text-warning"></fa-icon>
+  </ng-container>
+</ng-container>

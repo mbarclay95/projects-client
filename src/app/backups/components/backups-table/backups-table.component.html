@@ -1,4 +1,4 @@
-<nz-table #backupsTableTag [nzData]="_backups">
+<nz-table #backupsTableTag [nzData]="_backups" nzSize="small">
   <thead>
   <tr>
     <th nzWidth="60px"></th>
@@ -15,25 +15,24 @@
       <td>{{backup.id}}</td>
       <td>{{backup.startedAt | date : 'medium'}}</td>
       <td>{{backup | backupRunTime}}</td>
-      <td class="w-100 d-flex justify-content-center" [ngSwitch]="backup | backupStatus">
-        <ng-container *ngSwitchCase="'completed'">
-          <fa-icon [icon]="completed" class="text-success"></fa-icon>
-        </ng-container>
-        <ng-container *ngSwitchCase="'errored'">
-          <fa-icon [icon]="error" class=""></fa-icon>
-        </ng-container>
-        <ng-container *ngSwitchCase="'inProgress'">
-          <fa-icon [spin]="true" [icon]="inProgress" class="text-primary"></fa-icon>
-        </ng-container>
-        <ng-container *ngSwitchCase="'queued'">
-          <fa-icon [icon]="queued" class="text-warning"></fa-icon>
-        </ng-container>
+      <td class="w-100 d-flex justify-content-center">
+        <app-status-icon [status]="backup | backupStatus" iconSize="2x"></app-status-icon>
       </td>
     </tr>
     <tr [nzExpand]="expandSet.has(backup.id)">
-      <nz-steps [nzCurrent]="1" nzDirection="vertical">
-        <nz-step *ngFor="let backupStep of backup.backupSteps" [nzTitle]="backupStep.name"></nz-step>
-      </nz-steps>
+        <nz-collapse>
+          <ng-container *ngFor="let backupStep of backup.backupSteps">
+            <nz-collapse-panel [nzHeader]="backupStep.name" [nzExtra]="statusIcon">
+              <div class="d-flex w-100" >
+
+              </div>
+            </nz-collapse-panel>
+            <ng-template #statusIcon>
+              <app-status-icon [status]="backupStep | backupStatus"></app-status-icon>
+            </ng-template>
+          </ng-container>
+        </nz-collapse>
+
     </tr>
   </ng-container>
   </tbody>

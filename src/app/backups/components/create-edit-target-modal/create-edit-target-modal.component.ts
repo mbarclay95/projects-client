@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 import {createTarget, Target} from "../../models/target.model";
 import {TargetsService} from "../../services/targets/state/targets.service";
@@ -10,11 +10,12 @@ import {NzMessageService} from "ng-zorro-antd/message";
   styleUrls: ['./create-edit-target-modal.component.scss']
 })
 export class CreateEditTargetModalComponent implements OnInit, OnDestroy {
-  @Input() openModal!: Observable<{target: Target, backupStepId: number}>;
-  @Input() selectNewTarget!: Subject<{target: Target, backupStepId: number}>;
+  @Input() openModal!: Observable<{ target: Target, backupStepId?: number}>;
+  @Output() selectNewTarget: EventEmitter<{ target: Target, backupStepId: number }> =
+    new EventEmitter<{ target: Target; backupStepId: number }>();
 
   target!: Target;
-  backupStepId!: number;
+  backupStepId?: number;
   isVisible: boolean = false;
   saving = false;
 
@@ -44,8 +45,12 @@ export class CreateEditTargetModalComponent implements OnInit, OnDestroy {
   async saveTarget() {
     this.saving = true;
     try {
-      const newTarget = await this.targetsService.createNewTarget(this.target);
-      this.selectNewTarget.next({target: newTarget, backupStepId: this.backupStepId});
+      const newTarget = this.target.id === 0 ?
+        await this.targetsService.createNewTarget(this.target) :
+        await this.targetsService.updateTarget(this.target);
+      if (this.backupStepId !== undefined) {
+        this.selectNewTarget.emit({target: newTarget, backupStepId: this.backupStepId});
+      }
     } catch (e) {
       this.saving = false;
       this.nzMessageService.error("There was an error saving the target.");

@@ -24,8 +24,15 @@ export class TargetsService {
 
   async createNewTarget(target: Target): Promise<Target> {
     return await firstValueFrom(this.http.post<Target>(`${environment.apiUrl}/targets`, target).pipe(
-      map(target => createTarget(target)),
-      tap(target => this.targetsStore.add(target))
+      map(t => createTarget(t)),
+      tap(t => this.targetsStore.add(t))
+    ));
+  }
+
+  async updateTarget(target: Target): Promise<Target> {
+    return await firstValueFrom(this.http.put<Target>(`${environment.apiUrl}/targets/${target.id}`, target).pipe(
+      map(t => createTarget(t)),
+      tap(t => this.targetsStore.update(target.id, t))
     ));
   }
 

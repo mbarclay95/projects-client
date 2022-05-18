@@ -12,4 +12,5 @@ export interface Route {
   url: string,
   permission: Permissions,
   title: string
+  queryParams: Record<string, string>
 }

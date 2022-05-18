@@ -7,6 +7,7 @@ import {TargetsQuery} from "../../services/targets/state/targets.query";
 import {createTarget, Target} from "../../models/target.model";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {BackupsService} from "../../services/backups/state/backups.service";
+import {BackupsPollingService} from "../../services/backups-polling.service";
 
 @Component({
   selector: 'app-create-edit-backups-drawer',
@@ -21,7 +22,6 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy{
   plus = faPlus;
   grip = faGripVertical;
   openTargetModal: Subject<{target: Target, backupStepId: number}> = new Subject<{target: Target, backupStepId: number}>();
-  selectNewTarget: Subject<{target: Target, backupStepId: number}> = new Subject<{target: Target, backupStepId: number}>();
   saving: boolean = false;
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
@@ -29,7 +29,8 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy{
   constructor(
     public targetsQuery: TargetsQuery,
     private backupsService: BackupsService,
-    private nzMessageService: NzMessageService
+    private nzMessageService: NzMessageService,
+    private backupsPollingService: BackupsPollingService
   ) { }
 
   ngOnInit(): void {
@@ -39,20 +40,18 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy{
       this.backup = backup;
       this.isVisible = true;
     });
-
-    this.selectNewTarget.asObservable().pipe(
-      takeUntil(this.subscriptionDestroyer)
-    ).subscribe(({target, backupStepId}) => {
-      const backupStep = this.backup.backupSteps.find(step => step.id === backupStepId);
-      if (backupStep) {
-        backupStep.target = target;
-      }
-    });
   }
 
   ngOnDestroy(): void {
     this.subscriptionDestroyer.next();
     this.subscriptionDestroyer.complete();
+  }
+
+  selectNewTarget({target, backupStepId}: {target: Target, backupStepId: number}): void {
+    const backupStep = this.backup.backupSteps.find(step => step.id === backupStepId);
+    if (backupStep) {
+      backupStep.target = target;
+    }
   }
 
   addBackupStep() {
@@ -61,7 +60,7 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy{
   }
 
   targetCompare(a: Target, b: Target): boolean {
-    return a.id === b.id
+    return a?.id === b?.id
   }
 
   createNewTarget(backupStepId: number) {
@@ -72,6 +71,7 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy{
     this.saving = true;
     try {
       await this.backupsService.createNewBackups(this.backup);
+      this.backupsPollingService.startPolling();
     } catch (e) {
       this.saving = false;
       this.nzMessageService.error("There was an error saving the backup.");

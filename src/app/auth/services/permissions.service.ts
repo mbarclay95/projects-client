@@ -18,10 +18,10 @@ export class PermissionsService {
   users = faUsers;
   upload = faUpload;
   routes: Route[] = [
-    {icon: this.home, url: 'app/dashboard', permission: Permissions.DASHBOARD_PAGE, title: 'Dashboard'},
-    {icon: this.goals, url: 'app/goals', permission: Permissions.GOALS_PAGE, title: 'Goals'},
-    {icon: this.users, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users'},
-    {icon: this.upload, url: 'app/backups', permission: Permissions.BACKUPS_PAGE, title: 'Backups'},
+    {icon: this.home, url: 'app/dashboard', permission: Permissions.DASHBOARD_PAGE, title: 'Dashboard', queryParams: {}},
+    {icon: this.goals, url: 'app/goals', permission: Permissions.GOALS_PAGE, title: 'Goals', queryParams: {}},
+    {icon: this.users, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users', queryParams: {}},
+    {icon: this.upload, url: 'app/backups', permission: Permissions.BACKUPS_PAGE, title: 'Backups', queryParams: {tab: 'backups'}},
   ];
 
   constructor(

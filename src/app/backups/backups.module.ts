@@ -24,6 +24,10 @@ import {NzTableModule} from "ng-zorro-antd/table";
 import {NzStepsModule} from "ng-zorro-antd/steps";
 import { BackupStatusPipe } from './pipes/backup-status.pipe';
 import { BackupRunTimePipe } from './pipes/backup-run-time.pipe';
+import {NzCollapseModule} from "ng-zorro-antd/collapse";
+import { StatusIconComponent } from './components/status-icon/status-icon.component';
+import { TargetsPageComponent } from './pages/targets-page/targets-page.component';
+import { TargetsTableComponent } from './components/targets-table/targets-table.component';
 
 
 @NgModule({
@@ -36,7 +40,10 @@ import { BackupRunTimePipe } from './pipes/backup-run-time.pipe';
     CreateEditTargetModalComponent,
     BackupsTableComponent,
     BackupStatusPipe,
-    BackupRunTimePipe
+    BackupRunTimePipe,
+    StatusIconComponent,
+    TargetsPageComponent,
+    TargetsTableComponent
   ],
     imports: [
         CommonModule,
@@ -53,7 +60,8 @@ import { BackupRunTimePipe } from './pipes/backup-run-time.pipe';
         NzDividerModule,
         NzModalModule,
         NzTableModule,
-        NzStepsModule
+        NzStepsModule,
+        NzCollapseModule
     ]
 })
 export class BackupsModule { }

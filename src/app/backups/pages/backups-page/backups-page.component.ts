@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BackupsQuery} from "../../services/backups/state/backups.query";
 
 @Component({

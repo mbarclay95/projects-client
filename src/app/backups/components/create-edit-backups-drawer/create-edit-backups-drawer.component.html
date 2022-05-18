@@ -94,4 +94,4 @@
 </nz-drawer>
 
 <app-create-edit-target-modal [openModal]="openTargetModal.asObservable()"
-                              [selectNewTarget]="selectNewTarget"></app-create-edit-target-modal>
+                              (selectNewTarget)="selectNewTarget($event)"></app-create-edit-target-modal>

@@ -12,6 +12,7 @@ import {filter, take} from "rxjs";
 export class AppComponent {
   title = 'projects-client';
   sideMenuClosed?: boolean = undefined;
+  collapsedWidth = screen.width > 600 ? 64 : 0;
 
   constructor(
     public authQuery: AuthQuery,

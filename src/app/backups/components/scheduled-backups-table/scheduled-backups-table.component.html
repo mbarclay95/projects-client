@@ -1,0 +1,25 @@
+<nz-table #scheduledBackupsTableTag [nzData]="_scheduleBackups" nzSize="small">
+  <thead>
+  <tr>
+    <th nzWidth="60px"></th>
+    <th>Name</th>
+    <th>Start Time</th>
+    <th>Schedule</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let scheduledBackup of scheduledBackupsTable?.data">
+    <tr>
+      <td>
+        <button nz-button class="ant-btn-icon-only" nzType="text"
+                (click)="this.editScheduledBackup.emit(scheduledBackup)">
+          <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
+        </button>
+      </td>
+      <td>{{scheduledBackup.name}}</td>
+      <td>{{scheduledBackup.startTime}}</td>
+      <td>{{scheduledBackup.schedule.mode}}</td>
+  </ng-container>
+  </tbody>
+
+</nz-table>

@@ -28,6 +28,10 @@ import {NzCollapseModule} from "ng-zorro-antd/collapse";
 import { StatusIconComponent } from './components/status-icon/status-icon.component';
 import { TargetsPageComponent } from './pages/targets-page/targets-page.component';
 import { TargetsTableComponent } from './components/targets-table/targets-table.component';
+import { ScheduledBackupsTableComponent } from './components/scheduled-backups-table/scheduled-backups-table.component';
+import { CreateEditScheduledBackupDrawerComponent } from './components/create-edit-scheduled-backup-drawer/create-edit-scheduled-backup-drawer.component';
+import {NzInputNumberModule} from "ng-zorro-antd/input-number";
+import {NzRadioModule} from "ng-zorro-antd/radio";
 
 
 @NgModule({
@@ -43,25 +47,29 @@ import { TargetsTableComponent } from './components/targets-table/targets-table.
     BackupRunTimePipe,
     StatusIconComponent,
     TargetsPageComponent,
-    TargetsTableComponent
+    TargetsTableComponent,
+    ScheduledBackupsTableComponent,
+    CreateEditScheduledBackupDrawerComponent
   ],
-    imports: [
-        CommonModule,
-        BackupsRoutingModule,
-        NzLayoutModule,
-        NzTabsModule,
-        NzButtonModule,
-        NzDrawerModule,
-        FormsModule,
-        NzInputModule,
-        FontAwesomeModule,
-        NzSwitchModule,
-        NzSelectModule,
-        NzDividerModule,
-        NzModalModule,
-        NzTableModule,
-        NzStepsModule,
-        NzCollapseModule
-    ]
+  imports: [
+    CommonModule,
+    BackupsRoutingModule,
+    NzLayoutModule,
+    NzTabsModule,
+    NzButtonModule,
+    NzDrawerModule,
+    FormsModule,
+    NzInputModule,
+    FontAwesomeModule,
+    NzSwitchModule,
+    NzSelectModule,
+    NzDividerModule,
+    NzModalModule,
+    NzTableModule,
+    NzStepsModule,
+    NzCollapseModule,
+    NzInputNumberModule,
+    NzRadioModule
+  ]
 })
 export class BackupsModule { }

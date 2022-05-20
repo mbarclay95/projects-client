@@ -1,1 +1,4 @@
-<p>scheduled-backups-page works!</p>
+<div>
+  <app-scheduled-backups-table
+    [scheduledBackups]="scheduledBackupsQuery.scheduledBackups$ | async"></app-scheduled-backups-table>
+</div>

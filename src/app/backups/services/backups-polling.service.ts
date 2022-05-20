@@ -17,12 +17,10 @@ export class BackupsPollingService {
   }
 
   stopPolling(): void {
-    console.log('stopping');
     this.stopPollingSubject.next();
   }
 
   startPolling(): void {
-    console.log('starting');
     this.stopPollingSubject.next();
     timer(0, 1000).pipe(
       takeUntil(this.stopPollingSubject),

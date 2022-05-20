@@ -3,6 +3,7 @@ import {Subject} from "rxjs";
 import {Backup, createBackup} from "../../models/backup.model";
 import {BackupsPollingService} from "../../services/backups-polling.service";
 import {createTarget, Target} from "../../models/target.model";
+import {createScheduledBackup, ScheduledBackup} from "../../models/scheduled-backup.model";
 
 @Component({
   selector: 'app-backup-tabs',
@@ -12,7 +13,7 @@ import {createTarget, Target} from "../../models/target.model";
 export class BackupTabsComponent implements OnInit {
   selectedTab: 'Backup Job' | 'Scheduled Backup Job' | 'Target' = 'Backup Job';
   openBackupsDrawer: Subject<Backup> = new Subject<Backup>();
-  openScheduledBackupsDrawer: Subject<Backup> = new Subject<Backup>();
+  openScheduledBackupsDrawer: Subject<ScheduledBackup> = new Subject<ScheduledBackup>();
   openTargetModal: Subject<{target: Target}> = new Subject<{target: Target}>();
 
   constructor(
@@ -34,6 +35,7 @@ export class BackupTabsComponent implements OnInit {
         this.openBackupsDrawer.next(createBackup({id: 0}));
         break;
       case "Scheduled Backup Job":
+        this.openScheduledBackupsDrawer.next(createScheduledBackup({id: 0}));
         break;
       case "Target":
         this.openTargetModal.next({target: createTarget({id: 0})});

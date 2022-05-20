@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ScheduledBackupsQuery} from "../../services/scheduled-backups/state/scheduled-backups.query";
 
 @Component({
   selector: 'app-scheduled-backups-page',
@@ -7,7 +8,9 @@ import {Component, OnInit} from '@angular/core';
 })
 export class ScheduledBackupsPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public scheduledBackupsQuery: ScheduledBackupsQuery
+  ) { }
 
   ngOnInit(): void {
   }

@@ -1,5 +1,5 @@
 <nz-drawer [nzClosable]="false" [nzVisible]="isVisible" nzPlacement="right" [nzTitle]="'Create Scheduled Backup Job'"
-           nzWidth="33%" [nzMaskClosable]="false" [nzFooter]="footer">
+           nzWidth="500px" [nzMaskClosable]="false" [nzFooter]="footer">
   <ng-container *nzDrawerContent>
 
     <div class="drawer-container" *ngIf="scheduledBackup">
@@ -26,7 +26,7 @@
 
       <div class="w-100 mb-4" *ngIf="scheduledBackup.schedule.mode === 'weekly'">
 
-        <div class="mb-1">Schedule (Week)</div>
+        <div class="mb-1">Schedule (Day of Week):</div>
 
         <nz-select [(ngModel)]="scheduledBackup.schedule.dayOfWeek" class="w-100" nzMode="multiple">
           <nz-option *ngFor="let day of daysOfWeek" [nzValue]="day" [nzLabel]="day"></nz-option>
@@ -36,7 +36,7 @@
 
       <div class="w-100 mb-4" *ngIf="scheduledBackup.schedule.mode === 'monthly'">
 
-        <div class="mb-1">Schedule (Month)</div>
+        <div class="mb-1">Schedule (Day of Month):</div>
 
         <nz-select [(ngModel)]="scheduledBackup.schedule.dayOfMonth" class="w-100" nzMode="multiple">
           <nz-option *ngFor="let day of daysOfMonth" [nzValue]="day" [nzLabel]="day"></nz-option>
@@ -47,8 +47,8 @@
 
       <div class="w-100 mb-4">
 
-        <div class="mb-1">Full backup every {{!!scheduledBackup.fullEveryNDays ? scheduledBackup.fullEveryNDays : '_'}}
-          day{{scheduledBackup.fullEveryNDays === 1 ? '' : 's'}}:
+        <div class="mb-1">Full Backup Every {{!!scheduledBackup.fullEveryNDays ? scheduledBackup.fullEveryNDays : '_'}}
+          Day{{scheduledBackup.fullEveryNDays === 1 ? '' : 's'}}:
         </div>
 
         <nz-input-number class="w-100" [(ngModel)]="scheduledBackup.fullEveryNDays"></nz-input-number>
@@ -65,7 +65,7 @@
 
             <fa-icon [icon]="grip" class="me-4"></fa-icon>
 
-            <div>
+            <div class="w-100">
 
               <div class="w-100 mb-2">
 

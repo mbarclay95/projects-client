@@ -10,7 +10,7 @@ import {faBullseye, faHome, faUpload, faUsers} from "@fortawesome/free-solid-svg
 })
 export class PermissionsService {
   usersRoutes$: Observable<Route[]> = this.authQuery.auth$.pipe(
-    map(auth => this.routes.filter(route => auth.permissions.includes(route.permission)))
+    map(auth => this.routes.filter(route => auth.clientPermissions.includes(route.permission)))
   );
 
   home = faHome;
@@ -34,7 +34,7 @@ export class PermissionsService {
       return false;
     }
 
-    return user.permissions.includes(permission);
+    return user.clientPermissions.includes(permission);
   }
 }
 

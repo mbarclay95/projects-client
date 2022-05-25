@@ -7,7 +7,7 @@ export interface User {
   createdAt: Date;
   lastLoggedInAt: Date;
   roles: Role[];
-  permissions: string[];
+  clientPermissions: string[];
   userConfig: UserConfig;
 }
 
@@ -18,7 +18,7 @@ export function createUser(params: Partial<User>) {
     createdAt: params.createdAt ? new Date(params.createdAt) : new Date(),
     lastLoggedInAt: params.lastLoggedInAt ? new Date(params.lastLoggedInAt) : new Date(),
     roles: params.roles?.map(role => createRole(role)) ?? [],
-    permissions: params.permissions ?? [],
+    clientPermissions: params.clientPermissions ?? [],
     userConfig: createUserConfig(params.userConfig ?? {}),
   } as User;
 }

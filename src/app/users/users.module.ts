@@ -24,7 +24,7 @@ import { RolesToIdsPipe } from './pipes/roles-to-ids.pipe';
     UsersLayoutComponent,
     UserTableComponent,
     CreateEditUserModalComponent,
-    RolesToIdsPipe
+    RolesToIdsPipe,
   ],
     imports: [
         CommonModule,

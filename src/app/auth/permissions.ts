@@ -5,6 +5,7 @@ export const enum Permissions {
   DASHBOARD_PAGE = 'client_view_dashboard_page',
   GOALS_PAGE = 'client_view_goals_page',
   BACKUPS_PAGE = 'client_view_backups_page',
+  TASKS_PAGE = 'client_view_tasks_page',
 }
 
 export interface Route {

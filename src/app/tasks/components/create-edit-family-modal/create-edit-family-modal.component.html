@@ -1,0 +1,22 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(family?.id === 0 ? 'Create' : 'Edit') + ' Family'" nzWidth="600px"
+          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveFamily()"
+          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
+
+  <ng-container *nzModalContent>
+
+    <div *ngIf="family">
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Family Name:</div>
+
+        <input nz-input [(ngModel)]="family.name" class="w-100">
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+
+</nz-modal>

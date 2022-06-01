@@ -1,0 +1,20 @@
+<nz-tabset [nzTabBarExtraContent]="createButton" nzSize="large" nzLinkRouter>
+  <nz-tab (nzClick)="selectedTab = 'Task'">
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'tasks'}" queryParamsHandling="merge">
+      Tasks
+    </a>
+    <app-tasks-page></app-tasks-page>
+  </nz-tab>
+  <nz-tab (nzClick)="selectedTab = 'Family'">
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'families'}" queryParamsHandling="merge">
+      Families
+    </a>
+    <app-families-page></app-families-page>
+  </nz-tab>
+</nz-tabset>
+
+<ng-template #createButton>
+  <button nz-button nzType="primary" (click)="createEntity()">Create {{selectedTab}}</button>
+</ng-template>
+
+<app-create-edit-family-modal [openModal]="openFamilyModal.asObservable()"></app-create-edit-family-modal>

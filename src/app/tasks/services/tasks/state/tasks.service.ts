@@ -1,6 +1,5 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {ID} from '@datorama/akita';
 import {map, tap} from 'rxjs/operators';
 import {createTask, Task} from '../../../models/task.model';
 import {TasksStore} from './tasks.store';
@@ -23,4 +22,11 @@ export class TasksService {
     ));
   }
 
+  async createNewTask(task: Task) {
+
+  }
+
+  async updateTask(task: Task) {
+
+  }
 }

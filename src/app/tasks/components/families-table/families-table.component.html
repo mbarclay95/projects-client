@@ -1,0 +1,25 @@
+<nz-table #familiesTableTag [nzData]="_families">
+  <thead>
+  <tr>
+    <th nzWidth="60px"></th>
+    <th>Family</th>
+    <th>Number of Members</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let family of familiesTable?.data">
+    <tr>
+      <td>
+        <button nz-button class="ant-btn-icon-only" nzType="text"
+                (click)="openFamilyModal.emit(family)">
+          <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
+        </button>
+      </td>
+      <td>{{family.name}}</td>
+      <td>0</td>
+    </tr>
+  </ng-container>
+  </tbody>
+
+</nz-table>
+

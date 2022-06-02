@@ -1,0 +1,78 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(task?.id === 0 ? 'Create' : 'Edit') + ' Task'" nzWidth="500px"
+          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveTask()"
+          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
+
+  <ng-container *nzModalContent>
+
+    <div *ngIf="task">
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Task Name:</div>
+
+        <input nz-input [(ngModel)]="task.name" class="w-100">
+
+      </div>
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Description:</div>
+
+        <textarea nz-input [(ngModel)]="task.description" class="w-100"></textarea>
+
+      </div>
+
+      <div class="w-100 mb-4 d-flex justify-content-between align-items-center">
+
+        <div class="">Task Type:</div>
+
+        <nz-radio-group [(ngModel)]="task.ownerType" nzButtonStyle="solid"
+                        (ngModelChange)="changeOwner($event)">
+          <label nz-radio-button nzValue="user">Personal</label>
+          <label nz-radio-button nzValue="family">Family</label>
+        </nz-radio-group>
+
+      </div>
+
+      <div class="w-100 d-flex justify-content-between align-items-center mb-4">
+
+        <div class="mb-2">Recurring:</div>
+
+        <nz-switch [(ngModel)]="task.recurring" (ngModelChange)="updateRecurring($event)"></nz-switch>
+
+      </div>
+
+      <div class="w-100 mb-4" *ngIf="!task.recurring">
+
+        <div class="mb-2">Due Date:</div>
+
+        <nz-date-picker [(ngModel)]="task.dueDate" class="w-100"></nz-date-picker>
+
+      </div>
+
+      <div class="w-100 mb-4" *ngIf="task.recurring">
+
+        <div class="mb-2">Frequency:</div>
+
+        <div class="d-flex align-items-center">
+
+          Every
+
+          <nz-input-number class="mx-3" [(ngModel)]="task.frequencyAmount"></nz-input-number>
+
+          <nz-select [(ngModel)]="task.frequencyType" class="w-100">
+            <nz-option nzValue="day" nzLabel="Day"></nz-option>
+            <nz-option nzValue="week" nzLabel="Week"></nz-option>
+            <nz-option nzValue="month" nzLabel="Month"></nz-option>
+          </nz-select>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+
+</nz-modal>

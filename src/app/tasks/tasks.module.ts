@@ -12,6 +12,16 @@ import { CreateEditFamilyModalComponent } from './components/create-edit-family-
 import {NzModalModule} from "ng-zorro-antd/modal";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {FormsModule} from "@angular/forms";
+import { FamiliesTableComponent } from './components/families-table/families-table.component';
+import {NzTableModule} from "ng-zorro-antd/table";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {NzSelectModule} from "ng-zorro-antd/select";
+import { UsersToIdsPipe } from './pipes/users-to-ids.pipe';
+import { CreateEditTaskModalComponent } from './components/create-edit-task-modal/create-edit-task-modal.component';
+import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
+import {NzSwitchModule} from "ng-zorro-antd/switch";
+import {NzRadioModule} from "ng-zorro-antd/radio";
+import {NzInputNumberModule} from "ng-zorro-antd/input-number";
 
 @NgModule({
   declarations: [
@@ -19,7 +29,10 @@ import {FormsModule} from "@angular/forms";
     TasksPageComponent,
     TaskTabsComponent,
     FamiliesPageComponent,
-    CreateEditFamilyModalComponent
+    CreateEditFamilyModalComponent,
+    FamiliesTableComponent,
+    UsersToIdsPipe,
+    CreateEditTaskModalComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +42,14 @@ import {FormsModule} from "@angular/forms";
     NzButtonModule,
     NzModalModule,
     NzInputModule,
-    FormsModule
+    FormsModule,
+    NzTableModule,
+    FontAwesomeModule,
+    NzSelectModule,
+    NzDatePickerModule,
+    NzSwitchModule,
+    NzRadioModule,
+    NzInputNumberModule
   ]
 })
 export class TasksModule { }

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Query } from '@datorama/akita';
-import { AuthStore } from './auth.store';
-import {debounceTime, Observable} from "rxjs";
+import {Injectable} from '@angular/core';
+import {Query} from '@datorama/akita';
+import {AuthStore} from './auth.store';
+import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {User} from "../../../users/models/user.model";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthQuery extends Query<User> {
   auth$: Observable<User> = this.select();
 
@@ -30,6 +30,10 @@ export class AuthQuery extends Query<User> {
 
   getUser(): User {
     return this.getValue();
+  }
+
+  getFamilyId(): number|undefined {
+    return this.getUser().taskUserConfig?.familyId;
   }
 
 }

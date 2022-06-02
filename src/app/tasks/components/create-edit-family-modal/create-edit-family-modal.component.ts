@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
-import {createTarget, Target} from "../../../backups/models/target.model";
-import {TargetsService} from "../../../backups/services/targets/state/targets.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {createFamily, Family} from "../../models/family.model";
 import {FamiliesService} from "../../services/families/state/families.service";
+import {User} from "../../../users/models/user.model";
+import {UsersQuery} from "../../../users/services/state/users.query";
 
 @Component({
   selector: 'app-create-edit-family-modal',
@@ -22,6 +22,7 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private familiesService: FamiliesService,
+    public usersQuery: UsersQuery,
     private nzMessageService: NzMessageService
   ) {
   }
@@ -54,5 +55,13 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
     this.nzMessageService.success('Family Saved!');
     this.saving = false;
     this.isVisible = false;
+  }
+
+  toId = (user: User): number => {
+    return user.id;
+  }
+
+  updateFamilyMembers(userIds: number[]) {
+    this.family.members = this.usersQuery.getUsersByIds(userIds);
   }
 }

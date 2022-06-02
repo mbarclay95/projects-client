@@ -23,11 +23,28 @@ export class FamiliesService {
     ));
   }
 
-  async createNewFamily(family: Family) {
-    
+  async getFamily(familyId: number): Promise<void> {
+    await firstValueFrom(this.http.get<Family>(`${environment.apiUrl}/families/${familyId}`).pipe(
+      map(family => createFamily(family)),
+      tap(family => this.familiesStore.add(family))
+    ));
   }
 
-  async updateFamily(family: Family) {
-    
+  setActive(familyId: number): void {
+    this.familiesStore.setActive(familyId);
+  }
+
+  async createNewFamily(family: Family): Promise<void> {
+    await firstValueFrom(this.http.post<Family>(`${environment.apiUrl}/families`, family).pipe(
+      map(family => createFamily(family)),
+      tap(family => this.familiesStore.add(family))
+    ));
+  }
+
+  async updateFamily(family: Family): Promise<void> {
+    await firstValueFrom(this.http.put<Family>(`${environment.apiUrl}/families/${family.id}`, family).pipe(
+      map(family => createFamily(family)),
+      tap(family => this.familiesStore.update(family.id, family))
+    ));
   }
 }

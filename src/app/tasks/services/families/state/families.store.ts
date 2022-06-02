@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import {ActiveState, EntityState, EntityStore, StoreConfig} from '@datorama/akita';
 import { Family } from '../../../models/family.model';
 
-export interface FamiliesState extends EntityState<Family> {}
+export interface FamiliesState extends EntityState<Family>, ActiveState {}
 
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'families' })

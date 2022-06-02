@@ -20,7 +20,6 @@ export class BackupsTableComponent implements OnInit {
   _backups: Backup[] = [];
   expandSet = new Set<number>();
 
-
   constructor() { }
 
   ngOnInit(): void {

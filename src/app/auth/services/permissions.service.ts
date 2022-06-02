@@ -13,6 +13,10 @@ export class PermissionsService {
     map(auth => this.routes.filter(route => auth.clientPermissions.includes(route.permission)))
   );
 
+  viewFamiliesTab$: Observable<boolean> = this.authQuery.auth$.pipe(
+    map(auth => auth.clientPermissions.includes(Permissions.FAMILIES_TAB))
+  );
+
   home = faHome;
   goals = faBullseye;
   users = faUsers;

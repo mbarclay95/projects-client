@@ -5,12 +5,11 @@ export interface Task {
   clearedAt?: Date;
   dueDate?: Date;
   description?: string;
-  recurringTaskId?: number;
   ownerType: 'family' | 'user';
   ownerId: number;
-  recurring?: boolean;
+  recurring: boolean;
   frequencyAmount?: number;
-  frequencyType?: 'day' | 'week' | 'month';
+  frequencyUnit?: 'day' | 'week' | 'month';
 }
 
 export function createTask(params: Partial<Task>) {
@@ -21,11 +20,10 @@ export function createTask(params: Partial<Task>) {
     clearedAt: params.clearedAt ? new Date(params.clearedAt) : undefined,
     dueDate: params.dueDate ? new Date(params.dueDate) : undefined,
     description: params.description ?? undefined,
-    recurringTaskId: params.recurringTaskId ?? undefined,
-    ownerType: params.ownerType ?? '',
+    ownerType: params.ownerType ?? 'user',
     ownerId: params.ownerId ?? 0,
-    recurring: params.recurring,
+    recurring: params.recurring ?? false,
     frequencyAmount: params.frequencyAmount,
-    frequencyType: params.frequencyType,
+    frequencyUnit: params.frequencyUnit,
   } as Task;
 }

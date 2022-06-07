@@ -22,7 +22,11 @@ export class TasksService {
     ));
   }
 
-  async createNewTask(task: Task) {
+  async createNewTask(task: Task): Promise<void> {
+    await firstValueFrom(this.http.post<Task>(`${environment.apiUrl}/tasks`, task).pipe(
+      map(task => createTask(task)),
+      tap(task => this.tasksStore.add(task))
+    ));
 
   }
 

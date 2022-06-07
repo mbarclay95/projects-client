@@ -1,1 +1,9 @@
-<p>tasks-page works!</p>
+<div class="w-100">
+
+  <app-weekly-progress [auth]="authQuery.auth$ | async"></app-weekly-progress>
+
+  <nz-divider></nz-divider>
+
+  <app-tasks-list [tasks]="tasksQuery.tasks$ | async"></app-tasks-list>
+
+</div>

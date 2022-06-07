@@ -5,6 +5,7 @@ import {createTask, Task} from "../../models/task.model";
 import {TasksService} from "../../services/tasks/state/tasks.service";
 import {AuthQuery} from "../../../auth/services/state/auth.query";
 import {FamiliesQuery} from "../../services/families/state/families.query";
+import {differenceInCalendarDays} from "date-fns";
 
 @Component({
   selector: 'app-create-edit-task-modal',
@@ -50,10 +51,10 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
         await this.tasksService.updateTask(this.task);
     } catch (e) {
       this.saving = false;
-      this.nzMessageService.error("There was an error saving the family.");
+      this.nzMessageService.error("There was an error saving the task.");
       return;
     }
-    this.nzMessageService.success('Family Saved!');
+    this.nzMessageService.success('Task Saved!');
     this.saving = false;
     this.isVisible = false;
   }
@@ -68,14 +69,17 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  disabledDate = (current: Date): boolean => differenceInCalendarDays(current, new Date()) < 0;
+
   updateRecurring(recurring: boolean) {
     if (recurring) {
       this.task.dueDate = undefined;
       this.task.frequencyAmount = 1;
-      this.task.frequencyType = 'day';
+      this.task.frequencyUnit = 'day';
     } else {
       this.task.frequencyAmount = undefined;
-      this.task.frequencyType = undefined;
+      this.task.frequencyUnit = undefined;
+      this.task.dueDate = undefined;
     }
   }
 }

@@ -5,6 +5,12 @@
     </a>
     <app-tasks-page></app-tasks-page>
   </nz-tab>
+  <nz-tab *ngIf="familiesQuery.selectActive() | async" (nzSelect)="selectedTab = 'My Family'">
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'my-family'}" queryParamsHandling="merge">
+      My Family
+    </a>
+    <app-families-page (openFamilyModal)="openFamilyModal.next($event)"></app-families-page>
+  </nz-tab>
   <nz-tab *ngIf="permissionsService.viewFamiliesTab$ | async" (nzSelect)="selectedTab = 'Family'">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'families'}" queryParamsHandling="merge">
       Families
@@ -14,7 +20,8 @@
 </nz-tabset>
 
 <ng-template #createButton>
-  <button nz-button nzType="primary" (click)="createEntity()">Create {{selectedTab}}</button>
+  <button *ngIf="selectedTab !== 'My Family'" nz-button nzType="primary" (click)="createEntity()">
+    Create {{selectedTab}}</button>
 </ng-template>
 
 <app-create-edit-family-modal [openModal]="openFamilyModal.asObservable()"></app-create-edit-family-modal>

@@ -4,6 +4,7 @@ import {createFamily, Family} from "../../models/family.model";
 import {createTask, Task} from "../../models/task.model";
 import {AuthQuery} from "../../../auth/services/state/auth.query";
 import {PermissionsService} from "../../../auth/services/permissions.service";
+import {FamiliesQuery} from "../../services/families/state/families.query";
 
 @Component({
   selector: 'app-task-tabs',
@@ -11,13 +12,14 @@ import {PermissionsService} from "../../../auth/services/permissions.service";
   styleUrls: ['./task-tabs.component.scss']
 })
 export class TaskTabsComponent implements OnInit {
-  selectedTab: 'Task' | 'Recurring Task' | 'Family' = 'Task';
+  selectedTab: 'Task' | 'Recurring Task' | 'Family' | 'My Family' = 'Task';
   openFamilyModal: Subject<Family> = new Subject<Family>();
   openTaskModal: Subject<Task> = new Subject<Task>();
 
   constructor(
     private authQuery: AuthQuery,
-    public permissionsService: PermissionsService
+    public permissionsService: PermissionsService,
+    public familiesQuery: FamiliesQuery
   ) { }
 
   ngOnInit(): void {

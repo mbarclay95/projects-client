@@ -11,6 +11,7 @@ export interface User {
   userConfig: UserConfig;
   taskUserConfig?: {
     tasksPerWeek: number,
+    tasksCompleted: number
     familyId: number
   }
 }

@@ -1,0 +1,29 @@
+<div class="task-box mt-2" (click)="editTask.emit(task)">
+
+  <div class="d-flex align-items-center">
+
+    <label nz-checkbox [ngModel]="!!task.completedAt" (ngModelChange)="completedTask(task.id, $event)"
+           class="ms-2 me-4 checkbox-size"></label>
+
+    <!--  <div class="me-2" [ngSwitch]="task.priority">-->
+    <!--    <fa-icon [icon]="outlineStar" *ngSwitchCase="Priority.Low"></fa-icon>-->
+    <!--    <fa-icon [icon]="star" class="text-warning" *ngSwitchCase="Priority.Normal"></fa-icon>-->
+    <!--    <fa-icon [icon]="star" class="text-danger" *ngSwitchCase="Priority.High"></fa-icon>-->
+    <!--  </div>-->
+
+    <fa-icon *ngIf="task.ownerType === 'user'" [icon]="personal" size="2x" class="me-4 text-primary"></fa-icon>
+    <fa-icon *ngIf="task.ownerType === 'family'" [icon]="family" size="2x" class="me-4 text-primary"></fa-icon>
+
+    <div class="title-and-description">
+
+      <div class="title">{{task.name}}</div>
+
+      <div class="description" *ngIf="!!task.description">{{task.description}}</div>
+
+    </div>
+
+  </div>
+
+  <div>Due {{task.dueDate | dueDateHumanReadable}}</div>
+
+</div>

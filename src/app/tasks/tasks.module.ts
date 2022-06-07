@@ -22,6 +22,16 @@ import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {NzSwitchModule} from "ng-zorro-antd/switch";
 import {NzRadioModule} from "ng-zorro-antd/radio";
 import {NzInputNumberModule} from "ng-zorro-antd/input-number";
+import { PluralFrequencyPipe } from './pipes/plural-frequency.pipe';
+import { WeeklyProgressComponent } from './components/weekly-progress/weekly-progress.component';
+import {NzProgressModule} from "ng-zorro-antd/progress";
+import { WeeklyProgressPercentPipe } from './pipes/weekly-progress-percent.pipe';
+import { WeeklyProgressMessagePipe } from './pipes/weekly-progress-message.pipe';
+import {NzDividerModule} from "ng-zorro-antd/divider";
+import { TasksListComponent } from './components/tasks-list/tasks-list.component';
+import { TaskRowComponent } from './components/task-row/task-row.component';
+import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
+import { DueDateHumanReadablePipe } from './pipes/due-date-human-readable.pipe';
 
 @NgModule({
   declarations: [
@@ -32,24 +42,34 @@ import {NzInputNumberModule} from "ng-zorro-antd/input-number";
     CreateEditFamilyModalComponent,
     FamiliesTableComponent,
     UsersToIdsPipe,
-    CreateEditTaskModalComponent
+    CreateEditTaskModalComponent,
+    PluralFrequencyPipe,
+    WeeklyProgressComponent,
+    WeeklyProgressPercentPipe,
+    WeeklyProgressMessagePipe,
+    TasksListComponent,
+    TaskRowComponent,
+    DueDateHumanReadablePipe,
   ],
-  imports: [
-    CommonModule,
-    TasksRoutingModule,
-    NzLayoutModule,
-    NzTabsModule,
-    NzButtonModule,
-    NzModalModule,
-    NzInputModule,
-    FormsModule,
-    NzTableModule,
-    FontAwesomeModule,
-    NzSelectModule,
-    NzDatePickerModule,
-    NzSwitchModule,
-    NzRadioModule,
-    NzInputNumberModule
-  ]
+    imports: [
+        CommonModule,
+        TasksRoutingModule,
+        NzLayoutModule,
+        NzTabsModule,
+        NzButtonModule,
+        NzModalModule,
+        NzInputModule,
+        FormsModule,
+        NzTableModule,
+        FontAwesomeModule,
+        NzSelectModule,
+        NzDatePickerModule,
+        NzSwitchModule,
+        NzRadioModule,
+        NzInputNumberModule,
+        NzProgressModule,
+        NzDividerModule,
+        NzCheckboxModule
+    ]
 })
 export class TasksModule { }

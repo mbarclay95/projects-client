@@ -1,0 +1,52 @@
+.task-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid #434343;
+  border-radius: 2px;
+  padding: .5rem;
+  cursor: pointer;
+  height: 63px;
+
+  .checkbox-size {
+
+  }
+}
+
+.title-and-description {
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    font-size: 16px;
+    color: white;
+  }
+
+  .description {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+::ng-deep {
+  .ant-checkbox .ant-checkbox-inner {
+    width: 25px;
+    height: 25px;
+  }
+
+  .ant-checkbox-disabled .ant-checkbox-inner {
+    width: 25px;
+    height: 25px;
+  }
+
+  .ant-checkbox-checked .ant-checkbox-inner {
+    width: 25px;
+    height: 25px;
+  }
+
+  .ant-checkbox-inner::after {
+    width: 8px;
+    height: 12.5px;
+  }
+}

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthQuery} from "../../../auth/services/state/auth.query";
+import {TasksQuery} from "../../services/tasks/state/tasks.query";
 
 @Component({
   selector: 'app-tasks-page',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TasksPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public authQuery: AuthQuery,
+    public tasksQuery: TasksQuery
+  ) { }
 
   ngOnInit(): void {
   }

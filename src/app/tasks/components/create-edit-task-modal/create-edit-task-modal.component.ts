@@ -48,7 +48,7 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
     try {
       this.task.id === 0 ?
         await this.tasksService.createNewTask(this.task) :
-        await this.tasksService.updateTask(this.task);
+        await this.tasksService.updateTask(this.task.id, this.task);
     } catch (e) {
       this.saving = false;
       this.nzMessageService.error("There was an error saving the task.");

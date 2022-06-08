@@ -1,0 +1,23 @@
+<div class="members-container">
+
+  <div class="member-container" *ngFor="let member of myFamily.members">
+
+    <div class="d-flex align-items-center justify-content-center w-100 mb-4">
+
+      <div class="border me-3" style="background: {{member.taskUserConfig?.color}}; border-radius: 2px; width: 25px; height: 25px; cursor: pointer"
+           nz-popover nzPopoverTrigger="click" [nzPopoverContent]="colorPicker" nzPopoverPlacement="bottomLeft"
+           (nzPopoverVisibleChange)="saveColor(member, $event)"></div>
+
+      <ng-template #colorPicker>
+        <color-chrome (onChangeComplete)="colorChanged($event)" [color]="member.taskUserConfig?.color ?? ''"></color-chrome>
+      </ng-template>
+
+      <div style="font-size: 20px">{{member.name}}</div>
+
+    </div>
+
+    <nz-progress nzType="circle" [nzPercent]="member | weeklyProgressPercent : false"></nz-progress>
+
+  </div>
+
+</div>

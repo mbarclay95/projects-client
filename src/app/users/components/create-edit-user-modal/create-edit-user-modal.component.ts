@@ -47,7 +47,9 @@ export class CreateEditUserModalComponent implements OnInit {
   async saveUser() {
     this.saving = true;
     try {
-      await this.usersService.updateUser(this.user);
+      this.user.id === 0 ?
+        await this.usersService.createUser(this.user) :
+        await this.usersService.updateUser(this.user.id, this.user);
     } catch (e) {
       this.saving = false;
       return;

@@ -4,16 +4,14 @@ import {createUserConfig, UserConfig} from "./user-config.model";
 export interface User {
   id: number;
   name: string;
+  username?: string;
+  password?: string;
   createdAt: Date;
   lastLoggedInAt: Date;
   roles: Role[];
   clientPermissions: string[];
   userConfig: UserConfig;
-  taskUserConfig?: {
-    tasksPerWeek: number,
-    tasksCompleted: number
-    familyId: number
-  }
+  taskUserConfig?: TaskUserConfig;
 }
 
 export function createUser(params: Partial<User>) {
@@ -27,4 +25,12 @@ export function createUser(params: Partial<User>) {
     userConfig: createUserConfig(params.userConfig ?? {}),
     taskUserConfig: params.taskUserConfig,
   } as User;
+}
+
+export interface TaskUserConfig {
+  id: number;
+  tasksPerWeek: number;
+  tasksCompleted: number;
+  familyId: number;
+  color: string;
 }

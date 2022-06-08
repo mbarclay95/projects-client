@@ -32,6 +32,14 @@ import { TasksListComponent } from './components/tasks-list/tasks-list.component
 import { TaskRowComponent } from './components/task-row/task-row.component';
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import { DueDateHumanReadablePipe } from './pipes/due-date-human-readable.pipe';
+import { MyFamilyPageComponent } from './pages/my-family-page/my-family-page.component';
+import {ColorCompactModule} from "ngx-color/compact";
+import {ColorAlphaModule} from "ngx-color/alpha";
+import {AlphaModule} from "ngx-color";
+import {ColorChromeModule} from "ngx-color/chrome";
+import {NzPopoverModule} from "ng-zorro-antd/popover";
+import { MyFamilyEditFamilyComponent } from './components/my-family-edit-family/my-family-edit-family.component';
+import { MyFamilyMembersComponent } from './components/my-family-members/my-family-members.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +58,10 @@ import { DueDateHumanReadablePipe } from './pipes/due-date-human-readable.pipe';
     TasksListComponent,
     TaskRowComponent,
     DueDateHumanReadablePipe,
+    MyFamilyPageComponent,
+    MyFamilyEditFamilyComponent,
+    MyFamilyEditFamilyComponent,
+    MyFamilyMembersComponent,
   ],
     imports: [
         CommonModule,
@@ -69,7 +81,12 @@ import { DueDateHumanReadablePipe } from './pipes/due-date-human-readable.pipe';
         NzInputNumberModule,
         NzProgressModule,
         NzDividerModule,
-        NzCheckboxModule
+        NzCheckboxModule,
+        ColorCompactModule,
+        ColorAlphaModule,
+        AlphaModule,
+        ColorChromeModule,
+        NzPopoverModule
     ]
 })
 export class TasksModule { }

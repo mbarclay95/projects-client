@@ -1,0 +1,7 @@
+<div *ngIf="(familiesQuery.selectActive() | async) as myFamily">
+
+  <app-my-family-edit-family [myFamily]="myFamily"></app-my-family-edit-family>
+
+  <app-my-family-members [myFamily]="myFamily"></app-my-family-members>
+
+</div>

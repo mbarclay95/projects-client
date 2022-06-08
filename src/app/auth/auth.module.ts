@@ -6,6 +6,9 @@ import {AuthLayoutComponent} from "./auth-layout/auth-layout.component";
 import {LoginPageComponent} from "./pages/login-page/login-page.component";
 import {NzLayoutModule} from "ng-zorro-antd/layout";
 import {NzButtonModule} from "ng-zorro-antd/button";
+import {NzSpinModule} from "ng-zorro-antd/spin";
+import {ReactiveFormsModule} from "@angular/forms";
+import {NzInputModule} from "ng-zorro-antd/input";
 
 
 @NgModule({
@@ -13,11 +16,14 @@ import {NzButtonModule} from "ng-zorro-antd/button";
     AuthLayoutComponent,
     LoginPageComponent
   ],
-    imports: [
-        CommonModule,
-        AuthRoutingModule,
-        NzLayoutModule,
-        NzButtonModule
-    ]
+  imports: [
+    CommonModule,
+    AuthRoutingModule,
+    NzLayoutModule,
+    NzButtonModule,
+    NzSpinModule,
+    ReactiveFormsModule,
+    NzInputModule
+  ]
 })
 export class AuthModule { }

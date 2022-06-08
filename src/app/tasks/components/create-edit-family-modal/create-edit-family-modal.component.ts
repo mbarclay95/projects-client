@@ -46,7 +46,7 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
     try {
       this.family.id === 0 ?
         await this.familiesService.createNewFamily(this.family) :
-        await this.familiesService.updateFamily(this.family);
+        await this.familiesService.updateFamily(this.family.id, this.family);
     } catch (e) {
       this.saving = false;
       this.nzMessageService.error("There was an error saving the family.");

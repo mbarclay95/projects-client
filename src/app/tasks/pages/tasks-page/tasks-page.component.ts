@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthQuery} from "../../../auth/services/state/auth.query";
 import {TasksQuery} from "../../services/tasks/state/tasks.query";
+import {FamiliesQuery} from "../../services/families/state/families.query";
 
 @Component({
   selector: 'app-tasks-page',
@@ -10,7 +10,7 @@ import {TasksQuery} from "../../services/tasks/state/tasks.query";
 export class TasksPageComponent implements OnInit {
 
   constructor(
-    public authQuery: AuthQuery,
+    public familiesQuery: FamiliesQuery,
     public tasksQuery: TasksQuery
   ) { }
 

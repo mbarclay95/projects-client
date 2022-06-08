@@ -20,17 +20,17 @@ export class AuthService {
   ) {
   }
 
-  async login() {
+  async login(username: string, password: string) {
     await firstValueFrom(this.http.post<{accessToken: string}>(`${environment.apiUrl}/login`, {
-      username: 'mbarclay36',
-      password: 'password'
+      username,
+      password
     }).pipe(
       tap(token => this.authStorageService.setAuthToken(token.accessToken)),
-      tap(() => this.getUser())
+      tap(() => this.getMe())
     ));
   }
 
-  async getUser() {
+  async getMe() {
     await firstValueFrom(this.http.get<User>(`${environment.apiUrl}/me`).pipe(
       map(user => createUser(user)),
       tap(user => this.authStore.update(user))
@@ -44,5 +44,9 @@ export class AuthService {
       map(user => createUser(user)),
       tap(user => this.authStore.update(user))
     ));
+  }
+
+  async logout() {
+
   }
 }

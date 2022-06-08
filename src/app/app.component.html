@@ -4,8 +4,8 @@
     <nz-sider *ngIf="sideMenuClosed !== undefined" nzCollapsible [(nzCollapsed)]="sideMenuClosed"
               (nzCollapsedChange)="authService.updateUserConfig({sideMenuOpen: !$event})" nzWidth="200px"
               [nzCollapsedWidth]="collapsedWidth">
-      <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []"
-                     [sideMenuClosed]="sideMenuClosed"></app-side-menu>
+      <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed"
+                     (closeSideMenu)="closeSideMenu()" [isMobile]="isMobile"></app-side-menu>
       <!--      <ng-container *ngFor="let route of permissionsService.usersRoutes$ | async">-->
       <!--        <ul nz-menu nzMode="inline" nzTheme="dark"-->
       <!--            [ngClass]="{'ant-menu-vertical ant-menu-inline-collapsed': sideMenuClosed}"-->

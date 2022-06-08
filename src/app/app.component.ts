@@ -12,6 +12,7 @@ import {filter, take} from "rxjs";
 export class AppComponent {
   title = 'projects-client';
   sideMenuClosed?: boolean = undefined;
+  isMobile = screen.width < 600;
   collapsedWidth = screen.width > 600 ? 64 : 0;
 
   constructor(
@@ -34,5 +35,10 @@ export class AppComponent {
         },0);
       }
     });
+  }
+
+  closeSideMenu() {
+    this.sideMenuClosed = true;
+    this.authService.updateUserConfig({sideMenuOpen: false});
   }
 }

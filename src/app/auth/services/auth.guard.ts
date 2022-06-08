@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     try {
-      await this.authService.getUser();
+      await this.authService.getMe();
     } catch (e) {
       await this.router.navigateByUrl('login');
       return false;

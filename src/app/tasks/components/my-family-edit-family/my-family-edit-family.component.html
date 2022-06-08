@@ -1,0 +1,25 @@
+<div class="d-flex align-items-center justify-content-center w-100">
+
+  <div class="border me-3" style="background: {{myFamily.color}}; border-radius: 2px; width: 30px; height: 30px; cursor: pointer"
+       nz-popover nzPopoverTrigger="click" [nzPopoverContent]="colorPicker" nzPopoverPlacement="bottomLeft"
+       (nzPopoverVisibleChange)="saveColor($event)"></div>
+
+  <ng-template #colorPicker>
+    <color-chrome (onChangeComplete)="colorChanged($event)" [color]="myFamily.color"></color-chrome>
+  </ng-template>
+
+  <div style="font-size: 25px; cursor: pointer" *ngIf="!editFamilyName"
+       (click)="editFamilyName = true">{{myFamily.name}} Family</div>
+
+  <input nz-input *ngIf="editFamilyName" nzSize="large" [ngModel]="myFamily.name" style="width: auto"
+         (ngModelChange)="saveFamilyName($event)" [ngModelOptions]="{updateOn: 'blur'}" (blur)="editFamilyName = false">
+
+</div>
+
+<div class="d-flex justify-content-center w-100 mb-2">
+
+  <div class="w-50">
+    <nz-divider></nz-divider>
+  </div>
+
+</div>

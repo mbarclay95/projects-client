@@ -1,7 +1,7 @@
 <nz-tabset [nzTabBarExtraContent]="createButton" nzSize="large" nzLinkRouter>
   <nz-tab (nzSelect)="selectedTab = 'Task'">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'tasks'}" queryParamsHandling="merge">
-      Tasks
+      Weekly Tasks
     </a>
     <app-tasks-page></app-tasks-page>
   </nz-tab>
@@ -9,7 +9,7 @@
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'my-family'}" queryParamsHandling="merge">
       My Family
     </a>
-    <app-families-page (openFamilyModal)="openFamilyModal.next($event)"></app-families-page>
+    <app-my-family-page></app-my-family-page>
   </nz-tab>
   <nz-tab *ngIf="permissionsService.viewFamiliesTab$ | async" (nzSelect)="selectedTab = 'Family'">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'families'}" queryParamsHandling="merge">

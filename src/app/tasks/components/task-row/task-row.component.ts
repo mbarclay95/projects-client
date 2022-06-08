@@ -1,6 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Task} from "../../models/task.model";
 import {faHome, faUser} from "@fortawesome/free-solid-svg-icons";
+import {FamiliesQuery} from "../../services/families/state/families.query";
+import {AuthQuery} from "../../../auth/services/state/auth.query";
+import {TasksService} from "../../services/tasks/state/tasks.service";
+import {NzMessageService} from "ng-zorro-antd/message";
+import {FamiliesService} from "../../services/families/state/families.service";
 
 @Component({
   selector: 'app-task-row',
@@ -14,12 +19,28 @@ export class TaskRowComponent implements OnInit {
   family = faHome;
   personal = faUser
 
-  constructor() { }
+  constructor(
+    public familiesQuery: FamiliesQuery,
+    public familiesService: FamiliesService,
+    public authQuery: AuthQuery,
+    private tasksService: TasksService,
+    private nzMessageService: NzMessageService
+  ) { }
 
   ngOnInit(): void {
   }
 
-  completedTask(id: any, $event: any) {
+  async completedTask(taskId: number, checked: boolean) {
+    try {
+      await this.tasksService.updateTask(taskId, {completedAt: new Date()}, true);
+    } catch (e) {
+      console.log(e);
+      this.nzMessageService.error('There was an error');
+      return;
+    }
 
+    this.nzMessageService.success('Task Completed!');
+    const auth = this.familiesQuery.getAuthMember();
+    this.familiesService.updateTaskCompletedCount(this.familiesQuery.getActiveId() as number, auth.id, (auth.taskUserConfig?.tasksCompleted ?? 0) + 1)
   }
 }

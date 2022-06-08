@@ -18,6 +18,10 @@ export class AuthQuery extends Query<User> {
     // debounceTime(1000)
   );
 
+  myColor$: Observable<string> = this.select().pipe(
+    map(auth => auth.taskUserConfig?.color ?? '')
+  );
+
   constructor(
     protected override store: AuthStore
   ) {

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../users/models/user.model";
-import {endOfWeek} from "date-fns";
+import {differenceInDays, endOfWeek} from "date-fns";
 
 @Component({
   selector: 'app-weekly-progress',
@@ -8,8 +8,8 @@ import {endOfWeek} from "date-fns";
   styleUrls: ['./weekly-progress.component.scss']
 })
 export class WeeklyProgressComponent implements OnInit {
-  @Input() auth!: User | null;
-  // daysTillEndOfWeek =  endOfWeek()
+  @Input() user!: User | null;
+  daysTillEndOfWeek = differenceInDays(endOfWeek(new Date(), {weekStartsOn: 1}), new Date());
 
   constructor() { }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../services/state/auth.service";
+import {LoginService} from "../../services/login.service";
 
 @Component({
   selector: 'app-login-page',
@@ -9,10 +9,13 @@ import {AuthService} from "../../services/state/auth.service";
 export class LoginPageComponent implements OnInit {
 
   constructor(
-    public authService: AuthService
+    public loginService: LoginService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    if (!await this.loginService.isLoggedIn()) {
+      this.loginService.initializeForm();
+    }
   }
 
 }

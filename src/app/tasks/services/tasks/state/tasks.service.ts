@@ -5,13 +5,15 @@ import {createTask, Task} from '../../../models/task.model';
 import {TasksStore} from './tasks.store';
 import {firstValueFrom} from "rxjs";
 import {environment} from "../../../../../environments/environment";
+import {TasksQuery} from "./tasks.query";
 
 @Injectable({providedIn: 'root'})
 export class TasksService {
 
   constructor(
     private tasksStore: TasksStore,
-    private http: HttpClient
+    private http: HttpClient,
+    private tasksQuery: TasksQuery,
   ) {
   }
 
@@ -30,7 +32,17 @@ export class TasksService {
 
   }
 
-  async updateTask(task: Task) {
-
+  async updateTask(taskId: number, task: Partial<Task>, removeFromList = false) {
+    const newTask = {...this.tasksQuery.getEntity(taskId), ...task};
+    await firstValueFrom(this.http.put<Task>(`${environment.apiUrl}/tasks/${taskId}`, newTask).pipe(
+      map(task => createTask(task)),
+      tap(task => {
+        if (removeFromList) {
+          this.tasksStore.remove(taskId);
+        } else {
+          this.tasksStore.update(taskId, task);
+        }
+      })
+    ));
   }
 }

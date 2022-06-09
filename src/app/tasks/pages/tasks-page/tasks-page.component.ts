@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {TasksQuery} from "../../services/tasks/state/tasks.query";
-import {FamiliesQuery} from "../../services/families/state/families.query";
+import {Task} from "../../models/task.model";
 
 @Component({
   selector: 'app-tasks-page',
@@ -8,9 +8,9 @@ import {FamiliesQuery} from "../../services/families/state/families.query";
   styleUrls: ['./tasks-page.component.scss']
 })
 export class TasksPageComponent implements OnInit {
+  @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
 
   constructor(
-    public familiesQuery: FamiliesQuery,
     public tasksQuery: TasksQuery
   ) { }
 

@@ -1,15 +1,21 @@
 <nz-tabset [nzTabBarExtraContent]="createButton" nzSize="large" nzLinkRouter>
   <nz-tab (nzSelect)="selectedTab = 'Task'">
-    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'tasks'}" queryParamsHandling="merge">
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'weekly-tasks'}" queryParamsHandling="merge">
       Weekly Tasks
     </a>
-    <app-tasks-page></app-tasks-page>
+    <app-weekly-tasks-page></app-weekly-tasks-page>
   </nz-tab>
   <nz-tab *ngIf="familiesQuery.selectActive() | async" (nzSelect)="selectedTab = 'My Family'">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'my-family'}" queryParamsHandling="merge">
       My Family
     </a>
     <app-my-family-page></app-my-family-page>
+  </nz-tab>
+  <nz-tab (nzSelect)="selectedTab = 'Task'">
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'tasks'}" queryParamsHandling="merge">
+      Tasks
+    </a>
+    <app-tasks-page (editTask)="openTaskModal.next($event)"></app-tasks-page>
   </nz-tab>
   <nz-tab *ngIf="permissionsService.viewFamiliesTab$ | async" (nzSelect)="selectedTab = 'Family'">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'families'}" queryParamsHandling="merge">

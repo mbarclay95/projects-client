@@ -40,6 +40,8 @@ import {ColorChromeModule} from "ngx-color/chrome";
 import {NzPopoverModule} from "ng-zorro-antd/popover";
 import { MyFamilyEditFamilyComponent } from './components/my-family-edit-family/my-family-edit-family.component';
 import { MyFamilyMembersComponent } from './components/my-family-members/my-family-members.component';
+import { WeeklyTasksPageComponent } from './pages/weekly-tasks-page/weekly-tasks-page.component';
+import { TasksTableComponent } from './components/tasks-table/tasks-table.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { MyFamilyMembersComponent } from './components/my-family-members/my-fami
     MyFamilyEditFamilyComponent,
     MyFamilyEditFamilyComponent,
     MyFamilyMembersComponent,
+    WeeklyTasksPageComponent,
+    TasksTableComponent,
   ],
     imports: [
         CommonModule,

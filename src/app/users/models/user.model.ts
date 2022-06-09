@@ -30,7 +30,7 @@ export function createUser(params: Partial<User>) {
 export interface TaskUserConfig {
   id: number;
   tasksPerWeek: number;
-  tasksCompleted: number;
+  familyTasksCompleted: number;
   familyId: number;
   color: string;
 }

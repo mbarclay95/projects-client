@@ -11,7 +11,7 @@ export class WeeklyProgressPercentPipe implements PipeTransform {
       return 0;
     }
 
-    let progress = auth.taskUserConfig.tasksCompleted / auth.taskUserConfig.tasksPerWeek;
+    let progress = auth.taskUserConfig.familyTasksCompleted / auth.taskUserConfig.tasksPerWeek;
     if (progress > 1) {
       progress = 1;
     }

@@ -19,7 +19,7 @@ export function createTask(params: Partial<Task>) {
     completedAt: params.completedAt ? new Date(params.completedAt) : null,
     clearedAt: params.clearedAt ? new Date(params.clearedAt) : null,
     dueDate: params.dueDate ? new Date(params.dueDate) : null,
-    description: params.description,
+    description: params.description ?? null,
     ownerType: params.ownerType ?? 'user',
     ownerId: params.ownerId ?? 0,
     recurring: params.recurring ?? false,

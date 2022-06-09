@@ -41,6 +41,6 @@ export class TaskRowComponent implements OnInit {
 
     this.nzMessageService.success('Task Completed!');
     const auth = this.familiesQuery.getAuthMember();
-    this.familiesService.updateTaskCompletedCount(this.familiesQuery.getActiveId() as number, auth.id, (auth.taskUserConfig?.tasksCompleted ?? 0) + 1)
+    this.familiesService.updateTaskCompletedCount(this.familiesQuery.getActiveId() as number, auth.id, (auth.taskUserConfig?.familyTasksCompleted ?? 0) + 1)
   }
 }

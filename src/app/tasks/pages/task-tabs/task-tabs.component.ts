@@ -12,7 +12,7 @@ import {FamiliesQuery} from "../../services/families/state/families.query";
   styleUrls: ['./task-tabs.component.scss']
 })
 export class TaskTabsComponent implements OnInit {
-  selectedTab: 'Task' | 'Recurring Task' | 'Family' | 'My Family' = 'Task';
+  selectedTab: 'Task' | 'Family' | 'My Family' = 'Task';
   openFamilyModal: Subject<Family> = new Subject<Family>();
   openTaskModal: Subject<Task> = new Subject<Task>();
 
@@ -27,8 +27,6 @@ export class TaskTabsComponent implements OnInit {
 
   createEntity() {
     switch (this.selectedTab) {
-      case "Recurring Task":
-        break;
       case "Family":
         this.openFamilyModal.next(createFamily({id: 0}));
         break;

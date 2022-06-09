@@ -1,9 +1,9 @@
-<div class="w-100">
+<div>
 
-  <app-weekly-progress [user]="familiesQuery.authUser$ | async"></app-weekly-progress>
+  <ng-container *ngIf="tasksQuery.tasks$ | async as tasks">
 
-  <nz-divider></nz-divider>
+    <app-tasks-table [tasks]="tasks" (editTask)="editTask.emit($event)"></app-tasks-table>
 
-  <app-tasks-list [tasks]="tasksQuery.tasks$ | async"></app-tasks-list>
+  </ng-container>
 
 </div>

@@ -38,7 +38,8 @@
 
         <div class="mb-2">Recurring:</div>
 
-        <nz-switch [(ngModel)]="task.recurring" (ngModelChange)="updateRecurring($event)"></nz-switch>
+        <nz-switch [(ngModel)]="task.recurring" (ngModelChange)="updateRecurring($event)"
+                   [nzDisabled]="task.id !== 0"></nz-switch>
 
       </div>
 
@@ -76,7 +77,7 @@
         <div class="mb-2">Start Date: <span class="text-danger">*</span></div>
 
         <nz-date-picker [(ngModel)]="task.dueDate" class="w-100" [nzDisabledDate]="disabledDate"
-                        nzFormat="MM/dd/yyyy"></nz-date-picker>
+                        nzFormat="MM/dd/yyyy" [nzDisabled]="task.id !== 0"></nz-date-picker>
 
       </div>
 

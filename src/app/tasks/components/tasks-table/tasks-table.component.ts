@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {Task} from "../../models/task.model";
 import {NzTableComponent} from "ng-zorro-antd/table";
 import {Family} from "../../models/family.model";
-import {faEdit} from "@fortawesome/free-solid-svg-icons";
+import {fa1, faEdit, faPeopleRoof, faRepeat, faUser} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-tasks-table',
@@ -18,7 +18,10 @@ export class TasksTableComponent implements OnInit {
 
   _tasks: Task[] = [];
   edit = faEdit;
-  // repeat = fa;
+  repeat = faRepeat;
+  single = fa1;
+  household = faPeopleRoof;
+  personal = faUser;
 
   constructor() { }
 

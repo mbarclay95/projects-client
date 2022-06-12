@@ -18,8 +18,14 @@
         </button>
       </td>
       <td>{{task.name}}</td>
-      <td>{{task.recurring ? 'Yes' : 'No'}}</td>
-      <td>{{task.ownerType === 'family' ? 'Family' : 'Personal'}}</td>
+      <td>
+        <fa-icon *ngIf="task.recurring" [icon]="repeat"></fa-icon>
+        <fa-icon *ngIf="!task.recurring" [icon]="single"></fa-icon>
+      </td>
+      <td>
+        <fa-icon *ngIf="task.ownerType === 'family'" [icon]="household"></fa-icon>
+        <fa-icon *ngIf="task.ownerType === 'user'" [icon]="personal"></fa-icon>
+      </td>
       <td>{{task.dueDate | date : 'shortDate'}}</td>
     </tr>
   </ng-container>

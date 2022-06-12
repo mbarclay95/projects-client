@@ -8,6 +8,7 @@ import {GoalsLayoutComponent} from "./goals/goals-layout/goals-layout.component"
 import {BackupsLayoutComponent} from "./backups/backups-layout/backups-layout.component";
 import {DashboardLayoutComponent} from "./dashboard/dashboard-layout/dashboard-layout.component";
 import {TasksLayoutComponent} from "./tasks/tasks-layout/tasks-layout.component";
+import {EventsLayoutComponent} from "./events/events-layout/events-layout.component";
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
       {
         path: 'tasks', component: TasksLayoutComponent, data: {permission: Permissions.TASKS_PAGE},
         loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule)
+      },
+      {
+        path: 'events', component: EventsLayoutComponent, data: {permission: Permissions.EVENTS_PAGE},
+        loadChildren: () => import('./events/events.module').then(m => m.EventsModule)
       }
     ]
   },

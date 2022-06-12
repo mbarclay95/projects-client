@@ -1,0 +1,20 @@
+<div class="w-100 d-flex justify-content-between mb-4">
+
+  <div class="d-flex">
+
+    <input nz-input class="me-4" [ngModel]="ui.search" placeholder="search">
+
+    <div class="d-flex align-items-center">
+      <div style="white-space: nowrap" class="me-2">Show Archived:</div>
+      <nz-switch [ngModel]="ui.showArchived"></nz-switch>
+    </div>
+
+  </div>
+
+  <div>
+
+    <button nz-button nzType="primary" (click)="createNewEvent()">Create Event</button>
+
+  </div>
+
+</div>

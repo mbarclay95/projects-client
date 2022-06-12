@@ -30,14 +30,25 @@
 
       </div>
 
-      <div class="w-100 mb-4">
+      <div class="w-50 mb-4">
 
-        <div class="mb-2">Roles:</div>
+        <div class="mb-2">Modules:</div>
 
-        <nz-select [ngModel]="user.roles | rolesToIds" class="w-100" nzMode="multiple"
-                   (ngModelChange)="updateUsersRoles($event)">
-          <nz-option *ngFor="let role of rolesQuery.roles$ | async" [nzValue]="role.id" [nzLabel]="role.name"></nz-option>
-        </nz-select>
+        <ng-container *ngFor="let role of rolesQuery.roles$ | async">
+
+          <div class="d-flex justify-content-between w-100 mb-2">
+
+            {{role | displayRoleName}}
+
+            <nz-switch [ngModel]="user | hasRole : role.id" (ngModelChange)="updateUsersRoles($event, role.id)"></nz-switch>
+          </div>
+
+        </ng-container>
+
+<!--        <nz-select [ngModel]="user.roles | rolesToIds" class="w-100" nzMode="multiple"-->
+<!--                   (ngModelChange)="updateUsersRoles($event)">-->
+<!--          <nz-option *ngFor="let role of rolesQuery.roles$ | async" [nzValue]="role.id" [nzLabel]="role.name"></nz-option>-->
+<!--        </nz-select>-->
 
       </div>
 

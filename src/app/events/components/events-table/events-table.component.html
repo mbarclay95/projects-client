@@ -1,0 +1,33 @@
+<nz-table #eventsTableTag [nzData]="_events" nzSize="small">
+  <thead>
+  <tr>
+    <th nzWidth="60px"></th>
+    <th>Name</th>
+    <th>Date</th>
+    <th>Spots Filled</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let event of eventsTable?.data">
+    <tr>
+      <td [nzExpand]="expandSet.has(event.id)" (nzExpandChange)="onExpandChange(event.id, $event)"></td>
+<!--      <td>-->
+<!--        <button nz-button class="ant-btn-icon-only" nzType="text"-->
+<!--                (click)="editEvent.emit(event)">-->
+<!--          <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>-->
+<!--        </button>-->
+<!--      </td>-->
+      <td>{{event.name}}</td>
+      <td>{{event.eventDate}}</td>
+      <td></td>
+    </tr>
+    <tr [nzExpand]="expandSet.has(event.id)">
+      <nz-collapse>
+
+      </nz-collapse>
+    </tr>
+  </ng-container>
+  </tbody>
+
+</nz-table>
+

@@ -1,0 +1,51 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(event?.id === 0 ? 'Create' : 'Edit') + ' Event'" nzWidth="700px"
+          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveEvent()"
+          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
+
+  <ng-container *nzModalContent>
+
+    <div *ngIf="event">
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Event Title:</div>
+
+        <input nz-input [(ngModel)]="event.name" class="w-100">
+
+      </div>
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Event Date:</div>
+
+        <nz-date-picker [(ngModel)]="event.eventDate" nzFormat="MM/dd/yyyy HH:mm" [nzShowNow]="false"
+                        [nzShowTime]="{nzFormat: 'HH:mm', nzUse12Hours: true, nzMinuteStep: 15}"></nz-date-picker>
+
+      </div>
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Max Spots:</div>
+
+        <nz-input-number [(ngModel)]="event.numOfPeople"></nz-input-number>
+
+      </div>
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Notes:</div>
+
+        <div>
+
+          <angular-editor [(ngModel)]="event.notes"></angular-editor>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+
+</nz-modal>

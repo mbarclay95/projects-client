@@ -7,6 +7,7 @@ export const enum Permissions {
   BACKUPS_PAGE = 'client_view_backups_page',
   TASKS_PAGE = 'client_view_tasks_page',
   FAMILIES_TAB = 'client_view_families_tab',
+  EVENTS_PAGE = 'client_view_events_page',
 }
 
 export interface Route {

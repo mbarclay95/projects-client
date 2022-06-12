@@ -1,0 +1,10 @@
+<div class="w-100">
+
+  <app-events-filters *ngIf="eventsQuery.ui$ | async as ui" [ui]="ui"
+                      (createEvent)="openModal.next($event)"></app-events-filters>
+
+  <app-events-table [events]="eventsQuery.events$ | async" (editEvent)="openModal.next($event)"></app-events-table>
+
+</div>
+
+<app-create-edit-event [openModal]="openModal.asObservable()"></app-create-edit-event>

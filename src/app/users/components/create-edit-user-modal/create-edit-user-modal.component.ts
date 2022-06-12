@@ -40,8 +40,15 @@ export class CreateEditUserModalComponent implements OnInit {
     this.subscriptionDestroyer.complete();
   }
 
-  updateUsersRoles(event: number[]) {
-    this.user.roles = this.rolesQuery.getRolesByIds(event);
+  updateUsersRoles(checked: boolean, roleId: number) {
+    if (checked) {
+      const role = this.rolesQuery.getEntity(roleId);
+      if (role) {
+        this.user.roles.push(role);
+      }
+    } else {
+      this.user.roles = this.user.roles.filter(r => r.id !== roleId);
+    }
   }
 
   async saveUser() {

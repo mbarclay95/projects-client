@@ -5,12 +5,14 @@ export interface Task {
   clearedAt?: Date;
   dueDate?: Date;
   description?: string;
-  ownerType: 'family' | 'user';
+  ownerType: TaskOwnerType;
   ownerId: number;
   recurring: boolean;
   frequencyAmount?: number;
   frequencyUnit?: 'day' | 'week' | 'month';
 }
+
+export type TaskOwnerType = 'family' | 'user';
 
 export function createTask(params: Partial<Task>) {
   return {

@@ -31,7 +31,6 @@ export class TasksResolver implements Resolve<void> {
     if (familyId) {
       this.familiesService.setActive(familyId);
     }
-    await this.tasksService.getTasks();
     await this.usersService.getUsers();
   }
 }

@@ -42,6 +42,7 @@ import { MyFamilyEditFamilyComponent } from './components/my-family-edit-family/
 import { MyFamilyMembersComponent } from './components/my-family-members/my-family-members.component';
 import { WeeklyTasksPageComponent } from './pages/weekly-tasks-page/weekly-tasks-page.component';
 import { TasksTableComponent } from './components/tasks-table/tasks-table.component';
+import { TasksFiltersComponent } from './components/tasks-filters/tasks-filters.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { TasksTableComponent } from './components/tasks-table/tasks-table.compon
     MyFamilyMembersComponent,
     WeeklyTasksPageComponent,
     TasksTableComponent,
+    TasksFiltersComponent,
   ],
     imports: [
         CommonModule,

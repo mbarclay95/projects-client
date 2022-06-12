@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map, tap} from 'rxjs/operators';
 import {createTask, Task} from '../../../models/task.model';
-import {TasksStore} from './tasks.store';
+import {TasksStore, TaskUiState} from './tasks.store';
 import {firstValueFrom} from "rxjs";
 import {environment} from "../../../../../environments/environment";
 import {TasksQuery} from "./tasks.query";
@@ -17,8 +17,8 @@ export class TasksService {
   ) {
   }
 
-  async getTasks(): Promise<void> {
-    await firstValueFrom(this.http.get<Task[]>(`${environment.apiUrl}/tasks`).pipe(
+  async getTasks(queryString: string): Promise<void> {
+    await firstValueFrom(this.http.get<Task[]>(`${environment.apiUrl}/tasks?${queryString}`).pipe(
       map(tasks => tasks.map(task => createTask(task))),
       tap(tasks => this.tasksStore.set(tasks))
     ));
@@ -29,7 +29,6 @@ export class TasksService {
       map(task => createTask(task)),
       tap(task => this.tasksStore.add(task))
     ));
-
   }
 
   async updateTask(taskId: number, task: Partial<Task>, removeFromList = false) {
@@ -44,5 +43,11 @@ export class TasksService {
         }
       })
     ));
+  }
+
+  updateUi(newState: Partial<TaskUiState>): void {
+    const newUi = {...this.tasksQuery.getUi(), ...newState};
+    this.tasksStore.update({ui: newUi});
+    this.getTasks(this.tasksQuery.getQueryString(newUi));
   }
 }

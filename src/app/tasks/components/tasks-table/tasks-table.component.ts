@@ -18,6 +18,7 @@ export class TasksTableComponent implements OnInit {
 
   _tasks: Task[] = [];
   edit = faEdit;
+  // repeat = fa;
 
   constructor() { }
 

@@ -27,7 +27,7 @@ export class PermissionsService {
     {icon: this.goals, url: 'app/goals', permission: Permissions.GOALS_PAGE, title: 'Goals', queryParams: {}},
     {icon: this.users, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users', queryParams: {}},
     {icon: this.upload, url: 'app/backups', permission: Permissions.BACKUPS_PAGE, title: 'Backups', queryParams: {tab: 'backups'}},
-    {icon: this.task, url: 'app/tasks', permission: Permissions.TASKS_PAGE, title: 'Tasks', queryParams: {tab: 'tasks'}},
+    {icon: this.task, url: 'app/tasks', permission: Permissions.TASKS_PAGE, title: 'Tasks', queryParams: {tab: 'weekly-tasks'}},
   ];
 
   constructor(

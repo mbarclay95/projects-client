@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Subject} from "rxjs";
 import {createFamily, Family} from "../../models/family.model";
 import {createTask, Task} from "../../models/task.model";
 import {AuthQuery} from "../../../auth/services/state/auth.query";
 import {PermissionsService} from "../../../auth/services/permissions.service";
 import {FamiliesQuery} from "../../services/families/state/families.query";
+import {TasksService} from "../../services/tasks/state/tasks.service";
 
 @Component({
   selector: 'app-task-tabs',
@@ -19,10 +20,32 @@ export class TaskTabsComponent implements OnInit {
   constructor(
     private authQuery: AuthQuery,
     public permissionsService: PermissionsService,
-    public familiesQuery: FamiliesQuery
-  ) { }
+    public familiesQuery: FamiliesQuery,
+    private tasksService: TasksService
+  ) {
+  }
 
   ngOnInit(): void {
+    this.loadWeeklyTasks();
+  }
+
+  loadWeeklyTasks() {
+    this.selectedTab = 'Task';
+    this.tasksService.updateUi({
+      numOfDays: 7,
+      ownerId: null,
+      ownerType: null,
+      recurringType: 'both',
+      completedStatus: 'notCompleted',
+    });
+  }
+
+  loadTasksTable() {
+    this.selectedTab = 'Task';
+    this.tasksService.updateUi({
+      numOfDays: null,
+      page: 1,
+    });
   }
 
   createEntity() {

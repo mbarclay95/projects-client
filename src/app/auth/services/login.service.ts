@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {AuthService} from "./state/auth.service";
 import {AuthStorageService} from "./auth-storage.service";
 import {Router} from "@angular/router";
@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class LoginService {
-  loginForm?: FormGroup;
+  loginForm?: UntypedFormGroup;
   error = false;
   unauthorized = false;
   loading = false;
@@ -20,9 +20,9 @@ export class LoginService {
   ) { }
 
   initializeForm(): void {
-    this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required])
+    this.loginForm = new UntypedFormGroup({
+      email: new UntypedFormControl('', [Validators.required]),
+      password: new UntypedFormControl('', [Validators.required])
     });
   }
 

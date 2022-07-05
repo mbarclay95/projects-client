@@ -1,6 +1,10 @@
 <div>
 
-  <app-tasks-filters></app-tasks-filters>
+  <ng-container *ngIf="(tasksQuery.ui$ | async) as ui">
+
+    <app-tasks-filters [ui]="ui"></app-tasks-filters>
+
+  </ng-container>
 
   <ng-container *ngIf="tasksQuery.tasks$ | async as tasks">
 

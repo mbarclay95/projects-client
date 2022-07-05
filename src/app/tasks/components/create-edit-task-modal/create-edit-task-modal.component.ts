@@ -6,6 +6,7 @@ import {TasksService} from "../../services/tasks/state/tasks.service";
 import {AuthQuery} from "../../../auth/services/state/auth.query";
 import {FamiliesQuery} from "../../services/families/state/families.query";
 import {differenceInCalendarDays} from "date-fns";
+import {TagsService} from "../../services/tags.service";
 
 @Component({
   selector: 'app-create-edit-task-modal',
@@ -25,7 +26,8 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
     private tasksService: TasksService,
     private nzMessageService: NzMessageService,
     private authQuery: AuthQuery,
-    private familiesQuery: FamiliesQuery
+    private familiesQuery: FamiliesQuery,
+    public tagsService: TagsService
   ) {
   }
 

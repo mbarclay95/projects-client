@@ -24,7 +24,7 @@ export class EventsQuery extends QueryEntity<EventsState> {
 
   getQueryString(): string {
     const ui = this.getUi();
-    let queryString = `showArchived=${ui.showArchived}&`;
+    let queryString = `showArchived=${ui.showArchived ? 1 : 0}&`;
     if (ui.search) {
       queryString += `search=${ui.search}`;
     }

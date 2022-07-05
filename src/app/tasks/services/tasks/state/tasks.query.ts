@@ -32,6 +32,12 @@ export class TasksQuery extends QueryEntity<TasksState> {
     if (ui.ownerType && ui.ownerId) {
       queryString += `ownerType=${ui.ownerType}&ownerId=${ui.ownerId}&`;
     }
+    if (ui.search) {
+      queryString += `search=${ui.search}&`;
+    }
+    if (ui.tags.length > 0) {
+      queryString += ui.tags.reduce((prev, curr) => prev + `tags[]=${curr}&`, '');
+    }
 
     return queryString;
   }

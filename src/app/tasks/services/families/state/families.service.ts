@@ -29,8 +29,15 @@ export class FamiliesService {
   async getFamily(familyId: number): Promise<void> {
     await firstValueFrom(this.http.get<Family>(`${environment.apiUrl}/families/${familyId}`).pipe(
       map(family => createFamily(family)),
-      tap(family => this.familiesStore.add(family))
+      tap(family => this.familiesStore.upsert(familyId, family))
     ));
+  }
+
+  async refreshActiveFamily(): Promise<void> {
+    const activeId = this.familiesQuery.activeId;
+    if (activeId) {
+      await this.getFamily(activeId);
+    }
   }
 
   setActive(familyId: number): void {

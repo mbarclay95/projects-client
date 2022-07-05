@@ -12,10 +12,10 @@
     <!--  </div>-->
 
     <fa-icon *ngIf="task.ownerType === 'user'" [icon]="personal" size="2x" class="me-3"
-             style="color: {{authQuery.myColor$ | async}}"></fa-icon>
+             style="width: 35px; text-align: center; color: {{authQuery.myColor$ | async}}"></fa-icon>
 
     <fa-icon *ngIf="task.ownerType === 'family'" [icon]="family" size="2x" class="me-3"
-             style="color: {{familiesQuery.myFamilyColor$ | async}}"></fa-icon>
+             style="width: 35px; text-align: center; color: {{familiesQuery.myFamilyColor$ | async}}"></fa-icon>
 
     <div class="title-and-description">
 

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {EventsUiState} from "../../services/events/state/events.store";
 import {createEvent, Event} from "../../models/event.model";
+import {EventsService} from "../../services/events/state/events.service";
 
 @Component({
   selector: 'app-events-filters',
@@ -11,7 +12,9 @@ export class EventsFiltersComponent implements OnInit {
   @Input() ui!: EventsUiState;
   @Output() createEvent: EventEmitter<Event> = new EventEmitter<Event>();
 
-  constructor() { }
+  constructor(
+    public eventsService: EventsService
+  ) { }
 
   ngOnInit(): void {
   }

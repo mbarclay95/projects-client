@@ -43,6 +43,7 @@ import { MyFamilyMembersComponent } from './components/my-family-members/my-fami
 import { WeeklyTasksPageComponent } from './pages/weekly-tasks-page/weekly-tasks-page.component';
 import { TasksTableComponent } from './components/tasks-table/tasks-table.component';
 import { TasksFiltersComponent } from './components/tasks-filters/tasks-filters.component';
+import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { TasksFiltersComponent } from './components/tasks-filters/tasks-filters.
         ColorAlphaModule,
         AlphaModule,
         ColorChromeModule,
-        NzPopoverModule
+        NzPopoverModule,
+        NzPopconfirmModule
     ]
 })
 export class TasksModule { }

@@ -1,1 +1,11 @@
-<p>tasks-filters works!</p>
+<div class="d-flex mb-4">
+
+  <input nz-input style="width: 300px" placeholder="search" [ngModel]="ui.search" class="me-2"
+         (ngModelChange)="tasksService.updateUi({search: $event})">
+
+  <nz-select style="width: 300px" nzMode="multiple" [ngModel]="ui.tags" nzPlaceHolder="tags"
+             (ngModelChange)="tasksService.updateUi({tags: $event})">
+    <nz-option *ngFor="let tag of tagsService.tags$ | async" [nzLabel]="tag" [nzValue]="tag"></nz-option>
+  </nz-select>
+
+</div>

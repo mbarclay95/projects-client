@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {EventsQuery} from "../../services/events/state/events.query";
 import {Subject} from "rxjs";
 import {Event} from "../../models/event.model";
+import {EventsService} from "../../services/events/state/events.service";
 
 @Component({
   selector: 'app-events-page',
@@ -12,7 +13,8 @@ export class EventsPageComponent implements OnInit {
   openModal: Subject<Event> = new Subject<Event>();
 
   constructor(
-    public eventsQuery: EventsQuery
+    public eventsQuery: EventsQuery,
+    public eventsService: EventsService,
   ) { }
 
   ngOnInit(): void {

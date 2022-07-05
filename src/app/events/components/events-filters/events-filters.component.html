@@ -6,7 +6,7 @@
 
     <div class="d-flex align-items-center">
       <div style="white-space: nowrap" class="me-2">Show Archived:</div>
-      <nz-switch [ngModel]="ui.showArchived"></nz-switch>
+      <nz-switch [ngModel]="ui.showArchived" (ngModelChange)="eventsService.updateUi({showArchived: $event})"></nz-switch>
     </div>
 
   </div>

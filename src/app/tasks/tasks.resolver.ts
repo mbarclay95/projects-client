@@ -6,6 +6,7 @@ import {UsersService} from "../users/services/state/users.service";
 import {PermissionsService} from "../auth/services/permissions.service";
 import {Permissions} from "../auth/permissions";
 import {AuthQuery} from "../auth/services/state/auth.query";
+import {TagsService} from "./services/tags.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class TasksResolver implements Resolve<void> {
     private familiesService: FamiliesService,
     private usersService: UsersService,
     private permissionsService: PermissionsService,
+    private tagsService: TagsService,
     private authQuery: AuthQuery
   ) {
   }
@@ -32,5 +34,6 @@ export class TasksResolver implements Resolve<void> {
       this.familiesService.setActive(familyId);
     }
     await this.usersService.getUsers();
+    await this.tagsService.getTags();
   }
 }

@@ -10,6 +10,7 @@ export interface Task {
   recurring: boolean;
   frequencyAmount?: number;
   frequencyUnit?: 'day' | 'week' | 'month';
+  tags: string[];
 }
 
 export type TaskOwnerType = 'family' | 'user';
@@ -27,5 +28,6 @@ export function createTask(params: Partial<Task>) {
     recurring: params.recurring ?? false,
     frequencyAmount: params.frequencyAmount,
     frequencyUnit: params.frequencyUnit,
+    tags: params.tags ? params.tags : [],
   } as Task;
 }

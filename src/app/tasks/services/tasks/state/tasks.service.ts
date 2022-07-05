@@ -1,20 +1,26 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {map, tap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, map, tap} from 'rxjs/operators';
 import {createTask, Task} from '../../../models/task.model';
 import {TasksStore, TaskUiState} from './tasks.store';
-import {firstValueFrom} from "rxjs";
+import {firstValueFrom, Subject, takeUntil} from "rxjs";
 import {environment} from "../../../../../environments/environment";
 import {TasksQuery} from "./tasks.query";
+import {TagsService} from "../../tags.service";
+import {FamiliesService} from "../../families/state/families.service";
 
 @Injectable({providedIn: 'root'})
 export class TasksService {
+  private subscriptionDestroyer: Subject<void> = new Subject<void>();
 
   constructor(
     private tasksStore: TasksStore,
     private http: HttpClient,
     private tasksQuery: TasksQuery,
+    private tagsService: TagsService,
+    private familiesService: FamiliesService,
   ) {
+    // this.subscribeToUi();
   }
 
   async getTasks(queryString: string): Promise<void> {
@@ -29,6 +35,7 @@ export class TasksService {
       map(task => createTask(task)),
       tap(task => this.tasksStore.add(task))
     ));
+    this.tagsService.getTags();
   }
 
   async updateTask(taskId: number, task: Partial<Task>, removeFromList = false) {
@@ -38,10 +45,18 @@ export class TasksService {
       tap(task => {
         if (removeFromList) {
           this.tasksStore.remove(taskId);
+          this.familiesService.refreshActiveFamily();
         } else {
           this.tasksStore.update(taskId, task);
         }
       })
+    ));
+    this.tagsService.getTags();
+  }
+
+  async deleteTask(task: Task) {
+    await firstValueFrom(this.http.delete(`${environment.apiUrl}/tasks/${task.id}`).pipe(
+      tap(() => this.tasksStore.remove(task.id))
     ));
   }
 
@@ -50,4 +65,15 @@ export class TasksService {
     this.tasksStore.update({ui: newUi});
     this.getTasks(this.tasksQuery.getQueryString(newUi));
   }
+
+  // subscribeToUi() {
+  //   this.tasksQuery.ui$.pipe(
+  //     debounceTime(500),
+  //     distinctUntilChanged
+  //     takeUntil(this.subscriptionDestroyer)
+  //   ).subscribe(ui => {
+  //     console.log(ui);
+  //     this.getTasks(this.tasksQuery.getQueryString(ui))
+  //   });
+  // }
 }

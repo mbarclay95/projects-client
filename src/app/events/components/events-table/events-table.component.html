@@ -1,28 +1,56 @@
-<nz-table #eventsTableTag [nzData]="_events" nzSize="small">
+<nz-table #eventsTableTag [nzData]="_events" nzSize="default">
   <thead>
   <tr>
     <th nzWidth="60px"></th>
     <th>Name</th>
     <th>Date</th>
-    <th>Spots Filled</th>
+    <th>Spots</th>
   </tr>
   </thead>
   <tbody>
   <ng-container *ngFor="let event of eventsTable?.data">
     <tr>
       <td [nzExpand]="expandSet.has(event.id)" (nzExpandChange)="onExpandChange(event.id, $event)"></td>
-<!--      <td>-->
-<!--        <button nz-button class="ant-btn-icon-only" nzType="text"-->
-<!--                (click)="editEvent.emit(event)">-->
-<!--          <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>-->
-<!--        </button>-->
-<!--      </td>-->
-      <td>{{event.name}}</td>
-      <td>{{event.eventDate}}</td>
-      <td></td>
+      <td>
+        <div *ngIf="event.deletedAt" class="text-warning" style="font-style: italic">Archived</div>
+        {{event.name}}
+      </td>
+      <td>{{event.eventDate | date : 'short'}}</td>
+      <td>{{event.numOfPeople}}</td>
     </tr>
     <tr [nzExpand]="expandSet.has(event.id)">
       <nz-collapse>
+
+        <div class="d-flex" style="min-height: 80px">
+
+          <div class="d-flex flex-column justify-content-evenly ms-2" [ngSwitch]="!!event.deletedAt">
+
+            <ng-container *ngSwitchCase="true">
+
+              <button nz-button>
+                <fa-icon [icon]="edit" size="1x" class="text-primary me-1"></fa-icon>
+                Restore
+              </button>
+
+            </ng-container>
+
+            <ng-container *ngSwitchCase="false">
+
+              <button nz-button (click)="editEvent.emit(event)">
+                <fa-icon [icon]="edit" size="1x" class="text-primary me-1"></fa-icon>
+                Edit
+              </button>
+
+              <button nz-button (click)="archiveEvent.emit(event)">
+                <fa-icon [icon]="archive" size="1x" class="text-danger me-1"></fa-icon>
+                Archive
+              </button>
+
+            </ng-container>
+
+          </div>
+
+        </div>
 
       </nz-collapse>
     </tr>

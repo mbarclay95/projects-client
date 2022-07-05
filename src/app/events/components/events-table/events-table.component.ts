@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NzTableComponent} from "ng-zorro-antd/table";
-import {faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faBoxArchive, faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {Event} from "../../models/event.model";
 
 @Component({
@@ -18,11 +18,12 @@ export class EventsTableComponent implements OnInit {
   }
 
   @Output() editEvent: EventEmitter<Event> = new EventEmitter<Event>();
+  @Output() archiveEvent: EventEmitter<Event> = new EventEmitter<Event>();
 
   _events: Event[] = [];
   expandSet = new Set<number>();
   edit = faEdit;
-  delete = faTrash;
+  archive = faBoxArchive;
 
   constructor() {
   }

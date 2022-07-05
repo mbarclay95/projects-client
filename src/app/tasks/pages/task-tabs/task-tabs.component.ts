@@ -37,6 +37,8 @@ export class TaskTabsComponent implements OnInit {
       ownerType: null,
       recurringType: 'both',
       completedStatus: 'notCompleted',
+      search: null,
+      tags: []
     });
   }
 
@@ -45,6 +47,8 @@ export class TaskTabsComponent implements OnInit {
     this.tasksService.updateUi({
       numOfDays: null,
       page: 1,
+      search: null,
+      tags: []
     });
   }
 

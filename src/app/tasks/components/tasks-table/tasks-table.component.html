@@ -3,30 +3,36 @@
   <tr>
     <th nzWidth="60px"></th>
     <th>Name</th>
+    <th>Due Date</th>
     <th>Frequency</th>
     <th>Type</th>
-    <th>Due Date</th>
   </tr>
   </thead>
   <tbody>
   <ng-container *ngFor="let task of tasksTable?.data">
     <tr>
-      <td>
+      <td class="d-flex">
         <button nz-button class="ant-btn-icon-only" nzType="text"
                 (click)="editTask.emit(task)">
-          <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
+          <fa-icon [icon]="edit" class="text-primary"></fa-icon>
+        </button>
+        <button nz-button class="ant-btn-icon-only" nzType="text" nz-popconfirm nzPopconfirmTitle="Are you sure?"
+                (nzOnConfirm)="deleteTask(task)">
+          <fa-icon [icon]="delete" class=""></fa-icon>
         </button>
       </td>
       <td>{{task.name}}</td>
-      <td>
+      <td>{{task.dueDate | date : 'shortDate'}}</td>
+      <td style="width: 18px; text-align: center">
         <fa-icon *ngIf="task.recurring" [icon]="repeat"></fa-icon>
         <fa-icon *ngIf="!task.recurring" [icon]="single"></fa-icon>
       </td>
-      <td>
-        <fa-icon *ngIf="task.ownerType === 'family'" [icon]="household"></fa-icon>
-        <fa-icon *ngIf="task.ownerType === 'user'" [icon]="personal"></fa-icon>
+      <td style="width: 18px; text-align: center">
+        <fa-icon style="color: {{familiesQuery.myFamilyColor$ | async}}"
+                 *ngIf="task.ownerType === 'family'" [icon]="household"></fa-icon>
+        <fa-icon style="color: {{authQuery.myColor$ | async}}"
+                 *ngIf="task.ownerType === 'user'" [icon]="personal"></fa-icon>
       </td>
-      <td>{{task.dueDate | date : 'shortDate'}}</td>
     </tr>
   </ng-container>
   </tbody>

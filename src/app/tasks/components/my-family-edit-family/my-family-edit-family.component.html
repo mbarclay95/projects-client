@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center justify-content-center w-100">
+<div class="d-flex align-items-center justify-content-center w-100 mb-2">
 
   <div class="border me-3" style="background: {{myFamily.color}}; border-radius: 2px; width: 30px; height: 30px; cursor: pointer"
        nz-popover nzPopoverTrigger="click" [nzPopoverContent]="colorPicker" nzPopoverPlacement="bottomLeft"
@@ -13,6 +13,14 @@
 
   <input nz-input *ngIf="editFamilyName" nzSize="large" [ngModel]="myFamily.name" style="width: auto"
          (ngModelChange)="saveFamilyName($event)" [ngModelOptions]="{updateOn: 'blur'}" (blur)="editFamilyName = false">
+
+</div>
+
+<div class="d-flex w-100 flex-column align-items-center mb-2">
+
+  <div>Total family tasks: <strong>{{myFamily.totalFamilyTasks}}</strong></div>
+
+  <div>Tasks per week per person: <strong>{{myFamily.tasksPerWeek | number : '1.2-2'}}</strong></div>
 
 </div>
 

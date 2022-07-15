@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { UsersLayoutComponent } from './users-layout/users-layout.component';
@@ -20,7 +19,6 @@ import { DisplayRoleNamePipe } from './pipes/display-role-name.pipe';
 import {NzSwitchModule} from "ng-zorro-antd/switch";
 import { HasRolePipe } from './pipes/has-role.pipe';
 
-
 @NgModule({
   declarations: [
     UsersPageComponent,
@@ -31,19 +29,19 @@ import { HasRolePipe } from './pipes/has-role.pipe';
     DisplayRoleNamePipe,
     HasRolePipe,
   ],
-  imports: [
-    CommonModule,
-    UsersRoutingModule,
-    NzLayoutModule,
-    NzTableModule,
-    NzButtonModule,
-    FontAwesomeModule,
-    NzIconModule,
-    NzModalModule,
-    FormsModule,
-    NzInputModule,
-    NzSelectModule,
-    NzSwitchModule
-  ]
+    imports: [
+        CommonModule,
+        UsersRoutingModule,
+        NzLayoutModule,
+        NzTableModule,
+        NzButtonModule,
+        FontAwesomeModule,
+        NzIconModule,
+        NzModalModule,
+        FormsModule,
+        NzInputModule,
+        NzSelectModule,
+        NzSwitchModule
+    ]
 })
 export class UsersModule { }

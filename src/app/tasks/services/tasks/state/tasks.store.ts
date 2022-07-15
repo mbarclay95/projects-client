@@ -13,6 +13,7 @@ export interface TaskUiState {
   recurringType: boolean | 'both';
   page: number|null;
   pageSize: number|null;
+  total: number|null;
   sort: string;
   sortDir: 'asc' | 'desc';
   numOfDays: number|null;
@@ -32,7 +33,8 @@ export class TasksStore extends EntityStore<TasksState> {
         completedStatus: 'both',
         recurringType: 'both',
         page: 1,
-        pageSize: 20,
+        pageSize: 50,
+        total: null,
         sort: 'dueDate',
         sortDir: 'desc',
         numOfDays: null,

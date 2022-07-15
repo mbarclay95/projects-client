@@ -1,14 +1,10 @@
-<div>
+<div *ngIf="(tasksQuery.ui$ | async) as ui">
 
-  <ng-container *ngIf="(tasksQuery.ui$ | async) as ui">
-
-    <app-tasks-filters [ui]="ui"></app-tasks-filters>
-
-  </ng-container>
+  <app-tasks-filters [ui]="ui"></app-tasks-filters>
 
   <ng-container *ngIf="tasksQuery.tasks$ | async as tasks">
 
-    <app-tasks-table [tasks]="tasks" (editTask)="editTask.emit($event)"></app-tasks-table>
+    <app-tasks-table [tasks]="tasks" (editTask)="editTask.emit($event)" [ui]="ui"></app-tasks-table>
 
   </ng-container>
 

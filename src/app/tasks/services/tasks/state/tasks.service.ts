@@ -8,6 +8,7 @@ import {environment} from "../../../../../environments/environment";
 import {TasksQuery} from "./tasks.query";
 import {TagsService} from "../../tags.service";
 import {FamiliesService} from "../../families/state/families.service";
+import {Pagination} from "../../../../models/pagination.model";
 
 @Injectable({providedIn: 'root'})
 export class TasksService {
@@ -24,8 +25,14 @@ export class TasksService {
   }
 
   async getTasks(queryString: string): Promise<void> {
-    await firstValueFrom(this.http.get<Task[]>(`${environment.apiUrl}/tasks?${queryString}`).pipe(
-      map(tasks => tasks.map(task => createTask(task))),
+    await firstValueFrom(this.http.get<Task[] | Pagination<Task>>(`${environment.apiUrl}/tasks?${queryString}`).pipe(
+      map(tasks => {
+        if ('total' in tasks) {
+          this.tasksStore.update({ui: {...this.tasksQuery.getUi(), ...{total: tasks.total}}});
+          return tasks.data.map(task => createTask(task));
+        }
+        return tasks.map(task => createTask(task))
+      }),
       tap(tasks => this.tasksStore.set(tasks))
     ));
   }

@@ -6,6 +6,7 @@ import {AuthQuery} from "../../../auth/services/state/auth.query";
 import {FamiliesQuery} from "../../services/families/state/families.query";
 import {TasksService} from "../../services/tasks/state/tasks.service";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {TaskUiState} from "../../services/tasks/state/tasks.store";
 
 @Component({
   selector: 'app-tasks-table',
@@ -17,6 +18,7 @@ export class TasksTableComponent implements OnInit {
   @Input() set tasks(tasks: Task[]) {
       this._tasks = tasks;
   }
+  @Input() ui!: TaskUiState;
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
 
   _tasks: Task[] = [];
@@ -30,7 +32,7 @@ export class TasksTableComponent implements OnInit {
   constructor(
     public authQuery: AuthQuery,
     public familiesQuery: FamiliesQuery,
-    private tasksService: TasksService,
+    public tasksService: TasksService,
     private nzMessageService: NzMessageService
   ) { }
 

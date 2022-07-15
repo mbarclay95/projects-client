@@ -12,7 +12,8 @@ import {FamiliesService} from "../../services/families/state/families.service";
 })
 export class MyFamilyMembersComponent implements OnInit {
   @Input() myFamily!: Family;
-  newColor: string = '';
+  newColor?: string;
+  newTasksPerWeek?: number;
 
   constructor(
     private familiesService: FamiliesService,
@@ -28,12 +29,24 @@ export class MyFamilyMembersComponent implements OnInit {
       if (!member.taskUserConfig) {
         return;
       }
-      const newTaskConfig = {...member.taskUserConfig, ...{color: this.newColor}};
+      let newTaskConfig = {...member.taskUserConfig};
+      if (this.newColor !== undefined) {
+        newTaskConfig.color = this.newColor;
+        this.newColor = undefined;
+      }
+      if (this.newTasksPerWeek !== undefined) {
+        newTaskConfig.tasksPerWeek = this.newTasksPerWeek;
+        this.newTasksPerWeek = undefined;
+      }
       this.familiesService.updateTaskUserConfig(this.myFamily.id, member, newTaskConfig);
     }
   }
 
   colorChanged(newColor: ColorEvent) {
     this.newColor = newColor.color.hex;
+  }
+
+  tasksPerWeekChanged(newTasksPerWeek: number) {
+    this.newTasksPerWeek = newTasksPerWeek;
   }
 }

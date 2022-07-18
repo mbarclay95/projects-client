@@ -24,8 +24,8 @@ export class UsersService {
     ));
   }
 
-  async updateUser(userId: number, user: Partial<User>): Promise<void> {
-    const newUser = {...this.usersQuery.getEntity(userId), ...user};
+  async updateUser(userId: number, newUser: User): Promise<void> {
+    // const newUser = {...this.usersQuery.getEntity(userId), ...user};
     await firstValueFrom(this.http.put<User>(`${environment.apiUrl}/users/${userId}`, newUser).pipe(
       map(user => createUser(user)),
       tap(user => this.usersStore.update(user.id, user))

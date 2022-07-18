@@ -4,6 +4,7 @@ import {ColorEvent} from "ngx-color";
 import {User} from "../../../users/models/user.model";
 import {UsersService} from "../../../users/services/state/users.service";
 import {FamiliesService} from "../../services/families/state/families.service";
+import {LegendPosition} from "@swimlane/ngx-charts";
 
 @Component({
   selector: 'app-my-family-members',
@@ -14,6 +15,7 @@ export class MyFamilyMembersComponent implements OnInit {
   @Input() myFamily!: Family;
   newColor?: string;
   newTasksPerWeek?: number;
+  isMobile = screen.width < 600;
 
   constructor(
     private familiesService: FamiliesService,

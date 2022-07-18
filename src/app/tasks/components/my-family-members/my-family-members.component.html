@@ -26,11 +26,26 @@
 
     <div class="d-flex w-100 flex-column align-items-center mb-4">
 
-      <div>Total personal tasks: <strong>{{member.taskUserConfig?.totalUserTasks}}</strong></div>
+<!--      <div>Total personal tasks: <strong>{{member.taskUserConfig?.totalUserTasks}}</strong></div>-->
 
     </div>
 
-    <nz-progress nzType="circle" [nzPercent]="member | weeklyProgressPercent : false"></nz-progress>
+    <nz-progress nzType="circle" [nzPercent]="member | weeklyProgressPercent : false"
+                 class="mb-4"></nz-progress>
+
+    <div class="w-100 d-flex justify-content-center align-items-center mb-2"
+         *ngFor="let task of member.taskUserConfig?.completedFamilyTasks">
+
+      <label nz-checkbox [ngModel]="!!task.completedAt" [disabled]="true" class="me-2"></label>
+
+      <div style="font-size: 16px">{{task.name}}</div>
+
+    </div>
+
+    <nz-divider *ngIf="isMobile"></nz-divider>
+
+<!--    <ngx-charts-pie-chart [results]="member.taskUserConfig | tasksCompleteChartData" [labels]="true"-->
+<!--                          [doughnut]="true" [legend]="false" [maxLabelLength]="12"></ngx-charts-pie-chart>-->
 
   </div>
 

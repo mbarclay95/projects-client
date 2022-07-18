@@ -2,9 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Family} from "../../models/family.model";
 import {ColorEvent} from "ngx-color";
 import {User} from "../../../users/models/user.model";
-import {UsersService} from "../../../users/services/state/users.service";
 import {FamiliesService} from "../../services/families/state/families.service";
-import {LegendPosition} from "@swimlane/ngx-charts";
 
 @Component({
   selector: 'app-my-family-members',

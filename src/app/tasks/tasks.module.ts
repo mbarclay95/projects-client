@@ -44,7 +44,6 @@ import { WeeklyTasksPageComponent } from './pages/weekly-tasks-page/weekly-tasks
 import { TasksTableComponent } from './components/tasks-table/tasks-table.component';
 import { TasksFiltersComponent } from './components/tasks-filters/tasks-filters.component';
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
-import {PieChartModule} from "@swimlane/ngx-charts";
 import { TasksCompleteChartDataPipe } from './pipes/tasks-complete-chart-data.pipe';
 
 @NgModule({
@@ -98,7 +97,6 @@ import { TasksCompleteChartDataPipe } from './pipes/tasks-complete-chart-data.pi
         ColorChromeModule,
         NzPopoverModule,
         NzPopconfirmModule,
-        PieChartModule
     ]
 })
 export class TasksModule { }

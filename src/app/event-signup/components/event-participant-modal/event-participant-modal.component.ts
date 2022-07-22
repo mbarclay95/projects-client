@@ -3,6 +3,7 @@ import {Observable, Subject, takeUntil} from "rxjs";
 import {RolesQuery} from "../../../users/services/roles/state/roles.query";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {EventService} from "../../services/event.service";
+import {faThumbsDown, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-event-participant-modal',
@@ -15,7 +16,11 @@ export class EventParticipantModalComponent implements OnInit, OnDestroy {
   isVisible: boolean = false;
   saving = false;
   nameError = false;
+  goingError = false;
   name: string = '';
+  isGoing?: boolean;
+  thumbsUp = faThumbsUp;
+  thumbsDown = faThumbsDown;
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 
@@ -31,6 +36,7 @@ export class EventParticipantModalComponent implements OnInit, OnDestroy {
       takeUntil(this.subscriptionDestroyer)
     ).subscribe(() => {
       this.name = '';
+      this.isGoing = undefined;
       this.isVisible = true;
     });
   }
@@ -42,14 +48,19 @@ export class EventParticipantModalComponent implements OnInit, OnDestroy {
 
   async signup() {
     this.nameError = false;
+    this.goingError = false;
     if (this.name === '') {
       this.nameError = true;
+      return;
+    }
+    if (this.isGoing === undefined) {
+      this.goingError = true;
       return;
     }
 
     this.saving = true;
     try {
-      await this.eventService.createEventParticipant(this.name);
+      await this.eventService.createEventParticipant(this.name, this.isGoing);
     } catch (e) {
       this.nzMessageService.error('There was an error');
       this.saving = false;

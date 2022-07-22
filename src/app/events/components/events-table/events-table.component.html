@@ -1,4 +1,4 @@
-<nz-table #eventsTableTag [nzData]="_events" nzSize="default">
+<nz-table #eventsTableTag [nzData]="_events" nzSize="default" [nzFrontPagination]="false">
   <thead>
   <tr>
     <th nzWidth="60px"></th>
@@ -16,10 +16,16 @@
         {{event.name}}
       </td>
       <td>{{event.eventDate | date : 'short'}}</td>
-      <td class="d-flex spot-progress">
-        <nz-progress [nzPercent]="getPercent(event)" [nzSteps]="event.numOfPeople" [nzShowInfo]="false"
-                     nzStrokeColor="#1890ff"></nz-progress>
-        <div class="ms-2">{{event.eventParticipants.length}}/{{event.numOfPeople}}</div>
+      <td [ngSwitch]="event.limitParticipants">
+        <div class="d-flex spot-progress" *ngSwitchCase="true">
+
+          <nz-progress [nzPercent]="getPercent(event)" [nzSteps]="event.numOfPeople" [nzShowInfo]="false"
+                       nzStrokeColor="#1890ff"></nz-progress>
+          <div class="ms-2">{{event.eventParticipants.length}}/{{event.numOfPeople}}</div>
+
+        </div>
+
+        <div *ngSwitchCase="false">{{event.eventParticipants.length}} participants</div>
       </td>
     </tr>
     <tr [nzExpand]="expandSet.has(event.id)">
@@ -29,9 +35,17 @@
 
           <div class="collapsed-containers p-2">
 
-            <div class="mb-2" style="font-size: 17px; text-decoration: underline">Participants</div>
+            <div class="mb-2" style="font-size: 17px; text-decoration: underline">Coming</div>
 
             <div class="my-2" *ngFor="let participant of event.eventParticipants">{{participant.name}}</div>
+
+          </div>
+
+          <div class="collapsed-containers p-2">
+
+            <div class="mb-2" style="font-size: 17px; text-decoration: underline">Not Coming</div>
+
+            <div class="my-2" *ngFor="let participant of event.eventParticipantsNotGoing">{{participant.name}}</div>
 
           </div>
 
@@ -40,14 +54,15 @@
             <ng-container *ngSwitchCase="true">
 
               <button nz-button nz-tooltip nzTooltipTitle="Restore">
-                <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
+                <fa-icon [icon]="restore" size="1x"></fa-icon>
               </button>
 
             </ng-container>
 
             <ng-container *ngSwitchCase="false">
 
-              <button class="me-2" nz-button nz-tooltip nzTooltipTitle="Copy">
+              <button class="me-2" nz-button (click)="copyToClipboard(event)" nz-tooltip
+                      nzTooltipTitle="Copy link">
                 <fa-icon [icon]="copy" size="1x"></fa-icon>
               </button>
 
@@ -57,7 +72,7 @@
               </a>
 
               <button class="me-2" nz-button (click)="editEvent.emit(event)" nz-tooltip nzTooltipTitle="Edit">
-                <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
+                <fa-icon [icon]="edit" size="1x"></fa-icon>
               </button>
 
               <button nz-button nz-popconfirm nzPopconfirmTitle="Are you sure?" (nzOnConfirm)="archiveEvent.emit(event)"

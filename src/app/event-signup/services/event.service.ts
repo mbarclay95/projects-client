@@ -11,6 +11,7 @@ import {createEventParticipant} from "../models/event-participant";
 export class EventService {
   private eventSubject: BehaviorSubject<Event|undefined> = new BehaviorSubject<Event|undefined>(undefined);
   event$: Observable<Event|undefined> = this.eventSubject.asObservable();
+  private token?: string;
 
   spotsFull$: Observable<boolean> = this.event$.pipe(
     map(event => event?.eventParticipants.length === event?.numOfPeople)
@@ -25,11 +26,12 @@ export class EventService {
       map(event => createEvent(event)),
       tap(event => this.eventSubject.next(event))
     ));
+    this.token = token;
   }
 
-  async createEventParticipant(name: string): Promise<void> {
+  async createEventParticipant(name: string, isGoing: boolean): Promise<void> {
     const event = createEvent(this.eventSubject.value ?? {});
-    await firstValueFrom(this.http.post(`${environment.eventSignupApiUrl}/event-participants`, {name, eventId: event.id}).pipe(
+    await firstValueFrom(this.http.post(`${environment.eventSignupApiUrl}/event-participants`, {name, isGoing, eventId: event.id, token: this.token}).pipe(
       map(participant => createEventParticipant(participant)),
       tap(participant => {
         event.eventParticipants.push(participant);

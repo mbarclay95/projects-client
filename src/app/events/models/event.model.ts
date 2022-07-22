@@ -8,7 +8,9 @@ export interface Event {
   token: string;
   notes?: string;
   name: string;
+  limitParticipants: boolean;
   eventParticipants: EventParticipant[];
+  eventParticipantsNotGoing: EventParticipant[];
   eventUrl: string;
 }
 
@@ -16,12 +18,14 @@ export function createEvent(params: Partial<Event>) {
   return {
     id: params.id ?? 0,
     name: params.name ?? '',
-    notes: params.name ?? null,
+    notes: params.notes ?? null,
     eventDate: params.eventDate ? new Date(params.eventDate) : null,
     deletedAt: params.deletedAt ? new Date(params.deletedAt) : null,
     numOfPeople: params.numOfPeople ?? 0,
+    limitParticipants: params.limitParticipants ?? false,
     token: params.token ?? null,
-    eventParticipants: params.eventParticipants ? params.eventParticipants.map(p => createEventParticipant(p)) : [],
+    eventParticipants: params.eventParticipants ? params.eventParticipants.filter(p => p.isGoing).map(p => createEventParticipant(p)) : [],
+    eventParticipantsNotGoing: params.eventParticipants ? params.eventParticipants.filter(p => !p.isGoing).map(p => createEventParticipant(p)) : [],
     eventUrl: `/events/signup/${params.id}?token=${params.token}`
   } as Event;
 }

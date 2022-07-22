@@ -12,7 +12,22 @@
 
     </div>
 
+    <div class="w-100 mb-4 d-flex align-items-start">
+
+      <span class="text-danger me-1">*</span>
+      <nz-radio-group [(ngModel)]="isGoing" nzButtonStyle="solid">
+        <label nz-radio-button [nzValue]="true">
+          <fa-icon [icon]="thumbsUp" class="me-1"></fa-icon> Going
+        </label>
+        <label nz-radio-button [nzValue]="false">
+          <fa-icon [icon]="thumbsDown" class="me-1"></fa-icon> Not Going
+        </label>
+      </nz-radio-group>
+
+    </div>
+
     <div class="w-100 text-danger" style="font-style: italic" *ngIf="nameError">Please enter a name.</div>
+    <div class="w-100 text-danger" style="font-style: italic" *ngIf="goingError">Please select if you are going to the event.</div>
 
   </ng-container>
 

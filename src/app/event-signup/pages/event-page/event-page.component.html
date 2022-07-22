@@ -18,7 +18,14 @@
 
       <div style="font-size: 19px; text-decoration: underline">Signed up</div>
 
-      <div style="font-size: 12px">{{event.eventParticipants.length}}/{{event.numOfPeople}} spots taken</div>
+
+      <div *ngIf="!event.limitParticipants" style="font-size: 12px">
+        {{event.eventParticipants.length}} {{event.eventParticipants.length === 1 ? 'person' : 'people'}} coming
+      </div>
+
+      <div *ngIf="event.limitParticipants" style="font-size: 12px">
+        {{event.eventParticipants.length}}/{{event.numOfPeople}} spots taken
+      </div>
 
     </div>
 
@@ -28,9 +35,9 @@
     <div class="w-100 d-flex justify-content-start align-items-center mt-4">
 
       <button nz-button nzType="primary" (click)="openSignupModal.next()"
-              [disabled]="eventService.spotsFull$ | async">Signup</button>
+              [disabled]="event.limitParticipants && (eventService.spotsFull$ | async)">Signup</button>
 
-      <div *ngIf="eventService.spotsFull$ | async" class="text-danger ms-3"
+      <div *ngIf="event.limitParticipants && (eventService.spotsFull$ | async)" class="text-danger ms-3"
            style="font-style: italic">* Event is full</div>
 
     </div>

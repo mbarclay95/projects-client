@@ -13,6 +13,8 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 import {FormsModule} from "@angular/forms";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {NzDividerModule} from "ng-zorro-antd/divider";
+import {NzRadioModule} from "ng-zorro-antd/radio";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
 @NgModule({
@@ -22,16 +24,18 @@ import {NzDividerModule} from "ng-zorro-antd/divider";
     EventSignupLayoutComponent,
     EventParticipantModalComponent
   ],
-    imports: [
-        CommonModule,
-        EventSignupRoutingModule,
-        NzResultModule,
-        NzLayoutModule,
-        NzButtonModule,
-        NzModalModule,
-        FormsModule,
-        NzInputModule,
-        NzDividerModule
-    ]
+  imports: [
+    CommonModule,
+    EventSignupRoutingModule,
+    NzResultModule,
+    NzLayoutModule,
+    NzButtonModule,
+    NzModalModule,
+    FormsModule,
+    NzInputModule,
+    NzDividerModule,
+    NzRadioModule,
+    FontAwesomeModule
+  ]
 })
 export class EventSignupModule { }

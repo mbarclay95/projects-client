@@ -23,7 +23,15 @@
 
       </div>
 
-      <div class="w-100 mb-4">
+      <div class="w-100 mb-4 d-flex align-items-end">
+
+        <div class="me-4">Limit Participants:</div>
+
+        <nz-switch [(ngModel)]="event.limitParticipants"></nz-switch>
+
+      </div>
+
+      <div class="w-100 mb-4" *ngIf="event.limitParticipants">
 
         <div class="mb-2">Max Spots:</div>
 
@@ -33,7 +41,7 @@
 
       <div class="w-100 mb-4">
 
-        <div class="mb-2">Notes:</div>
+        <div class="mb-2">Event Details:</div>
 
         <textarea nz-input [(ngModel)]="event.notes"></textarea>
 

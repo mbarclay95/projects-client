@@ -22,6 +22,7 @@ import {AngularEditorModule} from "@kolkov/angular-editor";
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 import {NzProgressModule} from "ng-zorro-antd/progress";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
+import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 
 
 @NgModule({
@@ -32,24 +33,25 @@ import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
     EventsFiltersComponent,
     CreateEditEventComponent
   ],
-  imports: [
-    CommonModule,
-    EventsRoutingModule,
-    NzLayoutModule,
-    NzInputModule,
-    FormsModule,
-    NzSwitchModule,
-    NzButtonModule,
-    NzTableModule,
-    FontAwesomeModule,
-    NzCollapseModule,
-    NzModalModule,
-    NzDatePickerModule,
-    NzInputNumberModule,
-    AngularEditorModule,
-    NzToolTipModule,
-    NzProgressModule,
-    NzPopconfirmModule,
-  ]
+    imports: [
+        CommonModule,
+        EventsRoutingModule,
+        NzLayoutModule,
+        NzInputModule,
+        FormsModule,
+        NzSwitchModule,
+        NzButtonModule,
+        NzTableModule,
+        FontAwesomeModule,
+        NzCollapseModule,
+        NzModalModule,
+        NzDatePickerModule,
+        NzInputNumberModule,
+        AngularEditorModule,
+        NzToolTipModule,
+        NzProgressModule,
+        NzPopconfirmModule,
+        NzCheckboxModule,
+    ]
 })
 export class EventsModule { }

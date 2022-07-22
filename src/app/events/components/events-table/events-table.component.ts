@@ -1,7 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NzTableComponent} from "ng-zorro-antd/table";
-import {faBoxArchive, faCopy, faEdit, faUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
+import {faBoxArchive, faBoxOpen, faCopy, faEdit, faUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
 import {Event} from "../../models/event.model";
+import { Clipboard } from '@angular/cdk/clipboard';
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-events-table',
@@ -23,11 +25,15 @@ export class EventsTableComponent implements OnInit {
   _events: Event[] = [];
   expandSet = new Set<number>();
   edit = faEdit;
+  restore = faBoxOpen;
   copy = faCopy;
   open = faUpRightFromSquare;
   archive = faBoxArchive;
 
-  constructor() {
+  constructor(
+    private clipboard: Clipboard,
+    private nzMessageService: NzMessageService
+  ) {
   }
 
   ngOnInit(): void {
@@ -43,5 +49,10 @@ export class EventsTableComponent implements OnInit {
 
   getPercent(event: Event): number {
     return (event.eventParticipants.length / event.numOfPeople) * 100;
+  }
+
+  copyToClipboard(event: Event) {
+    this.clipboard.copy(`${window.location.protocol}//${window.location.host}${event.eventUrl}`);
+    this.nzMessageService.success('Event link copied!');
   }
 }

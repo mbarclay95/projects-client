@@ -1,7 +1,13 @@
+<div class="w-100 d-flex justify-content-between align-items-center mb-4">
+
+  <div style="font-size: 30px" class="text-white">Events</div>
+
+  <button nz-button nzType="primary" (click)="createNewEvent()">Create Event</button>
+
+</div>
 <div class="w-100">
 
-  <app-events-filters *ngIf="eventsQuery.ui$ | async as ui" [ui]="ui"
-                      (createEvent)="openModal.next($event)"></app-events-filters>
+  <app-events-filters *ngIf="eventsQuery.ui$ | async as ui" [ui]="ui"></app-events-filters>
 
   <app-events-table [events]="eventsQuery.events$ | async" (editEvent)="openModal.next($event)"
                     (archiveEvent)="eventsService.archiveEvent($event)"></app-events-table>

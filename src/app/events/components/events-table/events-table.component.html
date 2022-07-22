@@ -4,7 +4,7 @@
     <th nzWidth="60px"></th>
     <th>Name</th>
     <th>Date</th>
-    <th>Spots</th>
+    <th>Spots Filled</th>
   </tr>
   </thead>
   <tbody>
@@ -16,34 +16,53 @@
         {{event.name}}
       </td>
       <td>{{event.eventDate | date : 'short'}}</td>
-      <td>{{event.numOfPeople}}</td>
+      <td class="d-flex spot-progress">
+        <nz-progress [nzPercent]="getPercent(event)" [nzSteps]="event.numOfPeople" [nzShowInfo]="false"
+                     nzStrokeColor="#1890ff"></nz-progress>
+        <div class="ms-2">{{event.eventParticipants.length}}/{{event.numOfPeople}}</div>
+      </td>
     </tr>
     <tr [nzExpand]="expandSet.has(event.id)">
       <nz-collapse>
 
-        <div class="d-flex" style="min-height: 80px">
+        <div class="d-flex w-100 p-2 collapsed-parent-container">
 
-          <div class="d-flex flex-column justify-content-evenly ms-2" [ngSwitch]="!!event.deletedAt">
+          <div class="collapsed-containers p-2">
+
+            <div class="mb-2" style="font-size: 17px; text-decoration: underline">Participants</div>
+
+            <div class="my-2" *ngFor="let participant of event.eventParticipants">{{participant.name}}</div>
+
+          </div>
+
+          <div class="collapsed-containers d-flex buttons" [ngSwitch]="!!event.deletedAt">
 
             <ng-container *ngSwitchCase="true">
 
-              <button nz-button>
-                <fa-icon [icon]="edit" size="1x" class="text-primary me-1"></fa-icon>
-                Restore
+              <button nz-button nz-tooltip nzTooltipTitle="Restore">
+                <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
               </button>
 
             </ng-container>
 
             <ng-container *ngSwitchCase="false">
 
-              <button nz-button (click)="editEvent.emit(event)">
-                <fa-icon [icon]="edit" size="1x" class="text-primary me-1"></fa-icon>
-                Edit
+              <button class="me-2" nz-button nz-tooltip nzTooltipTitle="Copy">
+                <fa-icon [icon]="copy" size="1x"></fa-icon>
               </button>
 
-              <button nz-button (click)="archiveEvent.emit(event)">
-                <fa-icon [icon]="archive" size="1x" class="text-danger me-1"></fa-icon>
-                Archive
+              <a class="me-2" nz-button nz-tooltip nzTooltipTitle="Open link" [href]="event.eventUrl"
+                      target="_blank">
+                <fa-icon [icon]="open" size="1x"></fa-icon>
+              </a>
+
+              <button class="me-2" nz-button (click)="editEvent.emit(event)" nz-tooltip nzTooltipTitle="Edit">
+                <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
+              </button>
+
+              <button nz-button nz-popconfirm nzPopconfirmTitle="Are you sure?" (nzOnConfirm)="archiveEvent.emit(event)"
+                      nz-tooltip nzTooltipTitle="Archive">
+                <fa-icon [icon]="archive" size="1x" class="text-danger"></fa-icon>
               </button>
 
             </ng-container>

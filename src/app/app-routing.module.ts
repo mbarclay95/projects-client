@@ -9,11 +9,16 @@ import {BackupsLayoutComponent} from "./backups/backups-layout/backups-layout.co
 import {DashboardLayoutComponent} from "./dashboard/dashboard-layout/dashboard-layout.component";
 import {TasksLayoutComponent} from "./tasks/tasks-layout/tasks-layout.component";
 import {EventsLayoutComponent} from "./events/events-layout/events-layout.component";
+import {EventSignupLayoutComponent} from "./event-signup/event-signup-layout/event-signup-layout.component";
 
 const routes: Routes = [
   {
     path: '', component: AuthLayoutComponent,
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  },
+  {
+    path: 'events', component: EventSignupLayoutComponent,
+    loadChildren: () => import('./event-signup/event-signup.module').then(m => m.EventSignupModule)
   },
   {
     path: 'app', canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [

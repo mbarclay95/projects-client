@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {EventsQuery} from "../../services/events/state/events.query";
 import {Subject} from "rxjs";
-import {Event} from "../../models/event.model";
+import {createEvent, Event} from "../../models/event.model";
 import {EventsService} from "../../services/events/state/events.service";
 
 @Component({
@@ -20,4 +20,7 @@ export class EventsPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  createNewEvent() {
+    this.openModal.next(createEvent({id: 0}));
+  }
 }

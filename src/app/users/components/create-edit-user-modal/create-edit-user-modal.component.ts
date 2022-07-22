@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 import {createUser, User} from "../../models/user.model";
 import {UsersService} from "../../services/state/users.service";
@@ -10,7 +10,7 @@ import {NzMessageService} from "ng-zorro-antd/message";
   templateUrl: './create-edit-user-modal.component.html',
   styleUrls: ['./create-edit-user-modal.component.scss']
 })
-export class CreateEditUserModalComponent implements OnInit {
+export class CreateEditUserModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<User>;
 
   user!: User;

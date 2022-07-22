@@ -1,0 +1,44 @@
+<div class="w-100" *ngIf="eventService.event$ | async as event">
+
+  <div class="w-100 d-flex justify-content-center text-light" style="font-size: 30px">
+    {{event.name}}
+  </div>
+
+  <div class="w-100 d-flex justify-content-center mb-3" style="color: #464a4f">
+    {{event.eventDate | date : 'short'}}
+  </div>
+
+  <div class="w-100 d-flex justify-content-center mb-2" style="color: #464a4f">{{event.notes}}</div>
+
+  <nz-divider></nz-divider>
+
+  <div class="ps-2 mt-2" style="color: #464a4f">
+
+    <div class="d-flex justify-content-between align-items-center">
+
+      <div style="font-size: 19px; text-decoration: underline">Signed up</div>
+
+      <div style="font-size: 12px">{{event.eventParticipants.length}}/{{event.numOfPeople}} spots taken</div>
+
+    </div>
+
+
+    <div class="my-2" *ngFor="let participant of event.eventParticipants">{{participant.name}}</div>
+
+    <div class="w-100 d-flex justify-content-start align-items-center mt-4">
+
+      <button nz-button nzType="primary" (click)="openSignupModal.next()"
+              [disabled]="eventService.spotsFull$ | async">Signup</button>
+
+      <div *ngIf="eventService.spotsFull$ | async" class="text-danger ms-3"
+           style="font-style: italic">* Event is full</div>
+
+    </div>
+
+
+  </div>
+
+
+</div>
+
+<app-event-participant-modal [openModal]="openSignupModal.asObservable()"></app-event-participant-modal>

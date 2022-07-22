@@ -2,14 +2,11 @@ import {createEventParticipant, EventParticipant} from "./event-participant";
 
 export interface Event {
   id: number;
-  deletedAt: Date;
   eventDate: Date;
   numOfPeople: number;
-  token: string;
   notes?: string;
   name: string;
   eventParticipants: EventParticipant[];
-  eventUrl: string;
 }
 
 export function createEvent(params: Partial<Event>) {
@@ -18,10 +15,7 @@ export function createEvent(params: Partial<Event>) {
     name: params.name ?? '',
     notes: params.name ?? null,
     eventDate: params.eventDate ? new Date(params.eventDate) : null,
-    deletedAt: params.deletedAt ? new Date(params.deletedAt) : null,
     numOfPeople: params.numOfPeople ?? 0,
-    token: params.token ?? null,
     eventParticipants: params.eventParticipants ? params.eventParticipants.map(p => createEventParticipant(p)) : [],
-    eventUrl: `/events/signup/${params.id}?token=${params.token}`
   } as Event;
 }

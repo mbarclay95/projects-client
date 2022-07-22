@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NzTableComponent} from "ng-zorro-antd/table";
-import {faBoxArchive, faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faBoxArchive, faCopy, faEdit, faUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
 import {Event} from "../../models/event.model";
 
 @Component({
@@ -23,6 +23,8 @@ export class EventsTableComponent implements OnInit {
   _events: Event[] = [];
   expandSet = new Set<number>();
   edit = faEdit;
+  copy = faCopy;
+  open = faUpRightFromSquare;
   archive = faBoxArchive;
 
   constructor() {
@@ -37,5 +39,9 @@ export class EventsTableComponent implements OnInit {
     } else {
       this.expandSet.delete(id);
     }
+  }
+
+  getPercent(event: Event): number {
+    return (event.eventParticipants.length / event.numOfPeople) * 100;
   }
 }

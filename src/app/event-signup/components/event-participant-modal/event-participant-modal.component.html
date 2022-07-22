@@ -1,0 +1,19 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Signup" nzWidth="500px" (nzOnCancel)="isVisible = false"
+          nzOkText="Save" nzCancelText="Close" (nzOnOk)="signup()" [nzCancelDisabled]="saving"
+          [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
+
+  <ng-container *nzModalContent>
+
+    <div class="w-100 mb-4">
+
+      <div class="mb-2"><span class="text-danger">*</span> Name:</div>
+
+      <input nz-input [(ngModel)]="name" class="w-100">
+
+    </div>
+
+    <div class="w-100 text-danger" style="font-style: italic" *ngIf="nameError">Please enter a name.</div>
+
+  </ng-container>
+
+</nz-modal>

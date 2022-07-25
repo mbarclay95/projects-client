@@ -47,7 +47,7 @@ export class LoginService {
     }
 
     this.loading = false;
-    await this.router.navigateByUrl('app/dashboard');
+    await this.router.navigateByUrl(this.getRedirectUrl());
   }
 
   async isLoggedIn(): Promise<boolean> {

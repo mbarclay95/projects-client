@@ -48,7 +48,7 @@ export class EventsTableComponent implements OnInit {
   }
 
   getPercent(event: Event): number {
-    return (event.eventParticipants.length / event.numOfPeople) * 100;
+    return Math.ceil((event.eventParticipants.length / event.numOfPeople) * 100);
   }
 
   copyToClipboard(event: Event) {

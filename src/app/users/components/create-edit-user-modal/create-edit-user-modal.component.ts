@@ -4,6 +4,8 @@ import {createUser, User} from "../../models/user.model";
 import {UsersService} from "../../services/state/users.service";
 import {RolesQuery} from "../../services/roles/state/roles.query";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {Role} from "../../models/role.model";
+import {Roles} from "../../../auth/permissions";
 
 @Component({
   selector: 'app-create-edit-user-modal',
@@ -40,14 +42,17 @@ export class CreateEditUserModalComponent implements OnInit, OnDestroy {
     this.subscriptionDestroyer.complete();
   }
 
-  updateUsersRoles(checked: boolean, roleId: number) {
+  updateUsersRoles(checked: boolean, role: Role) {
     if (checked) {
-      const role = this.rolesQuery.getEntity(roleId);
-      if (role) {
-        this.user.roles.push(role);
-      }
+      this.user.roles.push(role);
     } else {
-      this.user.roles = this.user.roles.filter(r => r.id !== roleId);
+      this.user.roles = this.user.roles.filter(r => r.id !== role.id);
+    }
+
+    if (!this.user.roles.find(r => r.name === this.user.userConfig.homePageRole)) {
+      if (this.user.roles.length > 0) {
+        this.updateUserHomePage(this.user.roles[0].name as Roles);
+      }
     }
   }
 
@@ -64,5 +69,9 @@ export class CreateEditUserModalComponent implements OnInit, OnDestroy {
     this.saving = false;
     this.nzMessageService.success('User Saved!');
     this.isVisible = false;
+  }
+
+  updateUserHomePage(roleName: Roles) {
+    this.user.userConfig.homePageRole = roleName;
   }
 }

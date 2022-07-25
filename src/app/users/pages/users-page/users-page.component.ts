@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {UsersQuery} from "../../services/state/users.query";
 import {Subject} from "rxjs";
 import {createUser, User} from "../../models/user.model";
+import {RolesQuery} from "../../services/roles/state/roles.query";
+import {Roles} from "../../../auth/permissions";
 
 @Component({
   selector: 'app-users-page',
@@ -12,14 +14,17 @@ export class UsersPageComponent implements OnInit {
   openUserModal: Subject<User> = new Subject<User>();
 
   constructor(
-    public usersQuery: UsersQuery
+    public usersQuery: UsersQuery,
+    private rolesQuery: RolesQuery
   ) { }
 
   ngOnInit(): void {
   }
 
   createNewUser() {
-    this.openUserModal.next(createUser({id: 0}));
+    const dashboardRole = this.rolesQuery.getAll().find(r => r.name === Roles.DASHBOARD_ROLE);
+    const roles = dashboardRole ? [dashboardRole] : [];
+    this.openUserModal.next(createUser({id: 0, roles: roles}));
   }
 
 }

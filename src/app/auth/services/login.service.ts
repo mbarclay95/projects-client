@@ -3,6 +3,8 @@ import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {AuthService} from "./state/auth.service";
 import {AuthStorageService} from "./auth-storage.service";
 import {Router} from "@angular/router";
+import {AuthQuery} from "./state/auth.query";
+import {Roles} from "../permissions";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class LoginService {
 
   constructor(
     private authService: AuthService,
+    private authQuery: AuthQuery,
     private authStorageService: AuthStorageService,
     private router: Router,
   ) { }
@@ -59,9 +62,27 @@ export class LoginService {
       return false;
     }
 
-    await this.router.navigateByUrl('app/dashboard');
+    await this.router.navigateByUrl(this.getRedirectUrl());
 
     return true;
+  }
+
+  getRedirectUrl(): string {
+    const me = this.authQuery.getUser();
+    switch (me.userConfig.homePageRole) {
+      case Roles.DASHBOARD_ROLE:
+        return 'app/dashboard';
+      case Roles.BACKUPS_ROLE:
+        return 'app/backups?tab=backups';
+      case Roles.EVENTS_ROLE:
+        return 'app/events';
+      case Roles.GOALS_ROLE:
+        return 'app/goals';
+      case Roles.TASKS_ROLE:
+        return 'app/tasks?tab=weekly-tasks';
+      case Roles.USERS_ROLE:
+        return 'app/users';
+    }
   }
 
   async logout(): Promise<void> {

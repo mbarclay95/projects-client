@@ -40,10 +40,20 @@
 
             {{role | displayRoleName}}
 
-            <nz-switch [ngModel]="user | hasRole : role.id" (ngModelChange)="updateUsersRoles($event, role.id)"></nz-switch>
+            <nz-switch [ngModel]="user | hasRole : role.id" (ngModelChange)="updateUsersRoles($event, role)"></nz-switch>
           </div>
 
         </ng-container>
+
+      </div>
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Home Page:</div>
+
+        <nz-select [ngModel]="user.userConfig.homePageRole" (ngModelChange)="updateUserHomePage($event)" style="width: 300px">
+          <nz-option *ngFor="let role of user.roles" [nzLabel]="role | displayRoleName" [nzValue]="role.name"></nz-option>
+        </nz-select>
 
       </div>
 

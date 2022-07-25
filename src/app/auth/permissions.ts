@@ -10,6 +10,15 @@ export const enum Permissions {
   EVENTS_PAGE = 'client_view_events_page',
 }
 
+export const enum Roles {
+  USERS_ROLE = 'users_role',
+  GOALS_ROLE = 'goals_role',
+  BACKUPS_ROLE = 'backups_role',
+  DASHBOARD_ROLE = 'dashboard_role',
+  TASKS_ROLE = 'task_role',
+  EVENTS_ROLE = 'event_role',
+}
+
 export interface Route {
   icon: IconDefinition,
   url: string,

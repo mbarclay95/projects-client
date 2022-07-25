@@ -19,7 +19,6 @@ export class SideMenuComponent implements OnInit {
   }
 
   closeIfMobile() {
-    console.log(this.isMobile);
     if (this.isMobile) {
       this.closeSideMenu.emit();
     }

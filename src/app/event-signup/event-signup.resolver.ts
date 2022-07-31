@@ -5,6 +5,7 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import {EventService} from "./services/event.service";
+import {EventCacheService} from "./services/event-cache.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class EventSignupResolver implements Resolve<Promise<void>> {
 
   constructor(
     private eventService: EventService,
+    private eventCacheService: EventCacheService,
     private router: Router
   ) {}
 
@@ -24,11 +26,14 @@ export class EventSignupResolver implements Resolve<Promise<void>> {
         await this.eventService.getEvent(eventId, token);
       } catch (e) {
         await this.router.navigateByUrl('events');
+        return;
       }
     }
 
     if (this.eventService.eventNotLoaded()) {
       await this.router.navigateByUrl('events');
+      return;
     }
+    this.eventCacheService.loadEventCache();
   }
 }

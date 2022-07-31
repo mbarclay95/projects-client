@@ -8,7 +8,7 @@
 
       <div class="w-100 mb-4">
 
-        <div class="mb-2">Event Title:</div>
+        <div class="mb-2"><span class="text-danger">*</span> Event Title:</div>
 
         <input nz-input [(ngModel)]="event.name" class="w-100">
 
@@ -16,10 +16,18 @@
 
       <div class="w-100 mb-4">
 
-        <div class="mb-2">Event Date:</div>
+        <div class="mb-2"><span class="text-danger">*</span> Event Date:</div>
 
         <nz-date-picker [(ngModel)]="event.eventDate" nzFormat="MM/dd/yyyy HH:mm" [nzShowNow]="false"
                         [nzShowTime]="{nzFormat: 'HH:mm', nzUse12Hours: true, nzMinuteStep: 15}"></nz-date-picker>
+
+      </div>
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">Event Details:</div>
+
+        <textarea nz-input [(ngModel)]="event.notes"></textarea>
 
       </div>
 
@@ -39,19 +47,21 @@
 
       </div>
 
-      <div class="w-100 mb-4">
+<!--      <div class="w-100 mb-4 d-flex align-items-end">-->
 
-        <div class="mb-2">Event Details:</div>
+<!--        <div class="me-4">Notify On Signup:</div>-->
 
-        <textarea nz-input [(ngModel)]="event.notes"></textarea>
+<!--        <nz-switch [ngModel]="event.notificationEmail !== undefined" (ngModelChange)="updateNotifySwitch($event)"></nz-switch>-->
 
-<!--        <div>-->
+<!--      </div>-->
 
-<!--          <angular-editor [(ngModel)]="event.notes"></angular-editor>-->
+<!--      <div class="w-100 mb-4" *ngIf="event.notificationEmail !== undefined">-->
 
-<!--        </div>-->
+<!--        <div class="mb-2">Email:</div>-->
 
-      </div>
+<!--        <input nz-input [(ngModel)]="event.notificationEmail" class="w-100">-->
+
+<!--      </div>-->
 
     </div>
 

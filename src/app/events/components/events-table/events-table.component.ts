@@ -1,6 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NzTableComponent} from "ng-zorro-antd/table";
-import {faBoxArchive, faBoxOpen, faCopy, faEdit, faUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
+import {
+  faBoxArchive,
+  faBoxOpen, faCircleMinus,
+  faCopy,
+  faEdit, faThumbsDown,
+  faThumbsUp,
+  faUpRightFromSquare
+} from "@fortawesome/free-solid-svg-icons";
 import {Event} from "../../models/event.model";
 import { Clipboard } from '@angular/cdk/clipboard';
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -29,6 +36,9 @@ export class EventsTableComponent implements OnInit {
   copy = faCopy;
   open = faUpRightFromSquare;
   archive = faBoxArchive;
+  participantGoing = faThumbsUp;
+  participantNotGoing = faThumbsDown;
+  removeParticipant = faCircleMinus;
 
   constructor(
     private clipboard: Clipboard,

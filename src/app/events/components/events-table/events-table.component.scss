@@ -1,32 +1,32 @@
 
-.collapsed-containers {
-  width: 50%;
-}
+//.collapsed-containers {
+//  width: 50%;
+//}
 
 .collapsed-parent-container {
   flex-direction: row;
 }
 
-.buttons {
-  margin-bottom: 0;
-}
+//.buttons {
+//  margin-bottom: 0;
+//}
 
 .spot-progress {
   flex-direction: row;
 }
 
 @media only screen and (max-width: 700px) {
-  .collapsed-containers {
-    width: 100%;
-  }
+  //.collapsed-containers {
+  //  width: 100%;
+  //}
 
   .collapsed-parent-container {
     flex-direction: column-reverse;
   }
 
-  .buttons {
-    margin-bottom: 0.5rem;
-  }
+  //.buttons {
+  //  margin-bottom: 0.5rem;
+  //}
 
   .spot-progress {
     flex-direction: column;

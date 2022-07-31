@@ -23,32 +23,32 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SideMenuComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    environment.production ? [] : AkitaNgDevtools.forRoot(),
-    FontAwesomeModule,
-    NzLayoutModule,
-    NzMenuModule,
-    NzIconModule,
-    NzMessageModule,
-  ],
-  providers: [
-    {provide: NZ_I18N, useValue: en_US},
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        SideMenuComponent,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        environment.production ? [] : AkitaNgDevtools.forRoot(),
+        FontAwesomeModule,
+        NzLayoutModule,
+        NzMenuModule,
+        NzIconModule,
+        NzMessageModule,
+    ],
+    providers: [
+        {provide: NZ_I18N, useValue: en_US},
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

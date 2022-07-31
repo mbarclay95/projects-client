@@ -54,4 +54,14 @@ export class CreateEditEventComponent implements OnInit, OnDestroy {
     this.nzMessageService.success('Event Saved!');
     this.saving = false;
     this.isVisible = false;
-  }}
+  }
+
+  updateNotifySwitch(checked: boolean) {
+    if (checked) {
+      this.event.notificationEmail = '';
+    } else {
+      this.event.notificationEmail = undefined;
+    }
+
+  }
+}

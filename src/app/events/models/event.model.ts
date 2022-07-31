@@ -8,6 +8,7 @@ export interface Event {
   token: string;
   notes?: string;
   name: string;
+  notificationEmail?: string;
   limitParticipants: boolean;
   eventParticipants: EventParticipant[];
   eventParticipantsNotGoing: EventParticipant[];
@@ -24,6 +25,7 @@ export function createEvent(params: Partial<Event>) {
     numOfPeople: params.numOfPeople ?? 0,
     limitParticipants: params.limitParticipants ?? false,
     token: params.token ?? null,
+    notificationEmail: params.notificationEmail ?? undefined,
     eventParticipants: params.eventParticipants ? params.eventParticipants.filter(p => p.isGoing).map(p => createEventParticipant(p)) : [],
     eventParticipantsNotGoing: params.eventParticipants ? params.eventParticipants.filter(p => !p.isGoing).map(p => createEventParticipant(p)) : [],
     eventUrl: `/events/signup/${params.id}?token=${params.token}`

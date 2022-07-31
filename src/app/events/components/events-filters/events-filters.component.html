@@ -2,7 +2,8 @@
 
   <div class="d-flex">
 
-    <input nz-input class="me-4" [ngModel]="ui.search" placeholder="search">
+    <input nz-input class="me-4" [ngModel]="ui.search" placeholder="search"
+           (ngModelChange)="updateSearch($event)">
 
     <div class="d-flex align-items-center">
       <div style="white-space: nowrap" class="me-2">Show Archived:</div>

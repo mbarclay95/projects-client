@@ -4,6 +4,8 @@ import {RolesQuery} from "../../../users/services/roles/state/roles.query";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {EventService} from "../../services/event.service";
 import {faThumbsDown, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
+import {EventCacheService} from "../../services/event-cache.service";
+import {EventParticipant} from "../../models/event-participant";
 
 @Component({
   selector: 'app-event-participant-modal',
@@ -26,6 +28,7 @@ export class EventParticipantModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private eventService: EventService,
+    private eventCacheService: EventCacheService,
     public rolesQuery: RolesQuery,
     private nzMessageService: NzMessageService
   ) {
@@ -59,14 +62,16 @@ export class EventParticipantModalComponent implements OnInit, OnDestroy {
     }
 
     this.saving = true;
+    let participant: EventParticipant;
     try {
-      await this.eventService.createEventParticipant(this.name, this.isGoing);
+      participant = await this.eventService.createEventParticipant(this.name, this.isGoing);
     } catch (e) {
       this.nzMessageService.error('There was an error');
       this.saving = false;
       return;
     }
 
+    this.eventCacheService.loadNewParticipantIntoCache(this.eventService.getId(), participant);
     this.nzMessageService.success('You are signed up!');
     this.saving = false;
     this.isVisible = false;

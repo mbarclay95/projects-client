@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, firstValueFrom, map, Observable, tap} from "rxjs";
 import {createEvent, Event} from "../models/event.model";
 import {environment} from "../../../environments/environment";
-import {createEventParticipant} from "../models/event-participant";
+import {createEventParticipant, EventParticipant} from "../models/event-participant";
 
 @Injectable({
   providedIn: 'root'
@@ -29,9 +29,9 @@ export class EventService {
     this.token = token;
   }
 
-  async createEventParticipant(name: string, isGoing: boolean): Promise<void> {
+  async createEventParticipant(name: string, isGoing: boolean): Promise<EventParticipant> {
     const event = createEvent(this.eventSubject.value ?? {});
-    await firstValueFrom(this.http.post(`${environment.eventSignupApiUrl}/event-participants`, {name, isGoing, eventId: event.id, token: this.token}).pipe(
+    return await firstValueFrom(this.http.post(`${environment.eventSignupApiUrl}/event-participants`, {name, isGoing, eventId: event.id, token: this.token}).pipe(
       map(participant => createEventParticipant(participant)),
       tap(participant => {
         event.eventParticipants.push(participant);
@@ -42,5 +42,9 @@ export class EventService {
 
   eventNotLoaded(): boolean {
     return !this.eventSubject.value;
+  }
+
+  getId(): number {
+    return this.eventSubject.value?.id ?? 0;
   }
 }

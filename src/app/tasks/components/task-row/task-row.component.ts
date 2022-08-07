@@ -32,7 +32,7 @@ export class TaskRowComponent implements OnInit {
 
   async completedTask(taskId: number, checked: boolean) {
     try {
-      await this.tasksService.updateTask(taskId, {completedAt: new Date()}, true);
+      await this.tasksService.updateTask(taskId, {completedAt: new Date()}, true,true);
     } catch (e) {
       console.log(e);
       this.nzMessageService.error('There was an error');

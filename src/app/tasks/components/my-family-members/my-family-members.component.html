@@ -36,7 +36,11 @@
     <div class="w-100 d-flex justify-content-center align-items-center mb-2"
          *ngFor="let task of member.taskUserConfig?.completedFamilyTasks">
 
-      <label nz-checkbox [ngModel]="!!task.completedAt" [disabled]="true" class="me-2"></label>
+      <fa-icon *ngIf="loadingUndoId === task.id" [icon]="spinner" [spin]="true" class="me-2"></fa-icon>
+
+      <fa-icon *ngIf="loadingUndoId !== task.id" [icon]="undo" class="me-2" style="color: grey; cursor: pointer"
+               nz-popconfirm (nzOnConfirm)="undoTask(task)"
+               nzPopconfirmTitle="Are you sure you want to undo this chore?"></fa-icon>
 
       <div style="font-size: 16px">{{task.name}}</div>
 

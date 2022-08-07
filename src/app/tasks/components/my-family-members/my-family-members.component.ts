@@ -3,6 +3,10 @@ import {Family} from "../../models/family.model";
 import {ColorEvent} from "ngx-color";
 import {User} from "../../../users/models/user.model";
 import {FamiliesService} from "../../services/families/state/families.service";
+import {faArrowRotateLeft, faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {Task} from "../../models/task.model";
+import {NzMessageService} from "ng-zorro-antd/message";
+import {TasksService} from "../../services/tasks/state/tasks.service";
 
 @Component({
   selector: 'app-my-family-members',
@@ -11,12 +15,18 @@ import {FamiliesService} from "../../services/families/state/families.service";
 })
 export class MyFamilyMembersComponent implements OnInit {
   @Input() myFamily!: Family;
+
   newColor?: string;
   newTasksPerWeek?: number;
   isMobile = screen.width < 600;
+  undo = faArrowRotateLeft;
+  spinner = faSpinner;
+  loadingUndoId: number|null = null;
 
   constructor(
     private familiesService: FamiliesService,
+    private nzMessageService: NzMessageService,
+    private tasksService: TasksService
   ) { }
 
   ngOnInit(): void {
@@ -48,5 +58,13 @@ export class MyFamilyMembersComponent implements OnInit {
 
   tasksPerWeekChanged(newTasksPerWeek: number) {
     this.newTasksPerWeek = newTasksPerWeek;
+  }
+
+  async undoTask(task: Task) {
+    this.loadingUndoId  = task.id;
+    await this.tasksService.updateTask(task.id,  {...task,  ...{completedAt: undefined}}, false);
+    await this.familiesService.refreshActiveFamily();
+    this.loadingUndoId = null;
+    this.nzMessageService.success('Chore has been removed!');
   }
 }

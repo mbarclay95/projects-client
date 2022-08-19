@@ -22,5 +22,4 @@ export class NgLetDirective {
     private viewContainerRef: ViewContainerRef,
     private templateRef: TemplateRef<NgLetContext>
   ) { }
-
 }

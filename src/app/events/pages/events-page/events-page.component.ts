@@ -3,6 +3,8 @@ import {EventsQuery} from "../../services/events/state/events.query";
 import {Subject} from "rxjs";
 import {createEvent, Event} from "../../models/event.model";
 import {EventsService} from "../../services/events/state/events.service";
+import {EventParticipant} from "../../models/event-participant";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-events-page',
@@ -15,6 +17,7 @@ export class EventsPageComponent implements OnInit {
   constructor(
     public eventsQuery: EventsQuery,
     public eventsService: EventsService,
+    private nzMessageService: NzMessageService
   ) { }
 
   ngOnInit(): void {
@@ -22,5 +25,27 @@ export class EventsPageComponent implements OnInit {
 
   createNewEvent() {
     this.openModal.next(createEvent({id: 0}));
+  }
+
+  async archiveEvent(event: Event) {
+    try {
+      await this.eventsService.archiveEvent(event);
+    } catch (e) {
+      this.nzMessageService.error('There was an error archiving the event.');
+      return;
+    }
+
+    this.nzMessageService.success('Event archived!');
+  }
+
+  async removeParticipant(participant: EventParticipant) {
+    try {
+      await this.eventsService.removeParticipant(participant);
+    } catch (e) {
+      this.nzMessageService.error('There was an error removing the participant.');
+      return;
+    }
+
+    this.nzMessageService.success(`${participant.name} removed!`);
   }
 }

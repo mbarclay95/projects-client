@@ -11,6 +11,7 @@ import {
 import {Event} from "../../models/event.model";
 import { Clipboard } from '@angular/cdk/clipboard';
 import {NzMessageService} from "ng-zorro-antd/message";
+import {EventParticipant} from "../../models/event-participant";
 
 @Component({
   selector: 'app-events-table',
@@ -28,6 +29,7 @@ export class EventsTableComponent implements OnInit {
 
   @Output() editEvent: EventEmitter<Event> = new EventEmitter<Event>();
   @Output() archiveEvent: EventEmitter<Event> = new EventEmitter<Event>();
+  @Output() removeParticipant: EventEmitter<EventParticipant> = new EventEmitter<EventParticipant>();
 
   _events: Event[] = [];
   expandSet = new Set<number>();
@@ -38,7 +40,7 @@ export class EventsTableComponent implements OnInit {
   archive = faBoxArchive;
   participantGoing = faThumbsUp;
   participantNotGoing = faThumbsDown;
-  removeParticipant = faCircleMinus;
+  remove = faCircleMinus;
 
   constructor(
     private clipboard: Clipboard,

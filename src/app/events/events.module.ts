@@ -24,6 +24,7 @@ import {NzProgressModule} from "ng-zorro-antd/progress";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {NzListModule} from "ng-zorro-antd/list";
+import {NzPopoverModule} from "ng-zorro-antd/popover";
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import {NzListModule} from "ng-zorro-antd/list";
         NzPopconfirmModule,
         NzCheckboxModule,
         NzListModule,
+        NzPopoverModule,
     ]
 })
 export class EventsModule { }

@@ -45,7 +45,7 @@ export class TasksService {
     this.tagsService.getTags();
   }
 
-  async updateTask(taskId: number, task: Partial<Task>, removeFromList = false) {
+  async updateTask(taskId: number, task: Partial<Task>, getTags = true, removeFromList = false) {
     const newTask = {...this.tasksQuery.getEntity(taskId), ...task};
     await firstValueFrom(this.http.put<Task>(`${environment.apiUrl}/tasks/${taskId}`, newTask).pipe(
       map(task => createTask(task)),
@@ -58,7 +58,9 @@ export class TasksService {
         }
       })
     ));
-    this.tagsService.getTags();
+    if (getTags) {
+      this.tagsService.getTags();
+    }
   }
 
   async deleteTask(task: Task) {

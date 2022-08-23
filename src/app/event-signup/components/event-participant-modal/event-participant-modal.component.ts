@@ -23,6 +23,7 @@ export class EventParticipantModalComponent implements OnInit, OnDestroy {
   isGoing?: boolean;
   thumbsUp = faThumbsUp;
   thumbsDown = faThumbsDown;
+  modalWidth = screen.width < 600 ? '95%' : '500px';
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Route} from "../auth/permissions";
+import {Route} from "../../../auth/permissions";
 
 @Component({
   selector: 'app-side-menu',

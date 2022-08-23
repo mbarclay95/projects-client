@@ -1,0 +1,13 @@
+<div class="footer-buttons-container" *ngIf="currentRoute$ | async as currentRoute">
+
+  <div class="footer-button {{currentRoute === footerButton.path ? 'selected' : 'unselected'}}"
+       *ngFor="let footerButton of mobileFooterService.footerButtons$ | async" [routerLink]="footerButton.path">
+
+    <fa-icon [icon]="footerButton.icon" class="fa-xl"></fa-icon>
+
+    <div class="pt-2" style="font-size: 11px">{{footerButton.title}}</div>
+
+  </div>
+
+
+</div>

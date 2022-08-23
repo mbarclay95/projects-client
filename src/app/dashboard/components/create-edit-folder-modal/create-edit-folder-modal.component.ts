@@ -13,6 +13,7 @@ export class CreateEditFolderModalComponent implements OnInit {
 
   folder!: Folder;
   isVisible = false;
+  modalWidth = screen.width < 600 ? '95%' : '500px';
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

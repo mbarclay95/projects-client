@@ -18,28 +18,28 @@ import {NzMenuModule} from "ng-zorro-antd/menu";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {AuthInterceptor} from "./auth/services/auth.interceptor";
 import {NzMessageModule} from "ng-zorro-antd/message";
-import { SideMenuComponent } from './side-menu/side-menu.component';
+import {SharedModule} from "./shared/shared.module";
 
 registerLocaleData(en);
 
 @NgModule({
     declarations: [
         AppComponent,
-        SideMenuComponent,
     ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        environment.production ? [] : AkitaNgDevtools.forRoot(),
-        FontAwesomeModule,
-        NzLayoutModule,
-        NzMenuModule,
-        NzIconModule,
-        NzMessageModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    environment.production ? [] : AkitaNgDevtools.forRoot(),
+    FontAwesomeModule,
+    NzLayoutModule,
+    NzMenuModule,
+    NzIconModule,
+    NzMessageModule,
+    SharedModule,
+  ],
     providers: [
         {provide: NZ_I18N, useValue: en_US},
         {

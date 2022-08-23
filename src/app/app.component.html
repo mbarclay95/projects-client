@@ -1,30 +1,21 @@
 <nz-layout>
 
   <ng-container *ngIf="authQuery.isLoggedIn$ | async">
+
     <nz-sider *ngIf="sideMenuClosed !== undefined" nzCollapsible [(nzCollapsed)]="sideMenuClosed"
               (nzCollapsedChange)="authService.updateUserConfig({sideMenuOpen: !$event})" nzWidth="200px"
               [nzCollapsedWidth]="collapsedWidth">
       <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed"
                      (closeSideMenu)="closeSideMenu()" [isMobile]="isMobile"></app-side-menu>
-      <!--      <ng-container *ngFor="let route of permissionsService.usersRoutes$ | async">-->
-      <!--        <ul nz-menu nzMode="inline" nzTheme="dark"-->
-      <!--            [ngClass]="{'ant-menu-vertical ant-menu-inline-collapsed': sideMenuClosed}"-->
-      <!--            >{{sideMenuClosed}}-->
-      <!--          <li nz-menu-item [routerLink]="route.url" [nzMatchRouter]="true" style="padding-left: 24px">-->
-      <!--            <fa-icon class="anticon" [icon]="route.icon" style="padding-left: 9px"></fa-icon>-->
-      <!--            <span>{{route.title}}</span>-->
-      <!--          </li>-->
-      <!--        </ul>-->
-      <!--      </ng-container>-->
     </nz-sider>
 
   </ng-container>
 
   <nz-layout>
 
-    <nz-content>
+    <nz-content style="{{isMobile ? 'margin-bottom: 69px' : ''}}">
 
-      <div class="inner-content">
+      <div style="min-height: calc(100vh - 69px)">
 
         <router-outlet></router-outlet>
 
@@ -32,7 +23,11 @@
 
     </nz-content>
 
-    <nz-footer>Big Mike ©2021</nz-footer>
+    <nz-footer *ngIf="!isMobile" class="footer-shadow">Big Mike ©2021</nz-footer>
+
+    <nz-footer *ngIf="isMobile" class="footer-shadow mobile-footer">
+      <app-mobile-footer></app-mobile-footer>
+    </nz-footer>
 
   </nz-layout>
 

@@ -21,7 +21,7 @@ export class TaskTabsComponent implements OnInit {
     private authQuery: AuthQuery,
     public permissionsService: PermissionsService,
     public familiesQuery: FamiliesQuery,
-    private tasksService: TasksService
+    private tasksService: TasksService,
   ) {
   }
 
@@ -48,6 +48,7 @@ export class TaskTabsComponent implements OnInit {
       numOfDays: null,
       page: 1,
       search: null,
+      completedStatus: 'notCompleted',
       tags: []
     });
   }

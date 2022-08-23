@@ -3,36 +3,34 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  border: 1px solid #434343;
-  border-radius: 2px;
-  padding: .5rem;
+  box-sizing: border-box;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  padding: 0.25rem 0.75rem;
   cursor: pointer;
   height: 63px;
-
-  .checkbox-size {
-
-  }
 }
 
-.title-and-description {
-  display: flex;
-  flex-direction: column;
+.type-icon {
+  width: 26.25px;
+  text-align: center;
+}
 
-  .title {
-    font-size: 16px;
-    color: white;
-  }
+.title {
+  font-size: 15px;
+  color: white;
+}
 
-  .description {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.6);
-  }
+.due-text {
+  font-style: italic;
+  font-size: 11px;
 }
 
 ::ng-deep {
   .ant-checkbox .ant-checkbox-inner {
     width: 25px;
     height: 25px;
+    //border: 1px solid white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .ant-checkbox-disabled .ant-checkbox-inner {

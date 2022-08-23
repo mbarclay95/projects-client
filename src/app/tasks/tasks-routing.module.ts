@@ -2,11 +2,19 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {TaskTabsComponent} from "./pages/task-tabs/task-tabs.component";
 import {TasksResolver} from "./tasks.resolver";
+import {WeeklyTasksPageComponent} from "./pages/weekly-tasks-page/weekly-tasks-page.component";
+import {MyFamilyPageComponent} from "./pages/my-family-page/my-family-page.component";
+import {TasksPageComponent} from "./pages/tasks-page/tasks-page.component";
+import {FamiliesPageComponent} from "./pages/families-page/families-page.component";
 
 const routes: Routes = [
   {
     path: '', resolve: {TasksResolver}, children: [
-      {path: '', component: TaskTabsComponent, }
+      {path: '', component: TaskTabsComponent },
+      {path: 'weekly-tasks', component: WeeklyTasksPageComponent},
+      {path: 'my-family', component: MyFamilyPageComponent},
+      {path: 'tasks', component: TasksPageComponent},
+      {path: 'families', component: FamiliesPageComponent},
     ]
   }
 ];

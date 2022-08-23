@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 import {createSite, Site} from "../../models/site.model";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
@@ -21,6 +21,7 @@ export class CreateEditSiteModalComponent implements OnInit {
   isVisible = false;
   check = faCheckCircle;
   folderId: number = 0;
+  modalWidth = screen.width < 600 ? '95%' : '500px';
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

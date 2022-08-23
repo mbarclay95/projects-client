@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 import {UsersQuery} from "../../../users/services/state/users.query";
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -16,6 +16,7 @@ export class CreateEditEventComponent implements OnInit, OnDestroy {
   event!: Event;
   isVisible: boolean = false;
   saving = false;
+  modalWidth = screen.width < 700 ? '95%' : '700px';
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

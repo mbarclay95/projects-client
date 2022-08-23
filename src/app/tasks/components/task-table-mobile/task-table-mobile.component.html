@@ -1,0 +1,63 @@
+<div class="w-100 task-border">
+
+  <div class="task-box" *ngFor="let task of _tasks">
+
+    <div class="first-row">
+
+      <div>
+
+        <div class="title">{{task.name}}</div>
+
+        <div class="due-text">Due: {{task.dueDate | date}}</div>
+
+      </div>
+
+      <div class="d-flex">
+
+        <div style="width: 18px; text-align: center">
+          <fa-icon *ngIf="task.recurring" [icon]="repeat"></fa-icon>
+          <fa-icon *ngIf="!task.recurring" [icon]="single"></fa-icon>
+        </div>
+
+        <div style="width: 18px; text-align: center" class="ms-2 me-4">
+
+          <fa-icon style="color: {{familiesQuery.myFamilyColor$ | async}}"
+                   *ngIf="task.ownerType === 'family'" [icon]="household"></fa-icon>
+          <fa-icon style="color: {{authQuery.myColor$ | async}}"
+                   *ngIf="task.ownerType === 'user'" [icon]="personal"></fa-icon>
+
+        </div>
+
+        <fa-icon *ngIf="!expandSet.has(task.id)" style="cursor: pointer" [icon]="arrowDown"
+                 (click)="expandSet.add(task.id)"></fa-icon>
+
+        <fa-icon *ngIf="expandSet.has(task.id)" style="cursor: pointer" [icon]="arrowUp"
+                 (click)="expandSet.delete(task.id)"></fa-icon>
+
+      </div>
+
+    </div>
+
+    <div *ngIf="expandSet.has(task.id)" class="second-row">
+
+      <div class="d-flex justify-content-evenly">
+
+        <div (click)="editTask.emit(task)">
+          <fa-icon class="text-primary" [icon]="edit"></fa-icon>
+          Edit
+        </div>
+
+        <div nz-popconfirm nzPopconfirmTitle="Are you sure?" (nzOnConfirm)="deleteTask(task)">
+          <fa-icon class="text-danger" [icon]="delete"></fa-icon>
+          Delete
+        </div>
+
+      </div>
+
+      {{task.description}}
+
+    </div>
+
+  </div>
+
+</div>

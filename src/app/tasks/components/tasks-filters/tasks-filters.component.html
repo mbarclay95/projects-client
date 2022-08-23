@@ -1,9 +1,9 @@
-<div class="d-flex mb-4">
+<div class="filter-container">
 
-  <input nz-input style="width: 300px" placeholder="search" [ngModel]="ui.search" class="me-2"
-         (ngModelChange)="tasksService.updateUi({search: $event})">
+    <input nz-input placeholder="Search" [ngModel]="ui.search" class="filter-boxes"
+           (ngModelChange)="tasksService.updateUi({search: $event})">
 
-  <nz-select style="width: 300px" nzMode="multiple" [ngModel]="ui.tags" nzPlaceHolder="tags"
+  <nz-select nzMode="multiple" [ngModel]="ui.tags" nzPlaceHolder="Tags" class="filter-boxes"
              (ngModelChange)="tasksService.updateUi({tags: $event})">
     <nz-option *ngFor="let tag of tagsService.tags$ | async" [nzLabel]="tag" [nzValue]="tag"></nz-option>
   </nz-select>

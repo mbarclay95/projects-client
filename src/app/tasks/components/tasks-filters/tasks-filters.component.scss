@@ -1,0 +1,32 @@
+
+.filter-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1.5rem;
+}
+
+.filter-boxes {
+  flex: 1 1 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  margin: 0 0.25rem;
+  width: 300px;
+}
+
+@media only screen and (max-width: 600px) {
+  .filter-container {
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+
+  .filter-boxes {
+    margin: 0.25rem 0;
+    width: 100%;
+  }
+}
+
+::ng-deep {
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border: none;
+  }
+}

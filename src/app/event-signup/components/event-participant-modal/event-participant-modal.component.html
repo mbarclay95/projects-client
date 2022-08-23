@@ -1,4 +1,4 @@
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Signup" nzWidth="500px" (nzOnCancel)="isVisible = false"
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Signup" [nzWidth]="modalWidth" (nzOnCancel)="isVisible = false"
           nzOkText="Save" nzCancelText="Close" (nzOnOk)="signup()" [nzCancelDisabled]="saving"
           [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
 

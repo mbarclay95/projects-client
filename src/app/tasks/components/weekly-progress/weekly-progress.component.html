@@ -2,11 +2,11 @@
 
   <div class="d-flex flex-column align-items-center w-100">
 
-    <div class="mb-4" style="font-size: 25px">{{user | weeklyProgressPercent : false | weeklyProgressMessage}}
-       {{user.name}}!
+    <div class="mb-3" style="font-size: 22px">{{user | weeklyProgressPercent : false | weeklyProgressMessage}}
+       {{user | firstName}}!
     </div>
 
-    <div class="mb-2">{{daysTillEndOfWeek}} days left ~ {{user | weeklyProgressPercent | percent}} done</div>
+    <div class="mb-1" style="font-size: 14px">{{daysTillEndOfWeek}} days left ~ {{user | weeklyProgressPercent | percent}} done</div>
 
   </div>
 

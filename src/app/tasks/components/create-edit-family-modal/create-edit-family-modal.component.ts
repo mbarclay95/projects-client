@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {createFamily, Family} from "../../models/family.model";
@@ -17,6 +17,7 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   family!: Family;
   isVisible: boolean = false;
   saving = false;
+  modalWidth = screen.width < 600 ? '95%' : '500px';
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

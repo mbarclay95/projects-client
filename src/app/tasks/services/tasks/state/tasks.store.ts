@@ -30,7 +30,7 @@ export class TasksStore extends EntityStore<TasksState> {
       ui: {
         ownerType: null,
         ownerId: null,
-        completedStatus: 'both',
+        completedStatus: 'notCompleted',
         recurringType: 'both',
         page: 1,
         pageSize: 50,

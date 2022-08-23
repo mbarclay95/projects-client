@@ -1,4 +1,4 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(event?.id === 0 ? 'Create' : 'Edit') + ' Event'" nzWidth="700px"
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(event?.id === 0 ? 'Create' : 'Edit') + ' Event'" [nzWidth]="modalWidth"
           (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveEvent()"
           [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
 

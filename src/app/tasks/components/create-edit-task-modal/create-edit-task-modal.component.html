@@ -1,4 +1,4 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(task?.id === 0 ? 'Create' : 'Edit') + ' Task'" nzWidth="500px"
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(task?.id === 0 ? 'Create' : 'Edit') + ' Task'" [nzWidth]="modalWidth"
           (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveTask()"
           [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
 

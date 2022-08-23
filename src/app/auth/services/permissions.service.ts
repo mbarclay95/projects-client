@@ -23,12 +23,13 @@ export class PermissionsService {
   upload = faUpload;
   task = faTasks;
   event = faCalendarDays
+  isMobile = screen.width < 600;
   routes: Route[] = [
     {icon: this.home, url: 'app/dashboard', permission: Permissions.DASHBOARD_PAGE, title: 'Dashboard', queryParams: {}},
     {icon: this.goals, url: 'app/goals', permission: Permissions.GOALS_PAGE, title: 'Goals', queryParams: {}},
     {icon: this.users, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users', queryParams: {}},
     {icon: this.upload, url: 'app/backups', permission: Permissions.BACKUPS_PAGE, title: 'Backups', queryParams: {tab: 'backups'}},
-    {icon: this.task, url: 'app/tasks', permission: Permissions.TASKS_PAGE, title: 'Tasks', queryParams: {tab: 'weekly-tasks'}},
+    {icon: this.task, url: `app/tasks${this.isMobile ? '/weekly-tasks' : ''}`, permission: Permissions.TASKS_PAGE, title: 'Tasks', queryParams: this.isMobile ? {} : {tab: 'weekly-tasks'}},
     {icon: this.event, url: 'app/events', permission: Permissions.EVENTS_PAGE, title: 'Events', queryParams: {}},
   ];
 

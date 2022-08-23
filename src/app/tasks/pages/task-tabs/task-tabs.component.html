@@ -25,10 +25,35 @@
   </nz-tab>
 </nz-tabset>
 
+
+<!--<nz-tabset [nzTabBarExtraContent]="createButton" nzSize="large">-->
+<!--  <nz-tab (nzSelect)="loadWeeklyTasks()" nzTitle="Weekly Tasks">-->
+<!--    <app-weekly-tasks-page></app-weekly-tasks-page>-->
+<!--  </nz-tab>-->
+<!--  <nz-tab *ngIf="familiesQuery.selectActive() | async" (nzSelect)="selectedTab = 'My Family'" nzTitle="My Family">-->
+<!--    <app-my-family-page></app-my-family-page>-->
+<!--  </nz-tab>-->
+<!--  <nz-tab (nzSelect)="loadTasksTable()" nzTitle="Tasks">-->
+<!--    <app-tasks-page (editTask)="openTaskModal.next($event)"></app-tasks-page>-->
+<!--  </nz-tab>-->
+<!--  <nz-tab *ngIf="permissionsService.viewFamiliesTab$ | async" (nzSelect)="selectedTab = 'Family'" nzTitle="Families">-->
+<!--    <app-families-page (openFamilyModal)="openFamilyModal.next($event)"></app-families-page>-->
+<!--  </nz-tab>-->
+<!--</nz-tabset>-->
+
 <ng-template #createButton>
   <button *ngIf="selectedTab !== 'My Family'" nz-button nzType="primary" (click)="createEntity()">
     Create {{selectedTab}}</button>
 </ng-template>
+
+<!--<nz-layout>-->
+<!--  <nz-content>-->
+<!--    <app-weekly-tasks-page></app-weekly-tasks-page>-->
+<!--  </nz-content>-->
+
+<!--  <nz-footer>Testing</nz-footer>-->
+
+<!--</nz-layout>-->
 
 <app-create-edit-family-modal [openModal]="openFamilyModal.asObservable()"></app-create-edit-family-modal>
 

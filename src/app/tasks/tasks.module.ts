@@ -45,6 +45,8 @@ import { TasksTableComponent } from './components/tasks-table/tasks-table.compon
 import { TasksFiltersComponent } from './components/tasks-filters/tasks-filters.component';
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import { TasksCompleteChartDataPipe } from './pipes/tasks-complete-chart-data.pipe';
+import {SharedModule} from "../shared/shared.module";
+import { TaskTableMobileComponent } from './components/task-table-mobile/task-table-mobile.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +73,7 @@ import { TasksCompleteChartDataPipe } from './pipes/tasks-complete-chart-data.pi
     TasksTableComponent,
     TasksFiltersComponent,
     TasksCompleteChartDataPipe,
+    TaskTableMobileComponent,
   ],
     imports: [
         CommonModule,
@@ -97,6 +100,7 @@ import { TasksCompleteChartDataPipe } from './pipes/tasks-complete-chart-data.pi
         ColorChromeModule,
         NzPopoverModule,
         NzPopconfirmModule,
+        SharedModule,
     ]
 })
 export class TasksModule { }

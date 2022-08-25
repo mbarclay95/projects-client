@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from "../../services/login.service";
+import {MobileHeaderService} from "../../../shared/services/mobile-header.service";
 
 @Component({
   selector: 'app-login-page',
@@ -9,10 +10,13 @@ import {LoginService} from "../../services/login.service";
 export class LoginPageComponent implements OnInit {
 
   constructor(
-    public loginService: LoginService
+    public loginService: LoginService,
+    private mobileHeaderService: MobileHeaderService
   ) { }
 
   async ngOnInit(): Promise<void> {
+    this.mobileHeaderService.setTitle('Login');
+    this.mobileHeaderService.hideCreateButton();
     if (!await this.loginService.isLoggedIn()) {
       this.loginService.initializeForm();
     }

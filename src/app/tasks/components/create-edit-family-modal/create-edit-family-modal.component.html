@@ -1,6 +1,7 @@
 <nz-modal [(nzVisible)]="isVisible" [nzTitle]="(family?.id === 0 ? 'Create' : 'Edit') + ' Family'" [nzWidth]="modalWidth"
           (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveFamily()"
-          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
+          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false"
+          [nzStyle]="modalStyle">
 
   <ng-container *nzModalContent>
 

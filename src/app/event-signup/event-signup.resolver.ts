@@ -3,6 +3,7 @@ import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@ang
 import {EventService} from "./services/event.service";
 import {EventCacheService} from "./services/event-cache.service";
 import {MobileFooterService} from "../shared/services/mobile-footer.service";
+import {MobileHeaderService} from "../shared/services/mobile-header.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,14 @@ export class EventSignupResolver implements Resolve<Promise<void>> {
     private eventService: EventService,
     private eventCacheService: EventCacheService,
     private router: Router,
-    private mobileFooterService: MobileFooterService
+    private mobileFooterService: MobileFooterService,
+    private mobileHeaderService: MobileHeaderService
   ) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
+    this.mobileHeaderService.setTitle('Signup');
+    this.mobileHeaderService.hideCreateButton();
     const eventId = route.params['eventId'] as string | undefined;
     const token = route.queryParams['token'] as string | undefined;
     if (eventId && token) {

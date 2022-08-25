@@ -46,4 +46,10 @@ export class AppComponent {
     this.sideMenuClosed = true;
     this.authService.updateUserConfig({sideMenuOpen: false});
   }
+
+  closeSideIfMobile() {
+    if (this.isMobile && !this.sideMenuClosed) {
+      this.closeSideMenu();
+    }
+  }
 }

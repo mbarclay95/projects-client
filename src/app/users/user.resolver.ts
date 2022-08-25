@@ -7,6 +7,7 @@ import {
 import {UsersService} from "./services/state/users.service";
 import {RolesService} from "./services/roles/state/roles.service";
 import {MobileFooterService} from "../shared/services/mobile-footer.service";
+import {MobileHeaderService} from "../shared/services/mobile-header.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,14 @@ export class UserResolver implements Resolve<void> {
   constructor(
     private usersService: UsersService,
     private rolesService : RolesService,
-    private mobileFooterService: MobileFooterService
+    private mobileFooterService: MobileFooterService,
+    private mobileHeaderService: MobileHeaderService
   ) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
+    this.mobileHeaderService.setTitle('Users');
+    this.mobileHeaderService.hideCreateButton();
     await this.usersService.getUsers();
     await this.rolesService.getRoles();
     this.mobileFooterService.setFooterButtons([]);

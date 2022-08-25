@@ -19,6 +19,7 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
   task!: Task;
   isVisible: boolean = false;
   saving = false;
+  modalStyle = screen.width < 600 ? {top: '20px'} : {};
   modalWidth = screen.width < 600 ? '95%' : '500px';
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();

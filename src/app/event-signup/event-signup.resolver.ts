@@ -1,11 +1,8 @@
-import { Injectable } from '@angular/core';
-import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {EventService} from "./services/event.service";
 import {EventCacheService} from "./services/event-cache.service";
+import {MobileFooterService} from "../shared/services/mobile-footer.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +12,14 @@ export class EventSignupResolver implements Resolve<Promise<void>> {
   constructor(
     private eventService: EventService,
     private eventCacheService: EventCacheService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private mobileFooterService: MobileFooterService
+  ) {
+  }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
-    const eventId = route.params['eventId'] as string|undefined;
-    const token = route.queryParams['token'] as string|undefined;
+    const eventId = route.params['eventId'] as string | undefined;
+    const token = route.queryParams['token'] as string | undefined;
     if (eventId && token) {
       try {
         await this.eventService.getEvent(eventId, token);
@@ -35,5 +34,6 @@ export class EventSignupResolver implements Resolve<Promise<void>> {
       return;
     }
     this.eventCacheService.loadEventCache();
+    this.mobileFooterService.setFooterButtons([]);
   }
 }

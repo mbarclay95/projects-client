@@ -5,6 +5,7 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import {EventsService} from "./services/events/state/events.service";
+import {MobileFooterService} from "../shared/services/mobile-footer.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,13 @@ import {EventsService} from "./services/events/state/events.service";
 export class EventsResolver implements Resolve<void> {
 
   constructor(
-    private eventsService: EventsService
+    private eventsService: EventsService,
+    private mobileFooterService: MobileFooterService
   ) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
     await this.eventsService.getEvents();
+    this.mobileFooterService.setFooterButtons([]);
   }
 }

@@ -1,4 +1,4 @@
-<div *ngIf="(familiesQuery.selectActive() | async) as myFamily">
+<div class="my-family-page-container pt-2" *ngIf="(familiesQuery.selectActive() | async) as myFamily">
 
   <app-my-family-edit-family [myFamily]="myFamily"></app-my-family-edit-family>
 

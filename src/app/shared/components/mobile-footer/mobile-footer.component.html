@@ -1,13 +1,18 @@
 <div class="footer-buttons-container" *ngIf="currentRoute$ | async as currentRoute">
 
-  <div class="footer-button {{currentRoute === footerButton.path ? 'selected' : 'unselected'}}"
-       *ngFor="let footerButton of mobileFooterService.footerButtons$ | async" [routerLink]="footerButton.path">
+  <ng-container *ngLet="mobileFooterService.footerButtons$ | async as footerButtons">
 
-    <fa-icon [icon]="footerButton.icon" class="fa-xl"></fa-icon>
+    <div *ngIf="footerButtons.length === 0" style="padding: 24px 50px; font-size: 14px">Big Mike ©2022</div>
 
-    <div class="pt-2" style="font-size: 11px">{{footerButton.title}}</div>
+    <div class="footer-button {{currentRoute === footerButton.path ? 'selected' : 'unselected'}}"
+         *ngFor="let footerButton of footerButtons" [routerLink]="footerButton.path">
 
-  </div>
+      <fa-icon [icon]="footerButton.icon" class="fa-xl"></fa-icon>
 
+      <div class="pt-2" style="font-size: 11px">{{footerButton.title}}</div>
+
+    </div>
+
+  </ng-container>
 
 </div>

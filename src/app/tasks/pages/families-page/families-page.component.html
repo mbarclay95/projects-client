@@ -1,4 +1,7 @@
 <div>
+
   <app-families-table [families]="familiesQuery.families$ | async"
                       (openFamilyModal)="openFamilyModal.emit($event)"></app-families-table>
 </div>
+
+<app-create-edit-family-modal [openModal]="createEditFamily"></app-create-edit-family-modal>

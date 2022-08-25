@@ -1,21 +1,57 @@
 <nz-layout>
 
-  <ng-container *ngIf="authQuery.isLoggedIn$ | async">
+  <nz-header *ngIf="isMobile" style="height: 40px; padding: 0 16px">
 
-    <nz-sider *ngIf="sideMenuClosed !== undefined" nzCollapsible [(nzCollapsed)]="sideMenuClosed"
-              (nzCollapsedChange)="authService.updateUserConfig({sideMenuOpen: !$event})" nzWidth="200px"
-              [nzCollapsedWidth]="collapsedWidth">
-      <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed"
-                     (closeSideMenu)="closeSideMenu()" [isMobile]="isMobile"></app-side-menu>
-    </nz-sider>
+    <div class="w-100 h-100 d-flex justify-content-between align-items-center">
+
+      <fa-icon style="flex: 1" [icon]="menu" (click)="sideMenuClosed = !sideMenuClosed"></fa-icon>
+
+      <div style="font-size: 18px">{{mobileHeaderService.title$ | async}}</div>
+
+      <div style="flex: 1" class="d-flex w-100 justify-content-end">
+        <fa-icon *ngIf="mobileHeaderService.showCreateButton$ | async" [icon]="plus"
+                 (click)="mobileHeaderService.clickedButton()"></fa-icon>
+      </div>
+
+    </div>
+
+  </nz-header>
+
+  <ng-container *ngIf="!isMobile">
+
+    <ng-container *ngIf="authQuery.isLoggedIn$ | async">
+
+      <nz-sider *ngIf="sideMenuClosed !== undefined" nzCollapsible [(nzCollapsed)]="sideMenuClosed"
+                (nzCollapsedChange)="authService.updateUserConfig({sideMenuOpen: !$event})" nzWidth="200px"
+                [nzCollapsedWidth]="collapsedWidth">
+        <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed"
+                       (closeSideMenu)="closeSideMenu()" [isMobile]="isMobile"></app-side-menu>
+      </nz-sider>
+
+    </ng-container>
 
   </ng-container>
 
   <nz-layout>
 
+    <ng-container *ngIf="isMobile">
+
+      <ng-container *ngIf="authQuery.isLoggedIn$ | async">
+
+        <nz-sider *ngIf="sideMenuClosed !== undefined" nzCollapsible [(nzCollapsed)]="sideMenuClosed" [nzTrigger]="null"
+                  (nzCollapsedChange)="authService.updateUserConfig({sideMenuOpen: !$event})" nzWidth="200px"
+                  [nzCollapsedWidth]="collapsedWidth">
+          <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed"
+                         (closeSideMenu)="closeSideMenu()" [isMobile]="isMobile"></app-side-menu>
+        </nz-sider>
+
+      </ng-container>
+
+    </ng-container>
+
     <nz-content style="{{isMobile ? 'margin-bottom: 69px' : ''}}">
 
-      <div style="min-height: calc(100vh - 69px)">
+      <div style="min-height: calc(100vh - {{isMobile ? '109px' : '69px'}})">
 
         <router-outlet></router-outlet>
 
@@ -23,9 +59,9 @@
 
     </nz-content>
 
-    <nz-footer *ngIf="!isMobile" class="footer-shadow">Big Mike ©2021</nz-footer>
+    <nz-footer *ngIf="!isMobile" class="footer-shadow">Big Mike ©2022</nz-footer>
 
-    <nz-footer *ngIf="isMobile" class="footer-shadow mobile-footer">
+    <nz-footer *ngIf="isMobile" class="footer-shadow mobile-footer" style="z-index: 1000">
       <app-mobile-footer></app-mobile-footer>
     </nz-footer>
 

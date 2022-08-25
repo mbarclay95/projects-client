@@ -12,11 +12,16 @@ export class WeeklyProgressPercentPipe implements PipeTransform {
     }
 
     let progress = auth.taskUserConfig.completedFamilyTasks.length / auth.taskUserConfig.tasksPerWeek;
+    console.log(progress);
     if (progress > 1) {
       progress = 1;
     }
 
-    return parseFloat((progress * (returnFraction ? 1 : 100)).toFixed(1));
+    if (returnFraction) {
+      return progress;
+    }
+
+    return parseFloat((progress * 100.0).toFixed(0));
   }
 
 }

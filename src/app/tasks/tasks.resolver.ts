@@ -9,6 +9,7 @@ import {AuthQuery} from "../auth/services/state/auth.query";
 import {TagsService} from "./services/tags.service";
 import {MobileFooterService} from "../shared/services/mobile-footer.service";
 import {faPeopleGroup, faPeopleRoof, faTableList, faTasks} from "@fortawesome/free-solid-svg-icons";
+import {MobileHeaderService} from "../shared/services/mobile-header.service";
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +23,13 @@ export class TasksResolver implements Resolve<void> {
     private permissionsService: PermissionsService,
     private tagsService: TagsService,
     private authQuery: AuthQuery,
-    private mobileFooterService: MobileFooterService
+    private mobileFooterService: MobileFooterService,
+    private mobileHeaderService: MobileHeaderService
   ) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
+    this.mobileHeaderService.setTitle('Tasks');
     if (screen.width < 600) {
       const footerButtons = [
         {

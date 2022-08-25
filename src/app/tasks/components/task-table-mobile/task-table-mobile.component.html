@@ -40,14 +40,15 @@
 
     <div *ngIf="expandSet.has(task.id)" class="second-row">
 
-      <div class="d-flex justify-content-evenly">
+      <div class="d-flex justify-content-evenly mb-1">
 
-        <div (click)="editTask.emit(task)">
+        <div class="d-flex flex-column align-items-center" (click)="editTask.emit(task)">
           <fa-icon class="text-primary" [icon]="edit"></fa-icon>
           Edit
         </div>
 
-        <div nz-popconfirm nzPopconfirmTitle="Are you sure?" (nzOnConfirm)="deleteTask(task)">
+        <div class="d-flex flex-column align-items-center" nz-popconfirm nzPopconfirmTitle="Are you sure?"
+             (nzOnConfirm)="deleteTask(task)">
           <fa-icon class="text-danger" [icon]="delete"></fa-icon>
           Delete
         </div>

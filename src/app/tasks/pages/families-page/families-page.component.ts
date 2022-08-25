@@ -1,6 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FamiliesQuery} from "../../services/families/state/families.query";
-import {Family} from "../../models/family.model";
+import {createFamily, Family} from "../../models/family.model";
+import {merge, Observable} from "rxjs";
+import {map} from "rxjs/operators";
+import {MobileHeaderService} from "../../../shared/services/mobile-header.service";
 
 @Component({
   selector: 'app-families-page',
@@ -10,11 +13,23 @@ import {Family} from "../../models/family.model";
 export class FamiliesPageComponent implements OnInit {
   @Output() openFamilyModal: EventEmitter<Family> = new EventEmitter<Family>();
 
+  isMobile = screen.width < 600;
+  createEditFamily: Observable<Family> = merge(
+    this.mobileHeaderService.clickedButton$.pipe(
+      map(() => createFamily({}))
+    ),
+    this.openFamilyModal.asObservable()
+  );
+
   constructor(
-    public familiesQuery: FamiliesQuery
+    public familiesQuery: FamiliesQuery,
+    private mobileHeaderService: MobileHeaderService
   ) { }
 
   ngOnInit(): void {
+    if (this.isMobile) {
+      this.mobileHeaderService.showCreateButton();
+    }
   }
 
 }

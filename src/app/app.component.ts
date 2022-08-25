@@ -3,6 +3,8 @@ import {AuthQuery} from "./auth/services/state/auth.query";
 import {PermissionsService} from "./auth/services/permissions.service";
 import {AuthService} from "./auth/services/state/auth.service";
 import {filter, take} from "rxjs";
+import {faBars, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {MobileHeaderService} from "./shared/services/mobile-header.service";
 
 @Component({
   selector: 'app-root',
@@ -14,11 +16,14 @@ export class AppComponent {
   sideMenuClosed?: boolean = undefined;
   isMobile = screen.width < 600;
   collapsedWidth = screen.width > 600 ? 64 : 0;
+  menu = faBars;
+  plus = faPlus;
 
   constructor(
     public authQuery: AuthQuery,
     public authService: AuthService,
     public permissionsService: PermissionsService,
+    public mobileHeaderService: MobileHeaderService
   ) {
     this.getStartSideMenu();
   }

@@ -7,7 +7,7 @@
 
   </div>
 
-  <div *ngIf="loginService.loginForm" class="border" style="padding: 3rem 5rem; border-radius: 1px">
+  <div *ngIf="loginService.loginForm" class="login-container" style="padding: 3rem 5rem">
 
     <h1 class="mb-4">Login</h1>
 
@@ -17,7 +17,7 @@
 
         Email:
 
-        <input nz-input formControlName="email">
+        <input nz-input formControlName="email" class="input-borders">
 
       </div>
 
@@ -25,7 +25,7 @@
 
         Password:
 
-        <input nz-input type="password" formControlName="password">
+        <input nz-input type="password" formControlName="password" class="input-borders">
 
       </div>
 
@@ -38,7 +38,7 @@
     <div class="d-flex justify-content-end">
 
       <button nz-button nzType="primary" [nzLoading]="loginService.loading" (keydown.enter)="loginService.login()"
-              [disabled]="loginService.loading" (click)="loginService.login()">Login</button>
+              [disabled]="loginService.loading || loginService.loginForm.invalid" (click)="loginService.login()">Login</button>
 
     </div>
 

@@ -33,7 +33,7 @@ export class TasksStore extends EntityStore<TasksState> {
         completedStatus: 'notCompleted',
         recurringType: 'both',
         page: 1,
-        pageSize: 50,
+        pageSize: 200,
         total: null,
         sort: 'dueDate',
         sortDir: 'desc',

@@ -47,6 +47,7 @@ import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import { TasksCompleteChartDataPipe } from './pipes/tasks-complete-chart-data.pipe';
 import {SharedModule} from "../shared/shared.module";
 import { TaskTableMobileComponent } from './components/task-table-mobile/task-table-mobile.component';
+import {NzEmptyModule} from "ng-zorro-antd/empty";
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { TaskTableMobileComponent } from './components/task-table-mobile/task-ta
         NzPopoverModule,
         NzPopconfirmModule,
         SharedModule,
+        NzEmptyModule,
     ]
 })
 export class TasksModule { }

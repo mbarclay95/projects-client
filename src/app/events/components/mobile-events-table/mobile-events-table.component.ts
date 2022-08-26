@@ -1,26 +1,23 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NzTableComponent} from "ng-zorro-antd/table";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Event} from "../../models/event.model";
+import {EventParticipant} from "../../models/event-participant";
 import {
   faBoxArchive,
-  faBoxOpen, faCircleMinus,
+  faBoxOpen, faChevronDown, faChevronUp, faCircleMinus,
   faCopy,
   faEdit, faThumbsDown,
   faThumbsUp,
   faUpRightFromSquare, faUserPen
 } from "@fortawesome/free-solid-svg-icons";
-import {Event} from "../../models/event.model";
-import { Clipboard } from '@angular/cdk/clipboard';
+import {Clipboard} from "@angular/cdk/clipboard";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {EventParticipant} from "../../models/event-participant";
 
 @Component({
-  selector: 'app-events-table',
-  templateUrl: './events-table.component.html',
-  styleUrls: ['./events-table.component.scss']
+  selector: 'app-mobile-events-table',
+  templateUrl: './mobile-events-table.component.html',
+  styleUrls: ['./mobile-events-table.component.scss']
 })
-export class EventsTableComponent implements OnInit {
-  @ViewChild('eventsTableTag', {static: true}) eventsTable: NzTableComponent<Event> | undefined;
-
+export class MobileEventsTableComponent implements OnInit {
   @Input() set events(events: Event[] | null) {
     if (events) {
       this._events = events;
@@ -40,6 +37,9 @@ export class EventsTableComponent implements OnInit {
   archive = faBoxArchive;
   participantGoing = faThumbsUp;
   participantNotGoing = faThumbsDown;
+  remove = faCircleMinus;
+  arrowDown = faChevronDown;
+  arrowUp = faChevronUp;
   participantChange = faUserPen
 
   constructor(
@@ -48,15 +48,7 @@ export class EventsTableComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
-  }
-
-  onExpandChange(id: number, checked: boolean) {
-    if (checked) {
-      this.expandSet.add(id);
-    } else {
-      this.expandSet.delete(id);
-    }
+  ngOnInit() {
   }
 
   getPercent(participants: EventParticipant[], numOfPeople: number): number {

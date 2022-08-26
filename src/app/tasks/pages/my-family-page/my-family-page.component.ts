@@ -11,10 +11,8 @@ export class MyFamilyPageComponent implements OnInit {
 
   constructor(
     public familiesQuery: FamiliesQuery,
-    private mobileHeaderService: MobileHeaderService
   ) { }
 
   ngOnInit():void {
-    this.mobileHeaderService.hideCreateButton();
   }
 }

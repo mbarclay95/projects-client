@@ -6,9 +6,8 @@ import {EventsStore, EventsUiState} from './events.store';
 import {firstValueFrom} from "rxjs";
 import {environment} from "../../../../../environments/environment";
 import {EventsQuery} from "./events.query";
-import {TaskUiState} from "../../../../tasks/services/tasks/state/tasks.store";
-import {EventParticipant} from "../../../models/event-participant";
-import {arrayRemove} from "@datorama/akita";
+import {createEventParticipant, EventParticipant} from "../../../models/event-participant";
+import {arrayRemove, arrayUpdate} from "@datorama/akita";
 
 @Injectable({ providedIn: 'root' })
 export class EventsService {
@@ -50,6 +49,15 @@ export class EventsService {
   async archiveEvent(event: Event) {
     await firstValueFrom(this.http.delete(`${environment.apiUrl}/events/${event.id}`).pipe(
       tap(() => this.eventsStore.remove(event.id))
+    ));
+  }
+
+  async updateParticipant(participant: EventParticipant) {
+    await firstValueFrom(this.http.put(`${environment.apiUrl}/event-participants/${participant.id}`, participant).pipe(
+      map(newParticipant => createEventParticipant(newParticipant)),
+      tap(newParticipant => this.eventsStore.update(participant.eventId, ({ eventParticipants }) => ({
+        eventParticipants: arrayUpdate(eventParticipants, newParticipant.id, newParticipant)
+      })))
     ));
   }
 

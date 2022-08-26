@@ -1,4 +1,4 @@
-<div class="footer-buttons-container" *ngIf="currentRoute$ | async as currentRoute">
+<div class="footer-buttons-container" *ngLet="currentRoute$ | async as currentRoute">
 
   <ng-container *ngLet="mobileFooterService.footerButtons$ | async as footerButtons">
 

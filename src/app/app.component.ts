@@ -5,6 +5,7 @@ import {AuthService} from "./auth/services/state/auth.service";
 import {filter, take} from "rxjs";
 import {faBars, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {MobileHeaderService} from "./shared/services/mobile-header.service";
+import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -18,14 +19,38 @@ export class AppComponent {
   collapsedWidth = screen.width > 600 ? 64 : 0;
   menu = faBars;
   plus = faPlus;
+  loading = true;
 
   constructor(
     public authQuery: AuthQuery,
     public authService: AuthService,
     public permissionsService: PermissionsService,
-    public mobileHeaderService: MobileHeaderService
+    public mobileHeaderService: MobileHeaderService,
+    private router: Router
   ) {
     this.getStartSideMenu();
+    this.subscribeToRouter();
+  }
+
+  subscribeToRouter() {
+    this.router.events.subscribe((event ) => {
+      switch (true) {
+        case event instanceof NavigationStart: {
+          this.loading = true;
+          break;
+        }
+
+        case event instanceof NavigationEnd:
+        case event instanceof NavigationCancel:
+        case event instanceof NavigationError: {
+          this.loading = false;
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    });
   }
 
   getStartSideMenu() {

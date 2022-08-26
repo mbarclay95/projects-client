@@ -27,9 +27,6 @@ export class FamiliesPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.isMobile) {
-      this.mobileHeaderService.showCreateButton();
-    }
   }
 
 }

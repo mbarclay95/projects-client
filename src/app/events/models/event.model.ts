@@ -11,7 +11,7 @@ export interface Event {
   notificationEmail?: string;
   limitParticipants: boolean;
   eventParticipants: EventParticipant[];
-  eventParticipantsNotGoing: EventParticipant[];
+  // eventParticipantsNotGoing: EventParticipant[];
   eventUrl: string;
 }
 
@@ -26,8 +26,8 @@ export function createEvent(params: Partial<Event>) {
     limitParticipants: params.limitParticipants ?? false,
     token: params.token ?? null,
     notificationEmail: params.notificationEmail ?? undefined,
-    eventParticipants: params.eventParticipants ? params.eventParticipants.filter(p => p.isGoing).map(p => createEventParticipant(p)) : [],
-    eventParticipantsNotGoing: params.eventParticipants ? params.eventParticipants.filter(p => !p.isGoing).map(p => createEventParticipant(p)) : [],
+    eventParticipants: params.eventParticipants ? params.eventParticipants.map(p => createEventParticipant(p)) : [],
+    // eventParticipantsNotGoing: params.eventParticipants ? params.eventParticipants.filter(p => !p.isGoing).map(p => createEventParticipant(p)) : [],
     eventUrl: `/events/signup/${params.id}?token=${params.token}`
   } as Event;
 }

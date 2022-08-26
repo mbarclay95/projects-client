@@ -25,6 +25,12 @@ import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {NzListModule} from "ng-zorro-antd/list";
 import {NzPopoverModule} from "ng-zorro-antd/popover";
+import { MobileEventsTableComponent } from './components/mobile-events-table/mobile-events-table.component';
+import {NzDividerModule} from "ng-zorro-antd/divider";
+import { EditParticipantModalComponent } from './components/edit-participant-modal/edit-participant-modal.component';
+import {NzRadioModule} from "ng-zorro-antd/radio";
+import { ParticipantsGoingPipe } from './pipes/participants-going.pipe';
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -33,7 +39,10 @@ import {NzPopoverModule} from "ng-zorro-antd/popover";
     EventsPageComponent,
     EventsTableComponent,
     EventsFiltersComponent,
-    CreateEditEventComponent
+    CreateEditEventComponent,
+    MobileEventsTableComponent,
+    EditParticipantModalComponent,
+    ParticipantsGoingPipe
   ],
     imports: [
         CommonModule,
@@ -56,6 +65,9 @@ import {NzPopoverModule} from "ng-zorro-antd/popover";
         NzCheckboxModule,
         NzListModule,
         NzPopoverModule,
+        NzDividerModule,
+        NzRadioModule,
+        SharedModule,
     ]
 })
 export class EventsModule { }

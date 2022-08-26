@@ -20,6 +20,7 @@ import {AuthInterceptor} from "./auth/services/auth.interceptor";
 import {NzMessageModule} from "ng-zorro-antd/message";
 import {SharedModule} from "./shared/shared.module";
 import {NzButtonModule} from "ng-zorro-antd/button";
+import {NzSpinModule} from "ng-zorro-antd/spin";
 
 registerLocaleData(en);
 
@@ -27,21 +28,22 @@ registerLocaleData(en);
     declarations: [
         AppComponent,
     ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        environment.production ? [] : AkitaNgDevtools.forRoot(),
-        FontAwesomeModule,
-        NzLayoutModule,
-        NzMenuModule,
-        NzIconModule,
-        NzMessageModule,
-        SharedModule,
-        NzButtonModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    environment.production ? [] : AkitaNgDevtools.forRoot(),
+    FontAwesomeModule,
+    NzLayoutModule,
+    NzMenuModule,
+    NzIconModule,
+    NzMessageModule,
+    SharedModule,
+    NzButtonModule,
+    NzSpinModule,
+  ],
     providers: [
         {provide: NZ_I18N, useValue: en_US},
         {

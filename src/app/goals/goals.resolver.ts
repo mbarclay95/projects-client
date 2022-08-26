@@ -16,13 +16,10 @@ export class GoalsResolver implements Resolve<void> {
   constructor(
     private goalsService: GoalsService,
     private mobileFooterService: MobileFooterService,
-    private mobileHeaderService: MobileHeaderService
   ) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
-    this.mobileHeaderService.setTitle('Goals');
-    this.mobileHeaderService.hideCreateButton();
     await this.goalsService.getAllGoals();
     this.mobileFooterService.setFooterButtons([]);
   }

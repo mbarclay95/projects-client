@@ -27,7 +27,6 @@ export class WeeklyTasksPageComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.isMobile) {
-      this.mobileHeaderService.showCreateButton();
       this.tasksService.updateUi({
         numOfDays: 7,
         ownerId: null,

@@ -1,0 +1,87 @@
+<div class="w-100 event-border">
+
+  <div class="event-box" *ngFor="let event of _events">
+
+    <div class="first-row">
+
+      <div>
+
+        <div class="title">{{event.name}} <span *ngIf="event.deletedAt"
+                                                class="text-warning archived-text">*Archived</span>
+        </div>
+
+        <div class="due-text">{{event.eventDate | date : 'short'}}</div>
+
+      </div>
+
+      <div class="d-flex">
+
+        <div [ngSwitch]="event.limitParticipants" *ngLet="event | participantsGoing as participantsGoing" class="me-3">
+          <div class="d-flex spot-progress" *ngSwitchCase="true">
+
+            <nz-progress [nzPercent]="getPercent(participantsGoing, event.numOfPeople)" [nzSteps]="event.numOfPeople"
+                         [nzShowInfo]="false" nzStrokeColor="#1890ff"></nz-progress>
+            <div class="ms-2">{{participantsGoing.length}}/{{event.numOfPeople}}</div>
+
+          </div>
+
+          <div *ngSwitchCase="false">{{participantsGoing.length}} participant{{participantsGoing.length === 1 ? '' : 's'}}</div>
+        </div>
+
+        <fa-icon *ngIf="!expandSet.has(event.id)" style="cursor: pointer" [icon]="arrowDown"
+                 (click)="expandSet.add(event.id)"></fa-icon>
+
+        <fa-icon *ngIf="expandSet.has(event.id)" style="cursor: pointer" [icon]="arrowUp"
+                 (click)="expandSet.delete(event.id)"></fa-icon>
+
+      </div>
+
+    </div>
+
+    <div *ngIf="expandSet.has(event.id)" class="second-row">
+
+      <div class="d-flex justify-content-evenly">
+
+        <div class="d-flex flex-column align-items-center" (click)="copyToClipboard(event)">
+          <fa-icon class="text-info" [icon]="copy"></fa-icon>
+          Copy
+        </div>
+
+        <a class="d-flex flex-column align-items-center" [href]="event.eventUrl" target="_blank"
+           style="text-decoration: none; color: white">
+          <fa-icon class="text-warning" [icon]="open"></fa-icon>
+          Open
+        </a>
+
+        <div class="d-flex flex-column align-items-center" (click)="editEvent.emit(event)">
+          <fa-icon class="text-primary" [icon]="edit"></fa-icon>
+          Edit
+        </div>
+
+        <div class="d-flex flex-column align-items-center" nz-popconfirm nzPopconfirmTitle="Are you sure?"
+             (nzOnConfirm)="archiveEvent.emit(event)">
+          <fa-icon class="text-danger" [icon]="archive"></fa-icon>
+          Archive
+        </div>
+
+      </div>
+
+      <nz-divider style="margin: 16px 0" *ngIf="event.eventParticipants.length > 0"></nz-divider>
+
+      <nz-list>
+        <nz-list-item *ngFor="let participant of event.eventParticipants">
+          <div>
+            <fa-icon *ngIf="participant.isGoing" [icon]="participantGoing" class="text-success me-2"></fa-icon>
+            <fa-icon *ngIf="!participant.isGoing" [icon]="participantNotGoing" class="text-danger me-2"></fa-icon>
+            {{participant.name}}
+          </div>
+          <fa-icon [icon]="participantChange" (click)="editParticipant.emit(participant)"></fa-icon>
+        </nz-list-item>
+      </nz-list>
+
+    </div>
+
+  </div>
+
+</div>
+

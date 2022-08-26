@@ -17,6 +17,7 @@ export class CreateEditEventComponent implements OnInit, OnDestroy {
   isVisible: boolean = false;
   saving = false;
   modalWidth = screen.width < 700 ? '95%' : '700px';
+  modalStyle = screen.width < 600 ? {top: '20px'} : {};
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

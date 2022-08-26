@@ -22,7 +22,7 @@ export const enum Roles {
 export interface Route {
   icon: IconDefinition,
   url: string,
-  permission: Permissions,
+  permission: Permissions | true,
   title: string
   queryParams: Record<string, string>
 }

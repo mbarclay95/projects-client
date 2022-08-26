@@ -10,6 +10,7 @@ import {DashboardLayoutComponent} from "./dashboard/dashboard-layout/dashboard-l
 import {TasksLayoutComponent} from "./tasks/tasks-layout/tasks-layout.component";
 import {EventsLayoutComponent} from "./events/events-layout/events-layout.component";
 import {EventSignupLayoutComponent} from "./event-signup/event-signup-layout/event-signup-layout.component";
+import {MobileHeaderResolver} from "./mobile-header.resolver";
 
 const routes: Routes = [
   {
@@ -17,33 +18,39 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'events', component: EventSignupLayoutComponent,
+    path: 'events', component: EventSignupLayoutComponent, resolve: {MobileHeaderResolver}, data: {headerTitle: 'Signup'},
     loadChildren: () => import('./event-signup/event-signup.module').then(m => m.EventSignupModule)
   },
   {
     path: 'app', canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [
       {
-        path: 'dashboard', component: DashboardLayoutComponent, data: {permission: Permissions.DASHBOARD_PAGE},
+        path: 'dashboard', component: DashboardLayoutComponent, resolve: {MobileHeaderResolver},
+        data: {permission: Permissions.DASHBOARD_PAGE, headerTitle: 'Dashboard'},
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
-        path: 'users', component: UsersLayoutComponent, data: {permission: Permissions.USERS_PAGE},
+        path: 'users', component: UsersLayoutComponent, resolve: {MobileHeaderResolver},
+        data: {permission: Permissions.USERS_PAGE, headerTitle: 'Users'},
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
       },
       {
-        path: 'goals', component: GoalsLayoutComponent, data: {permission: Permissions.GOALS_PAGE},
+        path: 'goals', component: GoalsLayoutComponent, resolve: {MobileHeaderResolver},
+        data: {permission: Permissions.GOALS_PAGE, headerTitle: 'Goals'},
         loadChildren: () => import('./goals/goals.module').then(m => m.GoalsModule)
       },
       {
-        path: 'backups', component: BackupsLayoutComponent, data: {permission: Permissions.BACKUPS_PAGE},
+        path: 'backups', component: BackupsLayoutComponent, resolve: {MobileHeaderResolver},
+        data: {permission: Permissions.BACKUPS_PAGE, headerTitle: 'Backups'},
         loadChildren: () => import('./backups/backups.module').then(m => m.BackupsModule)
       },
       {
-        path: 'tasks', component: TasksLayoutComponent, data: {permission: Permissions.TASKS_PAGE},
+        path: 'tasks', component: TasksLayoutComponent, resolve: {MobileHeaderResolver},
+        data: {permission: Permissions.TASKS_PAGE, headerTitle: 'Tasks'},
         loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule)
       },
       {
-        path: 'events', component: EventsLayoutComponent, data: {permission: Permissions.EVENTS_PAGE},
+        path: 'events', component: EventsLayoutComponent, resolve: {MobileHeaderResolver},
+        data: {permission: Permissions.EVENTS_PAGE, headerTitle: 'Events', showCreateButton: true},
         loadChildren: () => import('./events/events.module').then(m => m.EventsModule)
       }
     ]

@@ -7,14 +7,17 @@ import {LoginPageComponent} from "./pages/login-page/login-page.component";
 import {NzLayoutModule} from "ng-zorro-antd/layout";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzSpinModule} from "ng-zorro-antd/spin";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NzInputModule} from "ng-zorro-antd/input";
+import { MyProfileComponent } from './pages/my-profile/my-profile.component';
+import {NzDividerModule} from "ng-zorro-antd/divider";
 
 
 @NgModule({
   declarations: [
     AuthLayoutComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    MyProfileComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,9 @@ import {NzInputModule} from "ng-zorro-antd/input";
     NzButtonModule,
     NzSpinModule,
     ReactiveFormsModule,
-    NzInputModule
+    NzInputModule,
+    NzDividerModule,
+    FormsModule
   ]
 })
 export class AuthModule { }

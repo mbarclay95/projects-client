@@ -16,13 +16,10 @@ export class EventsResolver implements Resolve<void> {
   constructor(
     private eventsService: EventsService,
     private mobileFooterService: MobileFooterService,
-    private mobileHeaderService: MobileHeaderService
   ) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
-    this.mobileHeaderService.setTitle('Events');
-    this.mobileHeaderService.hideCreateButton();
     await this.eventsService.getEvents();
     this.mobileFooterService.setFooterButtons([]);
   }

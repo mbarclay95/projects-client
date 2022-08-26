@@ -1,10 +1,17 @@
 <ng-container *ngFor="let route of routes">
+
   <ul nz-menu nzMode="inline" nzTheme="dark"
       [ngClass]="{'ant-menu-vertical ant-menu-inline-collapsed': sideMenuClosed}">
+
     <li nz-menu-item [routerLink]="route.url" [nzMatchRouter]="true" [queryParams]="route.queryParams" style="padding-left: 24px"
         (click)="closeIfMobile()">
+
       <fa-icon class="anticon" [icon]="route.icon" style="padding-left: 9px"></fa-icon>
+
       <span>{{route.title}}</span>
+
     </li>
+
   </ul>
+
 </ng-container>

@@ -1,9 +1,10 @@
-.task-border {
+.event-border {
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px;
+  color: white;
 }
 
-.task-box {
+.event-box {
   width: 100%;
   box-sizing: border-box;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.4);
@@ -23,7 +24,7 @@
     justify-content: space-evenly;
     width: 100%;
     font-size: 13px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
 }
 
@@ -35,4 +36,15 @@
 .due-text {
   font-style: italic;
   font-size: 11px;
+}
+
+.archived-text {
+  font-style: italic;
+  font-size: 11px;
+}
+
+::ng-deep {
+  .ant-list-split .ant-list-item {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
 }

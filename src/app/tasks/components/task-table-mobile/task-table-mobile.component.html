@@ -40,7 +40,7 @@
 
     <div *ngIf="expandSet.has(task.id)" class="second-row">
 
-      <div class="d-flex justify-content-evenly mb-1">
+      <div class="d-flex justify-content-evenly">
 
         <div class="d-flex flex-column align-items-center" (click)="editTask.emit(task)">
           <fa-icon class="text-primary" [icon]="edit"></fa-icon>
@@ -54,6 +54,8 @@
         </div>
 
       </div>
+
+      <nz-divider style="margin: 16px 0" *ngIf="task.description"></nz-divider>
 
       {{task.description}}
 

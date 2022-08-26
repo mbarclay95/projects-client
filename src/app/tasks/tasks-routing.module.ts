@@ -6,15 +6,26 @@ import {WeeklyTasksPageComponent} from "./pages/weekly-tasks-page/weekly-tasks-p
 import {MyFamilyPageComponent} from "./pages/my-family-page/my-family-page.component";
 import {TasksPageComponent} from "./pages/tasks-page/tasks-page.component";
 import {FamiliesPageComponent} from "./pages/families-page/families-page.component";
+import {MobileHeaderResolver} from "../mobile-header.resolver";
 
 const routes: Routes = [
   {
     path: '', resolve: {TasksResolver}, children: [
-      {path: '', component: TaskTabsComponent },
-      {path: 'weekly-tasks', component: WeeklyTasksPageComponent},
-      {path: 'my-family', component: MyFamilyPageComponent},
-      {path: 'tasks', component: TasksPageComponent},
-      {path: 'families', component: FamiliesPageComponent},
+      {path: '', component: TaskTabsComponent},
+      {
+        path: 'weekly-tasks',
+        resolve: {MobileHeaderResolver},
+        data: {showCreateButton: true},
+        component: WeeklyTasksPageComponent
+      },
+      {path: 'my-family', resolve: {MobileHeaderResolver}, component: MyFamilyPageComponent},
+      {path: 'tasks', resolve: {MobileHeaderResolver}, data: {showCreateButton: true}, component: TasksPageComponent},
+      {
+        path: 'families',
+        resolve: {MobileHeaderResolver},
+        data: {showCreateButton: true},
+        component: FamiliesPageComponent
+      },
     ]
   }
 ];

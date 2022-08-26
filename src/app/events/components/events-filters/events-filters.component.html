@@ -2,11 +2,11 @@
 
   <div class="d-flex">
 
-    <input nz-input class="me-4" [ngModel]="ui.search" placeholder="search"
+    <input nz-input class="me-4 filter-boxes" [ngModel]="ui.search" placeholder="Search"
            (ngModelChange)="updateSearch($event)">
 
     <div class="d-flex align-items-center">
-      <div style="white-space: nowrap" class="me-2">Show Archived:</div>
+      <div style="white-space: nowrap; color: rgba(255, 255, 255, 0.5)" class="me-2">Show Archived:</div>
       <nz-switch [ngModel]="ui.showArchived" (ngModelChange)="eventsService.updateUi({showArchived: $event})"></nz-switch>
     </div>
 

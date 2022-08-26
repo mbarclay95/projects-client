@@ -30,7 +30,6 @@ export class TasksPageComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.isMobile) {
-      this.mobileHeaderService.showCreateButton();
       this.tasksService.updateUi({
         numOfDays: null,
         page: 1,

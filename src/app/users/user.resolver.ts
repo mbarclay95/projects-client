@@ -18,13 +18,10 @@ export class UserResolver implements Resolve<void> {
     private usersService: UsersService,
     private rolesService : RolesService,
     private mobileFooterService: MobileFooterService,
-    private mobileHeaderService: MobileHeaderService
   ) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
-    this.mobileHeaderService.setTitle('Users');
-    this.mobileHeaderService.hideCreateButton();
     await this.usersService.getUsers();
     await this.rolesService.getRoles();
     this.mobileFooterService.setFooterButtons([]);

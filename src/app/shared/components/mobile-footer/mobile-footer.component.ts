@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MobileFooterService} from "../../services/mobile-footer.service";
 import {NavigationEnd, Router} from "@angular/router";
-import {filter, Observable } from "rxjs";
+import {filter, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 
 @Component({

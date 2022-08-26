@@ -1,18 +1,27 @@
-<div class="w-100 d-flex justify-content-between align-items-center mb-4">
+<div class="w-100 d-flex justify-content-between align-items-center" *ngIf="!isMobile">
 
   <div style="font-size: 30px" class="text-white">Events</div>
 
   <button nz-button nzType="primary" (click)="createNewEvent()">Create Event</button>
 
 </div>
-<div class="w-100">
+
+<nz-divider *ngIf="!isMobile" style="margin: 16px 0"></nz-divider>
+
+<div class="w-100 events-page-container p-2">
 
   <app-events-filters *ngIf="eventsQuery.ui$ | async as ui" [ui]="ui"></app-events-filters>
 
-  <app-events-table [events]="eventsQuery.events$ | async" (editEvent)="openModal.next($event)"
-                    (archiveEvent)="archiveEvent($event)"
-                    (removeParticipant)="removeParticipant($event)"></app-events-table>
+  <app-events-table *ngIf="!isMobile" [events]="eventsQuery.events$ | async"
+                    (editEvent)="openEventModal.next($event)" (archiveEvent)="archiveEvent($event)"
+                    (editParticipant)="openParticipantModal.next($event)"></app-events-table>
+
+  <app-mobile-events-table *ngIf="isMobile" [events]="eventsQuery.events$ | async"
+                           (editEvent)="openEventModal.next($event)" (archiveEvent)="archiveEvent($event)"
+                           (editParticipant)="openParticipantModal.next($event)"></app-mobile-events-table>
 
 </div>
 
-<app-create-edit-event [openModal]="openModal.asObservable()"></app-create-edit-event>
+<app-create-edit-event [openModal]="openEventModal$"></app-create-edit-event>
+
+<app-edit-participant-modal [openModal]="openParticipantModal.asObservable()"></app-edit-participant-modal>

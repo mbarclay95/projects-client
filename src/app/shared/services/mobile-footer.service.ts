@@ -11,8 +11,12 @@ export class MobileFooterService {
 
   constructor() { }
 
-  setFooterButtons(footerButtons: FooterButton[]) {
+  setFooterButtons(footerButtons: FooterButton[]): void {
     this.footerButtonsSubject.next(footerButtons);
+  }
+
+  clearFooterButtons(): void {
+    this.footerButtonsSubject.next([]);
   }
 }
 

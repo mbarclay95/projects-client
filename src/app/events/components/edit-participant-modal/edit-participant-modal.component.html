@@ -1,0 +1,37 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Participant" [nzWidth]="modalWidth" (nzOnCancel)="isVisible = false"
+          nzOkText="Save" nzCancelText="Close" (nzOnOk)="signup()" [nzCancelDisabled]="saving" [nzStyle]="modalStyle"
+          [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
+
+  <ng-container *nzModalContent>
+
+    <ng-container *ngIf="eventParticipant">
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2"><span class="text-danger">*</span> Name:</div>
+
+        <input nz-input [(ngModel)]="eventParticipant.name" class="w-100">
+
+      </div>
+
+      <div class="w-100 mb-4 d-flex align-items-start">
+
+        <span class="text-danger me-1">*</span>
+        <nz-radio-group [(ngModel)]="eventParticipant.isGoing" nzButtonStyle="solid">
+          <label nz-radio-button [nzValue]="true">
+            <fa-icon [icon]="thumbsUp" class="me-1"></fa-icon> Going
+          </label>
+          <label nz-radio-button [nzValue]="false">
+            <fa-icon [icon]="thumbsDown" class="me-1"></fa-icon> Not Going
+          </label>
+        </nz-radio-group>
+
+      </div>
+
+      <div class="w-100 text-danger" style="font-style: italic" *ngIf="nameError">Please enter a name.</div>
+
+    </ng-container>
+
+  </ng-container>
+
+</nz-modal>

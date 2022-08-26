@@ -24,12 +24,10 @@ export class TasksResolver implements Resolve<void> {
     private tagsService: TagsService,
     private authQuery: AuthQuery,
     private mobileFooterService: MobileFooterService,
-    private mobileHeaderService: MobileHeaderService
   ) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
-    this.mobileHeaderService.setTitle('Tasks');
     if (screen.width < 600) {
       const footerButtons = [
         {

@@ -9,7 +9,6 @@ import {BackupsService} from "./services/backups/state/backups.service";
 import {BackupsPollingService} from "./services/backups-polling.service";
 import {ScheduledBackupsService} from "./services/scheduled-backups/state/scheduled-backups.service";
 import {MobileFooterService} from "../shared/services/mobile-footer.service";
-import {MobileHeaderService} from "../shared/services/mobile-header.service";
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +21,10 @@ export class BackupsResolver implements Resolve<void> {
     private scheduledBackupsService: ScheduledBackupsService,
     private backupsPollingService: BackupsPollingService,
     private mobileFooterService: MobileFooterService,
-    private mobileHeaderService: MobileHeaderService
   ) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
-    this.mobileHeaderService.setTitle('Backups');
-    this.mobileHeaderService.hideCreateButton();
     await this.backupsService.getBackups();
     await this.targetsService.getTargets();
     await this.scheduledBackupsService.getScheduledBackups();

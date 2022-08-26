@@ -1,5 +1,5 @@
 <nz-modal [(nzVisible)]="isVisible" nzTitle="Signup" [nzWidth]="modalWidth" (nzOnCancel)="isVisible = false"
-          nzOkText="Save" nzCancelText="Close" (nzOnOk)="signup()" [nzCancelDisabled]="saving"
+          nzOkText="Save" nzCancelText="Close" (nzOnOk)="signup()" [nzCancelDisabled]="saving" [nzStyle]="modalStyle"
           [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
 
   <ng-container *nzModalContent>

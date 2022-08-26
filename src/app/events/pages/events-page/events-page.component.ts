@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {EventsQuery} from "../../services/events/state/events.query";
-import {Subject} from "rxjs";
+import {Observable, Subject, merge} from "rxjs";
 import {createEvent, Event} from "../../models/event.model";
 import {EventsService} from "../../services/events/state/events.service";
 import {EventParticipant} from "../../models/event-participant";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {MobileHeaderService} from "../../../shared/services/mobile-header.service";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-events-page',
@@ -12,19 +14,28 @@ import {NzMessageService} from "ng-zorro-antd/message";
   styleUrls: ['./events-page.component.scss']
 })
 export class EventsPageComponent implements OnInit {
-  openModal: Subject<Event> = new Subject<Event>();
+  openEventModal: Subject<Event> = new Subject<Event>();
+  isMobile = screen.width < 600;
+  openEventModal$: Observable<Event> = merge(
+    this.mobileHeaderService.clickedButton$.pipe(
+      map(() => createEvent({}))
+    ),
+    this.openEventModal.asObservable()
+  );
+  openParticipantModal: Subject<EventParticipant> = new Subject<EventParticipant>();
 
   constructor(
     public eventsQuery: EventsQuery,
     public eventsService: EventsService,
-    private nzMessageService: NzMessageService
+    private nzMessageService: NzMessageService,
+    private mobileHeaderService: MobileHeaderService
   ) { }
 
   ngOnInit(): void {
   }
 
   createNewEvent() {
-    this.openModal.next(createEvent({id: 0}));
+    this.openEventModal.next(createEvent({id: 0}));
   }
 
   async archiveEvent(event: Event) {
@@ -36,16 +47,5 @@ export class EventsPageComponent implements OnInit {
     }
 
     this.nzMessageService.success('Event archived!');
-  }
-
-  async removeParticipant(participant: EventParticipant) {
-    try {
-      await this.eventsService.removeParticipant(participant);
-    } catch (e) {
-      this.nzMessageService.error('There was an error removing the participant.');
-      return;
-    }
-
-    this.nzMessageService.success(`${participant.name} removed!`);
   }
 }

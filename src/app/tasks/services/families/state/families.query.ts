@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 import { FamiliesStore, FamiliesState } from './families.store';
-import {combineLatest, filter, Observable} from "rxjs";
-import {Family} from "../../../models/family.model";
+import {combineLatest, filter, Observable, OperatorFunction, pipe, UnaryFunction} from "rxjs";
+import {Family, TaskStrategy} from "../../../models/family.model";
 import {map} from "rxjs/operators";
 import {User} from "../../../../users/models/user.model";
 import {AuthQuery} from "../../../../auth/services/state/auth.query";
+import {TaskPoint} from "../../../models/task-point.model";
 
 @Injectable({ providedIn: 'root' })
 export class FamiliesQuery extends QueryEntity<FamiliesState> {
@@ -15,16 +16,26 @@ export class FamiliesQuery extends QueryEntity<FamiliesState> {
     map(family => family?.color ?? '')
   );
 
+  myFamily$: Observable<Family> = this.selectActive().pipe(
+    filterNullish()
+  );
+
+  familyTaskStrategy$: Observable<TaskStrategy> = this.myFamily$.pipe(
+    map(myFamily => myFamily.taskStrategy)
+  );
+
+  taskPoints$: Observable<TaskPoint[]> = this.myFamily$.pipe(
+    map(myFamily => myFamily.taskPoints)
+  );
+
   authUser$: Observable<User> = combineLatest([
-    this.selectActive().pipe(
-      filter(family => !!family)
-    ),
+    this.myFamily$,
     this.authQuery.auth$,
   ]).pipe(
     map(([family, auth]) => {
       return (family as Family).members.find(u => u.id === auth.id) as User;
     })
-  )
+  );
 
   constructor(
     protected override store: FamiliesStore,
@@ -43,4 +54,10 @@ export class FamiliesQuery extends QueryEntity<FamiliesState> {
 
     return family.members.find(u => u.id === auth.id) as User;
   }
+}
+
+export function filterNullish<T>(): UnaryFunction<Observable<T | null | undefined>, Observable<T>> {
+  return pipe(
+    filter(x => !!x) as OperatorFunction<T | null |  undefined, T>
+  );
 }

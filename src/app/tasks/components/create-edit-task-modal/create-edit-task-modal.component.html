@@ -35,6 +35,18 @@
 
       </div>
 
+      <div *ngIf="(familiesQuery.familyTaskStrategy$ | async) === 'per task point'" class="w-100 mb-4">
+
+        <div class="">Task Points: <span class="text-danger">*</span></div>
+
+        <nz-select [ngModel]="task.taskPoint" (ngModelChange)="updateTaskPoint(task, $event)" class="w-100"
+                   [compareWith]="compareTaskPoints">
+          <nz-option *ngFor="let taskPoint of familiesQuery.taskPoints$ | async" [nzValue]="taskPoint"
+                     [nzLabel]="taskPoint.name + ' - ' + taskPoint.points + (taskPoint.points === 1 ? ' point' : ' points')"></nz-option>
+        </nz-select>
+
+      </div>
+
       <div class="w-100 mb-4">
 
         <div class="">Task Tags:</div>

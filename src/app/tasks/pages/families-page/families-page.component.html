@@ -4,4 +4,4 @@
                       (openFamilyModal)="openFamilyModal.emit($event)"></app-families-table>
 </div>
 
-<app-create-edit-family-modal [openModal]="createEditFamily"></app-create-edit-family-modal>
+<app-create-edit-family-modal *ngIf="isMobile" [openModal]="createEditFamily"></app-create-edit-family-modal>

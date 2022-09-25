@@ -48,6 +48,8 @@ import { TasksCompleteChartDataPipe } from './pipes/tasks-complete-chart-data.pi
 import {SharedModule} from "../shared/shared.module";
 import { TaskTableMobileComponent } from './components/task-table-mobile/task-table-mobile.component';
 import {NzEmptyModule} from "ng-zorro-antd/empty";
+import {NzListModule} from "ng-zorro-antd/list";
+import { TotalCompletedTasksPipe } from './pipes/total-completed-tasks.pipe';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,7 @@ import {NzEmptyModule} from "ng-zorro-antd/empty";
     TasksFiltersComponent,
     TasksCompleteChartDataPipe,
     TaskTableMobileComponent,
+    TotalCompletedTasksPipe,
   ],
     imports: [
         CommonModule,
@@ -103,6 +106,7 @@ import {NzEmptyModule} from "ng-zorro-antd/empty";
         NzPopconfirmModule,
         SharedModule,
         NzEmptyModule,
+        NzListModule,
     ]
 })
 export class TasksModule { }

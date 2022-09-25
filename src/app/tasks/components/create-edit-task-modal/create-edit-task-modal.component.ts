@@ -7,6 +7,7 @@ import {AuthQuery} from "../../../auth/services/state/auth.query";
 import {FamiliesQuery} from "../../services/families/state/families.query";
 import {differenceInCalendarDays} from "date-fns";
 import {TagsService} from "../../services/tags.service";
+import {TaskPoint} from "../../models/task-point.model";
 
 @Component({
   selector: 'app-create-edit-task-modal',
@@ -28,7 +29,7 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
     private tasksService: TasksService,
     private nzMessageService: NzMessageService,
     private authQuery: AuthQuery,
-    private familiesQuery: FamiliesQuery,
+    public familiesQuery: FamiliesQuery,
     public tagsService: TagsService
   ) {
   }
@@ -85,5 +86,13 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
       this.task.frequencyUnit = undefined;
       this.task.dueDate = undefined;
     }
+  }
+
+  updateTaskPoint(task: Task, taskPoint: TaskPoint) {
+    task.taskPoint = {...taskPoint};
+  }
+
+  compareTaskPoints(a?: TaskPoint, b?: TaskPoint) {
+    return a?.id === b?.id;
   }
 }

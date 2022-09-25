@@ -1,6 +1,7 @@
 <div class="d-flex align-items-center justify-content-center w-100 mb-2">
 
-  <div class="border me-3" style="background: {{myFamily.color}}; border-radius: 2px; width: 30px; height: 30px; cursor: pointer"
+  <div class="border me-3"
+       style="background: {{myFamily.color}}; border-radius: 2px; width: 30px; height: 30px; cursor: pointer"
        nz-popover nzPopoverTrigger="click" [nzPopoverContent]="colorPicker" nzPopoverPlacement="bottomLeft"
        (nzPopoverVisibleChange)="saveColor($event)"></div>
 
@@ -9,7 +10,8 @@
   </ng-template>
 
   <div style="font-size: 25px; cursor: pointer" *ngIf="!editFamilyName"
-       (click)="editFamilyName = true">{{myFamily.name}} Family</div>
+       (click)="editFamilyName = true">{{myFamily.name}} Family
+  </div>
 
   <input nz-input *ngIf="editFamilyName" nzSize="large" [ngModel]="myFamily.name" style="width: auto"
          (ngModelChange)="saveFamilyName($event)" [ngModelOptions]="{updateOn: 'blur'}" (blur)="editFamilyName = false">
@@ -20,7 +22,8 @@
 
   <div>Total family tasks: <strong>{{myFamily.totalFamilyTasks}}</strong></div>
 
-  <div>Tasks per week per person: <strong>{{myFamily.tasksPerWeek | number : '1.2-2'}}</strong></div>
+  <div>Task{{myFamily.taskStrategy === 'per task' ? 's' : ' points'}} per week per person:
+    <strong>{{myFamily.tasksPerWeek | number : '1.2-2'}}</strong></div>
 
 </div>
 

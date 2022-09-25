@@ -1,10 +1,13 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {createFamily, Family} from "../../models/family.model";
+import {createFamily, Family, TaskStrategy} from "../../models/family.model";
 import {FamiliesService} from "../../services/families/state/families.service";
 import {User} from "../../../users/models/user.model";
 import {UsersQuery} from "../../../users/services/state/users.query";
+import {faEdit, faMinus, faPlus, faSave} from "@fortawesome/free-solid-svg-icons";
+import {createTaskPoint, TaskPoint} from "../../models/task-point.model";
+import {FamiliesQuery} from "../../services/families/state/families.query";
 
 @Component({
   selector: 'app-create-edit-family-modal',
@@ -17,13 +20,20 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   family!: Family;
   isVisible: boolean = false;
   saving = false;
+  plus = faPlus;
+  save = faSave;
+  edit = faEdit;
+  remove = faMinus;
   modalStyle = screen.width < 600 ? {top: '20px'} : {};
   modalWidth = screen.width < 600 ? '95%' : '500px';
+  editTaskPointId: number | null = null;
+  newTaskPoint: TaskPoint | null = null;
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 
   constructor(
     private familiesService: FamiliesService,
+    private familiesQuery: FamiliesQuery,
     public usersQuery: UsersQuery,
     private nzMessageService: NzMessageService
   ) {
@@ -66,4 +76,51 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   updateFamilyMembers(userIds: number[]) {
     this.family.members = this.usersQuery.getUsersByIds(userIds);
   }
+
+  createNewTaskPoint(): void {
+    this.newTaskPoint = createTaskPoint({});
+  }
+
+  async saveNewTaskPoint(): Promise<void> {
+    if (!this.newTaskPoint) {
+      return;
+    }
+    try {
+      await this.familiesService.saveTaskPoint(this.newTaskPoint, this.family.id);
+    } catch (e) {
+      this.nzMessageService.error("There was an error saving the task point.");
+      return;
+    }
+    this.updateFamilyTaskPoints();
+    this.newTaskPoint = null
+  }
+
+  async updateTaskPoint(taskPoint: TaskPoint): Promise<void> {
+    try {
+      await this.familiesService.updateTaskPoint(taskPoint, this.family.id);
+    } catch (e) {
+      this.nzMessageService.error("There was an error removing the task point.");
+      return;
+    }
+    this.editTaskPointId = null;
+    this.updateFamilyTaskPoints();
+  }
+
+  async removeTaskPoint(taskPoint: TaskPoint): Promise<void> {
+    try {
+      await this.familiesService.removeTaskPoint(taskPoint, this.family.id);
+    } catch (e) {
+      this.nzMessageService.error("There was an error removing the task point.");
+      return;
+    }
+    this.updateFamilyTaskPoints();
+  }
+
+  updateFamilyTaskPoints() {
+    const family = this.familiesQuery.getEntity(this.family.id);
+    if (family) {
+      this.family.taskPoints = [...family.taskPoints].map(taskPoint => ({...taskPoint}));
+    }
+  }
+
 }

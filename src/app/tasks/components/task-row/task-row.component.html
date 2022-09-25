@@ -21,12 +21,20 @@
 
   </div>
 
+  <ng-container [ngSwitch]="familiesQuery.familyTaskStrategy$ | async">
 
+    <ng-container *ngSwitchCase="'per task'">
 
-  <fa-icon *ngIf="task.ownerType === 'user'" [icon]="personal" class="me-2 type-icon fa-xl"
-           style="color: {{authQuery.myColor$ | async}}"></fa-icon>
+      <fa-icon *ngIf="task.ownerType === 'user'" [icon]="personal" class="me-2 type-icon fa-xl"
+               style="color: {{authQuery.myColor$ | async}}"></fa-icon>
 
-  <fa-icon *ngIf="task.ownerType === 'family'" [icon]="family" class="me-2 type-icon fa-xl"
-           style="color: {{familiesQuery.myFamilyColor$ | async}}"></fa-icon>
+      <fa-icon *ngIf="task.ownerType === 'family'" [icon]="family" class="me-2 type-icon fa-xl"
+               style="color: {{familiesQuery.myFamilyColor$ | async}}"></fa-icon>
+
+    </ng-container>
+
+    <fa-icon *ngSwitchCase="'per task point'" [icon]="getIcon(task.taskPoint?.points)" class="me-2 type-icon fa-xl text-success"></fa-icon>
+
+  </ng-container>
 
 </div>

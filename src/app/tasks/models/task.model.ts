@@ -1,3 +1,5 @@
+import {createTaskPoint, TaskPoint} from "./task-point.model";
+
 export interface Task {
   id: number;
   name: string;
@@ -11,6 +13,7 @@ export interface Task {
   frequencyAmount?: number;
   frequencyUnit?: 'day' | 'week' | 'month';
   tags: string[];
+  taskPoint?: TaskPoint;
 }
 
 export type TaskOwnerType = 'family' | 'user';
@@ -23,11 +26,12 @@ export function createTask(params: Partial<Task>) {
     clearedAt: params.clearedAt ? new Date(params.clearedAt) : null,
     dueDate: params.dueDate ? new Date(params.dueDate) : null,
     description: params.description ?? null,
-    ownerType: params.ownerType ?? 'user',
+    ownerType: params.ownerType ?? 'family',
     ownerId: params.ownerId ?? 0,
     recurring: params.recurring ?? false,
     frequencyAmount: params.frequencyAmount,
     frequencyUnit: params.frequencyUnit,
     tags: params.tags ? params.tags : [],
+    taskPoint: params.taskPoint ? createTaskPoint(params.taskPoint) : undefined,
   } as Task;
 }

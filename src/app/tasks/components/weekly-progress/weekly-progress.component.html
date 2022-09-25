@@ -7,7 +7,7 @@
     </div>
 
     <div class="mb-1" style="font-size: 14px">{{daysTillEndOfWeek}} days left
-      ~ {{user.taskUserConfig?.completedFamilyTasks?.length}}/{{user.taskUserConfig?.tasksPerWeek}} completed
+      ~ {{user | totalCompletedTasks}}/{{user.taskUserConfig?.tasksPerWeek}} {{(familiesQuery.familyTaskStrategy$ | async) === 'per task' ? 'completed' : 'points gained'}}
     </div>
 
   </div>

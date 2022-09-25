@@ -1,7 +1,7 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(family?.id === 0 ? 'Create' : 'Edit') + ' Family'" [nzWidth]="modalWidth"
-          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveFamily()"
-          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false"
-          [nzStyle]="modalStyle">
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(family?.id === 0 ? 'Create' : 'Edit') + ' Family'"
+          [nzWidth]="modalWidth" (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close"
+          (nzOnOk)="saveFamily()" [nzCancelDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false"
+          [nzOkDisabled]="saving || !!editTaskPointId || !!newTaskPoint" [nzStyle]="modalStyle">
 
   <ng-container *nzModalContent>
 
@@ -12,6 +12,89 @@
         <div class="mb-2">Family Name:</div>
 
         <input nz-input [(ngModel)]="family.name" class="w-100">
+
+      </div>
+
+      <div class="w-100 mb-4 d-flex justify-content-between align-items-center">
+
+        <div class="">Task Type:</div>
+
+        <nz-radio-group [(ngModel)]="family.taskStrategy" nzButtonStyle="solid">
+          <label nz-radio-button nzValue="per task">Per Task</label>
+          <label nz-radio-button nzValue="per task point">Per Task Point</label>
+        </nz-radio-group>
+
+      </div>
+
+      <div class="w-100 mb-4" *ngIf="family.taskStrategy === 'per task point'">
+
+        <nz-list>
+
+          <nz-list-header class="d-flex justify-content-between">
+
+            <div>Task Points:</div>
+
+            <fa-icon class="text-primary cursor-pointer" [icon]="plus" (click)="createNewTaskPoint()"></fa-icon>
+
+          </nz-list-header>
+
+          <nz-list-item *ngFor="let taskPoint of family.taskPoints" class="d-flex justify-content-between">
+
+            <ng-container *ngIf="taskPoint.id !== editTaskPointId">
+
+              <div class="d-flex justify-content-start">
+
+                <div style="font-size: 15px">{{taskPoint.name}}</div>
+
+                <div class="mx-2">-</div>
+
+                <div class="" style="font-style: italic">{{taskPoint.points}} points</div>
+
+              </div>
+
+              <div class="d-flex">
+
+                <button nz-button [disabled]="editTaskPointId !== null" (click)="editTaskPointId = taskPoint.id"
+                        class="me-2">
+                  <fa-icon [icon]="edit" class="text-primary"></fa-icon>
+                </button>
+
+                <button nz-button [disabled]="editTaskPointId !== null" (click)="removeTaskPoint(taskPoint)">
+                  <fa-icon [icon]="remove" class="text-danger"></fa-icon>
+                </button>
+
+              </div>
+
+            </ng-container>
+
+            <ng-container *ngIf="taskPoint.id === editTaskPointId">
+
+              <input nz-input [(ngModel)]="taskPoint.name" class="me-2" placeholder="Name">
+
+              <nz-input-number [(ngModel)]="taskPoint.points" [nzMin]="0" nzPlaceHolder="Points"
+                               class="me-2"></nz-input-number>
+
+              <button nz-button [disabled]="taskPoint.name === ''" (click)="updateTaskPoint(taskPoint)">
+                <fa-icon [icon]="save" class="text-success"></fa-icon>
+              </button>
+
+            </ng-container>
+
+          </nz-list-item>
+
+          <nz-list-item *ngIf="newTaskPoint !== null" class="d-flex">
+
+            <input nz-input [(ngModel)]="newTaskPoint.name" class="me-2" placeholder="Name">
+
+            <nz-input-number [(ngModel)]="newTaskPoint.points" [nzMin]="0" nzPlaceHolder="Points"
+                             class="me-2"></nz-input-number>
+
+            <button nz-button [disabled]="newTaskPoint.name === ''" (click)="saveNewTaskPoint()">
+              <fa-icon [icon]="save" class="text-success"></fa-icon>
+            </button>
+
+          </nz-list-item>
+        </nz-list>
 
       </div>
 

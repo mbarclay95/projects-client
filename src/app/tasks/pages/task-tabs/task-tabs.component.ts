@@ -54,6 +54,7 @@ export class TaskTabsComponent implements OnInit {
   }
 
   createEntity() {
+    console.log('clicked on tabs');
     switch (this.selectedTab) {
       case "Family":
         this.openFamilyModal.next(createFamily({id: 0}));

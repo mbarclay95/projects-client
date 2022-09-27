@@ -9,8 +9,12 @@
 
   <a target="_blank" [href]="site.url" style="color: rgba(255, 255, 255, 0.85); text-decoration: none;"
      class="d-flex w-100">
-
-    <img *ngIf="site.siteImage" [src]="site.siteImage.imagePath" class="me-3" style="height: 40px">
+     
+     <div class="d-flex justify-content-center me-2" style="width: 50px">
+         
+         <img *ngIf="site.siteImage" [src]="site.siteImage.imagePath" class="" style="height: 40px">
+         
+     </div>
 
     <div>
 

@@ -58,10 +58,8 @@ export class LoginService {
     try {
       await this.authService.getMe();
     } catch (e) {
-      this.authStorageService.clearToken();
       return false;
     }
-
     await this.router.navigateByUrl(this.getRedirectUrl());
 
     return true;
@@ -87,6 +85,7 @@ export class LoginService {
 
   async logout(): Promise<void> {
     await this.authService.logout();
+    this.authStorageService.clearToken();
     await this.router.navigateByUrl('login');
   }
 

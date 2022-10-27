@@ -8,7 +8,9 @@
 
         <div class="title">{{task.name}}</div>
 
-        <div class="due-text">Due: {{task.dueDate | date}}</div>
+        <div *ngIf="task.isActive" class="due-text">Due: {{task.dueDate | date}}</div>
+
+        <div *ngIf="!task.isActive" class="due-text text-warning">*Paused</div>
 
       </div>
 

@@ -9,6 +9,7 @@ import {TasksQuery} from "./tasks.query";
 import {TagsService} from "../../tags.service";
 import {FamiliesService} from "../../families/state/families.service";
 import {Pagination} from "../../../../models/pagination.model";
+import {setLoading} from '@datorama/akita';
 
 @Injectable({providedIn: 'root'})
 export class TasksService {
@@ -26,6 +27,7 @@ export class TasksService {
 
   async getTasks(queryString: string): Promise<void> {
     await firstValueFrom(this.http.get<Task[] | Pagination<Task>>(`${environment.apiUrl}/tasks?${queryString}`).pipe(
+      setLoading(this.tasksStore),
       map(tasks => {
         if ('total' in tasks) {
           this.tasksStore.update({ui: {...this.tasksQuery.getUi(), ...{total: tasks.total}}});

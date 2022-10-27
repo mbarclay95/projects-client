@@ -7,6 +7,14 @@
 
     <div *ngIf="task">
 
+      <div *ngIf="task.id !== 0 && task.recurring" class="w-100 d-flex justify-content-between align-items-center mb-4">
+
+        <div class="">Pause Recurring Task:</div>
+
+        <nz-switch [ngModel]="!task.isActive" (ngModelChange)="task.isActive = !$event"></nz-switch>
+
+      </div>
+
       <div class="w-100 mb-4">
 
         <div class="mb-2">Task Name: <span class="text-danger">*</span></div>
@@ -59,7 +67,7 @@
 
       <div class="w-100 d-flex justify-content-between align-items-center mb-4">
 
-        <div class="mb-2">Recurring:</div>
+        <div class="">Recurring:</div>
 
         <nz-switch [(ngModel)]="task.recurring" (ngModelChange)="updateRecurring($event)"
                    [nzDisabled]="task.id !== 0"></nz-switch>
@@ -97,10 +105,10 @@
 
       <div class="w-100 mb-4" *ngIf="task.recurring">
 
-        <div class="mb-2">Start Date: <span class="text-danger">*</span></div>
+        <div class="mb-2">{{task.id === 0 ? 'First' : 'Next'}} Due Date: <span class="text-danger">*</span></div>
 
         <nz-date-picker [(ngModel)]="task.dueDate" class="w-100" [nzDisabledDate]="disabledDate"
-                        nzFormat="MM/dd/yyyy" [nzDisabled]="task.id !== 0"></nz-date-picker>
+                        nzFormat="MM/dd/yyyy"></nz-date-picker>
 
       </div>
 

@@ -35,7 +35,8 @@ export class TasksPageComponent implements OnInit {
         page: 1,
         completedStatus: 'notCompleted',
         search: null,
-        tags: []
+        tags: [],
+        showInactive: true
       });
     }
   }

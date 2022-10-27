@@ -14,6 +14,7 @@ export interface Task {
   frequencyUnit?: 'day' | 'week' | 'month';
   tags: string[];
   taskPoint?: TaskPoint;
+  isActive: boolean
 }
 
 export type TaskOwnerType = 'family' | 'user';
@@ -33,5 +34,6 @@ export function createTask(params: Partial<Task>) {
     frequencyUnit: params.frequencyUnit,
     tags: params.tags ? params.tags : [],
     taskPoint: params.taskPoint ? createTaskPoint(params.taskPoint) : undefined,
+    isActive: params.isActive ?? true
   } as Task;
 }

@@ -24,6 +24,10 @@ export class FamiliesQuery extends QueryEntity<FamiliesState> {
     map(myFamily => myFamily.taskStrategy)
   );
 
+  isPerTaskPoint$: Observable<boolean> = this.familyTaskStrategy$.pipe(
+    map(strategy => strategy === 'per task point')
+  );
+
   taskPoints$: Observable<TaskPoint[]> = this.myFamily$.pipe(
     map(myFamily => myFamily.taskPoints)
   );

@@ -34,7 +34,8 @@ export class WeeklyTasksPageComponent implements OnInit {
         recurringType: 'both',
         completedStatus: 'notCompleted',
         search: null,
-        tags: []
+        tags: [],
+        showInactive: false
       });
     }
   }

@@ -1,4 +1,4 @@
-<div class="w-100 task-page-container p-2">
+<div class="w-100 task-page-container p-2" *ngIf="!(tasksQuery.selectLoading() | async)">
 
   <app-weekly-progress [user]="familiesQuery.authUser$ | async"></app-weekly-progress>
 

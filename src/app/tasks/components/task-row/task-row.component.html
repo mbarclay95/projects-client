@@ -3,13 +3,16 @@
   <div class="d-flex align-items-center">
 
     <label nz-checkbox [ngModel]="!!task.completedAt" (ngModelChange)="completedTask(task.id, $event)"
-           class="me-3"></label>
+           class="me-2"></label>
 
 <!--    <fa-icon *ngIf="task.ownerType === 'user'" [icon]="personal" class="me-2 type-icon fa-xl"-->
 <!--             style="color: {{authQuery.myColor$ | async}}"></fa-icon>-->
 
 <!--    <fa-icon *ngIf="task.ownerType === 'family'" [icon]="family" class="me-2 type-icon fa-xl"-->
 <!--             style="color: {{familiesQuery.myFamilyColor$ | async}}"></fa-icon>-->
+
+    <fa-icon *ngIf="familiesQuery.isPerTaskPoint$ | async" [icon]="getIcon(task.taskPoint?.points)"
+             class="me-2 type-icon fa-xl {{'color-' + task.taskPoint?.points}}"></fa-icon>
 
     <div>
 
@@ -21,20 +24,14 @@
 
   </div>
 
-  <ng-container [ngSwitch]="familiesQuery.familyTaskStrategy$ | async">
+  <div class="d-flex justify-content-center" style="width: 30px">
 
-    <ng-container *ngSwitchCase="'per task'">
+    <fa-icon *ngIf="task.ownerType === 'user'" [icon]="personal" class="type-icon fa-xl"
+             style="color: rgba(255, 255, 255, 0.3)"></fa-icon>
 
-      <fa-icon *ngIf="task.ownerType === 'user'" [icon]="personal" class="me-2 type-icon fa-xl"
-               style="color: {{authQuery.myColor$ | async}}"></fa-icon>
+    <fa-icon *ngIf="task.ownerType === 'family'" [icon]="family" class="type-icon fa-xl"
+             style="color: rgba(255, 255, 255, 0.3)"></fa-icon>
 
-      <fa-icon *ngIf="task.ownerType === 'family'" [icon]="family" class="me-2 type-icon fa-xl"
-               style="color: {{familiesQuery.myFamilyColor$ | async}}"></fa-icon>
-
-    </ng-container>
-
-    <fa-icon *ngSwitchCase="'per task point'" [icon]="getIcon(task.taskPoint?.points)" class="me-2 type-icon fa-xl text-success"></fa-icon>
-
-  </ng-container>
+  </div>
 
 </div>

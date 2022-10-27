@@ -38,7 +38,8 @@ export class TaskTabsComponent implements OnInit {
       recurringType: 'both',
       completedStatus: 'notCompleted',
       search: null,
-      tags: []
+      tags: [],
+      showInactive: false
     });
   }
 
@@ -49,7 +50,8 @@ export class TaskTabsComponent implements OnInit {
       page: 1,
       search: null,
       completedStatus: 'notCompleted',
-      tags: []
+      tags: [],
+      showInactive: true
     });
   }
 

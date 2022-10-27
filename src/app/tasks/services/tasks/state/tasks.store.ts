@@ -19,6 +19,7 @@ export interface TaskUiState {
   numOfDays: number|null;
   search: string|null;
   tags: string[];
+  showInactive: boolean;
 }
 
 @Injectable({providedIn: 'root'})
@@ -39,7 +40,8 @@ export class TasksStore extends EntityStore<TasksState> {
         sortDir: 'desc',
         numOfDays: null,
         search: null,
-        tags: []
+        tags: [],
+        showInactive: false
       }
     });
   }

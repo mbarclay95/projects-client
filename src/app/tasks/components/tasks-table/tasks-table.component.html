@@ -27,7 +27,8 @@
           </button>
         </td>
         <td>{{task.name}}</td>
-        <td>{{task.dueDate | date : 'shortDate'}}</td>
+        <td *ngIf="task.isActive">{{task.dueDate | date : 'shortDate'}}</td>
+        <td *ngIf="!task.isActive" class="text-warning" style="font-style: italic">*Paused</td>
         <td style="width: 18px; text-align: center">
           <fa-icon *ngIf="task.recurring" [icon]="repeat"></fa-icon>
           <fa-icon *ngIf="!task.recurring" [icon]="single"></fa-icon>

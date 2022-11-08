@@ -28,7 +28,11 @@ export class AppComponent {
     public mobileHeaderService: MobileHeaderService,
     private router: Router
   ) {
-    this.getStartSideMenu();
+    if (this.isMobile) {
+        this.sideMenuClosed = true;
+    } else {
+        this.getStartSideMenu();
+    }
     this.subscribeToRouter();
   }
 

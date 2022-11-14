@@ -10,7 +10,7 @@ import {FamiliesQuery} from "../../services/families/state/families.query";
 })
 export class WeeklyProgressComponent implements OnInit {
   @Input() user!: User | null;
-  daysTillEndOfWeek = differenceInDays(endOfWeek(new Date(), {weekStartsOn: 1}), new Date());
+  daysTillEndOfWeek = differenceInDays(endOfWeek(new Date(), {weekStartsOn: 1}), new Date()) + 1;
 
   constructor(
     public familiesQuery: FamiliesQuery

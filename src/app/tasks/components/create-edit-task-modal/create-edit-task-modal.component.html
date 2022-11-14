@@ -79,7 +79,7 @@
         <div class="mb-2">Due Date: <span class="text-danger">*</span></div>
 
         <nz-date-picker [(ngModel)]="task.dueDate" class="w-100" [nzDisabledDate]="disabledDate"
-                        nzFormat="MM/dd/yyyy"></nz-date-picker>
+                        nzFormat="MM/dd/yyyy" [nzInputReadOnly]="true"></nz-date-picker>
 
       </div>
 
@@ -108,7 +108,7 @@
         <div class="mb-2">{{task.id === 0 ? 'First' : 'Next'}} Due Date: <span class="text-danger">*</span></div>
 
         <nz-date-picker [(ngModel)]="task.dueDate" class="w-100" [nzDisabledDate]="disabledDate"
-                        nzFormat="MM/dd/yyyy"></nz-date-picker>
+                        nzFormat="MM/dd/yyyy" [nzInputReadOnly]="true"></nz-date-picker>
 
       </div>
 

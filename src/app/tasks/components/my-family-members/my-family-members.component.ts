@@ -7,6 +7,7 @@ import {faArrowRotateLeft, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {Task} from "../../models/task.model";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {TasksService} from "../../services/tasks/state/tasks.service";
+import {FamiliesQuery} from '../../services/families/state/families.query';
 
 @Component({
   selector: 'app-my-family-members',
@@ -25,6 +26,7 @@ export class MyFamilyMembersComponent implements OnInit {
 
   constructor(
     private familiesService: FamiliesService,
+    public familiesQuery: FamiliesQuery,
     private nzMessageService: NzMessageService,
     private tasksService: TasksService
   ) { }

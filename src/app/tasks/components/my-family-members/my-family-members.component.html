@@ -26,14 +26,15 @@
 
     </div>
 
-    <div class="d-flex w-100 flex-column align-items-center mb-4">
-
-      <!--      <div>Total personal tasks: <strong>{{member.taskUserConfig?.totalUserTasks}}</strong></div>-->
-
-    </div>
-
     <nz-progress nzType="circle" [nzPercent]="member | weeklyProgressPercent : false"
-                 class="mb-4"></nz-progress>
+                 class="mb-4" [nzFormat]="taskProgress"></nz-progress>
+
+    <ng-template #taskProgress>
+      <span style="font-size: 19px; line-height: 1.3">
+        {{member | totalCompletedTasks}}/{{member.taskUserConfig?.tasksPerWeek}}<br>
+        {{(familiesQuery.familyTaskStrategy$ | async) === 'per task' ? 'tasks' : 'points'}}
+      </span>
+    </ng-template>
 
     <div class="w-100 d-flex justify-content-center align-items-center mb-2"
          *ngFor="let task of member.taskUserConfig?.completedFamilyTasks">
@@ -51,9 +52,6 @@
     </div>
 
     <nz-divider *ngIf="isMobile"></nz-divider>
-
-    <!--    <ngx-charts-pie-chart [results]="member.taskUserConfig | tasksCompleteChartData" [labels]="true"-->
-    <!--                          [doughnut]="true" [legend]="false" [maxLabelLength]="12"></ngx-charts-pie-chart>-->
 
   </div>
 

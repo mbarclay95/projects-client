@@ -1,13 +1,22 @@
-import { Injectable } from '@angular/core';
-import { QueryEntity } from '@datorama/akita';
+import {Injectable} from '@angular/core';
+import {QueryEntity} from '@datorama/akita';
 import {TasksStore, TasksState, TaskUiState} from './tasks.store';
 import {Observable} from "rxjs";
 import {Task} from "../../../models/task.model";
 import {map} from "rxjs/operators";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class TasksQuery extends QueryEntity<TasksState> {
   tasks$: Observable<Task[]> = this.selectAll();
+  sortedTasks$: Observable<Task[]> = this.tasks$.pipe(
+    map(tasks => tasks.sort((a, b) => {
+      if (a.priority === b.priority) {
+        return (a.dueDate?.getTime() ?? 0) - (b.dueDate?.getTime() ?? 0);
+      }
+
+      return b.priority - a.priority;
+    }))
+  );
   ui$: Observable<TaskUiState> = this.select().pipe(
     map(state => state.ui)
   );

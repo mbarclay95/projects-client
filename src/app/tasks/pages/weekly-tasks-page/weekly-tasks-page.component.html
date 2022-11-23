@@ -2,7 +2,7 @@
 
   <app-weekly-progress [user]="familiesQuery.authUser$ | async"></app-weekly-progress>
 
-  <app-tasks-list [tasks]="tasksQuery.tasks$ | async"></app-tasks-list>
+  <app-tasks-list [tasks]="tasksQuery.sortedTasks$ | async"></app-tasks-list>
 
 </div>
 

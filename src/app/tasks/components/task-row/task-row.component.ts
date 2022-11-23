@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Task} from "../../models/task.model";
-import {fa0, fa1, fa2, fa3, faPeopleRoof, faUser} from "@fortawesome/free-solid-svg-icons";
+import {fa0, fa1, fa2, fa3, faFlag, faPeopleRoof, faStar, faUser} from "@fortawesome/free-solid-svg-icons";
 import {FamiliesQuery} from "../../services/families/state/families.query";
 import {AuthQuery} from "../../../auth/services/state/auth.query";
 import {TasksService} from "../../services/tasks/state/tasks.service";
@@ -23,6 +23,7 @@ export class TaskRowComponent implements OnInit {
   onePoint = fa1;
   twoPoints = fa2;
   threePoints = fa3;
+  flag = faFlag;
 
   constructor(
     public familiesQuery: FamiliesQuery,

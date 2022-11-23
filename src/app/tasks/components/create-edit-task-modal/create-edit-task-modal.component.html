@@ -23,6 +23,14 @@
 
       </div>
 
+      <div class="w-100 d-flex justify-content-between align-items-center mb-4">
+
+        <div class="">High Priority:</div>
+
+        <nz-switch [ngModel]="task.priority === 1" (ngModelChange)="task.priority = !!$event ? 1 : 0"></nz-switch>
+
+      </div>
+
       <div class="w-100 mb-4">
 
         <div class="mb-2">Description:</div>

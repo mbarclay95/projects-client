@@ -9,6 +9,9 @@ import {map} from "rxjs/operators";
 @Injectable({ providedIn: 'root' })
 export class FoldersQuery extends QueryEntity<FolderState> {
   folders$: Observable<Folder[]> = this.selectAll();
+  sortedAndFilteredFolders$: Observable<Folder[]> = this.folders$.pipe(
+    map(folders => folders.filter(f => f.show).sort((a, b) => a.sort - b.sort))
+  );
 
   gridFormattedFolders$: Observable<Folder[][]> = this.folders$.pipe(
     map(o => {

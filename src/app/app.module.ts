@@ -21,13 +21,20 @@ import {NzMessageModule} from "ng-zorro-antd/message";
 import {SharedModule} from "./shared/shared.module";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzSpinModule} from "ng-zorro-antd/spin";
+import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 
 registerLocaleData(en);
 
+const config: SocketIoConfig = {
+  url: 'ws://10.5.10.11:3001/', options: {
+    transports: ['websocket']
+  }
+};
+
 @NgModule({
-    declarations: [
-        AppComponent,
-    ],
+  declarations: [
+    AppComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -43,16 +50,17 @@ registerLocaleData(en);
     SharedModule,
     NzButtonModule,
     NzSpinModule,
+    SocketIoModule.forRoot(config)
   ],
-    providers: [
-        {provide: NZ_I18N, useValue: en_US},
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true
-        }
-    ],
-    bootstrap: [AppComponent]
+  providers: [
+    {provide: NZ_I18N, useValue: en_US},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

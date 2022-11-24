@@ -75,7 +75,7 @@ export class FoldersService {
 
   async deleteSite(folderId: number, siteId: number): Promise<void> {
     await this.http.delete(`${environment.apiUrl}/sites/${siteId}`).toPromise();
-    await this.getFolders(); // refresh so that sorts will be up to date
+    await this.getFolders(); // refresh so that sorts will be up to-date
   }
 
   toggleEditMode(): void {

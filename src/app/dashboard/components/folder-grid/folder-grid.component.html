@@ -10,19 +10,53 @@
 
 </div>
 
+<div *ngIf="uptimeKumaService.hasDownItems$ | async" class="site-down p-4 m-2 d-flex align-items-center">
+
+  <fa-icon [icon]="down" class="text-danger fa-xl"></fa-icon>
+
+  <div class="ms-3">
+
+    <h4 class="m-0" *ngFor="let item of uptimeKumaService.downItems$ | async">
+
+      {{item.name}} is<span style="font-style: italic"
+                            [ngClass]="{'text-warning': item.lastHeartBeat?.status === sitePending, 'text-danger': item.lastHeartBeat?.status === siteDown}">
+      {{item.lastHeartBeat?.status === sitePending ? 'pending' : 'down'}}</span>
+
+    </h4>
+
+  </div>
+
+</div>
+
 <div class="w-100 d-flex responsive-layout">
 
-  <div *ngFor="let folderColumn of foldersQuery.gridFormattedFolders$ | async"
-       class="d-flex flex-column responsive-width">
+  <ng-container *ngIf="isMobile">
 
-    <div class="w-100" *ngFor="let folder of folderColumn">
+    <div class="w-100" *ngFor="let folder of foldersQuery.sortedAndFilteredFolders$ | async">
 
       <app-folder (openFolderModal)="openFolderModal.next($event)" (openSiteModal)="openSiteModal.next($event)"
                   [folder]="folder" [editMode]="(foldersQuery.editMode$ | async) ?? false"></app-folder>
 
     </div>
 
-  </div>
+  </ng-container>
+
+  <ng-container *ngIf="!isMobile">
+
+    <div *ngFor="let folderColumn of foldersQuery.gridFormattedFolders$ | async"
+         class="d-flex flex-column responsive-width">
+
+      <div class="w-100" *ngFor="let folder of folderColumn">
+
+        <app-folder (openFolderModal)="openFolderModal.next($event)" (openSiteModal)="openSiteModal.next($event)"
+                    [folder]="folder" [editMode]="(foldersQuery.editMode$ | async) ?? false"></app-folder>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
 
 </div>
 

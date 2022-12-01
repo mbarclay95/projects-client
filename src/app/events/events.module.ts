@@ -18,7 +18,6 @@ import { CreateEditEventComponent } from './components/create-edit-event/create-
 import {NzModalModule} from "ng-zorro-antd/modal";
 import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {NzInputNumberModule} from "ng-zorro-antd/input-number";
-import {AngularEditorModule} from "@kolkov/angular-editor";
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 import {NzProgressModule} from "ng-zorro-antd/progress";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
@@ -59,7 +58,6 @@ import {NzEmptyModule} from "ng-zorro-antd/empty";
         NzModalModule,
         NzDatePickerModule,
         NzInputNumberModule,
-        AngularEditorModule,
         NzToolTipModule,
         NzProgressModule,
         NzPopconfirmModule,

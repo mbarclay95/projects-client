@@ -25,7 +25,6 @@
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
-    "@kolkov/angular-editor": "^2.0.0",
     "@swimlane/ngx-charts": "^20.1.0",
     "bluebird": "^3.7.2",
     "bootstrap": "^5.1.3",

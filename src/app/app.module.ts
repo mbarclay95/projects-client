@@ -26,7 +26,7 @@ import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 registerLocaleData(en);
 
 const config: SocketIoConfig = {
-  url: 'ws://10.5.10.11:3001/', options: {
+  url: 'wss://uptime-kuma.bigmike.dev/', options: {
     transports: ['websocket']
   }
 };

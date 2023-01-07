@@ -20,10 +20,8 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
   task?: Task;
   isVisible: boolean = false;
   saving = false;
-  modalStyle = screen.width < 600 ? {top: '20px'} : {};
-  modalWidth = screen.width < 600 ? '95%' : '500px';
 
-  private subscriptionDestroyer: Subject<void> = new Subject<void>();
+  subscriptionDestroyer: Subject<void> = new Subject<void>();
 
   constructor(
     private tasksService: TasksService,
@@ -97,8 +95,13 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateTaskPoint(task: Task, taskPoint: TaskPoint) {
-    task.taskPoint = {...taskPoint};
+  updateTaskPoint(taskPoint: TaskPoint) {
+    console.log('here');
+    if (!this.task || this.task.taskPoint?.id === taskPoint.id) {
+      return;
+    }
+    this.task.taskPoint = {...taskPoint};
+    console.log(this.task);
   }
 
   compareTaskPoints(a?: TaskPoint, b?: TaskPoint) {

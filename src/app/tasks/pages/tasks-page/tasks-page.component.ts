@@ -5,6 +5,7 @@ import {TasksService} from "../../services/tasks/state/tasks.service";
 import {merge, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {MobileHeaderService} from "../../../shared/services/mobile-header.service";
+import {FamiliesQuery} from '../../services/families/state/families.query';
 
 @Component({
   selector: 'app-tasks-page',
@@ -17,7 +18,7 @@ export class TasksPageComponent implements OnInit {
   isMobile = screen.width < 600;
   createEditTask: Observable<Task> = merge(
     this.mobileHeaderService.clickedButton$.pipe(
-      map(() => createTask({}))
+      map(() => createTask({ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getZeroTaskPoint()}))
     ),
     this.editTask.asObservable()
   );
@@ -25,8 +26,10 @@ export class TasksPageComponent implements OnInit {
   constructor(
     public tasksQuery: TasksQuery,
     public tasksService: TasksService,
-    private mobileHeaderService: MobileHeaderService
-  ) { }
+    private mobileHeaderService: MobileHeaderService,
+    private familiesQuery: FamiliesQuery
+  ) {
+  }
 
   ngOnInit(): void {
     if (this.isMobile) {

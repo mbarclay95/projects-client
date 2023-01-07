@@ -1,12 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Task} from "../../models/task.model";
-import {fa0, fa1, fa2, fa3, faFlag, faPeopleRoof, faStar, faUser} from "@fortawesome/free-solid-svg-icons";
+import {fa0, fa1, fa2, fa3, faFlag, faPeopleRoof, faUser} from "@fortawesome/free-solid-svg-icons";
 import {FamiliesQuery} from "../../services/families/state/families.query";
 import {AuthQuery} from "../../../auth/services/state/auth.query";
 import {TasksService} from "../../services/tasks/state/tasks.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {FamiliesService} from "../../services/families/state/families.service";
 import {IconDefinition} from "@fortawesome/free-brands-svg-icons";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-task-row',
@@ -17,6 +18,7 @@ export class TaskRowComponent implements OnInit {
   @Input() task!: Task;
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
 
+  isMobile = screen.width < 600;
   family = faPeopleRoof;
   personal = faUser;
   zeroPoints = fa0;
@@ -30,13 +32,14 @@ export class TaskRowComponent implements OnInit {
     public familiesService: FamiliesService,
     public authQuery: AuthQuery,
     private tasksService: TasksService,
-    private nzMessageService: NzMessageService
+    private nzMessageService: NzMessageService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
   }
 
-  async completedTask(taskId: number, checked: boolean) {
+  async completedTask(taskId: number) {
     try {
       await this.tasksService.updateTask(taskId, {completedAt: new Date()}, true,true);
     } catch (e) {
@@ -57,5 +60,10 @@ export class TaskRowComponent implements OnInit {
       case 2: return this.twoPoints;
       default: return this.threePoints;
     }
+  }
+
+  goToTask() {
+    const route = this.isMobile ? `app/tasks/tasks?taskId=${this.task.id}` : `app/tasks?tab=tasks&taskId=${this.task.id}`;
+    this.router.navigateByUrl(route);
   }
 }

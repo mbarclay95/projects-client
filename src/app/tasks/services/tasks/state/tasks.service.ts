@@ -20,9 +20,7 @@ export class TasksService {
     private tasksQuery: TasksQuery,
     private tagsService: TagsService,
     private familiesService: FamiliesService,
-  ) {
-    // this.subscribeToUi();
-  }
+  ) {}
 
   async getTasks(queryString: string): Promise<void> {
     await firstValueFrom(this.http.get<Task[] | Pagination<Task>>(`${environment.apiUrl}/tasks?${queryString}`).pipe(

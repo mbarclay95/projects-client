@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { QueryEntity } from '@datorama/akita';
-import { FamiliesStore, FamiliesState } from './families.store';
+import {Injectable} from '@angular/core';
+import {QueryEntity} from '@datorama/akita';
+import {FamiliesStore, FamiliesState} from './families.store';
 import {combineLatest, filter, Observable, OperatorFunction, pipe, UnaryFunction} from "rxjs";
 import {Family, TaskStrategy} from "../../../models/family.model";
 import {map} from "rxjs/operators";
@@ -8,7 +8,7 @@ import {User} from "../../../../users/models/user.model";
 import {AuthQuery} from "../../../../auth/services/state/auth.query";
 import {TaskPoint} from "../../../models/task-point.model";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class FamiliesQuery extends QueryEntity<FamiliesState> {
   families$: Observable<Family[]> = this.selectAll();
 
@@ -48,7 +48,7 @@ export class FamiliesQuery extends QueryEntity<FamiliesState> {
     super(store);
   }
 
-  get activeId(): number|undefined {
+  get activeId(): number | undefined {
     return this.getActive()?.id;
   }
 
@@ -58,10 +58,19 @@ export class FamiliesQuery extends QueryEntity<FamiliesState> {
 
     return family.members.find(u => u.id === auth.id) as User;
   }
+
+  getZeroTaskPoint(): TaskPoint | undefined {
+    const taskPoints = this.getActive()?.taskPoints;
+    if (!taskPoints) {
+      return;
+    }
+
+    return taskPoints.find(taskPoint => taskPoint.points === 0);
+  }
 }
 
 export function filterNullish<T>(): UnaryFunction<Observable<T | null | undefined>, Observable<T>> {
   return pipe(
-    filter(x => !!x) as OperatorFunction<T | null |  undefined, T>
+    filter(x => !!x) as OperatorFunction<T | null | undefined, T>
   );
 }

@@ -1,6 +1,7 @@
 <div class="w-100 task-border">
 
-  <div class="task-box" *ngFor="let task of _tasks">
+  <div class="task-box" *ngFor="let task of _tasks"
+       [ngClass]="{'highlighted-row': highlightedTaskId === task.id}">
 
     <div class="first-row">
 
@@ -16,12 +17,16 @@
 
       <div class="d-flex">
 
+        <div style="width: 18px; text-align: center" class="me-2" *ngIf="task.priority === 1">
+          <fa-icon style="color: #922724" [icon]="flag"></fa-icon>
+        </div>
+
         <div style="width: 18px; text-align: center">
           <fa-icon *ngIf="task.recurring" [icon]="repeat"></fa-icon>
           <fa-icon *ngIf="!task.recurring" [icon]="single"></fa-icon>
         </div>
 
-        <div style="width: 18px; text-align: center" class="ms-2 me-4">
+        <div style="width: 18px; text-align: center" class="ms-2 me-3">
 
           <fa-icon style="color: {{familiesQuery.myFamilyColor$ | async}}"
                    *ngIf="task.ownerType === 'family'" [icon]="household"></fa-icon>

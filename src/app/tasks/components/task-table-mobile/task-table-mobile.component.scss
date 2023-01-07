@@ -23,7 +23,7 @@
     justify-content: space-evenly;
     width: 100%;
     font-size: 13px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
 }
 
@@ -35,4 +35,8 @@
 .due-text {
   font-style: italic;
   font-size: 11px;
+}
+
+.highlighted-row {
+  background: rgba(169, 123, 32, 0.6);
 }

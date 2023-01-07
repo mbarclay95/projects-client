@@ -50,6 +50,8 @@ import { TaskTableMobileComponent } from './components/task-table-mobile/task-ta
 import {NzEmptyModule} from "ng-zorro-antd/empty";
 import {NzListModule} from "ng-zorro-antd/list";
 import { TotalCompletedTasksPipe } from './pipes/total-completed-tasks.pipe';
+import { CreateEditTaskModalMobileComponent } from './components/create-edit-task-modal-mobile/create-edit-task-modal-mobile.component';
+import { TaskPointColorPipe } from './pipes/task-point-color.pipe';
 
 @NgModule({
   declarations: [
@@ -78,6 +80,8 @@ import { TotalCompletedTasksPipe } from './pipes/total-completed-tasks.pipe';
     TasksCompleteChartDataPipe,
     TaskTableMobileComponent,
     TotalCompletedTasksPipe,
+    CreateEditTaskModalMobileComponent,
+    TaskPointColorPipe,
   ],
     imports: [
         CommonModule,

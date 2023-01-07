@@ -7,18 +7,21 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import {NzMenuModule} from "ng-zorro-antd/menu";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {RouterModule} from "@angular/router";
+import {LongPressDirective} from './directives/long-press.directive';
 
 
 
 @NgModule({
   declarations: [
     NgLetDirective,
+    LongPressDirective,
     FirstNamePipe,
     MobileFooterComponent,
     SideMenuComponent
   ],
   exports: [
     NgLetDirective,
+    LongPressDirective,
     FirstNamePipe,
     SideMenuComponent,
     MobileFooterComponent

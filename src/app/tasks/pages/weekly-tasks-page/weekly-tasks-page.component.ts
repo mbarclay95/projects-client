@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FamiliesQuery} from "../../services/families/state/families.query";
 import {TasksQuery} from "../../services/tasks/state/tasks.query";
 import {TasksService} from "../../services/tasks/state/tasks.service";
@@ -15,7 +15,7 @@ import {createTask, Task} from "../../models/task.model";
 export class WeeklyTasksPageComponent implements OnInit {
   isMobile = screen.width < 600;
   createTask: Observable<Task> = this.mobileHeaderService.clickedButton$.pipe(
-    map(() => createTask({}))
+    map(() => createTask({ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getZeroTaskPoint()}))
   );
 
   constructor(
@@ -23,7 +23,8 @@ export class WeeklyTasksPageComponent implements OnInit {
     public tasksQuery: TasksQuery,
     private tasksService: TasksService,
     private mobileHeaderService: MobileHeaderService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     if (this.isMobile) {

@@ -15,7 +15,7 @@
     </thead>
     <tbody>
     <ng-container *ngFor="let task of tasksTable?.data">
-      <tr>
+      <tr [ngClass]="{'highlighted-row': highlightedTaskId === task.id}">
         <td class="d-flex">
           <button nz-button class="ant-btn-icon-only" nzType="text"
                   (click)="editTask.emit(task)">

@@ -1,20 +1,19 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {debounceTime, distinctUntilChanged, map, tap} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {createTask, Task} from '../../../models/task.model';
 import {TasksStore, TaskUiState} from './tasks.store';
-import {firstValueFrom, Subject, takeUntil} from "rxjs";
+import {firstValueFrom} from "rxjs";
 import {environment} from "../../../../../environments/environment";
 import {TasksQuery} from "./tasks.query";
 import {TagsService} from "../../tags.service";
 import {FamiliesService} from "../../families/state/families.service";
 import {Pagination} from "../../../../models/pagination.model";
 import {setLoading} from '@datorama/akita';
+import {differenceInDays, endOfWeek} from 'date-fns';
 
 @Injectable({providedIn: 'root'})
 export class TasksService {
-  private subscriptionDestroyer: Subject<void> = new Subject<void>();
-
   constructor(
     private tasksStore: TasksStore,
     private http: HttpClient,
@@ -77,14 +76,27 @@ export class TasksService {
     this.getTasks(this.tasksQuery.getQueryString(newUi));
   }
 
-  // subscribeToUi() {
-  //   this.tasksQuery.ui$.pipe(
-  //     debounceTime(500),
-  //     distinctUntilChanged
-  //     takeUntil(this.subscriptionDestroyer)
-  //   ).subscribe(ui => {
-  //     console.log(ui);
-  //     this.getTasks(this.tasksQuery.getQueryString(ui))
-  //   });
-  // }
+  loadWeeklyTasksPage(): void {
+    this.updateUi({
+      numOfDays: differenceInDays(endOfWeek(new Date(), {weekStartsOn: 1}), new Date()),
+      ownerId: null,
+      ownerType: null,
+      recurringType: 'both',
+      completedStatus: 'notCompleted',
+      search: null,
+      tags: [],
+      showInactive: false
+    });
+  }
+
+  loadTasksPage(): void {
+    this.updateUi({
+      numOfDays: null,
+      page: 1,
+      completedStatus: 'notCompleted',
+      search: null,
+      tags: [],
+      showInactive: true
+    });
+  }
 }

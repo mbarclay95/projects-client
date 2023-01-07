@@ -11,7 +11,7 @@ import {FoldersService} from "../../services/folder/state/folders.service";
 export class CreateEditFolderModalComponent implements OnInit {
   @Input() openModal!: Observable<Folder>;
 
-  folder!: Folder;
+  folder?: Folder;
   isVisible = false;
   modalWidth = screen.width < 600 ? '95%' : '500px';
 
@@ -36,6 +36,9 @@ export class CreateEditFolderModalComponent implements OnInit {
   }
 
   async saveFolder(): Promise<void> {
+    if (!this.folder) {
+      return;
+    }
     if (this.folder.id === 0) {
       await this.foldersService.createFolder(this.folder);
     } else {

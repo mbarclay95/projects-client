@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {createFamily, Family, TaskStrategy} from "../../models/family.model";
+import {createFamily, Family} from "../../models/family.model";
 import {FamiliesService} from "../../services/families/state/families.service";
 import {User} from "../../../users/models/user.model";
 import {UsersQuery} from "../../../users/services/state/users.query";
@@ -17,7 +17,7 @@ import {FamiliesQuery} from "../../services/families/state/families.query";
 export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Family>;
 
-  family!: Family;
+  family?: Family;
   isVisible: boolean = false;
   saving = false;
   plus = faPlus;
@@ -54,6 +54,9 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   }
 
   async saveFamily() {
+    if (!this.family) {
+      return;
+    }
     this.saving = true;
     try {
       this.family.id === 0 ?
@@ -74,6 +77,9 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   }
 
   updateFamilyMembers(userIds: number[]) {
+    if (!this.family) {
+      return;
+    }
     this.family.members = this.usersQuery.getUsersByIds(userIds);
   }
 
@@ -82,6 +88,9 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   }
 
   async saveNewTaskPoint(): Promise<void> {
+    if (!this.family) {
+      return;
+    }
     if (!this.newTaskPoint) {
       return;
     }
@@ -96,6 +105,9 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   }
 
   async updateTaskPoint(taskPoint: TaskPoint): Promise<void> {
+    if (!this.family) {
+      return;
+    }
     try {
       await this.familiesService.updateTaskPoint(taskPoint, this.family.id);
     } catch (e) {
@@ -107,6 +119,9 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   }
 
   async removeTaskPoint(taskPoint: TaskPoint): Promise<void> {
+    if (!this.family) {
+      return;
+    }
     try {
       await this.familiesService.removeTaskPoint(taskPoint, this.family.id);
     } catch (e) {
@@ -117,6 +132,9 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   }
 
   updateFamilyTaskPoints() {
+    if (!this.family) {
+      return;
+    }
     const family = this.familiesQuery.getEntity(this.family.id);
     if (family) {
       this.family.taskPoints = [...family.taskPoints].map(taskPoint => ({...taskPoint}));

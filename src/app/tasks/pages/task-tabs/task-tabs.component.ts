@@ -31,32 +31,15 @@ export class TaskTabsComponent implements OnInit {
 
   loadWeeklyTasks() {
     this.selectedTab = 'Task';
-    this.tasksService.updateUi({
-      numOfDays: 7,
-      ownerId: null,
-      ownerType: null,
-      recurringType: 'both',
-      completedStatus: 'notCompleted',
-      search: null,
-      tags: [],
-      showInactive: false
-    });
+    this.tasksService.loadWeeklyTasksPage();
   }
 
   loadTasksTable() {
     this.selectedTab = 'Task';
-    this.tasksService.updateUi({
-      numOfDays: null,
-      page: 1,
-      search: null,
-      completedStatus: 'notCompleted',
-      tags: [],
-      showInactive: true
-    });
+    this.tasksService.loadTasksPage();
   }
 
   createEntity() {
-    console.log('clicked on tabs');
     switch (this.selectedTab) {
       case "Family":
         this.openFamilyModal.next(createFamily({id: 0}));

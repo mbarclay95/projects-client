@@ -11,7 +11,7 @@ import {GoalsService} from "../../services/state/goals.service";
 export class CreateEditGoalModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Goal>;
 
-  goal!: Goal;
+  goal?: Goal;
   isVisible: boolean = false;
   equalityDrownDown = EqualityDropDown;
   lengthOfTimeDrownDown = LengthOfTimeDropDown;
@@ -39,6 +39,9 @@ export class CreateEditGoalModalComponent implements OnInit, OnDestroy {
   }
 
   async saveGoal() {
+    if (!this.goal) {
+      return;
+    }
     this.saving = true;
     try {
       await this.goalsService.createNewGoal(this.goal);

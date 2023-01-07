@@ -17,7 +17,7 @@ import {TaskPoint} from "../../models/task-point.model";
 export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Task>;
 
-  task!: Task;
+  task?: Task;
   isVisible: boolean = false;
   saving = false;
   modalStyle = screen.width < 600 ? {top: '20px'} : {};
@@ -49,6 +49,9 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
   }
 
   async saveTask() {
+    if (!this.task) {
+      return;
+    }
     this.saving = true;
     try {
       this.task.id === 0 ?
@@ -65,6 +68,9 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
   }
 
   changeOwner(type: 'user' | 'family') {
+    if (!this.task) {
+      return;
+    }
     switch (type) {
       case "user":
         this.task.ownerId = this.authQuery.getUser().id;
@@ -77,6 +83,9 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
   disabledDate = (current: Date): boolean => differenceInCalendarDays(current, new Date()) < 0;
 
   updateRecurring(recurring: boolean) {
+    if (!this.task) {
+      return;
+    }
     if (recurring) {
       this.task.dueDate = undefined;
       this.task.frequencyAmount = 1;

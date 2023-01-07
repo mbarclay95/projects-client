@@ -33,7 +33,7 @@ export class TasksQuery extends QueryEntity<TasksState> {
 
   getQueryString(ui: TaskUiState = this.getUi()) {
     let queryString = `sort=${ui.sort}&sortDir=${ui.sortDir}&recurringType=${ui.recurringType}&completedStatus=${ui.completedStatus}&showInactive=${ui.showInactive ? 1 : 0}&`;
-    if (ui.numOfDays) {
+    if (ui.numOfDays !== null) {
       queryString += `numOfDays=${ui.numOfDays}&`;
     } else {
       queryString += `page=${ui.page}&pageSize=${ui.pageSize}&`;

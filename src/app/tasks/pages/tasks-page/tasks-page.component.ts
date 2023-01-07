@@ -30,14 +30,7 @@ export class TasksPageComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.isMobile) {
-      this.tasksService.updateUi({
-        numOfDays: null,
-        page: 1,
-        completedStatus: 'notCompleted',
-        search: null,
-        tags: [],
-        showInactive: true
-      });
+      this.tasksService.loadTasksPage();
     }
   }
 

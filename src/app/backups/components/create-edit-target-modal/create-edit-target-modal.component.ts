@@ -14,7 +14,7 @@ export class CreateEditTargetModalComponent implements OnInit, OnDestroy {
   @Output() selectNewTarget: EventEmitter<{ target: Target, backupStepId: number }> =
     new EventEmitter<{ target: Target; backupStepId: number }>();
 
-  target!: Target;
+  target?: Target;
   backupStepId?: number;
   isVisible: boolean = false;
   saving = false;
@@ -44,6 +44,9 @@ export class CreateEditTargetModalComponent implements OnInit, OnDestroy {
 
   async saveTarget() {
     this.saving = true;
+    if (!this.target) {
+      return;
+    }
     try {
       const newTarget = this.target.id === 0 ?
         await this.targetsService.createNewTarget(this.target) :

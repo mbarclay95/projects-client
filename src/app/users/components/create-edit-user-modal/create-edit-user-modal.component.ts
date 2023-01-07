@@ -15,7 +15,7 @@ import {Roles} from "../../../auth/permissions";
 export class CreateEditUserModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<User>;
 
-  user!: User;
+  user?: User;
   isVisible: boolean = false;
   saving = false;
 
@@ -43,13 +43,17 @@ export class CreateEditUserModalComponent implements OnInit, OnDestroy {
   }
 
   updateUsersRoles(checked: boolean, role: Role) {
+    if (!this.user) {
+      return;
+    }
     if (checked) {
       this.user.roles.push(role);
     } else {
       this.user.roles = this.user.roles.filter(r => r.id !== role.id);
     }
 
-    if (!this.user.roles.find(r => r.name === this.user.userConfig.homePageRole)) {
+    const userHomePageRole = this.user.userConfig.homePageRole;
+    if (!this.user.roles.find(r => r.name === userHomePageRole)) {
       if (this.user.roles.length > 0) {
         this.updateUserHomePage(this.user.roles[0].name as Roles);
       }
@@ -57,6 +61,9 @@ export class CreateEditUserModalComponent implements OnInit, OnDestroy {
   }
 
   async saveUser() {
+    if (!this.user) {
+      return;
+    }
     this.saving = true;
     try {
       this.user.id === 0 ?
@@ -72,6 +79,9 @@ export class CreateEditUserModalComponent implements OnInit, OnDestroy {
   }
 
   updateUserHomePage(roleName: Roles) {
+    if (!this.user) {
+      return;
+    }
     this.user.userConfig.homePageRole = roleName;
   }
 }

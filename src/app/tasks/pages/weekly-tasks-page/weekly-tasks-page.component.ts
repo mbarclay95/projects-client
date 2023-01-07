@@ -6,7 +6,6 @@ import {MobileHeaderService} from "../../../shared/services/mobile-header.servic
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {createTask, Task} from "../../models/task.model";
-import {differenceInDays, endOfWeek} from 'date-fns';
 
 @Component({
   selector: 'app-weekly-tasks-page',
@@ -28,16 +27,7 @@ export class WeeklyTasksPageComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.isMobile) {
-      this.tasksService.updateUi({
-        numOfDays: differenceInDays(endOfWeek(new Date(), {weekStartsOn: 1}), new Date()),
-        ownerId: null,
-        ownerType: null,
-        recurringType: 'both',
-        completedStatus: 'notCompleted',
-        search: null,
-        tags: [],
-        showInactive: false
-      });
+      this.tasksService.loadWeeklyTasksPage();
     }
   }
 

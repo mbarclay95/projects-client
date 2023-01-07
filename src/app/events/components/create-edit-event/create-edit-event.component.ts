@@ -13,7 +13,7 @@ import {EventsService} from "../../services/events/state/events.service";
 export class CreateEditEventComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Event>;
 
-  event!: Event;
+  event?: Event;
   isVisible: boolean = false;
   saving = false;
   modalWidth = screen.width < 700 ? '95%' : '700px';
@@ -43,6 +43,9 @@ export class CreateEditEventComponent implements OnInit, OnDestroy {
   }
 
   async saveEvent() {
+    if (!this.event) {
+      return;
+    }
     this.saving = true;
     try {
       this.event.id === 0 ?
@@ -59,6 +62,9 @@ export class CreateEditEventComponent implements OnInit, OnDestroy {
   }
 
   updateNotifySwitch(checked: boolean) {
+    if (!this.event) {
+      return;
+    }
     if (checked) {
       this.event.notificationEmail = '';
     } else {

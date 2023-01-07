@@ -17,7 +17,7 @@ export class CreateEditSiteModalComponent implements OnInit {
   @Input() openModal!: Observable<Site>;
 
   fileList: NzUploadFile[] = [];
-  site!: Site;
+  site?: Site;
   isVisible = false;
   check = faCheckCircle;
   folderId: number = 0;
@@ -46,6 +46,9 @@ export class CreateEditSiteModalComponent implements OnInit {
   }
 
   async saveSite(): Promise<void> {
+    if (!this.site) {
+      return;
+    }
     if (this.site.id === 0) {
       await this.foldersService.createSite(this.site);
     } else {
@@ -65,6 +68,9 @@ export class CreateEditSiteModalComponent implements OnInit {
   }
 
   handleChange({file}: NzUploadChangeParam): void {
+    if (!this.site) {
+      return;
+    }
     const status = file.status;
 
     if (status === 'done') {

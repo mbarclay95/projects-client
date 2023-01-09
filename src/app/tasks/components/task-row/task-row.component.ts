@@ -63,6 +63,7 @@ export class TaskRowComponent implements OnInit {
   }
 
   goToTask() {
+    window.navigator.vibrate(300);
     const route = this.isMobile ? `app/tasks/tasks?taskId=${this.task.id}` : `app/tasks?tab=tasks&taskId=${this.task.id}`;
     this.router.navigateByUrl(route);
   }

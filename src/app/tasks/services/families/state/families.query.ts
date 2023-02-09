@@ -29,7 +29,7 @@ export class FamiliesQuery extends QueryEntity<FamiliesState> {
   );
 
   taskPoints$: Observable<TaskPoint[]> = this.myFamily$.pipe(
-    map(myFamily => myFamily.taskPoints)
+    map(myFamily => myFamily.taskPoints.sort((a, b) => a.points > b.points ? 1 : -1))
   );
 
   authUser$: Observable<User> = combineLatest([

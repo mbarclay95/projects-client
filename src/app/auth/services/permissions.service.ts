@@ -6,6 +6,7 @@ import {map} from "rxjs/operators";
 import {
   faBullseye,
   faCalendarDays,
+  faFolderOpen,
   faHome,
   faTasks,
   faUpload,
@@ -32,6 +33,7 @@ export class PermissionsService {
   task = faTasks;
   event = faCalendarDays;
   user = faUser;
+  files = faFolderOpen;
   isMobile = screen.width < 600;
   routes: Route[] = [
     {
@@ -42,7 +44,6 @@ export class PermissionsService {
       queryParams: {}
     },
     {icon: this.goals, url: 'app/goals', permission: Permissions.GOALS_PAGE, title: 'Goals', queryParams: {}},
-    {icon: this.users, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users', queryParams: {}},
     {
       icon: this.upload,
       url: 'app/backups',
@@ -57,7 +58,15 @@ export class PermissionsService {
       title: 'Tasks',
       queryParams: this.isMobile ? {} : {tab: 'weekly-tasks'}
     },
+    {
+      icon: this.files,
+      url: 'app/file-explorer',
+      permission: Permissions.FILE_EXPLORER_PAGE,
+      title: 'File Explorer',
+      queryParams: {}
+    },
     {icon: this.event, url: 'app/events', permission: Permissions.EVENTS_PAGE, title: 'Events', queryParams: {}},
+    {icon: this.users, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users', queryParams: {}},
     // {icon: this.user, url: 'my-profile', permission: true, title: 'My Profile', queryParams: {}},
   ];
 
@@ -66,10 +75,13 @@ export class PermissionsService {
   ) {
   }
 
-  hasPermissionTo(permission: Permissions): boolean {
+  hasPermissionTo(permission?: Permissions): boolean {
     const user = this.authQuery.getUser();
     if (!user) {
       return false;
+    }
+    if (!permission) {
+      return true;
     }
 
     return user.clientPermissions.includes(permission);

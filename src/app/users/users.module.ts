@@ -18,6 +18,7 @@ import { RolesToIdsPipe } from './pipes/roles-to-ids.pipe';
 import { DisplayRoleNamePipe } from './pipes/display-role-name.pipe';
 import {NzSwitchModule} from "ng-zorro-antd/switch";
 import { HasRolePipe } from './pipes/has-role.pipe';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { HasRolePipe } from './pipes/has-role.pipe';
         FormsModule,
         NzInputModule,
         NzSelectModule,
-        NzSwitchModule
+        NzSwitchModule,
+        SharedModule
     ]
 })
 export class UsersModule { }

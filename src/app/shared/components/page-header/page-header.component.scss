@@ -1,0 +1,21 @@
+:host {
+  width: 100%;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #303030
+}
+
+.page-title {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5715;
+  font-variant: tabular-nums;
+  font-weight: 400;
+  padding: 16px 0;
+}

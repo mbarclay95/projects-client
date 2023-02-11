@@ -1,0 +1,23 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="createOrUpdate + (item?.type === 'dir' ? ' Directory' : ' File')" [nzWidth]="modalWidth"
+          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveItem()"
+          [nzStyle]="modalStyle" [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving"
+          [nzMaskClosable]="false">
+
+  <ng-container *nzModalContent>
+
+    <div *ngIf="item">
+
+      <div class="w-100 mb-4">
+
+        <div class="mb-2">{{item.type === 'dir' ? 'Directory' : 'File'}} Name:</div>
+
+        <input nz-input [(ngModel)]="item.newName" class="w-100">
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+
+</nz-modal>

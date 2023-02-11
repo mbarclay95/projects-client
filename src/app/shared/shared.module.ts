@@ -8,6 +8,8 @@ import {NzMenuModule} from "ng-zorro-antd/menu";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {RouterModule} from "@angular/router";
 import {LongPressDirective} from './directives/long-press.directive';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
+import {NzButtonModule} from 'ng-zorro-antd/button';
 
 
 
@@ -17,20 +19,23 @@ import {LongPressDirective} from './directives/long-press.directive';
     LongPressDirective,
     FirstNamePipe,
     MobileFooterComponent,
-    SideMenuComponent
+    SideMenuComponent,
+    PageHeaderComponent
   ],
   exports: [
     NgLetDirective,
     LongPressDirective,
     FirstNamePipe,
     SideMenuComponent,
-    MobileFooterComponent
+    MobileFooterComponent,
+    PageHeaderComponent
   ],
-  imports: [
-    CommonModule,
-    NzMenuModule,
-    FontAwesomeModule,
-    RouterModule
-  ]
+    imports: [
+        CommonModule,
+        NzMenuModule,
+        FontAwesomeModule,
+        RouterModule,
+        NzButtonModule
+    ]
 })
 export class SharedModule { }

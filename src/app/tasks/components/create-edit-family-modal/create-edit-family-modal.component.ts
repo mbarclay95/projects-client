@@ -45,6 +45,8 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
     ).subscribe(family => {
       this.family = family.id === 0 ? family : createFamily(family);
       this.isVisible = true;
+      this.editTaskPointId = null;
+      this.newTaskPoint = null;
     });
   }
 

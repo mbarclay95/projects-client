@@ -8,6 +8,7 @@ export const enum Permissions {
   TASKS_PAGE = 'client_view_tasks_page',
   FAMILIES_TAB = 'client_view_families_tab',
   EVENTS_PAGE = 'client_view_events_page',
+  FILE_EXPLORER_PAGE = 'client_view_file_explorer_page',
 }
 
 export const enum Roles {
@@ -17,6 +18,7 @@ export const enum Roles {
   DASHBOARD_ROLE = 'dashboard_role',
   TASKS_ROLE = 'task_role',
   EVENTS_ROLE = 'event_role',
+  FILE_EXPLORER_ROLE = 'file_explorer_role',
 }
 
 export interface Route {

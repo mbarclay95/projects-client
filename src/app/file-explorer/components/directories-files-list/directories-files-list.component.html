@@ -1,0 +1,37 @@
+<nz-list nzBordered [nzLoading]="directoryItemsQuery.selectLoading() | async">
+
+  <nz-list-header class="d-flex" *ngLet="directoryItemsQuery.noWorkingDirectory$ | async as noWorkingDir">
+    <div>Working Path:</div>
+    <div class="px-2" [ngClass]="{'working-dir-button': !noWorkingDir}" (click)="clickedRoot(noWorkingDir)">/</div>
+    <div *ngFor="let dir of directoryItemsQuery.workingDirectory$ | async; let last = last; let first = first"
+          (click)="clickedWorkingDirectory(dir, last)">
+      <span *ngIf="!first" class="mx-2">/</span><span [ngClass]="{'working-dir-button': !last}">{{dir.path}}</span>
+    </div>
+  </nz-list-header>
+
+  <nz-list-item *ngFor="let item of directoryItemsQuery.items$ | async" class="d-flex justify-content-start">
+
+    <div class="me-4">
+
+      <fa-icon class="me-2 hover-icons" [icon]="edit" (click)="updateItem(item)"></fa-icon>
+      <fa-icon class="me-2 hover-icons" [icon]="delete"></fa-icon>
+
+    </div>
+
+    <div *ngIf="item.type === 'dir'" class="directory" (click)="clickedDirectory(item)">
+
+      <fa-icon class="me-1" [icon]="dir"></fa-icon>
+      {{item.id}}
+
+    </div>
+
+    <div *ngIf="item.type === 'file'">
+
+      <fa-icon class="me-1" [icon]="file"></fa-icon>
+      {{item.id}}
+
+    </div>
+
+  </nz-list-item>
+
+</nz-list>

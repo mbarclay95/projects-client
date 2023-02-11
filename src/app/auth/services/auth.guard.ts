@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const hasPermission = this.permissionsService.hasPermissionTo(childRoute.data['permission'] as unknown as Permissions);
+    const hasPermission = this.permissionsService.hasPermissionTo(childRoute.data['permission'] as unknown as Permissions|undefined);
 
     if (!hasPermission) {
       void this.router.navigateByUrl('login');

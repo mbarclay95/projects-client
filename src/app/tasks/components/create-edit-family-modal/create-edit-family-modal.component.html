@@ -59,7 +59,8 @@
                   <fa-icon [icon]="edit" class="text-primary"></fa-icon>
                 </button>
 
-                <button nz-button [disabled]="editTaskPointId !== null" (click)="removeTaskPoint(taskPoint)">
+                <button nz-button [disabled]="editTaskPointId !== null" nz-popconfirm nzPopconfirmTitle="Are you sure?"
+                        (nzOnConfirm)="removeTaskPoint(taskPoint)">
                   <fa-icon [icon]="remove" class="text-danger"></fa-icon>
                 </button>
 
@@ -72,7 +73,7 @@
               <input nz-input [(ngModel)]="taskPoint.name" class="me-2" placeholder="Name">
 
               <nz-input-number [(ngModel)]="taskPoint.points" [nzMin]="0" nzPlaceHolder="Points"
-                               class="me-2"></nz-input-number>
+                               class="me-2" nzDisabled></nz-input-number>
 
               <button nz-button [disabled]="taskPoint.name === ''" (click)="updateTaskPoint(taskPoint)">
                 <fa-icon [icon]="save" class="text-success"></fa-icon>

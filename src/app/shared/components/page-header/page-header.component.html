@@ -1,0 +1,9 @@
+<div class="page-header">
+
+  <div class="page-title">{{title}}</div>
+
+  <button *ngIf="showCreateButton" nz-button nzType="primary" (click)="createButtonClicked.emit()">
+    {{buttonText}}
+  </button>
+
+</div>

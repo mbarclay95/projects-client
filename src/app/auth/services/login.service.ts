@@ -80,6 +80,8 @@ export class LoginService {
         return 'app/tasks?tab=weekly-tasks';
       case Roles.USERS_ROLE:
         return 'app/users';
+      case Roles.FILE_EXPLORER_ROLE:
+        return 'app/file-explorer';
     }
   }
 

@@ -12,6 +12,7 @@ import {Roles} from "../../../auth/permissions";
 })
 export class UsersPageComponent implements OnInit {
   openUserModal: Subject<User> = new Subject<User>();
+  isMobile = screen.width < 600;
 
   constructor(
     public usersQuery: UsersQuery,

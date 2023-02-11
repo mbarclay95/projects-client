@@ -11,6 +11,7 @@ import {TasksLayoutComponent} from "./tasks/tasks-layout/tasks-layout.component"
 import {EventsLayoutComponent} from "./events/events-layout/events-layout.component";
 import {EventSignupLayoutComponent} from "./event-signup/event-signup-layout/event-signup-layout.component";
 import {MobileHeaderResolver} from "./mobile-header.resolver";
+import {FileExplorerLayoutComponent} from './file-explorer/file-explorer-layout/file-explorer-layout.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,11 @@ const routes: Routes = [
         path: 'events', component: EventsLayoutComponent, resolve: {MobileHeaderResolver},
         data: {permission: Permissions.EVENTS_PAGE, headerTitle: 'Events', showCreateButton: true},
         loadChildren: () => import('./events/events.module').then(m => m.EventsModule)
+      },
+      {
+        path: 'file-explorer', component: FileExplorerLayoutComponent, resolve: {MobileHeaderResolver},
+        data: {permission: Permissions.FILE_EXPLORER_PAGE, headerTitle: 'File Explorer', showCreateButton: false},
+        loadChildren: () => import('./file-explorer/file-explorer.module').then(m => m.FileExplorerModule)
       }
     ]
   },

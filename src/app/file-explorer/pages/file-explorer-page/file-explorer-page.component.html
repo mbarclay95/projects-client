@@ -1,0 +1,10 @@
+<app-page-header *ngIf="!isMobile" [showCreateButton]="true" buttonText="Create Directory" title="File Explorer"
+                 (createButtonClicked)="createNewDirectory()"></app-page-header>
+
+<div>
+
+  <app-directories-files-list (openCreateEditModal)="openCreateEditModal.next($event)"></app-directories-files-list>
+
+</div>
+
+<app-create-edit-directory-item-modal [openModal]="openCreateEditModal.asObservable()"></app-create-edit-directory-item-modal>

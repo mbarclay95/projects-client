@@ -1,12 +1,5 @@
-<div class="w-100 d-flex justify-content-between align-items-center" *ngIf="!isMobile">
-
-  <div style="font-size: 30px" class="text-white">Events</div>
-
-  <button nz-button nzType="primary" (click)="createNewEvent()">Create Event</button>
-
-</div>
-
-<nz-divider *ngIf="!isMobile" style="margin: 16px 0"></nz-divider>
+<app-page-header *ngIf="!isMobile" [showCreateButton]="true" buttonText="Create Event" title="Events"
+                 (createButtonClicked)="createNewEvent()"></app-page-header>
 
 <div class="w-100 events-page-container p-2">
 

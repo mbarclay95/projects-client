@@ -3,6 +3,7 @@ import {DirectoryItemsQuery} from '../../services/state/directory-items.query';
 import {faEdit, faFile, faFolder, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {DirectoryItemsService} from '../../services/state/directory-items.service';
 import {DirectoryItem} from '../../models/directory-item.model';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-directories-files-list',
@@ -20,6 +21,7 @@ export class DirectoriesFilesListComponent implements OnInit {
   constructor(
     public directoryItemsQuery: DirectoryItemsQuery,
     public directoryItemsService: DirectoryItemsService,
+    private nzMessageService: NzMessageService
   ) {
   }
 
@@ -47,12 +49,21 @@ export class DirectoriesFilesListComponent implements OnInit {
     void this.directoryItemsService.getItems();
   }
 
-
   updateItem(item: DirectoryItem): void {
     this.openCreateEditModal.emit({
       id: item.id,
       type: item.type,
       createOrUpdate: 'Update'
     });
+  }
+
+  async deleteItem(item: DirectoryItem): Promise<void> {
+    try {
+      await this.directoryItemsService.deleteItem(item);
+    } catch (e) {
+      this.nzMessageService.error('There was an error');
+    }
+    this.nzMessageService.success(`${item.type === 'dir' ? 'Directory' : 'File'} deleted`)
+
   }
 }

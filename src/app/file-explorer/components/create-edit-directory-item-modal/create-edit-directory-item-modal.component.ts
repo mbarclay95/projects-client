@@ -54,11 +54,15 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy 
     try {
       if (this.createOrUpdate === 'Create') {
         await this.directoryItemsService.createDirectory(this.item);
+      } else {
+        await this.directoryItemsService.updateItem(this.item);
       }
     } catch (e) {
       console.log(e);
+      this.nzMessageService.error('There was an error');
     }
 
+    this.nzMessageService.success(`${this.item.type === 'dir' ? 'Directory' : 'File'} ${this.createOrUpdate}`);
     this.saving = false;
   }
 }

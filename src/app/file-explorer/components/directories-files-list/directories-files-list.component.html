@@ -14,7 +14,8 @@
     <div class="me-4">
 
       <fa-icon class="me-2 hover-icons" [icon]="edit" (click)="updateItem(item)"></fa-icon>
-      <fa-icon class="me-2 hover-icons" [icon]="delete"></fa-icon>
+      <fa-icon class="me-2 hover-icons" [icon]="delete" nz-popconfirm nzPopconfirmTitle="Are you sure?"
+               (nzOnConfirm)="deleteItem(item)"></fa-icon>
 
     </div>
 

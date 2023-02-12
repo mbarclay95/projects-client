@@ -13,6 +13,7 @@ import { CreateEditDirectoryItemModalComponent } from './components/create-edit-
 import {NzModalModule} from 'ng-zorro-antd/modal';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {FormsModule} from '@angular/forms';
+import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
 
 
 @NgModule({
@@ -22,16 +23,17 @@ import {FormsModule} from '@angular/forms';
     DirectoriesFilesListComponent,
     CreateEditDirectoryItemModalComponent
   ],
-  imports: [
-    CommonModule,
-    FileExplorerRoutingModule,
-    NzLayoutModule,
-    SharedModule,
-    NzListModule,
-    FontAwesomeModule,
-    NzModalModule,
-    NzInputModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        FileExplorerRoutingModule,
+        NzLayoutModule,
+        SharedModule,
+        NzListModule,
+        FontAwesomeModule,
+        NzModalModule,
+        NzInputModule,
+        FormsModule,
+        NzPopconfirmModule
+    ]
 })
 export class FileExplorerModule { }

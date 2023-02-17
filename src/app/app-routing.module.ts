@@ -36,7 +36,7 @@ const routes: Routes = [
       },
       {
         path: 'goals', component: GoalsLayoutComponent, resolve: {MobileHeaderResolver},
-        data: {permission: Permissions.GOALS_PAGE, headerTitle: 'Goals'},
+        data: {permission: Permissions.GOALS_PAGE, headerTitle: 'Goals', showCreateButton: true},
         loadChildren: () => import('./goals/goals.module').then(m => m.GoalsModule)
       },
       {
@@ -56,7 +56,7 @@ const routes: Routes = [
       },
       {
         path: 'file-explorer', component: FileExplorerLayoutComponent, resolve: {MobileHeaderResolver},
-        data: {permission: Permissions.FILE_EXPLORER_PAGE, headerTitle: 'File Explorer', showCreateButton: false},
+        data: {permission: Permissions.FILE_EXPLORER_PAGE, headerTitle: 'File Explorer', showCreateButton: true},
         loadChildren: () => import('./file-explorer/file-explorer.module').then(m => m.FileExplorerModule)
       }
     ]

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { GoalsRoutingModule } from './goals-routing.module';
 import { ListGoalsPageComponent } from './pages/list-goals-page/list-goals-page.component';
 import { GoalsLayoutComponent } from './goals-layout/goals-layout.component';
@@ -14,6 +13,16 @@ import {NzInputModule} from "ng-zorro-antd/input";
 import {FormsModule} from "@angular/forms";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzInputNumberModule} from "ng-zorro-antd/input-number";
+import {SharedModule} from '../shared/shared.module';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
+import { GoalStatsPageComponent } from './pages/goal-stats-page/goal-stats-page.component';
+import { GoalsTableMobileComponent } from './components/goals-table-mobile/goals-table-mobile.component';
+import {NzPopoverModule} from 'ng-zorro-antd/popover';
+import { GoalDayButtonComponent } from './components/goal-day-button/goal-day-button.component';
+import { PluralizeGoalPipe } from './pipes/pluralize-goal.pipe';
+import { GoalDaysPipe } from './pipes/goal-days.pipe';
+import {NzSpaceModule} from 'ng-zorro-antd/space';
 
 
 @NgModule({
@@ -21,7 +30,12 @@ import {NzInputNumberModule} from "ng-zorro-antd/input-number";
     ListGoalsPageComponent,
     GoalsLayoutComponent,
     GoalsTableComponent,
-    CreateEditGoalModalComponent
+    CreateEditGoalModalComponent,
+    GoalStatsPageComponent,
+    GoalsTableMobileComponent,
+    GoalDayButtonComponent,
+    PluralizeGoalPipe,
+    GoalDaysPipe
   ],
   imports: [
     CommonModule,
@@ -33,7 +47,12 @@ import {NzInputNumberModule} from "ng-zorro-antd/input-number";
     NzInputModule,
     FormsModule,
     NzSelectModule,
-    NzInputNumberModule
+    NzInputNumberModule,
+    SharedModule,
+    FontAwesomeModule,
+    NzPopconfirmModule,
+    NzPopoverModule,
+    NzSpaceModule
   ]
 })
 export class GoalsModule { }

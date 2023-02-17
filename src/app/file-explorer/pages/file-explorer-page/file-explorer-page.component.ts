@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Subject} from 'rxjs';
+import {merge, Observable, Subject} from 'rxjs';
 import {DirectoryItem} from '../../models/directory-item.model';
+import {map} from 'rxjs/operators';
+import {MobileHeaderService} from '../../../shared/services/mobile-header.service';
 
 @Component({
   selector: 'app-file-explorer-page',
@@ -10,11 +12,23 @@ import {DirectoryItem} from '../../models/directory-item.model';
 export class FileExplorerPageComponent implements OnInit {
   isMobile = screen.width < 600;
 
-
   openCreateEditModal: Subject<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }> =
     new Subject<DirectoryItem & { createOrUpdate: "Create" | "Update" }>();
 
-  constructor() { }
+  openCreateEditModal$: Observable<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }> = merge(
+    this.mobileHeaderService.clickedButton$.pipe(
+      map(() => ({
+        id: '',
+        type: 'dir',
+        createOrUpdate: 'Create'
+      } as (DirectoryItem & { createOrUpdate: 'Create' | 'Update'})))
+    ),
+    this.openCreateEditModal.asObservable()
+  );
+
+  constructor(
+    private mobileHeaderService: MobileHeaderService
+  ) { }
 
   ngOnInit(): void {
   }

@@ -41,7 +41,7 @@ export class TasksService {
       map(task => createTask(task)),
       tap(task => this.tasksStore.add(task))
     ));
-    this.tagsService.getTags();
+    void this.tagsService.getTags();
   }
 
   async updateTask(taskId: number, task: Partial<Task>, getTags = true, removeFromList = false) {
@@ -58,7 +58,7 @@ export class TasksService {
       })
     ));
     if (getTags) {
-      this.tagsService.getTags();
+      void this.tagsService.getTags();
     }
   }
 
@@ -71,7 +71,7 @@ export class TasksService {
   updateUi(newState: Partial<TaskUiState>): void {
     const newUi = {...this.tasksQuery.getUi(), ...newState};
     this.tasksStore.update({ui: newUi});
-    this.getTasks(this.tasksQuery.getQueryString(newUi));
+    void this.getTasks(this.tasksQuery.getQueryString(newUi));
   }
 
   loadWeeklyTasksPage(): void {

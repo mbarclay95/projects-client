@@ -6,8 +6,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
   styleUrls: ['./page-header.component.scss']
 })
 export class PageHeaderComponent implements OnInit {
-  @Input() showCreateButton: boolean = false;
-  @Input() buttonText: string = '';
+  @Input() buttonText?: string;
   @Input() title: string = '';
 
   @Output() createButtonClicked: EventEmitter<void> = new EventEmitter<void>();

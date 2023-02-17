@@ -1,4 +1,4 @@
-<app-page-header *ngIf="!isMobile" [showCreateButton]="true" buttonText="Create Directory" title="File Explorer"
+<app-page-header *ngIf="!isMobile" buttonText="Create Directory" title="File Explorer"
                  (createButtonClicked)="createNewDirectory()"></app-page-header>
 
 <div>
@@ -7,4 +7,4 @@
 
 </div>
 
-<app-create-edit-directory-item-modal [openModal]="openCreateEditModal.asObservable()"></app-create-edit-directory-item-modal>
+<app-create-edit-directory-item-modal [openModal]="openCreateEditModal$"></app-create-edit-directory-item-modal>

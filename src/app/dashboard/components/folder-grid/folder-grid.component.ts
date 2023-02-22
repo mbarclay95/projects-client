@@ -33,7 +33,7 @@ export class FolderGridComponent implements OnInit {
   }
 
   createFolder(): void {
-    const folder = createFolder({id: -1});
+    const folder = createFolder({id: 0});
     this.openFolderModal.next(folder);
   }
 

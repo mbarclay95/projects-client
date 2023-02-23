@@ -7,6 +7,7 @@ import {EventParticipant} from "../../models/event-participant";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {MobileHeaderService} from "../../../shared/services/mobile-header.service";
 import {map} from "rxjs/operators";
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-events-page',
@@ -15,7 +16,7 @@ import {map} from "rxjs/operators";
 })
 export class EventsPageComponent implements OnInit {
   openEventModal: Subject<Event> = new Subject<Event>();
-  isMobile = screen.width < 600;
+  isMobile = isMobile;
   openEventModal$: Observable<Event> = merge(
     this.mobileHeaderService.clickedButton$.pipe(
       map(() => createEvent({}))

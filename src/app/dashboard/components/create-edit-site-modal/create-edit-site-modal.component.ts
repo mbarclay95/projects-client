@@ -7,6 +7,7 @@ import {FoldersQuery} from "../../services/folder/state/folders.query";
 import {environment} from "../../../../environments/environment";
 import {createSiteImage} from "../../models/site-image.model";
 import {NzUploadChangeParam, NzUploadFile} from "ng-zorro-antd/upload";
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-create-edit-site-modal',
@@ -21,7 +22,7 @@ export class CreateEditSiteModalComponent implements OnInit {
   isVisible = false;
   check = faCheckCircle;
   folderId: number = 0;
-  modalWidth = screen.width < 600 ? '95%' : '500px';
+  modalWidth = isMobile ? '95%' : '500px';
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

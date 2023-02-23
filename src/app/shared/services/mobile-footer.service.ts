@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
-import {IconDefinition} from "@fortawesome/free-brands-svg-icons";
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
+import {defaultTaskButtons, FooterButton, taskFamiliesButton} from '../models/footer-button.model';
+import {isMobile} from '../../app.component';
+import {Permissions} from '../../auth/permissions';
+import {PermissionsService} from '../../auth/services/permissions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,19 +12,26 @@ export class MobileFooterService {
   private footerButtonsSubject: BehaviorSubject<FooterButton[]> = new BehaviorSubject<FooterButton[]>([]);
   footerButtons$: Observable<FooterButton[]> = this.footerButtonsSubject.asObservable();
 
-  constructor() { }
+  constructor(
+    private permissionsService: PermissionsService,
+  ) {
+  }
 
-  setFooterButtons(footerButtons: FooterButton[]): void {
-    this.footerButtonsSubject.next(footerButtons);
+  setFooterButtonsForTasksPage(): void {
+    if (isMobile) {
+      const footerButtons = [...defaultTaskButtons];
+      if (this.permissionsService.hasPermissionTo(Permissions.FAMILIES_TAB)) {
+        footerButtons.push({...taskFamiliesButton});
+      }
+      this.setFooterButtons(footerButtons);
+    }
   }
 
   clearFooterButtons(): void {
     this.footerButtonsSubject.next([]);
   }
-}
 
-export interface FooterButton {
-  path: string,
-  icon: IconDefinition,
-  title: string
+   private setFooterButtons(footerButtons: FooterButton[]): void {
+    this.footerButtonsSubject.next(footerButtons);
+  }
 }

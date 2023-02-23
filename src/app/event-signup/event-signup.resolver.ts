@@ -2,8 +2,6 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {EventService} from "./services/event.service";
 import {EventCacheService} from "./services/event-cache.service";
-import {MobileFooterService} from "../shared/services/mobile-footer.service";
-import {MobileHeaderService} from "../shared/services/mobile-header.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +12,6 @@ export class EventSignupResolver implements Resolve<Promise<void>> {
     private eventService: EventService,
     private eventCacheService: EventCacheService,
     private router: Router,
-    private mobileFooterService: MobileFooterService,
   ) {
   }
 
@@ -35,6 +32,5 @@ export class EventSignupResolver implements Resolve<Promise<void>> {
       return;
     }
     this.eventCacheService.loadEventCache();
-    this.mobileFooterService.setFooterButtons([]);
   }
 }

@@ -1,0 +1,13 @@
+<div class="d-flex justify-content-evenly align-items-center pb-2 container-width">
+
+  <button nz-button nzType="text" (click)="goalsService.updateWeekOffset(-1)">
+    <fa-icon [icon]="left"></fa-icon>
+  </button>
+
+  <div>{{goalsQuery.weekString$ | async}}</div>
+
+  <button nz-button nzType="text" (click)="goalsService.updateWeekOffset(1)">
+    <fa-icon [icon]="right"></fa-icon>
+  </button>
+
+</div>

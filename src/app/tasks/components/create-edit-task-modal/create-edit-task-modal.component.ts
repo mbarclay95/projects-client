@@ -96,12 +96,10 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
   }
 
   updateTaskPoint(taskPoint: TaskPoint) {
-    console.log('here');
     if (!this.task || this.task.taskPoint?.id === taskPoint.id) {
       return;
     }
     this.task.taskPoint = {...taskPoint};
-    console.log(this.task);
   }
 
   compareTaskPoints(a?: TaskPoint, b?: TaskPoint) {

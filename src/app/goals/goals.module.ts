@@ -23,6 +23,8 @@ import { GoalDayButtonComponent } from './components/goal-day-button/goal-day-bu
 import { PluralizeGoalPipe } from './pipes/pluralize-goal.pipe';
 import { GoalDaysPipe } from './pipes/goal-days.pipe';
 import {NzSpaceModule} from 'ng-zorro-antd/space';
+import { WeekSelectorComponent } from './components/week-selector/week-selector.component';
+import {NzSpinModule} from 'ng-zorro-antd/spin';
 
 
 @NgModule({
@@ -35,24 +37,26 @@ import {NzSpaceModule} from 'ng-zorro-antd/space';
     GoalsTableMobileComponent,
     GoalDayButtonComponent,
     PluralizeGoalPipe,
-    GoalDaysPipe
+    GoalDaysPipe,
+    WeekSelectorComponent
   ],
-  imports: [
-    CommonModule,
-    GoalsRoutingModule,
-    NzLayoutModule,
-    NzTableModule,
-    NzButtonModule,
-    NzModalModule,
-    NzInputModule,
-    FormsModule,
-    NzSelectModule,
-    NzInputNumberModule,
-    SharedModule,
-    FontAwesomeModule,
-    NzPopconfirmModule,
-    NzPopoverModule,
-    NzSpaceModule
-  ]
+    imports: [
+        CommonModule,
+        GoalsRoutingModule,
+        NzLayoutModule,
+        NzTableModule,
+        NzButtonModule,
+        NzModalModule,
+        NzInputModule,
+        FormsModule,
+        NzSelectModule,
+        NzInputNumberModule,
+        SharedModule,
+        FontAwesomeModule,
+        NzPopconfirmModule,
+        NzPopoverModule,
+        NzSpaceModule,
+        NzSpinModule
+    ]
 })
 export class GoalsModule { }

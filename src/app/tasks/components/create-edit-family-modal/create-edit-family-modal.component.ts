@@ -8,6 +8,7 @@ import {UsersQuery} from "../../../users/services/state/users.query";
 import {faEdit, faMinus, faPlus, faSave} from "@fortawesome/free-solid-svg-icons";
 import {createTaskPoint, TaskPoint} from "../../models/task-point.model";
 import {FamiliesQuery} from "../../services/families/state/families.query";
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-create-edit-family-modal',
@@ -24,8 +25,8 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   save = faSave;
   edit = faEdit;
   remove = faMinus;
-  modalStyle = screen.width < 600 ? {top: '20px'} : {};
-  modalWidth = screen.width < 600 ? '95%' : '500px';
+  modalStyle = isMobile ? {top: '20px'} : {};
+  modalWidth = isMobile ? '95%' : '500px';
   editTaskPointId: number | null = null;
   newTaskPoint: TaskPoint | null = null;
 

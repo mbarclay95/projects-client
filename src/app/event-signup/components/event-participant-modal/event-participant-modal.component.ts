@@ -6,6 +6,7 @@ import {EventService} from "../../services/event.service";
 import {faThumbsDown, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import {EventCacheService} from "../../services/event-cache.service";
 import {EventParticipant} from "../../models/event-participant";
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-event-participant-modal',
@@ -23,8 +24,8 @@ export class EventParticipantModalComponent implements OnInit, OnDestroy {
   isGoing?: boolean;
   thumbsUp = faThumbsUp;
   thumbsDown = faThumbsDown;
-  modalWidth = screen.width < 600 ? '95%' : '500px';
-  modalStyle = screen.width < 600 ? {top: '20px'} : {};
+  modalWidth = isMobile ? '95%' : '500px';
+  modalStyle = isMobile ? {top: '20px'} : {};
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

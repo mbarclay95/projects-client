@@ -4,6 +4,7 @@ import {createFamily, Family} from "../../models/family.model";
 import {merge, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {MobileHeaderService} from "../../../shared/services/mobile-header.service";
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-families-page',
@@ -13,7 +14,7 @@ import {MobileHeaderService} from "../../../shared/services/mobile-header.servic
 export class FamiliesPageComponent implements OnInit {
   @Output() openFamilyModal: EventEmitter<Family> = new EventEmitter<Family>();
 
-  isMobile = screen.width < 600;
+  isMobile = isMobile;
   createEditFamily: Observable<Family> = merge(
     this.mobileHeaderService.clickedButton$.pipe(
       map(() => createFamily({}))

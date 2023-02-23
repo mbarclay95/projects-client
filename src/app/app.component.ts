@@ -15,8 +15,8 @@ import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Route
 export class AppComponent {
   title = 'projects-client';
   sideMenuClosed?: boolean = undefined;
-  isMobile = screen.width < 600;
-  collapsedWidth = screen.width > 600 ? 64 : 0;
+  isMobile = isMobile;
+  collapsedWidth = isMobile ? 0 : 64;
   menu = faBars;
   plus = faPlus;
   loading = true;
@@ -82,3 +82,5 @@ export class AppComponent {
     }
   }
 }
+
+export const isMobile = screen.width < 600;

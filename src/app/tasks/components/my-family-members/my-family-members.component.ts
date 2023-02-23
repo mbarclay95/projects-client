@@ -8,6 +8,7 @@ import {Task} from "../../models/task.model";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {TasksService} from "../../services/tasks/state/tasks.service";
 import {FamiliesQuery} from '../../services/families/state/families.query';
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-my-family-members',
@@ -19,7 +20,7 @@ export class MyFamilyMembersComponent implements OnInit {
 
   newColor?: string;
   newTasksPerWeek?: number;
-  isMobile = screen.width < 600;
+  isMobile = isMobile;
   undo = faArrowRotateLeft;
   spinner = faSpinner;
   loadingUndoId: number|null = null;

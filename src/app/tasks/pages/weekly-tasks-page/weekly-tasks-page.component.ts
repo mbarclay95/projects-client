@@ -6,6 +6,7 @@ import {MobileHeaderService} from "../../../shared/services/mobile-header.servic
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {createTask, Task} from "../../models/task.model";
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-weekly-tasks-page',
@@ -13,7 +14,7 @@ import {createTask, Task} from "../../models/task.model";
   styleUrls: ['./weekly-tasks-page.component.scss']
 })
 export class WeeklyTasksPageComponent implements OnInit {
-  isMobile = screen.width < 600;
+  isMobile = isMobile;
   createTask: Observable<Task> = this.mobileHeaderService.clickedButton$.pipe(
     map(() => createTask({ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getZeroTaskPoint()}))
   );

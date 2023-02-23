@@ -1,13 +1,15 @@
 import {NzSelectOptionInterface} from "ng-zorro-antd/select";
+import {createGoalDay, GoalDay} from './goal-day.model';
 
 export interface Goal {
   id: number;
   createdAt: Date;
   expectedAmount: number;
+  currentAmount: number;
   title: string;
   unit: string;
-  lengthOfTime: lengthOfTime;
-  equality: equality;
+  lengthOfTime: LengthOfTime;
+  equality: Equality;
   verb: string;
   goalDays: GoalDay[];
   singularUnit?: string;
@@ -19,7 +21,8 @@ export function createGoal(params: Partial<Goal>) {
     id: params.id ?? 0,
     createdAt: params.createdAt ? new Date(params.createdAt) : new Date(),
     title: params.title ?? '',
-    expectedAmount: params.expectedAmount ? Number(params.expectedAmount) : '',
+    expectedAmount: params.expectedAmount ?? '',
+    currentAmount: params.currentAmount ?? 0,
     unit: params.unit ?? '',
     lengthOfTime: params.lengthOfTime ?? '',
     equality: params.equality ?? '',
@@ -30,35 +33,20 @@ export function createGoal(params: Partial<Goal>) {
   } as Goal;
 }
 
-export interface GoalDay {
-  id: number;
-  date: Date;
-  amount: number | null;
-}
-
-export function createGoalDay(params: Partial<GoalDay>) {
-  return {
-    id: params.id ?? 0,
-    date: params.date ? new Date(params.date) : new Date(),
-    amount: params.amount ? Number(params.amount) : null,
-  } as GoalDay;
-}
-
-export type equality = 'lessThan' | 'greaterThan' | 'equal';
+export type Equality = 'atMost' | 'atLeast';
 
 export const EqualityDropDown: NzSelectOptionInterface[] = [
-  {label: 'less than', value: 'lessThan'},
-  {label: 'greater than', value: 'greaterThan'},
-  {label: 'exactly', value: 'equal'},
+  {label: 'at most', value: 'atMost'},
+  {label: 'at least', value: 'atLeast'},
 ];
 
-export type lengthOfTime = 'day' | 'week' | 'month' | 'year';
+export type LengthOfTime = 'week' | 'month';
 
 export const LengthOfTimeDropDown: NzSelectOptionInterface[] = [
-  {label: 'day', value: 'day'},
+  // {label: 'day', value: 'day'},
   {label: 'week', value: 'week'},
   {label: 'month', value: 'month'},
-  {label: 'year', value: 'year'},
+  // {label: 'year', value: 'year'},
 ];
 
 export const daysOfWeek: string[] = [

@@ -5,6 +5,7 @@ import {merge, Observable, Subject} from "rxjs";
 import {map} from 'rxjs/operators';
 import {MobileHeaderService} from '../../../shared/services/mobile-header.service';
 import {GoalsService} from '../../services/state/goals.service';
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-list-goals-page',
@@ -12,12 +13,12 @@ import {GoalsService} from '../../services/state/goals.service';
   styleUrls: ['./list-goals-page.component.scss']
 })
 export class ListGoalsPageComponent implements OnInit {
-  isMobile = screen.width < 600;
+  isMobile = isMobile;
   openGoalModal: Subject<Goal> = new Subject<Goal>();
 
   openGoalModal$: Observable<Goal> = merge(
     this.mobileHeaderService.clickedButton$.pipe(
-      map(() => createGoal({equality: 'lessThan', lengthOfTime: 'day'}))
+      map(() => createGoal({equality: 'atLeast', lengthOfTime: 'week'}))
     ),
     this.openGoalModal.asObservable()
   );
@@ -35,7 +36,7 @@ export class ListGoalsPageComponent implements OnInit {
   }
 
   createNewGoal() {
-    const newGoal = createGoal({equality: 'lessThan', lengthOfTime: 'day'});
+    const newGoal = createGoal({equality: 'atLeast', lengthOfTime: 'week'});
     this.openGoalModal.next(newGoal);
   }
 

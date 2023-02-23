@@ -3,6 +3,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {Observable, Subject, takeUntil} from 'rxjs';
 import {DirectoryItem} from '../../models/directory-item.model';
 import {DirectoryItemsService} from '../../services/state/directory-items.service';
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-create-edit-directory-item-modal',
@@ -16,8 +17,8 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy 
   createOrUpdate?: 'Create' | 'Update';
   isVisible: boolean = false;
   saving = false;
-  modalWidth = screen.width < 700 ? '95%' : '700px';
-  modalStyle = screen.width < 600 ? {top: '20px'} : {};
+  modalWidth = isMobile ? '95%' : '650px';
+  modalStyle = isMobile ? {top: '20px'} : {};
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

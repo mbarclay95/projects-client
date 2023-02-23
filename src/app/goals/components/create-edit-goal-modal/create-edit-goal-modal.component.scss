@@ -1,0 +1,14 @@
+
+.description-container {
+  flex-direction: row;
+}
+
+@media only screen and (max-width: 715px) {
+  .description-container {
+    flex-direction: column;
+
+    * {
+      margin: 0.25rem 0;
+    }
+  }
+}

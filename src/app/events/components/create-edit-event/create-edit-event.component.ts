@@ -4,6 +4,7 @@ import {UsersQuery} from "../../../users/services/state/users.query";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {createEvent, Event} from "../../models/event.model";
 import {EventsService} from "../../services/events/state/events.service";
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-create-edit-event',
@@ -16,8 +17,8 @@ export class CreateEditEventComponent implements OnInit, OnDestroy {
   event?: Event;
   isVisible: boolean = false;
   saving = false;
-  modalWidth = screen.width < 700 ? '95%' : '700px';
-  modalStyle = screen.width < 600 ? {top: '20px'} : {};
+  modalWidth = isMobile ? '95%' : '700px';
+  modalStyle = isMobile ? {top: '20px'} : {};
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

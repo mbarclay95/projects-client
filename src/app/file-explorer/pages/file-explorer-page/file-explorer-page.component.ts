@@ -3,6 +3,7 @@ import {merge, Observable, Subject} from 'rxjs';
 import {DirectoryItem} from '../../models/directory-item.model';
 import {map} from 'rxjs/operators';
 import {MobileHeaderService} from '../../../shared/services/mobile-header.service';
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-file-explorer-page',
@@ -10,7 +11,7 @@ import {MobileHeaderService} from '../../../shared/services/mobile-header.servic
   styleUrls: ['./file-explorer-page.component.scss']
 })
 export class FileExplorerPageComponent implements OnInit {
-  isMobile = screen.width < 600;
+  isMobile = isMobile;
 
   openCreateEditModal: Subject<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }> =
     new Subject<DirectoryItem & { createOrUpdate: "Create" | "Update" }>();

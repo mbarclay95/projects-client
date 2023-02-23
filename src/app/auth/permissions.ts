@@ -1,5 +1,3 @@
-import {IconDefinition} from "@fortawesome/free-brands-svg-icons";
-
 export const enum Permissions {
   USERS_PAGE = 'client_view_users_page',
   DASHBOARD_PAGE = 'client_view_dashboard_page',
@@ -21,10 +19,3 @@ export const enum Roles {
   FILE_EXPLORER_ROLE = 'file_explorer_role',
 }
 
-export interface Route {
-  icon: IconDefinition,
-  url: string,
-  permission: Permissions | true,
-  title: string
-  queryParams: Record<string, string>
-}

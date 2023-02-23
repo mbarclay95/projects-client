@@ -1,18 +1,18 @@
 <div class="w-100 h-100 d-flex justify-content-center align-items-center" nz-popover [nzPopoverContent]="popoverContent"
-     nzPopoverTrigger="click" [nzPopoverPlacement]="isFirst ? 'bottomLeft' : (isLast ? 'bottomRight' : 'bottom')"
-     (nzPopoverVisibleChange)="visibilityChange($event)">
+     [nzPopoverPlacement]="showBottomLeft ? 'bottomLeft' : (showBottomRight ? 'bottomRight' : 'bottom')"
+     nzPopoverTrigger="click" (nzPopoverVisibleChange)="visibilityChange($event)">
 
-  <div *ngIf="_goalDay?.amount">{{_goalDay?.amount}}</div>
+  <div *ngIf="_goalDay?.amount !== null" style="font-size: 17px">{{_goalDay?.amount}}</div>
 </div>
 
 <ng-template #popoverContent>
 
   <div *ngIf="_goalDay" class="d-flex align-items-center">
 
-    <nz-space nzDirection="vertical" style="width: 115px">
+    <nz-space nzDirection="vertical" style="width: 115px" nzSize="large">
 
-      <nz-input-number-group nzSpaceItem class="me-2" [nzAddOnAfter]="clearNumber">
-        <nz-input-number nzAutoFocus [(ngModel)]="_goalDay.amount"></nz-input-number>
+      <nz-input-number-group nzSpaceItem class="me-2" [nzAddOnAfter]="clearNumber" nzSize="large">
+        <nz-input-number nzAutoFocus [nzMin]="0" [(ngModel)]="_goalDay.amount" nzSize="large"></nz-input-number>
       </nz-input-number-group>
 
     </nz-space>
@@ -21,7 +21,7 @@
       <fa-icon class="px-2" (click)="_goalDay.amount = null" [icon]="clear"></fa-icon>
     </ng-template>
 
-    <div>{{_goalDay.amount | pluralizeGoal : goal}}</div>
+    <div style="font-size: 18px">{{_goalDay.amount | pluralizeGoal : goal}}</div>
 
   </div>
 

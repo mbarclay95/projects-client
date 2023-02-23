@@ -4,6 +4,7 @@ import {Subject} from "rxjs";
 import {createUser, User} from "../../models/user.model";
 import {RolesQuery} from "../../services/roles/state/roles.query";
 import {Roles} from "../../../auth/permissions";
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-users-page',
@@ -12,7 +13,7 @@ import {Roles} from "../../../auth/permissions";
 })
 export class UsersPageComponent implements OnInit {
   openUserModal: Subject<User> = new Subject<User>();
-  isMobile = screen.width < 600;
+  isMobile = isMobile;
 
   constructor(
     public usersQuery: UsersQuery,

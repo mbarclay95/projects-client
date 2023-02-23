@@ -8,6 +8,7 @@ import {NzMessageService} from "ng-zorro-antd/message";
 import {FamiliesService} from "../../services/families/state/families.service";
 import {IconDefinition} from "@fortawesome/free-brands-svg-icons";
 import {Router} from '@angular/router';
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-task-row',
@@ -18,7 +19,7 @@ export class TaskRowComponent implements OnInit {
   @Input() task!: Task;
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
 
-  isMobile = screen.width < 600;
+  isMobile = isMobile;
   family = faPeopleRoof;
   personal = faUser;
   zeroPoints = fa0;

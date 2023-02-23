@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 import {createFolder, Folder} from "../../models/folder.model";
 import {FoldersService} from "../../services/folder/state/folders.service";
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-create-edit-folder-modal',
@@ -13,7 +14,7 @@ export class CreateEditFolderModalComponent implements OnInit {
 
   folder?: Folder;
   isVisible = false;
-  modalWidth = screen.width < 600 ? '95%' : '500px';
+  modalWidth = isMobile ? '95%' : '500px';
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

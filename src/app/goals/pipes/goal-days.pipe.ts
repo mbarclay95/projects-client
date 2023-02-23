@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import {GoalsQuery} from '../services/state/goals.query';
 import {Observable} from 'rxjs';
-import {GoalDay} from '../models/goal.model';
+import {GoalDayButton} from '../models/goal-day.model';
 
 @Pipe({
   name: 'goalDays'
@@ -13,7 +13,7 @@ export class GoalDaysPipe implements PipeTransform {
   ) {
   }
 
-  transform(goalId: number): Observable<{ goalDay: GoalDay; dayString: string }[]> {
+  transform(goalId: number): Observable<GoalDayButton[]> {
     return this.goalsQuery.getGoalDays(goalId);
   }
 

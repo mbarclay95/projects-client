@@ -6,6 +6,7 @@ import {merge, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {MobileHeaderService} from "../../../shared/services/mobile-header.service";
 import {FamiliesQuery} from '../../services/families/state/families.query';
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-tasks-page',
@@ -15,7 +16,7 @@ import {FamiliesQuery} from '../../services/families/state/families.query';
 export class TasksPageComponent implements OnInit {
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
 
-  isMobile = screen.width < 600;
+  isMobile = isMobile;
   createEditTask: Observable<Task> = merge(
     this.mobileHeaderService.clickedButton$.pipe(
       map(() => createTask({ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getZeroTaskPoint()}))

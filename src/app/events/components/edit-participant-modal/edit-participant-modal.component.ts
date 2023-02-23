@@ -5,6 +5,7 @@ import {RolesQuery} from "../../../users/services/roles/state/roles.query";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {EventsService} from "../../services/events/state/events.service";
 import {EventParticipant} from "../../models/event-participant";
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-edit-participant-modal',
@@ -20,8 +21,8 @@ export class EditParticipantModalComponent implements OnInit, OnDestroy {
   eventParticipant?: EventParticipant;
   thumbsUp = faThumbsUp;
   thumbsDown = faThumbsDown;
-  modalWidth = screen.width < 600 ? '95%' : '500px';
-  modalStyle = screen.width < 600 ? {top: '20px'} : {};
+  modalWidth = isMobile ? '95%' : '500px';
+  modalStyle = isMobile ? {top: '20px'} : {};
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

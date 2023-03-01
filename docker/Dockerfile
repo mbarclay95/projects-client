@@ -3,7 +3,7 @@ FROM node:lts-alpine as build-stage
 WORKDIR /app
 COPY . .
 RUN npm install --legacy-peer-deps
-RUN npm run build:prod
+RUN npm run build-compress:prod
 COPY . .
 
 # production stage

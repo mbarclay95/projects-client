@@ -7,7 +7,7 @@ RUN ls -la ./
 RUN ls -la ./node_modules
 RUN ls -la ./node_modules/gzipper
 RUN ls -la ./node_modules/gzipper/bin
-RUN npm run build-compress:prod
+RUN npm run build:prod
 COPY . .
 
 # production stage
@@ -20,4 +20,4 @@ RUN echo "gzip_types text/plain application/xm application/json application/java
 # Set workdir
 WORKDIR /var/www/html
 COPY ./docker/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=build-stage /app/dist-compressed/projects-client /var/www/html
+COPY --from=build-stage /app/dist/projects-client /var/www/html

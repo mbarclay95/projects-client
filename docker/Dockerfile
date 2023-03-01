@@ -3,6 +3,10 @@ FROM node:lts-alpine as build-stage
 WORKDIR /app
 COPY . .
 RUN npm install --legacy-peer-deps
+RUN ls -la ./
+RUN ls -la ./node_modules
+RUN ls -la ./node_modules/gzipper
+RUN ls -la ./node_modules/gzipper/bin
 RUN npm run build-compress:prod
 COPY . .
 

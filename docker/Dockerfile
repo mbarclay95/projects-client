@@ -16,4 +16,4 @@ RUN echo "gzip_types text/plain application/xm application/json application/java
 # Set workdir
 WORKDIR /var/www/html
 COPY ./docker/10-location-root.conf ./10-location-root.conf
-COPY --from=build-stage /app/dist/projects-client /var/www/html
+COPY --from=build-stage /app/dist-compressed/projects-client /var/www/html

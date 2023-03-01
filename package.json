@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build:prod": "node ./node_modules/@angular/cli/bin/ng build --configuration=production"
+    "build:prod": "node ./node_modules/@angular/cli/bin/ng build --configuration=production",
+    "build-compress:prod": "node ./node_modules/@angular/cli/bin/ng build --configuration=production && gzipper c ./dist --include js,css,html --output-file-format [filename].[ext] ./dist-compressed/"
   },
   "private": true,
   "dependencies": {

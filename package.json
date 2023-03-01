@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:prod": "node ./node_modules/@angular/cli/bin/ng build --configuration=production",
-    "build-compress:prod": "node ./node_modules/@angular/cli/bin/ng build --configuration=production && gzipper c ./dist --include js,css,html --output-file-format [filename].[ext] ./dist-compressed/"
+    "build-compress:prod": "node ./node_modules/@angular/cli/bin/ng build --configuration=production && node ./node_modules/gzipper/bin/gzipper c ./dist --include js,css,html --output-file-format [filename].[ext] ./dist-compressed/"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +30,7 @@
     "bluebird": "^3.7.2",
     "bootstrap": "^5.1.3",
     "date-fns": "^2.29.3",
+    "gzipper": "^7.2.0",
     "ng-zorro-antd": "^14.2.1",
     "ngx-color": "^7.3.3",
     "ngx-socket-io": "^4.3.0",

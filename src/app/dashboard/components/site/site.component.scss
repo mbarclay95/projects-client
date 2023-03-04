@@ -3,6 +3,12 @@
 
 }
 
+.site-image {
+  height: 40px;
+  width: 50px;
+  object-fit: contain;
+}
+
 .site-box {
   display: flex;
   box-sizing: border-box;

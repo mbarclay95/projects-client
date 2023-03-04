@@ -12,7 +12,7 @@ ENV WEB_DOCUMENT_ROOT /var/www/html
 ENV WEB_DOCUMENT_INDEX index.html
 ENV ACCEPT_EULA y
 RUN echo "gzip on;" >> /opt/docker/etc/nginx/conf.d/gzip.conf
-RUN echo "gzip_types text/plain application/xm application/json application/javascript;" >> /opt/docker/etc/nginx/conf.d/gzip.conf
+RUN echo "gzip_types text/plain application/xm application/json application/javascript text/css;" >> /opt/docker/etc/nginx/conf.d/gzip.conf
 RUN echo "gzip_proxied no-cache no-store private expired auth;" >> /opt/docker/etc/nginx/conf.d/gzip.conf
 RUN echo "gzip_min_length 1000;" >> /opt/docker/etc/nginx/conf.d/gzip.conf
 

@@ -22,7 +22,7 @@ export class WeeklyProgressPercentPipe implements PipeTransform {
     }
     let totalCompleted = activeFamily.taskStrategy === 'per task' ?
       user.taskUserConfig.completedFamilyTasks.length :
-      user.taskUserConfig.completedFamilyTasks.reduce((prev, curr) => prev + (curr.taskPoint?.points ?? 0), 0);
+      user.taskUserConfig.completedFamilyTasks.reduce((prev, curr) => prev + (curr.taskPoint ?? 0), 0);
 
     let progress = totalCompleted / user.taskUserConfig.tasksPerWeek;
     if (progress > 1) {

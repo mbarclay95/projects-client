@@ -54,10 +54,9 @@
 
         <div class="">Task Points: <span class="text-danger">*</span></div>
 
-        <nz-select [ngModel]="task.taskPoint" (ngModelChange)="updateTaskPoint($event)" class="w-100"
-                   [compareWith]="compareTaskPoints">
+        <nz-select [ngModel]="task.taskPoint" (ngModelChange)="updateTaskPoint($event)" class="w-100">
           <nz-option *ngFor="let taskPoint of familiesQuery.taskPoints$ | async" [nzValue]="taskPoint"
-                     [nzLabel]="taskPoint.name + ' - ' + taskPoint.points + (taskPoint.points === 1 ? ' point' : ' points')"></nz-option>
+                     [nzLabel]="taskPoint + (taskPoint === 1 ? ' point' : ' points')"></nz-option>
         </nz-select>
 
       </div>

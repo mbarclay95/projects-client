@@ -30,6 +30,7 @@
     Create {{selectedTab}}</button>
 </ng-template>
 
-<app-create-edit-family-modal [openModal]="openFamilyModal.asObservable()"></app-create-edit-family-modal>
+<app-create-edit-family-modal [showFamilyMembers]="true"
+                              [openModal]="openFamilyModal.asObservable()"></app-create-edit-family-modal>
 
-<app-create-edit-task-modal [openModal]="openTaskModal.asObservable()"></app-create-edit-task-modal>
+<app-create-edit-task-modal-mobile [openModal]="openTaskModal.asObservable()"></app-create-edit-task-modal-mobile>

@@ -1,17 +1,18 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {TaskPoint} from '../models/task-point.model';
+import {TaskPointColorsService} from '../services/task-point-colors.service';
 
 @Pipe({
   name: 'taskPointColor'
 })
 export class TaskPointColorPipe implements PipeTransform {
 
-  transform(currentTaskPoint: TaskPoint | undefined, taskPoint: TaskPoint): string {
-    if (currentTaskPoint?.id === taskPoint.id) {
-      return `color-1`;
-    }
+  constructor(
+    private taskPointColorsService: TaskPointColorsService
+  ) {
+  }
 
-    return 'text-muted';
+  transform(taskPoint: number): string {
+    return this.taskPointColorsService.getActiveFamilyColor(taskPoint);
   }
 
 }

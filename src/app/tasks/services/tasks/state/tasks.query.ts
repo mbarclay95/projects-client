@@ -8,6 +8,9 @@ import {map} from "rxjs/operators";
 @Injectable({providedIn: 'root'})
 export class TasksQuery extends QueryEntity<TasksState> {
   tasks$: Observable<Task[]> = this.selectAll();
+  dateSortedTasks$: Observable<Task[]> = this.tasks$.pipe(
+    map(tasks => tasks.sort((a, b) => (a.dueDate?.getTime() ?? 0) - (b.dueDate?.getTime() ?? 0)))
+  );
   sortedTasks$: Observable<Task[]> = this.tasks$.pipe(
     map(tasks => tasks.sort((a, b) => {
       if (a.priority === b.priority) {

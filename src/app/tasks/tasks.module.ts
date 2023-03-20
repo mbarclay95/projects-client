@@ -52,6 +52,9 @@ import {NzListModule} from "ng-zorro-antd/list";
 import { TotalCompletedTasksPipe } from './pipes/total-completed-tasks.pipe';
 import { CreateEditTaskModalMobileComponent } from './components/create-edit-task-modal-mobile/create-edit-task-modal-mobile.component';
 import { TaskPointColorPipe } from './pipes/task-point-color.pipe';
+import {NzSpaceModule} from 'ng-zorro-antd/space';
+import { UpdatingTaskPointColorsPipe } from './pipes/updating-task-point-colors.pipe';
+import { SelectedTaskPointColorPipe } from './pipes/selected-task-point-color.pipe';
 
 @NgModule({
   declarations: [
@@ -82,6 +85,8 @@ import { TaskPointColorPipe } from './pipes/task-point-color.pipe';
     TotalCompletedTasksPipe,
     CreateEditTaskModalMobileComponent,
     TaskPointColorPipe,
+    UpdatingTaskPointColorsPipe,
+    SelectedTaskPointColorPipe,
   ],
     imports: [
         CommonModule,
@@ -111,6 +116,7 @@ import { TaskPointColorPipe } from './pipes/task-point-color.pipe';
         SharedModule,
         NzEmptyModule,
         NzListModule,
+        NzSpaceModule,
     ]
 })
 export class TasksModule { }

@@ -5,8 +5,9 @@
     <label nz-checkbox [ngModel]="!!task.completedAt" (ngModelChange)="completedTask(task.id)"
            class="me-2"></label>
 
-    <fa-icon *ngIf="familiesQuery.isPerTaskPoint$ | async" [icon]="getIcon(task.taskPoint?.points)"
-             class="me-2 type-icon fa-xl {{'color-' + task.taskPoint?.points}}"></fa-icon>
+    <span *ngIf="familiesQuery.isPerTaskPoint$ | async" class="me-2 task-points" style="color: {{(task.taskPoint ?? 0) | taskPointColor}}">
+      {{task.taskPoint}}
+    </span>
 
     <div>
 

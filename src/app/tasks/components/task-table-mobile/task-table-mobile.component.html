@@ -3,7 +3,7 @@
   <div class="task-box" *ngFor="let task of _tasks"
        [ngClass]="{'highlighted-row': highlightedTaskId === task.id}">
 
-    <div class="first-row">
+    <div class="first-row" (click)="expandSet.has(task.id) ? expandSet.delete(task.id) : expandSet.add(task.id)">
 
       <div>
 
@@ -35,11 +35,9 @@
 
         </div>
 
-        <fa-icon *ngIf="!expandSet.has(task.id)" style="cursor: pointer" [icon]="arrowDown"
-                 (click)="expandSet.add(task.id)"></fa-icon>
+        <fa-icon *ngIf="!expandSet.has(task.id)" style="cursor: pointer" [icon]="arrowDown"></fa-icon>
 
-        <fa-icon *ngIf="expandSet.has(task.id)" style="cursor: pointer" [icon]="arrowUp"
-                 (click)="expandSet.delete(task.id)"></fa-icon>
+        <fa-icon *ngIf="expandSet.has(task.id)" style="cursor: pointer" [icon]="arrowUp"></fa-icon>
 
       </div>
 

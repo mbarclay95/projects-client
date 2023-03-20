@@ -1,4 +1,3 @@
-import {createTaskPoint, TaskPoint} from "./task-point.model";
 
 export interface Task {
   id: number;
@@ -13,7 +12,7 @@ export interface Task {
   frequencyAmount?: number;
   frequencyUnit?: 'day' | 'week' | 'month';
   tags: string[];
-  taskPoint?: TaskPoint;
+  taskPoint?: number;
   isActive: boolean;
   priority: number;
 }
@@ -34,7 +33,7 @@ export function createTask(params: Partial<Task>) {
     frequencyAmount: params.frequencyAmount,
     frequencyUnit: params.frequencyUnit,
     tags: params.tags ? params.tags : [],
-    taskPoint: params.taskPoint ? createTaskPoint(params.taskPoint) : undefined,
+    taskPoint: params.taskPoint ?? undefined,
     isActive: params.isActive ?? true,
     priority: Number(params.priority ?? 0),
   } as Task;

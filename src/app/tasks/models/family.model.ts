@@ -1,5 +1,4 @@
 import {createUser, User} from "../../users/models/user.model";
-import {createTaskPoint, TaskPoint} from "./task-point.model";
 
 export interface Family {
   id: number;
@@ -8,7 +7,7 @@ export interface Family {
   members: User[];
   tasksPerWeek: number;
   totalFamilyTasks: number;
-  taskPoints: TaskPoint[];
+  taskPoints: number[];
   taskStrategy: TaskStrategy;
 }
 
@@ -22,7 +21,7 @@ export function createFamily(params: Partial<Family>) {
     members: params.members ? params.members.map(m => createUser(m)) : [],
     tasksPerWeek: params.tasksPerWeek ?? 0,
     totalFamilyTasks: params.totalFamilyTasks ?? 0,
-    taskPoints: params.taskPoints ? params.taskPoints.map(taskPoint => createTaskPoint(taskPoint)) : [],
+    taskPoints: params.taskPoints ?? [],
     taskStrategy: params.taskStrategy ?? 'per task',
   } as Family;
 }

@@ -1,20 +1,8 @@
 <div class="d-flex align-items-center justify-content-center w-100 mb-2">
 
-  <div class="border me-3"
-       style="background: {{myFamily.color}}; border-radius: 2px; width: 30px; height: 30px; cursor: pointer"
-       nz-popover nzPopoverTrigger="click" [nzPopoverContent]="colorPicker" nzPopoverPlacement="bottomLeft"
-       (nzPopoverVisibleChange)="saveColor($event)"></div>
+  <div style="font-size: 25px;">{{myFamily.name}} Family</div>
 
-  <ng-template #colorPicker>
-    <color-chrome (onChangeComplete)="colorChanged($event)" [color]="myFamily.color"></color-chrome>
-  </ng-template>
-
-  <div style="font-size: 25px; cursor: pointer" *ngIf="!editFamilyName"
-       (click)="editFamilyName = true">{{myFamily.name}} Family
-  </div>
-
-  <input nz-input *ngIf="editFamilyName" nzSize="large" [ngModel]="myFamily.name" style="width: auto"
-         (ngModelChange)="saveFamilyName($event)" [ngModelOptions]="{updateOn: 'blur'}" (blur)="editFamilyName = false">
+  <fa-icon class="cursor-pointer ms-2" style="color: grey" [icon]="settings" (click)="openFamilyModal.next(myFamily)"></fa-icon>
 
 </div>
 
@@ -34,3 +22,5 @@
   </div>
 
 </div>
+
+<app-create-edit-family-modal [openModal]="openFamilyModal.asObservable()"></app-create-edit-family-modal>

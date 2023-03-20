@@ -19,7 +19,7 @@ export class TasksPageComponent implements OnInit {
   isMobile = isMobile;
   createEditTask: Observable<Task> = merge(
     this.mobileHeaderService.clickedButton$.pipe(
-      map(() => createTask({ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getZeroTaskPoint()}))
+      map(() => createTask({ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getMinTaskPoint()}))
     ),
     this.editTask.asObservable()
   );

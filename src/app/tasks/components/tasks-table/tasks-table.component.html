@@ -40,7 +40,7 @@
                    *ngIf="task.ownerType === 'user'" [icon]="personal"></fa-icon>
         </td>
         <td *ngIf="familyTaskStrategy === 'per task point'" class="text-center">
-          {{task.taskPoint?.points ?? 0}}
+          {{task.taskPoint ?? 0}}
         </td>
       </tr>
     </ng-container>

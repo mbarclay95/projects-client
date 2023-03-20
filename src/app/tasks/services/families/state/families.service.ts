@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {arrayAdd, arrayRemove, arrayUpdate, ID} from '@datorama/akita';
+import {arrayUpdate} from '@datorama/akita';
 import {map, tap} from 'rxjs/operators';
 import {createFamily, Family} from '../../../models/family.model';
 import {FamiliesStore} from './families.store';
@@ -8,7 +8,6 @@ import {firstValueFrom} from "rxjs";
 import {environment} from "../../../../../environments/environment";
 import {FamiliesQuery} from "./families.query";
 import {TaskUserConfig, User} from "../../../../users/models/user.model";
-import {createTaskPoint, TaskPoint} from "../../../models/task-point.model";
 
 @Injectable({providedIn: 'root'})
 export class FamiliesService {
@@ -79,31 +78,5 @@ export class FamiliesService {
         members: arrayUpdate(members, userId, {taskUserConfig: newTaskUserConfig})
       }));
     }
-  }
-
-  async saveTaskPoint(taskPoint: TaskPoint, familyId: number): Promise<void> {
-    await firstValueFrom(this.http.post(`${environment.apiUrl}/task-points`, {...taskPoint, familyId}).pipe(
-      map(taskPoint => createTaskPoint(taskPoint)),
-      tap(taskPoint => this.familiesStore.update(familyId, ({ taskPoints }) => ({
-        taskPoints: arrayAdd(taskPoints, taskPoint)
-      })))
-    ));
-  }
-
-  async updateTaskPoint(taskPoint: TaskPoint, familyId: number): Promise<void> {
-    await firstValueFrom(this.http.put(`${environment.apiUrl}/task-points/${taskPoint.id}`, taskPoint).pipe(
-      map(taskPoint => createTaskPoint(taskPoint)),
-      tap(taskPoint => this.familiesStore.update(familyId, ({ taskPoints }) => ({
-        taskPoints: arrayUpdate(taskPoints, taskPoint.id, taskPoint)
-      })))
-    ));
-  }
-
-  async removeTaskPoint(taskPoint: TaskPoint, familyId: number): Promise<void> {
-    await firstValueFrom(this.http.delete(`${environment.apiUrl}/task-points/${taskPoint.id}`).pipe(
-      tap(() => this.familiesStore.update(familyId, ({ taskPoints }) => ({
-        taskPoints: arrayRemove(taskPoints, taskPoint.id)
-      })))
-    ));
   }
 }

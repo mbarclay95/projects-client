@@ -6,7 +6,6 @@ import {Family, TaskStrategy} from "../../../models/family.model";
 import {map} from "rxjs/operators";
 import {User} from "../../../../users/models/user.model";
 import {AuthQuery} from "../../../../auth/services/state/auth.query";
-import {TaskPoint} from "../../../models/task-point.model";
 
 @Injectable({providedIn: 'root'})
 export class FamiliesQuery extends QueryEntity<FamiliesState> {
@@ -28,8 +27,8 @@ export class FamiliesQuery extends QueryEntity<FamiliesState> {
     map(strategy => strategy === 'per task point')
   );
 
-  taskPoints$: Observable<TaskPoint[]> = this.myFamily$.pipe(
-    map(myFamily => [...myFamily.taskPoints].sort((a, b) => a.points > b.points ? 1 : -1))
+  taskPoints$: Observable<number[]> = this.myFamily$.pipe(
+    map(myFamily => [...myFamily.taskPoints].sort((a, b) => a > b ? 1 : -1))
   );
 
   authUser$: Observable<User> = combineLatest([
@@ -59,13 +58,22 @@ export class FamiliesQuery extends QueryEntity<FamiliesState> {
     return family.members.find(u => u.id === auth.id) as User;
   }
 
-  getZeroTaskPoint(): TaskPoint | undefined {
+  getMinTaskPoint(): number | undefined {
     const taskPoints = this.getActive()?.taskPoints;
     if (!taskPoints) {
       return;
     }
 
-    return taskPoints.find(taskPoint => taskPoint.points === 0);
+    return Math.min(...[...taskPoints]);
+  }
+
+  getMaxTaskPoint(): number | undefined {
+    const taskPoints = this.getActive()?.taskPoints;
+    if (!taskPoints) {
+      return;
+    }
+
+    return Math.max(...[...taskPoints]);
   }
 }
 

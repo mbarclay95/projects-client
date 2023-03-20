@@ -48,7 +48,7 @@ export class TaskTabsComponent implements OnInit {
         this.openTaskModal.next(createTask({
           id: 0,
           ownerId: this.familiesQuery.activeId,
-          taskPoint: this.familiesQuery.getZeroTaskPoint()
+          taskPoint: this.familiesQuery.getMinTaskPoint()
         }));
         break;
     }

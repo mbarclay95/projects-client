@@ -4,25 +4,19 @@
 
     <div class="d-flex align-items-center justify-content-center w-100 mb-2">
 
-      <div class="border me-3"
-           style="background: {{member.taskUserConfig?.color}}; border-radius: 2px; width: 25px; height: 25px; cursor: pointer"
-           nz-popover nzPopoverTrigger="click" [nzPopoverContent]="colorPicker" nzPopoverPlacement="bottomLeft"
-           (nzPopoverVisibleChange)="saveColor(member, $event)"></div>
+      <div style="font-size: 20px">{{member | firstName}}</div>
 
-      <ng-template #colorPicker>
-        <div class="mb-2">
-          <div class="mb-1">Color:</div>
-          <color-chrome (onChangeComplete)="colorChanged($event)"
-                        [color]="member.taskUserConfig?.color ?? ''"></color-chrome>
-        </div>
+      <fa-icon class="cursor-pointer ms-2" [icon]="settings" nz-popover nzPopoverTrigger="click"
+               [nzPopoverContent]="memberSettings" nzPopoverPlacement="bottom" style="color: grey"
+               (nzPopoverVisibleChange)="saveSettings(member, $event)"></fa-icon>
+
+      <ng-template #memberSettings>
         <div>
           <div class="mb-1">Task{{myFamily.taskStrategy === 'per task' ? 's' : ' Points'}} Per Week:</div>
-          <nz-input-number class="w-100" [ngModel]="member.taskUserConfig?.tasksPerWeek"
-                           (ngModelChange)="tasksPerWeekChanged($event)"></nz-input-number>
+          <nz-input-number style="width: 140px" [ngModel]="member.taskUserConfig?.tasksPerWeek" nzSize="large"
+                           (ngModelChange)="tasksPerWeekChanged($event)" [nzMin]="0"></nz-input-number>
         </div>
       </ng-template>
-
-      <div style="font-size: 20px">{{member | firstName}}</div>
 
     </div>
 
@@ -46,8 +40,8 @@
                nzPopconfirmTitle="Are you sure you want to undo this chore?"></fa-icon>
 
       <div style="font-size: 16px">{{task.name}}
-        <span *ngIf="myFamily.taskStrategy === 'per task point'" style="font-style: italic">- {{task.taskPoint?.points}}
-          point{{task.taskPoint?.points === 1 ? '' : 's'}}</span></div>
+        <span *ngIf="myFamily.taskStrategy === 'per task point'" style="font-style: italic">- {{task.taskPoint}}
+          point{{task.taskPoint === 1 ? '' : 's'}}</span></div>
 
     </div>
 

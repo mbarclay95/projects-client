@@ -1,9 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Family} from "../../models/family.model";
-import {ColorEvent} from "ngx-color";
 import {User} from "../../../users/models/user.model";
 import {FamiliesService} from "../../services/families/state/families.service";
-import {faArrowRotateLeft, faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRotateLeft, faCog, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {Task} from "../../models/task.model";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {TasksService} from "../../services/tasks/state/tasks.service";
@@ -18,9 +17,9 @@ import {isMobile} from '../../../app.component';
 export class MyFamilyMembersComponent implements OnInit {
   @Input() myFamily!: Family;
 
-  newColor?: string;
   newTasksPerWeek?: number;
   isMobile = isMobile;
+  settings = faCog;
   undo = faArrowRotateLeft;
   spinner = faSpinner;
   loadingUndoId: number|null = null;
@@ -35,28 +34,20 @@ export class MyFamilyMembersComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  saveColor(member: User, popoverOpened: boolean) {
-    if (popoverOpened) {
-      this.newColor = member.taskUserConfig?.color ?? '';
-    } else {
+  saveSettings(member: User, popoverOpened: boolean) {
+    if (!popoverOpened) {
       if (!member.taskUserConfig) {
         return;
       }
       let newTaskConfig = {...member.taskUserConfig};
-      if (this.newColor !== undefined) {
-        newTaskConfig.color = this.newColor;
-        this.newColor = undefined;
-      }
       if (this.newTasksPerWeek !== undefined) {
         newTaskConfig.tasksPerWeek = this.newTasksPerWeek;
         this.newTasksPerWeek = undefined;
       }
-      this.familiesService.updateTaskUserConfig(this.myFamily.id, member, newTaskConfig);
+      if (member.taskUserConfig.tasksPerWeek !== newTaskConfig.tasksPerWeek) {
+        this.familiesService.updateTaskUserConfig(this.myFamily.id, member, newTaskConfig);
+      }
     }
-  }
-
-  colorChanged(newColor: ColorEvent) {
-    this.newColor = newColor.color.hex;
   }
 
   tasksPerWeekChanged(newTasksPerWeek: number) {

@@ -8,6 +8,7 @@ import {CreateEditTaskModalComponent} from '../create-edit-task-modal/create-edi
 import {fa0, fa1, fa2, fa3, faChevronDown, faChevronUp, faFlag, faPause} from '@fortawesome/free-solid-svg-icons';
 import {IconDefinition} from '@fortawesome/free-brands-svg-icons';
 import {takeUntil} from 'rxjs';
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-create-edit-task-modal-mobile',
@@ -17,6 +18,8 @@ import {takeUntil} from 'rxjs';
 export class CreateEditTaskModalMobileComponent extends CreateEditTaskModalComponent {
   recurringExpanded = false;
   advancedExpanded = false;
+  modalStyle = isMobile ? {top: '20px'} : {};
+  modalWidth = isMobile ? '95%' : '500px';
 
   pause = faPause;
   flag = faFlag;

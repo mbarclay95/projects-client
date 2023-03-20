@@ -9,6 +9,7 @@ import {FamiliesService} from "../../services/families/state/families.service";
 import {IconDefinition} from "@fortawesome/free-brands-svg-icons";
 import {Router} from '@angular/router';
 import {isMobile} from '../../../app.component';
+import Color from 'colorjs.io';
 
 @Component({
   selector: 'app-task-row',
@@ -27,6 +28,14 @@ export class TaskRowComponent implements OnInit {
   twoPoints = fa2;
   threePoints = fa3;
   flag = faFlag;
+
+  startColor = new Color('#A9B31E');
+  endColor = new Color('#214897');
+  range = this.startColor.range(this.endColor, {
+    space: 'lch',
+    hue: undefined,
+    outputSpace: 'srgb'
+  });
 
   constructor(
     public familiesQuery: FamiliesQuery,

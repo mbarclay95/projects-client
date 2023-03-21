@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from "../../../users/models/user.model";
 import {differenceInDays, endOfWeek} from "date-fns";
 import {FamiliesQuery} from "../../services/families/state/families.query";
+import {TaskUserConfig} from '../../models/task-user-config.model';
 
 @Component({
   selector: 'app-weekly-progress',
@@ -9,7 +9,7 @@ import {FamiliesQuery} from "../../services/families/state/families.query";
   styleUrls: ['./weekly-progress.component.scss']
 })
 export class WeeklyProgressComponent implements OnInit {
-  @Input() user!: User | null;
+  @Input() userConfig!: TaskUserConfig | undefined | null;
   daysTillEndOfWeek = differenceInDays(endOfWeek(new Date(), {weekStartsOn: 1}), new Date()) + 1;
 
   constructor(

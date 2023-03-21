@@ -7,7 +7,6 @@ import {firstValueFrom} from "rxjs";
 import {environment} from "../../../../../environments/environment";
 import {TasksQuery} from "./tasks.query";
 import {TagsService} from "../../tags.service";
-import {FamiliesService} from "../../families/state/families.service";
 import {Pagination} from "../../../../models/pagination.model";
 import {setLoading} from '@datorama/akita';
 import {differenceInDays, endOfWeek} from 'date-fns';
@@ -19,8 +18,8 @@ export class TasksService {
     private http: HttpClient,
     private tasksQuery: TasksQuery,
     private tagsService: TagsService,
-    private familiesService: FamiliesService,
-  ) {}
+  ) {
+  }
 
   async getTasks(queryString: string): Promise<void> {
     await firstValueFrom(this.http.get<Task[] | Pagination<Task>>(`${environment.apiUrl}/tasks?${queryString}`).pipe(
@@ -44,22 +43,21 @@ export class TasksService {
     void this.tagsService.getTags();
   }
 
-  async updateTask(taskId: number, task: Partial<Task>, getTags = true, removeFromList = false) {
+  async updateTask(taskId: number, task: Partial<Task>, getTags = true, removeFromList = false): Promise<Task> {
     const newTask = {...this.tasksQuery.getEntity(taskId), ...task};
-    await firstValueFrom(this.http.put<Task>(`${environment.apiUrl}/tasks/${taskId}`, newTask).pipe(
+    const t = await firstValueFrom(this.http.put<Task>(`${environment.apiUrl}/tasks/${taskId}`, newTask).pipe(
       map(task => createTask(task)),
       tap(task => {
-        if (removeFromList) {
-          this.tasksStore.remove(taskId);
-          this.familiesService.refreshActiveFamily();
-        } else {
+        removeFromList ?
+          this.tasksStore.remove(taskId) :
           this.tasksStore.update(taskId, task);
-        }
       })
     ));
     if (getTags) {
       void this.tagsService.getTags();
     }
+
+    return t;
   }
 
   async deleteTask(task: Task) {

@@ -18,12 +18,17 @@ const routes: Routes = [
         data: {showCreateButton: true},
         component: WeeklyTasksPageComponent
       },
-      {path: 'my-family', resolve: {MobileHeaderResolver}, component: MyFamilyPageComponent},
+      {
+        path: 'my-family',
+        resolve: {MobileHeaderResolver},
+        data: {headerTitle: 'My Family'},
+        component: MyFamilyPageComponent
+      },
       {path: 'tasks', resolve: {MobileHeaderResolver}, data: {showCreateButton: true}, component: TasksPageComponent},
       {
         path: 'families',
         resolve: {MobileHeaderResolver},
-        data: {showCreateButton: true},
+        data: {showCreateButton: true, headerTitle: 'Families'},
         component: FamiliesPageComponent
       },
     ]

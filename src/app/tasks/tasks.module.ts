@@ -44,7 +44,6 @@ import { WeeklyTasksPageComponent } from './pages/weekly-tasks-page/weekly-tasks
 import { TasksTableComponent } from './components/tasks-table/tasks-table.component';
 import { TasksFiltersComponent } from './components/tasks-filters/tasks-filters.component';
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
-import { TasksCompleteChartDataPipe } from './pipes/tasks-complete-chart-data.pipe';
 import {SharedModule} from "../shared/shared.module";
 import { TaskTableMobileComponent } from './components/task-table-mobile/task-table-mobile.component';
 import {NzEmptyModule} from "ng-zorro-antd/empty";
@@ -55,6 +54,7 @@ import { TaskPointColorPipe } from './pipes/task-point-color.pipe';
 import {NzSpaceModule} from 'ng-zorro-antd/space';
 import { UpdatingTaskPointColorsPipe } from './pipes/updating-task-point-colors.pipe';
 import { SelectedTaskPointColorPipe } from './pipes/selected-task-point-color.pipe';
+import { WeekSelectorComponent } from './components/week-selector/week-selector.component';
 
 @NgModule({
   declarations: [
@@ -80,13 +80,13 @@ import { SelectedTaskPointColorPipe } from './pipes/selected-task-point-color.pi
     WeeklyTasksPageComponent,
     TasksTableComponent,
     TasksFiltersComponent,
-    TasksCompleteChartDataPipe,
     TaskTableMobileComponent,
     TotalCompletedTasksPipe,
     CreateEditTaskModalMobileComponent,
     TaskPointColorPipe,
     UpdatingTaskPointColorsPipe,
     SelectedTaskPointColorPipe,
+    WeekSelectorComponent,
   ],
     imports: [
         CommonModule,

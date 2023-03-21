@@ -34,9 +34,9 @@
           <fa-icon *ngIf="!task.recurring" [icon]="single"></fa-icon>
         </td>
         <td style="width: 18px; text-align: center">
-          <fa-icon style="color: {{familiesQuery.myFamilyColor$ | async}}"
+          <fa-icon style="color: white"
                    *ngIf="task.ownerType === 'family'" [icon]="household"></fa-icon>
-          <fa-icon style="color: {{authQuery.myColor$ | async}}"
+          <fa-icon style="color: white"
                    *ngIf="task.ownerType === 'user'" [icon]="personal"></fa-icon>
         </td>
         <td *ngIf="familyTaskStrategy === 'per task point'" class="text-center">

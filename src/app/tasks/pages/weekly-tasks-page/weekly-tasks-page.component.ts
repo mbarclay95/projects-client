@@ -7,6 +7,8 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {createTask, Task} from "../../models/task.model";
 import {isMobile} from '../../../app.component';
+import {TaskUserConfigsQuery} from '../../services/task-user-configs/state/task-user-configs.query';
+import {TaskUserConfigsService} from '../../services/task-user-configs/state/task-user-configs.service';
 
 @Component({
   selector: 'app-weekly-tasks-page',
@@ -21,6 +23,8 @@ export class WeeklyTasksPageComponent implements OnInit {
 
   constructor(
     public familiesQuery: FamiliesQuery,
+    public taskUserConfigsQuery: TaskUserConfigsQuery,
+    public taskUserConfigsService: TaskUserConfigsService,
     public tasksQuery: TasksQuery,
     private tasksService: TasksService,
     private mobileHeaderService: MobileHeaderService
@@ -30,6 +34,7 @@ export class WeeklyTasksPageComponent implements OnInit {
   ngOnInit(): void {
     if (this.isMobile) {
       this.tasksService.loadWeeklyTasksPage();
+      this.taskUserConfigsService.resetWeekOffset();
     }
   }
 

@@ -11,10 +11,6 @@ import {AuthQuery} from "../../../../auth/services/state/auth.query";
 export class FamiliesQuery extends QueryEntity<FamiliesState> {
   families$: Observable<Family[]> = this.selectAll();
 
-  myFamilyColor$: Observable<string> = this.selectActive().pipe(
-    map(family => family?.color ?? '')
-  );
-
   myFamily$: Observable<Family> = this.selectActive().pipe(
     filterNullish()
   );

@@ -27,7 +27,6 @@ export class GoalsQuery extends QueryEntity<GoalsState> {
     })
   );
 
-
   constructor(
     protected override store: GoalsStore
   ) {

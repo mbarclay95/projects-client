@@ -1,14 +1,13 @@
-import {createUser, User} from "../../users/models/user.model";
 
 export interface Family {
   id: number;
   name: string;
-  color: string;
-  members: User[];
+  members: {id: number, name: string}[];
   tasksPerWeek: number;
   totalFamilyTasks: number;
   taskPoints: number[];
   taskStrategy: TaskStrategy;
+  minWeekOffset: number
 }
 
 export type TaskStrategy = 'per task' | 'per task point';
@@ -17,11 +16,11 @@ export function createFamily(params: Partial<Family>) {
   return {
     id: params.id ?? 0,
     name: params.name ?? '',
-    color: params.color ?? '#703920',
-    members: params.members ? params.members.map(m => createUser(m)) : [],
+    members: params.members ?? [],
     tasksPerWeek: params.tasksPerWeek ?? 0,
     totalFamilyTasks: params.totalFamilyTasks ?? 0,
     taskPoints: params.taskPoints ?? [],
     taskStrategy: params.taskStrategy ?? 'per task',
+    minWeekOffset: params.minWeekOffset ?? 0,
   } as Family;
 }

@@ -9,29 +9,30 @@
 
         <div class="title">{{task.name}}</div>
 
-        <div *ngIf="task.isActive" class="due-text">Due: {{task.dueDate | date}}</div>
+        <div class="due-text d-flex">
 
-        <div *ngIf="!task.isActive" class="due-text text-warning">*Paused</div>
+          <div style="text-align: center" class="me-1" *ngIf="task.priority === 1">
+            <fa-icon style="color: #922724" [icon]="flag"></fa-icon>
+          </div>
+
+          <div *ngIf="task.isActive" class="">Due: {{task.dueDate | date}}</div>
+
+          <div *ngIf="!task.isActive" class="text-warning">*Paused</div>
+
+        </div>
 
       </div>
 
       <div class="d-flex">
 
-        <div style="width: 18px; text-align: center" class="me-2" *ngIf="task.priority === 1">
-          <fa-icon style="color: #922724" [icon]="flag"></fa-icon>
-        </div>
-
-        <div style="width: 18px; text-align: center">
-          <fa-icon *ngIf="task.recurring" [icon]="repeat"></fa-icon>
-          <fa-icon *ngIf="!task.recurring" [icon]="single"></fa-icon>
+        <div *ngIf="task.recurring" style="width: 18px; text-align: center">
+          <fa-icon style="color: grey" [icon]="repeat"></fa-icon>
         </div>
 
         <div style="width: 18px; text-align: center" class="ms-2 me-3">
 
-          <fa-icon style="color: {{familiesQuery.myFamilyColor$ | async}}"
-                   *ngIf="task.ownerType === 'family'" [icon]="household"></fa-icon>
-          <fa-icon style="color: {{authQuery.myColor$ | async}}"
-                   *ngIf="task.ownerType === 'user'" [icon]="personal"></fa-icon>
+          <fa-icon style="color: grey" *ngIf="task.ownerType === 'family'" [icon]="household"></fa-icon>
+          <fa-icon style="color: grey" *ngIf="task.ownerType === 'user'" [icon]="personal"></fa-icon>
 
         </div>
 

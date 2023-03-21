@@ -8,6 +8,7 @@ import {Permissions} from "../auth/permissions";
 import {AuthQuery} from "../auth/services/state/auth.query";
 import {TagsService} from "./services/tags.service";
 import {MobileFooterService} from "../shared/services/mobile-footer.service";
+import {TaskUserConfigsService} from './services/task-user-configs/state/task-user-configs.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,25 +23,31 @@ export class TasksResolver implements Resolve<void> {
     private tagsService: TagsService,
     private authQuery: AuthQuery,
     private mobileFooterService: MobileFooterService,
+    private taskUserConfigsService: TaskUserConfigsService
   ) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
     this.mobileFooterService.setFooterButtonsForTasksPage();
-    await this.handleFamilies();
-    await this.usersService.getUsers();
-    await this.tagsService.getTags();
+    await Promise.all([
+      this.handleFamilies(),
+      this.tagsService.getTags()
+    ]);
   }
 
   private async handleFamilies(): Promise<void> {
-    const familyId = this.authQuery.getFamilyId();
+    const familyId = this.authQuery.getValue().familyId;
     if (this.permissionsService.hasPermissionTo(Permissions.FAMILIES_TAB)) {
-      await this.familiesService.getFamilies();
+      await Promise.all([
+        this.familiesService.getFamilies(),
+        this.usersService.getUsers()
+      ]);
     } else if (familyId) {
       await this.familiesService.getFamily(familyId);
     }
     if (familyId) {
       this.familiesService.setActive(familyId);
+      await this.taskUserConfigsService.get();
     }
   }
 }

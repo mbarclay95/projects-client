@@ -6,6 +6,7 @@ import {AuthQuery} from "../../../auth/services/state/auth.query";
 import {PermissionsService} from "../../../auth/services/permissions.service";
 import {FamiliesQuery} from "../../services/families/state/families.query";
 import {TasksService} from "../../services/tasks/state/tasks.service";
+import {TaskUserConfigsService} from '../../services/task-user-configs/state/task-user-configs.service';
 
 @Component({
   selector: 'app-task-tabs',
@@ -22,6 +23,7 @@ export class TaskTabsComponent implements OnInit {
     public permissionsService: PermissionsService,
     public familiesQuery: FamiliesQuery,
     private tasksService: TasksService,
+    private taskUserConfigsService: TaskUserConfigsService
   ) {
   }
 
@@ -32,11 +34,13 @@ export class TaskTabsComponent implements OnInit {
   loadWeeklyTasks() {
     this.selectedTab = 'Task';
     this.tasksService.loadWeeklyTasksPage();
+    this.taskUserConfigsService.resetWeekOffset();
   }
 
   loadTasksTable() {
     this.selectedTab = 'Task';
     this.tasksService.loadTasksPage();
+    this.taskUserConfigsService.resetWeekOffset();
   }
 
   createEntity() {

@@ -1,6 +1,6 @@
 <div class="w-100 task-page-container p-2" *ngIf="!(tasksQuery.selectLoading() | async)">
 
-  <app-weekly-progress [user]="familiesQuery.authUser$ | async"></app-weekly-progress>
+  <app-weekly-progress [userConfig]="taskUserConfigsQuery.activeUserConfig$ | async"></app-weekly-progress>
 
   <app-tasks-list [tasks]="tasksQuery.sortedTasks$ | async"></app-tasks-list>
 

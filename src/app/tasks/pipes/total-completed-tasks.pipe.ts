@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {FamiliesQuery} from "../services/families/state/families.query";
-import {User} from "../../users/models/user.model";
+import {TaskUserConfig} from '../models/task-user-config.model';
 
 @Pipe({
   name: 'totalCompletedTasks'
@@ -12,18 +12,15 @@ export class TotalCompletedTasksPipe implements PipeTransform {
   ) {
   }
 
-  transform(user: User, ...args: unknown[]): number {
-    if (!user.taskUserConfig) {
-      return 0;
-    }
+  transform(config: TaskUserConfig): number {
     const activeFamily = this.familiesQuery.getActive();
     if (!activeFamily) {
       return 0;
     }
 
     return activeFamily.taskStrategy === 'per task' ?
-      user.taskUserConfig.completedFamilyTasks.length :
-      user.taskUserConfig.completedFamilyTasks.reduce((prev, curr) => prev + (curr.taskPoint ?? 0), 0);
+      config.completedFamilyTasks.length :
+      config.completedFamilyTasks.reduce((prev, curr) => prev + (curr.taskPoint ?? 0), 0);
 
   }
 

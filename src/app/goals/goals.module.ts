@@ -28,18 +28,21 @@ import {NzSpinModule} from 'ng-zorro-antd/spin';
 
 
 @NgModule({
-  declarations: [
-    ListGoalsPageComponent,
-    GoalsLayoutComponent,
-    GoalsTableComponent,
-    CreateEditGoalModalComponent,
-    GoalStatsPageComponent,
-    GoalsTableMobileComponent,
-    GoalDayButtonComponent,
-    PluralizeGoalPipe,
-    GoalDaysPipe,
-    WeekSelectorComponent
-  ],
+    declarations: [
+        ListGoalsPageComponent,
+        GoalsLayoutComponent,
+        GoalsTableComponent,
+        CreateEditGoalModalComponent,
+        GoalStatsPageComponent,
+        GoalsTableMobileComponent,
+        GoalDayButtonComponent,
+        PluralizeGoalPipe,
+        GoalDaysPipe,
+        WeekSelectorComponent
+    ],
+    exports: [
+        WeekSelectorComponent
+    ],
     imports: [
         CommonModule,
         GoalsRoutingModule,

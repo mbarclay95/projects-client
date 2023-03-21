@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FamiliesQuery} from "../../services/families/state/families.query";
-import {MobileHeaderService} from "../../../shared/services/mobile-header.service";
+import {TaskUserConfigsQuery} from '../../services/task-user-configs/state/task-user-configs.query';
 
 @Component({
   selector: 'app-my-family-page',
@@ -11,6 +11,7 @@ export class MyFamilyPageComponent implements OnInit {
 
   constructor(
     public familiesQuery: FamiliesQuery,
+    public taskUserConfigsQuery: TaskUserConfigsQuery
   ) { }
 
   ngOnInit():void {

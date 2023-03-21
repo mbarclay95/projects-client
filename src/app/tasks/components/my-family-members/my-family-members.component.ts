@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Family} from "../../models/family.model";
-import {User} from "../../../users/models/user.model";
+import {TaskStrategy} from "../../models/family.model";
 import {FamiliesService} from "../../services/families/state/families.service";
 import {faArrowRotateLeft, faCog, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {Task} from "../../models/task.model";
@@ -8,6 +7,8 @@ import {NzMessageService} from "ng-zorro-antd/message";
 import {TasksService} from "../../services/tasks/state/tasks.service";
 import {FamiliesQuery} from '../../services/families/state/families.query';
 import {isMobile} from '../../../app.component';
+import {TaskUserConfig} from '../../models/task-user-config.model';
+import {TaskUserConfigsService} from '../../services/task-user-configs/state/task-user-configs.service';
 
 @Component({
   selector: 'app-my-family-members',
@@ -15,7 +16,9 @@ import {isMobile} from '../../../app.component';
   styleUrls: ['./my-family-members.component.scss']
 })
 export class MyFamilyMembersComponent implements OnInit {
-  @Input() myFamily!: Family;
+  @Input() familyTaskStrategy!: TaskStrategy;
+  @Input() membersConfig: TaskUserConfig[] | null = [];
+  @Input() weekOffset!: number | null;
 
   newTasksPerWeek?: number;
   isMobile = isMobile;
@@ -28,24 +31,22 @@ export class MyFamilyMembersComponent implements OnInit {
     private familiesService: FamiliesService,
     public familiesQuery: FamiliesQuery,
     private nzMessageService: NzMessageService,
-    private tasksService: TasksService
+    private tasksService: TasksService,
+    private taskUserConfigsService: TaskUserConfigsService
   ) { }
 
   ngOnInit(): void {
   }
 
-  saveSettings(member: User, popoverOpened: boolean) {
+  saveSettings(memberConfig: TaskUserConfig, popoverOpened: boolean) {
     if (!popoverOpened) {
-      if (!member.taskUserConfig) {
-        return;
-      }
-      let newTaskConfig = {...member.taskUserConfig};
+      let newTaskConfig = {...memberConfig};
       if (this.newTasksPerWeek !== undefined) {
         newTaskConfig.tasksPerWeek = this.newTasksPerWeek;
         this.newTasksPerWeek = undefined;
       }
-      if (member.taskUserConfig.tasksPerWeek !== newTaskConfig.tasksPerWeek) {
-        this.familiesService.updateTaskUserConfig(this.myFamily.id, member, newTaskConfig);
+      if (memberConfig.tasksPerWeek !== newTaskConfig.tasksPerWeek) {
+        void this.taskUserConfigsService.updateTaskUserConfig(newTaskConfig);
       }
     }
   }
@@ -54,10 +55,10 @@ export class MyFamilyMembersComponent implements OnInit {
     this.newTasksPerWeek = newTasksPerWeek;
   }
 
-  async undoTask(task: Task) {
+  async undoTask(memberConfigId: number, task: Task) {
     this.loadingUndoId  = task.id;
     await this.tasksService.updateTask(task.id,  {...task,  ...{completedAt: undefined}}, false);
-    await this.familiesService.refreshActiveFamily();
+    this.taskUserConfigsService.removeTaskFromConfig(memberConfigId, task.id);
     this.loadingUndoId = null;
     this.nzMessageService.success('Chore has been removed!');
   }

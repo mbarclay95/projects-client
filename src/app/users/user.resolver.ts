@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   Resolve,
   RouterStateSnapshot,
@@ -14,12 +14,14 @@ export class UserResolver implements Resolve<void> {
 
   constructor(
     private usersService: UsersService,
-    private rolesService : RolesService,
+    private rolesService: RolesService,
   ) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
-    await this.usersService.getUsers();
-    await this.rolesService.getRoles();
+    await Promise.all([
+      this.usersService.getUsers(),
+      this.rolesService.getRoles()
+    ]);
   }
 }

@@ -18,10 +18,6 @@ export class AuthQuery extends Query<User> {
     // debounceTime(1000)
   );
 
-  myColor$: Observable<string> = this.select().pipe(
-    map(auth => auth.taskUserConfig?.color ?? '')
-  );
-
   constructor(
     protected override store: AuthStore
   ) {
@@ -35,9 +31,4 @@ export class AuthQuery extends Query<User> {
   getUser(): User {
     return this.getValue();
   }
-
-  getFamilyId(): number|undefined {
-    return this.getUser().taskUserConfig?.familyId;
-  }
-
 }

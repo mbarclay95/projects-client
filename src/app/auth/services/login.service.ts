@@ -5,6 +5,7 @@ import {AuthStorageService} from "./auth-storage.service";
 import {Router} from "@angular/router";
 import {AuthQuery} from "./state/auth.query";
 import {Roles} from "../permissions";
+import {isMobile} from '../../app.component';
 
 @Injectable({
   providedIn: 'root'
@@ -77,7 +78,7 @@ export class LoginService {
       case Roles.GOALS_ROLE:
         return 'app/goals';
       case Roles.TASKS_ROLE:
-        return 'app/tasks?tab=weekly-tasks';
+        return isMobile ? 'app/tasks/weekly-tasks' : 'app/tasks?tab=weekly-tasks';
       case Roles.USERS_ROLE:
         return 'app/users';
       case Roles.FILE_EXPLORER_ROLE:

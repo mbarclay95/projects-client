@@ -36,10 +36,10 @@
     <ng-container *ngIf="isMobile">
 
       <nz-sider *ngIf="sideMenuClosed !== undefined" nzCollapsible [(nzCollapsed)]="sideMenuClosed" [nzTrigger]="null"
-                (nzCollapsedChange)="authService.updateUserConfig({sideMenuOpen: !$event})" nzWidth="200px"
-                [nzCollapsedWidth]="collapsedWidth">
+                (nzCollapsedChange)="authService.updateUserConfig({sideMenuOpen: !$event}, false)"
+                nzWidth="200px" [nzCollapsedWidth]="collapsedWidth">
         <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed"
-                       (closeSideMenu)="closeSideMenu()" [isMobile]="isMobile"></app-side-menu>
+                       (closeSideMenu)="closeSideMenu(false)" [isMobile]="isMobile"></app-side-menu>
       </nz-sider>
 
     </ng-container>

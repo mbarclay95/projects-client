@@ -37,13 +37,15 @@ export class AuthService {
     ));
   }
 
-  async updateUserConfig(userConfig: Partial<UserConfig>) {
+  async updateUserConfig(userConfig: Partial<UserConfig>, saveToServer = true) {
     const user = this.authQuery.getUser();
     user.userConfig = {...user.userConfig, ...userConfig};
-    await firstValueFrom(this.http.patch<User>(`${environment.apiUrl}/users/${user.id}`, user).pipe(
-      map(user => createUser(user)),
-      tap(user => this.authStore.update(user))
-    ));
+    if (saveToServer) {
+      await firstValueFrom(this.http.patch<User>(`${environment.apiUrl}/users/${user.id}`, user).pipe(
+        map(user => createUser(user)),
+        tap(user => this.authStore.update(user))
+      ));
+    }
   }
 
   async logout() {

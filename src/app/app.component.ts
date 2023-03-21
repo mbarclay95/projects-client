@@ -71,14 +71,14 @@ export class AppComponent {
     });
   }
 
-  closeSideMenu() {
+  closeSideMenu(saveToServer = true) {
     this.sideMenuClosed = true;
-    this.authService.updateUserConfig({sideMenuOpen: false});
+    void this.authService.updateUserConfig({sideMenuOpen: false}, saveToServer);
   }
 
   closeSideIfMobile() {
     if (this.isMobile && !this.sideMenuClosed) {
-      this.closeSideMenu();
+      this.sideMenuClosed = true;
     }
   }
 }

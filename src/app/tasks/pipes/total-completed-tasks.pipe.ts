@@ -21,7 +21,6 @@ export class TotalCompletedTasksPipe implements PipeTransform {
     return activeFamily.taskStrategy === 'per task' ?
       config.completedFamilyTasks.length :
       config.completedFamilyTasks.reduce((prev, curr) => prev + (curr.taskPoint ?? 0), 0);
-
   }
 
 }

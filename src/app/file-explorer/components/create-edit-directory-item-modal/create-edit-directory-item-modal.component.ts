@@ -65,5 +65,6 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy 
 
     this.nzMessageService.success(`${this.item.type === 'dir' ? 'Directory' : 'File'} ${this.createOrUpdate}`);
     this.saving = false;
+    this.isVisible = false;
   }
 }

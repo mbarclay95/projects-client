@@ -3,7 +3,7 @@ import {Permissions} from '../../auth/permissions';
 import {
   faBullseye,
   faCalendarDays,
-  faFolderOpen,
+  faFolderOpen, faGear,
   faHome,
   faTasks,
   faUpload,
@@ -51,5 +51,5 @@ export const routes: Route[] = [
   },
   {icon: faCalendarDays, url: 'app/events', permission: Permissions.EVENTS_PAGE, title: 'Events', queryParams: {}},
   {icon: faUsers, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users', queryParams: {}},
-  // {icon: faUser, url: 'my-profile', permission: true, title: 'My Profile', queryParams: {}},
+  {icon: faGear, url: 'my-profile', permission: true, title: 'My Profile', queryParams: {}},
 ];

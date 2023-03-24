@@ -11,13 +11,16 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NzInputModule} from "ng-zorro-antd/input";
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 import {NzDividerModule} from "ng-zorro-antd/divider";
+import { ChangePasswordModalComponent } from './components/change-password-modal/change-password-modal.component';
+import {NzModalModule} from 'ng-zorro-antd/modal';
 
 
 @NgModule({
   declarations: [
     AuthLayoutComponent,
     LoginPageComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    ChangePasswordModalComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +31,8 @@ import {NzDividerModule} from "ng-zorro-antd/divider";
     ReactiveFormsModule,
     NzInputModule,
     NzDividerModule,
-    FormsModule
+    FormsModule,
+    NzModalModule
   ]
 })
 export class AuthModule { }

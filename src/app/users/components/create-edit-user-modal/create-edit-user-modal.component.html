@@ -1,5 +1,5 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(user?.id === 0 ? 'Create' : 'Edit') + ' User'" nzWidth="800px"
-          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveUser()"
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(user?.id === 0 ? 'Create' : 'Edit') + ' User'" [nzWidth]="modalWidth"
+          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveUser()" [nzStyle]="modalStyle"
           [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
 
   <ng-container *nzModalContent>

@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthQuery} from "../../services/state/auth.query";
-import {User} from "../../../users/models/user.model";
+import {Subject} from 'rxjs';
+import {AuthService} from '../../services/state/auth.service';
+import {User} from '../../../users/models/user.model';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-my-profile',
@@ -8,15 +11,25 @@ import {User} from "../../../users/models/user.model";
   styleUrls: ['./my-profile.component.scss']
 })
 export class MyProfileComponent implements OnInit {
-  user!: User;
+  changePasswordModal: Subject<void> = new Subject<void>();
 
   constructor(
     public authQuery: AuthQuery,
+    private authService: AuthService,
+    private nzMessageService: NzMessageService
   ) {
   }
 
   ngOnInit(): void {
-    this.user = {...this.authQuery.getUser()};
+  }
+
+  async updateMe(changes: Partial<User>): Promise<void> {
+    try {
+      await this.authService.updateMe(changes);
+      // this.nzMessageService
+    } catch (e) {
+      this.nzMessageService.error('There was an error');
+    }
   }
 
 }

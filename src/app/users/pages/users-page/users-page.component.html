@@ -5,5 +5,5 @@
   <app-user-table [users]="usersQuery.users$ | async" (editUser)="openUserModal.next($event)"></app-user-table>
 </div>
 
-<app-create-edit-user-modal [openModal]="openUserModal.asObservable()"></app-create-edit-user-modal>
+<app-create-edit-user-modal [openModal]="openUserModal$"></app-create-edit-user-modal>
 

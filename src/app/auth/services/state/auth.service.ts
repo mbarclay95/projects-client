@@ -41,14 +41,26 @@ export class AuthService {
     const user = this.authQuery.getUser();
     user.userConfig = {...user.userConfig, ...userConfig};
     if (saveToServer) {
-      await firstValueFrom(this.http.patch<User>(`${environment.apiUrl}/users/${user.id}`, user).pipe(
-        map(user => createUser(user)),
-        tap(user => this.authStore.update(user))
-      ));
+      await this.updateMe(user);
     }
+  }
+
+  async updateMe(changes: Partial<User>): Promise<void> {
+    const user = this.authQuery.getUser();
+    await firstValueFrom(this.http.patch<User>(`${environment.apiUrl}/update-me`, {...user, ...changes}).pipe(
+      map(me => createUser(me)),
+      tap(me => this.authStore.update(me))
+    ));
   }
 
   async logout() {
 
+  }
+
+  async changePassword(currentPassword: string, newPassword: string): Promise<void> {
+    await firstValueFrom(this.http.post(`${environment.apiUrl}/change-password`, {
+      currentPassword,
+      newPassword
+    }));
   }
 }

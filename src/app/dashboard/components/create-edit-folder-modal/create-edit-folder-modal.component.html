@@ -1,5 +1,6 @@
 <nz-modal [(nzVisible)]="isVisible" [nzTitle]="(folder?.id === 0 ? 'Create' : 'Edit') + ' Folder'" [nzWidth]="modalWidth"
-          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveFolder()">
+          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveFolder()"
+          [nzStyle]="modalStyle">
 
   <ng-container *nzModalContent>
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 import {createSite, Site} from "../../models/site.model";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +14,7 @@ import {isMobile} from '../../../app.component';
   templateUrl: './create-edit-site-modal.component.html',
   styleUrls: ['./create-edit-site-modal.component.scss']
 })
-export class CreateEditSiteModalComponent implements OnInit {
+export class CreateEditSiteModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Site>;
 
   fileList: NzUploadFile[] = [];
@@ -23,6 +23,7 @@ export class CreateEditSiteModalComponent implements OnInit {
   check = faCheckCircle;
   folderId: number = 0;
   modalWidth = isMobile ? '95%' : '500px';
+  modalStyle = isMobile ? {top: '20px'} : {};
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

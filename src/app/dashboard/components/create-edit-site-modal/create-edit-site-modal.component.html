@@ -1,5 +1,5 @@
 <nz-modal [(nzVisible)]="isVisible" [nzTitle]="(site?.id === 0 ? 'Create' : 'Edit') + ' Site'" [nzWidth]="modalWidth"
-          (nzOnCancel)="closeModal()" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveSite()">
+          (nzOnCancel)="closeModal()" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveSite()" [nzStyle]="modalStyle">
 
   <ng-container *nzModalContent>
 

@@ -6,6 +6,7 @@ import {RolesQuery} from "../../services/roles/state/roles.query";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {Role} from "../../models/role.model";
 import {Roles} from "../../../auth/permissions";
+import {isMobile} from '../../../app.component';
 
 @Component({
   selector: 'app-create-edit-user-modal',
@@ -18,6 +19,8 @@ export class CreateEditUserModalComponent implements OnInit, OnDestroy {
   user?: User;
   isVisible: boolean = false;
   saving = false;
+  modalWidth = isMobile ? '95%' : '800px';
+  modalStyle = isMobile ? {top: '20px'} : {};
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 

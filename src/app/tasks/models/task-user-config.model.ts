@@ -5,7 +5,6 @@ export interface TaskUserConfig {
   userId: number;
   userName: string;
   tasksPerWeek: number;
-  totalUserTasks: number;
   completedFamilyTasks: Task[];
   familyId: number;
   color: string;
@@ -17,7 +16,6 @@ export function createTaskUserConfig(params: Partial<TaskUserConfig>) {
     userId: params.userId ?? 0,
     userName: params.userName ?? '',
     tasksPerWeek: params.tasksPerWeek ?? 0,
-    totalUserTasks: params.totalUserTasks ?? 0,
     familyId: params.familyId ?? 0,
     color: params.color ?? '',
     completedFamilyTasks: params.completedFamilyTasks ? params.completedFamilyTasks.map(t => createTask(t)) : [],

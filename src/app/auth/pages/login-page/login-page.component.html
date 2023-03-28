@@ -50,7 +50,7 @@
       something wrong
     </div>
 
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-end" *ngIf="!loginService.otherError">
 
       <button nz-button nzType="primary" [nzLoading]="loginService.loading" (keydown.enter)="loginService.login()"
               [disabled]="loginService.loading || loginService.loginForm.invalid" (click)="loginService.login()">Login

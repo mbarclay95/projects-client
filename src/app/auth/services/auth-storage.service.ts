@@ -34,5 +34,4 @@ export class AuthStorageService {
     this.authToken = undefined;
     localStorage.removeItem('token');
   }
-
 }

@@ -6,15 +6,18 @@ import {Router} from "@angular/router";
 import {AuthQuery} from "./state/auth.query";
 import {Roles} from "../permissions";
 import {isMobile} from '../../app.component';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
   loginForm?: UntypedFormGroup;
-  error = false;
-  unauthorized = false;
   loading = false;
+
+  badCredsError = false;
+  expiredTokenError = false;
+  otherError = false;
 
   constructor(
     private authService: AuthService,
@@ -32,17 +35,24 @@ export class LoginService {
 
   async login(): Promise<void> {
     if (!this.loginForm || this.loginForm.invalid) {
-      this.error = true;
       return;
     }
-    this.error = false;
     this.loading = true;
-    this.unauthorized = false;
+    this.badCredsError = false;
+    this.expiredTokenError = false;
 
     try {
       await this.authService.login(this.loginForm.get('email')?.value ?? '', this.loginForm.get('password')?.value ?? '');
-    } catch (e) {
-      this.unauthorized = true;
+    } catch (e: unknown) {
+      this.handleUnAuthorizedErrors(e as HttpErrorResponse);
+      this.loading = false;
+      return;
+    }
+
+    try {
+      await this.authService.getMe();
+    } catch (e: unknown) {
+      this.handleUnAuthorizedErrors(e as HttpErrorResponse);
       this.loading = false;
       return;
     }
@@ -58,12 +68,26 @@ export class LoginService {
 
     try {
       await this.authService.getMe();
-    } catch (e) {
+    } catch (e: unknown) {
+      this.handleUnAuthorizedErrors(e as HttpErrorResponse);
       return false;
     }
     await this.router.navigateByUrl(this.getRedirectUrl());
 
     return true;
+  }
+
+  handleUnAuthorizedErrors(error: HttpErrorResponse): void {
+    switch (error.error.message) {
+      case 'Unauthenticated.':
+        this.expiredTokenError = true;
+        break;
+      case 'Bad credentials':
+        this.badCredsError = true;
+        break;
+      default:
+        this.otherError = true;
+    }
   }
 
   getRedirectUrl(): string {
@@ -85,11 +109,4 @@ export class LoginService {
         return 'app/file-explorer';
     }
   }
-
-  async logout(): Promise<void> {
-    await this.authService.logout();
-    this.authStorageService.clearToken();
-    await this.router.navigateByUrl('login');
-  }
-
 }

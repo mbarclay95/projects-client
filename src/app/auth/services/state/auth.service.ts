@@ -21,19 +21,18 @@ export class AuthService {
   }
 
   async login(username: string, password: string) {
-    await firstValueFrom(this.http.post<{accessToken: string}>(`${environment.apiUrl}/login`, {
+    await firstValueFrom(this.http.post<{ accessToken: string }>(`${environment.apiUrl}/login`, {
       username,
       password
     }).pipe(
       tap(token => this.authStorageService.setAuthToken(token.accessToken)),
-      tap(() => this.getMe())
     ));
   }
 
   async getMe() {
     await firstValueFrom(this.http.get<User>(`${environment.apiUrl}/me`).pipe(
       map(user => createUser(user)),
-      tap(user => this.authStore.update(user))
+      tap(user => this.authStore.update(user)),
     ));
   }
 
@@ -53,8 +52,10 @@ export class AuthService {
     ));
   }
 
-  async logout() {
-
+  async logout(): Promise<void> {
+    await firstValueFrom(this.http.post(`${environment.apiUrl}/logout`, {}).pipe(
+      tap(() => this.authStorageService.clearToken())
+    ));
   }
 
   async changePassword(currentPassword: string, newPassword: string): Promise<void> {

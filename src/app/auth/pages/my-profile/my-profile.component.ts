@@ -4,6 +4,7 @@ import {Subject} from 'rxjs';
 import {AuthService} from '../../services/state/auth.service';
 import {User} from '../../../users/models/user.model';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-my-profile',
@@ -11,12 +12,14 @@ import {NzMessageService} from 'ng-zorro-antd/message';
   styleUrls: ['./my-profile.component.scss']
 })
 export class MyProfileComponent implements OnInit {
+  loggingOut = false;
   changePasswordModal: Subject<void> = new Subject<void>();
 
   constructor(
     public authQuery: AuthQuery,
     private authService: AuthService,
-    private nzMessageService: NzMessageService
+    private nzMessageService: NzMessageService,
+    private router: Router
   ) {
   }
 
@@ -26,10 +29,24 @@ export class MyProfileComponent implements OnInit {
   async updateMe(changes: Partial<User>): Promise<void> {
     try {
       await this.authService.updateMe(changes);
-      // this.nzMessageService
     } catch (e) {
       this.nzMessageService.error('There was an error');
     }
   }
 
+  async logout(): Promise<void> {
+    this.loggingOut = true;
+    try {
+      await this.authService.logout();
+    } catch (e) {
+      console.log(e);
+      this.nzMessageService.error('There was an error logging out');
+      this.loggingOut = false;
+      return;
+    }
+
+    this.nzMessageService.success('You have been logged out');
+    this.loggingOut = false;
+    await this.router.navigateByUrl('/login');
+  }
 }

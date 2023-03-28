@@ -9,36 +9,52 @@
 
   <div *ngIf="loginService.loginForm" class="login-container" style="padding: 3rem 5rem">
 
-    <h1 class="mb-4">Login</h1>
+    <ng-container *ngIf="!this.loginService.otherError">
 
-    <form [formGroup]="loginService.loginForm">
+      <h1 class="mb-4">Login</h1>
 
-      <div class="mb-2">
+      <form [formGroup]="loginService.loginForm">
 
-        Username:
+        <div class="mb-2">
 
-        <input nz-input formControlName="email" class="input-borders">
+          Username:
 
-      </div>
+          <input nz-input formControlName="email" class="input-borders">
 
-      <div class="mb-4">
+        </div>
 
-        Password:
+        <div class="mb-4">
 
-        <input nz-input type="password" formControlName="password" class="input-borders">
+          Password:
 
-      </div>
+          <input nz-input type="password" formControlName="password" class="input-borders">
 
-    </form>
+        </div>
 
-    <div *ngIf="loginService.error" class="text-danger">There was an error</div>
+      </form>
 
-    <div *ngIf="loginService.unauthorized" class="text-danger">Incorrect email or password</div>
+    </ng-container>
+
+    <div *ngIf="loginService.expiredTokenError" class="text-danger mb-4">
+      Your session is expired. Please login again
+    </div>
+
+    <div *ngIf="loginService.badCredsError" class="text-danger mb-4">
+      Incorrect email or password
+    </div>
+
+    <div *ngIf="loginService.otherError" class="text-danger mb-4">
+      <h2 class="mb-4">Something is wrong</h2>
+
+      Make sure you are on your home wifi and refresh this page. If it still doesn't work let Michael know there is
+      something wrong
+    </div>
 
     <div class="d-flex justify-content-end">
 
       <button nz-button nzType="primary" [nzLoading]="loginService.loading" (keydown.enter)="loginService.login()"
-              [disabled]="loginService.loading || loginService.loginForm.invalid" (click)="loginService.login()">Login</button>
+              [disabled]="loginService.loading || loginService.loginForm.invalid" (click)="loginService.login()">Login
+      </button>
 
     </div>
 

@@ -58,6 +58,7 @@ import { WeekSelectorComponent } from './components/week-selector/week-selector.
 import {NzSegmentedModule} from 'ng-zorro-antd/segmented';
 import { WeeklyTasksSegmentComponent } from './components/weekly-tasks-segment/weekly-tasks-segment.component';
 import {NzBadgeModule} from 'ng-zorro-antd/badge';
+import { StatsPageComponent } from './pages/stats-page/stats-page.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import {NzBadgeModule} from 'ng-zorro-antd/badge';
     SelectedTaskPointColorPipe,
     WeekSelectorComponent,
     WeeklyTasksSegmentComponent,
+    StatsPageComponent,
   ],
   imports: [
     CommonModule,

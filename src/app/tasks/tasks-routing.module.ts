@@ -7,6 +7,7 @@ import {MyFamilyPageComponent} from "./pages/my-family-page/my-family-page.compo
 import {TasksPageComponent} from "./pages/tasks-page/tasks-page.component";
 import {FamiliesPageComponent} from "./pages/families-page/families-page.component";
 import {MobileHeaderResolver} from "../mobile-header.resolver";
+import {StatsPageComponent} from './pages/stats-page/stats-page.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,12 @@ const routes: Routes = [
         resolve: {MobileHeaderResolver},
         data: {headerTitle: 'My Family'},
         component: MyFamilyPageComponent
+      },
+      {
+        path: 'stats',
+        resolve: {MobileHeaderResolver},
+        data: {headerTitle: 'Stats'},
+        component: StatsPageComponent
       },
       {path: 'tasks', resolve: {MobileHeaderResolver}, data: {showCreateButton: true}, component: TasksPageComponent},
       {

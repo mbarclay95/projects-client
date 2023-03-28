@@ -5,7 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import {catchError, Observable, of, throwError} from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
 import {AuthStorageService} from "./auth-storage.service";
 import {Router} from "@angular/router";
 
@@ -36,7 +36,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.router.navigateByUrl('login');
         }
 
-        return of();
+        return throwError(error);
       })
     );
   }

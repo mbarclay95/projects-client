@@ -17,6 +17,7 @@ import {TaskUserConfigsService} from '../../services/task-user-configs/state/tas
 })
 export class WeeklyTasksPageComponent implements OnInit {
   isMobile = isMobile;
+
   createTask: Observable<Task> = this.mobileHeaderService.clickedButton$.pipe(
     map(() => createTask({ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getMinTaskPoint()}))
   );

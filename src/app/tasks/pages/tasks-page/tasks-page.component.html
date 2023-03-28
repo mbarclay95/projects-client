@@ -4,7 +4,7 @@
 
   <ng-container *ngIf="!(tasksQuery.selectLoading() | async)">
 
-    <ng-container *ngIf="tasksQuery.dateSortedTasks$ | async as tasks">
+    <ng-container *ngIf="tasksQuery.filteredTasks$ | async as tasks">
 
     <app-tasks-table *ngIf="!isMobile" [tasks]="tasks" (editTask)="editTask.emit($event)" [ui]="ui"></app-tasks-table>
 

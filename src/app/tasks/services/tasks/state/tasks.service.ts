@@ -66,33 +66,37 @@ export class TasksService {
     ));
   }
 
-  updateUi(newState: Partial<TaskUiState>): void {
+  updateUi(newState: Partial<TaskUiState>, reloadTasks = true): void {
     const newUi = {...this.tasksQuery.getUi(), ...newState};
     this.tasksStore.update({ui: newUi});
-    void this.getTasks(this.tasksQuery.getQueryString(newUi));
+    if (reloadTasks) {
+      void this.getTasks(this.tasksQuery.getQueryString(newUi));
+    }
   }
 
   loadWeeklyTasksPage(): void {
     this.updateUi({
       numOfDays: differenceInDays(endOfWeek(new Date(), {weekStartsOn: 1}), new Date()),
-      ownerId: null,
-      ownerType: null,
+      ownerType: 'family',
       recurringType: 'both',
       completedStatus: 'notCompleted',
       search: null,
       tags: [],
-      showInactive: false
+      showInactive: false,
+      highPriorityFirst: true
     });
   }
 
   loadTasksPage(): void {
     this.updateUi({
       numOfDays: null,
+      ownerType: null,
       page: 1,
       completedStatus: 'notCompleted',
       search: null,
       tags: [],
-      showInactive: true
+      showInactive: true,
+      highPriorityFirst: false
     });
   }
 }

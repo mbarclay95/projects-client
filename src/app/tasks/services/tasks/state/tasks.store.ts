@@ -8,7 +8,6 @@ export interface TasksState extends EntityState<Task> {
 
 export interface TaskUiState {
   ownerType: TaskOwnerType | null,
-  ownerId: number | null,
   completedStatus: 'completed' | 'notCompleted' | 'both';
   recurringType: boolean | 'both';
   page: number|null;
@@ -20,6 +19,7 @@ export interface TaskUiState {
   search: string|null;
   tags: string[];
   showInactive: boolean;
+  highPriorityFirst: boolean;
 }
 
 @Injectable({providedIn: 'root'})
@@ -30,7 +30,6 @@ export class TasksStore extends EntityStore<TasksState> {
     super({
       ui: {
         ownerType: null,
-        ownerId: null,
         completedStatus: 'notCompleted',
         recurringType: 'both',
         page: 1,
@@ -41,7 +40,8 @@ export class TasksStore extends EntityStore<TasksState> {
         numOfDays: null,
         search: null,
         tags: [],
-        showInactive: false
+        showInactive: false,
+        highPriorityFirst: true
       }
     });
   }

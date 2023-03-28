@@ -15,7 +15,7 @@ const routes: Routes = [
       {
         path: 'weekly-tasks',
         resolve: {MobileHeaderResolver},
-        data: {showCreateButton: true},
+        data: {showCreateButton: true, headerTitle: 'To Do'},
         component: WeeklyTasksPageComponent
       },
       {

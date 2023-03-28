@@ -21,17 +21,7 @@
 
   <div class="d-flex">
 
-    <fa-icon *ngIf="task.priority === 1" class="me-2 fa-xl" style="color: #922724" [icon]="flag"></fa-icon>
-
-    <div class="d-flex justify-content-center" style="width: 30px">
-
-      <fa-icon *ngIf="task.ownerType === 'user'" [icon]="personal" class="type-icon fa-xl"
-               style="color: rgba(255, 255, 255, 0.3)"></fa-icon>
-
-      <fa-icon *ngIf="task.ownerType === 'family'" [icon]="family" class="type-icon fa-xl"
-               style="color: rgba(255, 255, 255, 0.3)"></fa-icon>
-
-    </div>
+    <fa-icon *ngIf="task.priority === 1" class="me-2 fa-lg" style="color: #922724" [icon]="flag"></fa-icon>
 
   </div>
 

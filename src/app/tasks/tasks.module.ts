@@ -55,6 +55,9 @@ import {NzSpaceModule} from 'ng-zorro-antd/space';
 import { UpdatingTaskPointColorsPipe } from './pipes/updating-task-point-colors.pipe';
 import { SelectedTaskPointColorPipe } from './pipes/selected-task-point-color.pipe';
 import { WeekSelectorComponent } from './components/week-selector/week-selector.component';
+import {NzSegmentedModule} from 'ng-zorro-antd/segmented';
+import { WeeklyTasksSegmentComponent } from './components/weekly-tasks-segment/weekly-tasks-segment.component';
+import {NzBadgeModule} from 'ng-zorro-antd/badge';
 
 @NgModule({
   declarations: [
@@ -87,36 +90,39 @@ import { WeekSelectorComponent } from './components/week-selector/week-selector.
     UpdatingTaskPointColorsPipe,
     SelectedTaskPointColorPipe,
     WeekSelectorComponent,
+    WeeklyTasksSegmentComponent,
   ],
-    imports: [
-        CommonModule,
-        TasksRoutingModule,
-        NzLayoutModule,
-        NzTabsModule,
-        NzButtonModule,
-        NzModalModule,
-        NzInputModule,
-        FormsModule,
-        NzTableModule,
-        FontAwesomeModule,
-        NzSelectModule,
-        NzDatePickerModule,
-        NzSwitchModule,
-        NzRadioModule,
-        NzInputNumberModule,
-        NzProgressModule,
-        NzDividerModule,
-        NzCheckboxModule,
-        ColorCompactModule,
-        ColorAlphaModule,
-        AlphaModule,
-        ColorChromeModule,
-        NzPopoverModule,
-        NzPopconfirmModule,
-        SharedModule,
-        NzEmptyModule,
-        NzListModule,
-        NzSpaceModule,
-    ]
+  imports: [
+    CommonModule,
+    TasksRoutingModule,
+    NzLayoutModule,
+    NzTabsModule,
+    NzButtonModule,
+    NzModalModule,
+    NzInputModule,
+    FormsModule,
+    NzTableModule,
+    FontAwesomeModule,
+    NzSelectModule,
+    NzDatePickerModule,
+    NzSwitchModule,
+    NzRadioModule,
+    NzInputNumberModule,
+    NzProgressModule,
+    NzDividerModule,
+    NzCheckboxModule,
+    ColorCompactModule,
+    ColorAlphaModule,
+    AlphaModule,
+    ColorChromeModule,
+    NzPopoverModule,
+    NzPopconfirmModule,
+    SharedModule,
+    NzEmptyModule,
+    NzListModule,
+    NzSpaceModule,
+    NzSegmentedModule,
+    NzBadgeModule,
+  ]
 })
 export class TasksModule { }

@@ -1,7 +1,4 @@
-<nz-table #tasksTableTag [nzData]="_tasks" nzShowPagination nzShowSizeChanger [nzPageIndex]="ui.page ?? 1"
-          [nzPageSize]="ui.pageSize ?? 10" [nzPageSizeOptions]="[10, 25, 50, 100]" nzSize="small"
-          (nzPageIndexChange)="tasksService.updateUi({page: $event})" [nzTotal]="ui.total ?? 10"
-          (nzPageSizeChange)="tasksService.updateUi({pageSize: $event, page: 1})" [nzFrontPagination]="false">
+<nz-table #tasksTableTag [nzData]="_tasks" nzSize="small" [nzFrontPagination]="false">
   <ng-container *ngLet="(familiesQuery.familyTaskStrategy$ | async) as familyTaskStrategy">
     <thead>
     <tr>

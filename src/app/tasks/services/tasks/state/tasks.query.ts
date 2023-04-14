@@ -72,11 +72,9 @@ export class TasksQuery extends QueryEntity<TasksState> {
   }
 
   getQueryString(ui: TaskUiState = this.getUi()) {
-    let queryString = `sort=${ui.sort}&sortDir=${ui.sortDir}&completedStatus=${ui.completedStatus}&showInactive=${ui.showInactive ? 1 : 0}&`;
+    let queryString = `sort=${ui.sort}&sortDir=${ui.sortDir}&completedStatus=${ui.completedStatus}&showInactive=${ui.showPaused ? 1 : 0}&`;
     if (ui.numOfDays !== null) {
       queryString += `numOfDays=${ui.numOfDays}&`;
-    } else {
-      queryString += `page=${ui.page}&pageSize=${ui.pageSize}&`;
     }
 
     // do all of this client side for now

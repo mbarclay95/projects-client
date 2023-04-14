@@ -7,7 +7,6 @@ import {firstValueFrom} from "rxjs";
 import {environment} from "../../../../../environments/environment";
 import {TasksQuery} from "./tasks.query";
 import {TagsService} from "../../tags.service";
-import {Pagination} from "../../../../models/pagination.model";
 import {setLoading} from '@datorama/akita';
 import {differenceInDays, endOfWeek} from 'date-fns';
 
@@ -22,15 +21,9 @@ export class TasksService {
   }
 
   async getTasks(queryString: string): Promise<void> {
-    await firstValueFrom(this.http.get<Task[] | Pagination<Task>>(`${environment.apiUrl}/tasks?${queryString}`).pipe(
+    await firstValueFrom(this.http.get<Task[]>(`${environment.apiUrl}/tasks?${queryString}`).pipe(
       setLoading(this.tasksStore),
-      map(tasks => {
-        if ('total' in tasks) {
-          this.tasksStore.update({ui: {...this.tasksQuery.getUi(), ...{total: tasks.total}}});
-          return tasks.data.map(task => createTask(task));
-        }
-        return tasks.map(task => createTask(task))
-      }),
+      map(tasks => tasks.map(task => createTask(task))),
       tap(tasks => this.tasksStore.set(tasks))
     ));
   }
@@ -82,7 +75,7 @@ export class TasksService {
       completedStatus: 'notCompleted',
       search: null,
       tags: [],
-      showInactive: false,
+      showPaused: false,
       highPriorityFirst: true
     });
   }
@@ -91,11 +84,10 @@ export class TasksService {
     this.updateUi({
       numOfDays: null,
       ownerType: null,
-      page: 1,
       completedStatus: 'notCompleted',
       search: null,
       tags: [],
-      showInactive: true,
+      showPaused: true,
       highPriorityFirst: false
     });
   }

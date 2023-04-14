@@ -10,15 +10,12 @@ export interface TaskUiState {
   ownerType: TaskOwnerType | null,
   completedStatus: 'completed' | 'notCompleted' | 'both';
   recurringType: boolean | 'both';
-  page: number|null;
-  pageSize: number|null;
-  total: number|null;
   sort: string;
   sortDir: 'asc' | 'desc';
   numOfDays: number|null;
   search: string|null;
   tags: string[];
-  showInactive: boolean;
+  showPaused: boolean;
   highPriorityFirst: boolean;
 }
 
@@ -32,15 +29,12 @@ export class TasksStore extends EntityStore<TasksState> {
         ownerType: null,
         completedStatus: 'notCompleted',
         recurringType: 'both',
-        page: 1,
-        pageSize: 200,
-        total: null,
         sort: 'dueDate',
         sortDir: 'desc',
         numOfDays: null,
         search: null,
         tags: [],
-        showInactive: false,
+        showPaused: false,
         highPriorityFirst: true
       }
     });

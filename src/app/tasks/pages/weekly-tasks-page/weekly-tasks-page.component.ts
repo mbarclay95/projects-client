@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FamiliesQuery} from "../../services/families/state/families.query";
 import {TasksQuery} from "../../services/tasks/state/tasks.query";
 import {TasksService} from "../../services/tasks/state/tasks.service";
 import {MobileHeaderService} from "../../../shared/services/mobile-header.service";
-import {Observable} from "rxjs";
+import {merge, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {createTask, Task} from "../../models/task.model";
 import {isMobile} from '../../../app.component';
@@ -16,10 +16,14 @@ import {TaskUserConfigsService} from '../../services/task-user-configs/state/tas
   styleUrls: ['./weekly-tasks-page.component.scss']
 })
 export class WeeklyTasksPageComponent implements OnInit {
+  @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
   isMobile = isMobile;
 
-  createTask: Observable<Task> = this.mobileHeaderService.clickedButton$.pipe(
-    map(() => createTask({ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getMinTaskPoint()}))
+  createEditTask: Observable<Task> = merge(
+    this.mobileHeaderService.clickedButton$.pipe(
+      map(() => createTask({ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getMinTaskPoint()}))
+    ),
+    this.editTask.asObservable()
   );
 
   constructor(

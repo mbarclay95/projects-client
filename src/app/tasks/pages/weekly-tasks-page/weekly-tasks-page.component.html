@@ -4,8 +4,8 @@
 
   <app-weekly-progress [userConfig]="taskUserConfigsQuery.activeUserConfig$ | async"></app-weekly-progress>
 
-  <app-tasks-list [tasks]="tasksQuery.filteredTasks$ | async"></app-tasks-list>
+  <app-tasks-list [tasks]="tasksQuery.filteredTasks$ | async" (editTask)="editTask.emit($event)"></app-tasks-list>
 
 </div>
 
-<app-create-edit-task-modal-mobile *ngIf="isMobile" [openModal]="createTask"></app-create-edit-task-modal-mobile>
+<app-create-edit-task-modal-mobile *ngIf="isMobile" [openModal]="createEditTask"></app-create-edit-task-modal-mobile>

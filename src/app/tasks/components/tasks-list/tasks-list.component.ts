@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Task} from "../../models/task.model";
 
 @Component({
@@ -8,6 +8,7 @@ import {Task} from "../../models/task.model";
 })
 export class TasksListComponent implements OnInit {
   @Input() tasks!: Task[]|null;
+  @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
 
   constructor() { }
 

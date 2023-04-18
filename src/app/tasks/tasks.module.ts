@@ -59,6 +59,7 @@ import {NzSegmentedModule} from 'ng-zorro-antd/segmented';
 import { WeeklyTasksSegmentComponent } from './components/weekly-tasks-segment/weekly-tasks-segment.component';
 import {NzBadgeModule} from 'ng-zorro-antd/badge';
 import { StatsPageComponent } from './pages/stats-page/stats-page.component';
+import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 
 @NgModule({
   declarations: [
@@ -94,37 +95,38 @@ import { StatsPageComponent } from './pages/stats-page/stats-page.component';
     WeeklyTasksSegmentComponent,
     StatsPageComponent,
   ],
-  imports: [
-    CommonModule,
-    TasksRoutingModule,
-    NzLayoutModule,
-    NzTabsModule,
-    NzButtonModule,
-    NzModalModule,
-    NzInputModule,
-    FormsModule,
-    NzTableModule,
-    FontAwesomeModule,
-    NzSelectModule,
-    NzDatePickerModule,
-    NzSwitchModule,
-    NzRadioModule,
-    NzInputNumberModule,
-    NzProgressModule,
-    NzDividerModule,
-    NzCheckboxModule,
-    ColorCompactModule,
-    ColorAlphaModule,
-    AlphaModule,
-    ColorChromeModule,
-    NzPopoverModule,
-    NzPopconfirmModule,
-    SharedModule,
-    NzEmptyModule,
-    NzListModule,
-    NzSpaceModule,
-    NzSegmentedModule,
-    NzBadgeModule,
-  ]
+    imports: [
+        CommonModule,
+        TasksRoutingModule,
+        NzLayoutModule,
+        NzTabsModule,
+        NzButtonModule,
+        NzModalModule,
+        NzInputModule,
+        FormsModule,
+        NzTableModule,
+        FontAwesomeModule,
+        NzSelectModule,
+        NzDatePickerModule,
+        NzSwitchModule,
+        NzRadioModule,
+        NzInputNumberModule,
+        NzProgressModule,
+        NzDividerModule,
+        NzCheckboxModule,
+        ColorCompactModule,
+        ColorAlphaModule,
+        AlphaModule,
+        ColorChromeModule,
+        NzPopoverModule,
+        NzPopconfirmModule,
+        SharedModule,
+        NzEmptyModule,
+        NzListModule,
+        NzSpaceModule,
+        NzSegmentedModule,
+        NzBadgeModule,
+        NzDropDownModule,
+    ]
 })
 export class TasksModule { }

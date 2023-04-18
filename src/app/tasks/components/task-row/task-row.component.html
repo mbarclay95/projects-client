@@ -1,4 +1,4 @@
-<div class="task-box" longPress (mouseLongPress)="goToTask()">
+<div class="task-box">
 
   <div class="d-flex align-items-center">
 
@@ -13,7 +13,15 @@
 
       <div class="title">{{task.name}}</div>
 
-      <div class="due-text">Due {{task.dueDate | dueDateHumanReadable}}</div>
+      <div class="d-flex align-items-center due-text">
+
+        <div style="text-align: center" class="me-1" *ngIf="task.priority === 1">
+          <fa-icon style="color: #922724" [icon]="flag"></fa-icon>
+        </div>
+
+        <div>Due {{task.dueDate | dueDateHumanReadable}}</div>
+
+      </div>
 
     </div>
 
@@ -21,7 +29,17 @@
 
   <div class="d-flex">
 
-    <fa-icon *ngIf="task.priority === 1" class="me-2 fa-lg" style="color: #922724" [icon]="flag"></fa-icon>
+    <fa-icon class="me-2 fa-lg" [icon]="more" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu"></fa-icon>
+
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+
+      <ul nz-menu style="width: 100px">
+<!--        <li nz-menu-item>View</li>-->
+<!--        <li nz-menu-item>Skip</li>-->
+        <li nz-menu-item (click)="editTask.emit(task)">Edit</li>
+      </ul>
+
+    </nz-dropdown-menu>
 
   </div>
 

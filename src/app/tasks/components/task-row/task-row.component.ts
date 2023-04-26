@@ -17,6 +17,7 @@ import {TaskUserConfigsService} from '../../services/task-user-configs/state/tas
 export class TaskRowComponent implements OnInit {
   @Input() task!: Task;
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
+  @Output() viewTask: EventEmitter<Task> = new EventEmitter<Task>();
 
   isMobile = isMobile;
   flag = faFlag;

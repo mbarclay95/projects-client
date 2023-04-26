@@ -9,6 +9,7 @@ import {TasksQuery} from "./tasks.query";
 import {TagsService} from "../../tags.service";
 import {setLoading} from '@datorama/akita';
 import {differenceInDays, endOfWeek} from 'date-fns';
+import {createTaskHistory, TaskHistory} from '../../../models/task-history.model';
 
 @Injectable({providedIn: 'root'})
 export class TasksService {
@@ -65,6 +66,16 @@ export class TasksService {
     if (reloadTasks) {
       void this.getTasks(this.tasksQuery.getQueryString(newUi));
     }
+  }
+
+  async loadTaskHistoryIfNeeded(task: Task): Promise<void> {
+    if (task.taskHistory !== undefined) {
+      return;
+    }
+    await firstValueFrom(this.http.get<TaskHistory[]>(`${environment.apiUrl}/tasks/${task.id}/history`).pipe(
+      map(histories=> histories.map(history => createTaskHistory(history))),
+      tap(histories => this.tasksStore.update(task.id, {taskHistory: histories}))
+    ));
   }
 
   loadWeeklyTasksPage(): void {

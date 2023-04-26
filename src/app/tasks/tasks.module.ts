@@ -60,6 +60,8 @@ import { WeeklyTasksSegmentComponent } from './components/weekly-tasks-segment/w
 import {NzBadgeModule} from 'ng-zorro-antd/badge';
 import { StatsPageComponent } from './pages/stats-page/stats-page.component';
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
+import { ViewTaskModalComponent } from './components/view-task-modal/view-task-modal.component';
+import {NzSpinModule} from 'ng-zorro-antd/spin';
 
 @NgModule({
   declarations: [
@@ -94,39 +96,41 @@ import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
     WeekSelectorComponent,
     WeeklyTasksSegmentComponent,
     StatsPageComponent,
+    ViewTaskModalComponent,
   ],
-    imports: [
-        CommonModule,
-        TasksRoutingModule,
-        NzLayoutModule,
-        NzTabsModule,
-        NzButtonModule,
-        NzModalModule,
-        NzInputModule,
-        FormsModule,
-        NzTableModule,
-        FontAwesomeModule,
-        NzSelectModule,
-        NzDatePickerModule,
-        NzSwitchModule,
-        NzRadioModule,
-        NzInputNumberModule,
-        NzProgressModule,
-        NzDividerModule,
-        NzCheckboxModule,
-        ColorCompactModule,
-        ColorAlphaModule,
-        AlphaModule,
-        ColorChromeModule,
-        NzPopoverModule,
-        NzPopconfirmModule,
-        SharedModule,
-        NzEmptyModule,
-        NzListModule,
-        NzSpaceModule,
-        NzSegmentedModule,
-        NzBadgeModule,
-        NzDropDownModule,
-    ]
+  imports: [
+    CommonModule,
+    TasksRoutingModule,
+    NzLayoutModule,
+    NzTabsModule,
+    NzButtonModule,
+    NzModalModule,
+    NzInputModule,
+    FormsModule,
+    NzTableModule,
+    FontAwesomeModule,
+    NzSelectModule,
+    NzDatePickerModule,
+    NzSwitchModule,
+    NzRadioModule,
+    NzInputNumberModule,
+    NzProgressModule,
+    NzDividerModule,
+    NzCheckboxModule,
+    ColorCompactModule,
+    ColorAlphaModule,
+    AlphaModule,
+    ColorChromeModule,
+    NzPopoverModule,
+    NzPopconfirmModule,
+    SharedModule,
+    NzEmptyModule,
+    NzListModule,
+    NzSpaceModule,
+    NzSegmentedModule,
+    NzBadgeModule,
+    NzDropDownModule,
+    NzSpinModule,
+  ]
 })
 export class TasksModule { }

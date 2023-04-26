@@ -3,7 +3,7 @@
 
   <ng-container *ngFor="let task of tasks">
 
-    <app-task-row [task]="task" (editTask)="editTask.emit($event)"></app-task-row>
+    <app-task-row [task]="task" (editTask)="editTask.emit($event)" (viewTask)="viewTask.emit($event)"></app-task-row>
 
   </ng-container>
 

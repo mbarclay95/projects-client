@@ -10,6 +10,7 @@ import {RouterModule} from "@angular/router";
 import {LongPressDirective} from './directives/long-press.directive';
 import {PageHeaderComponent} from './components/page-header/page-header.component';
 import {NzButtonModule} from 'ng-zorro-antd/button';
+import { DefaultModalComponent } from './components/default-modal/default-modal.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
     MobileFooterComponent,
     SideMenuComponent,
     PageHeaderComponent,
+    DefaultModalComponent,
   ],
   exports: [
     NgLetDirective,

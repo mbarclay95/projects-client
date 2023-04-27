@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Task} from "../../models/task.model";
-import {faEllipsisV, faFlag} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faEllipsisV, faFlag} from "@fortawesome/free-solid-svg-icons";
 import {FamiliesQuery} from "../../services/families/state/families.query";
 import {AuthQuery} from "../../../auth/services/state/auth.query";
 import {TasksService} from "../../services/tasks/state/tasks.service";
@@ -8,6 +8,7 @@ import {NzMessageService} from "ng-zorro-antd/message";
 import {Router} from '@angular/router';
 import {isMobile} from '../../../app.component';
 import {TaskUserConfigsService} from '../../services/task-user-configs/state/task-user-configs.service';
+import {faEye} from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-task-row',
@@ -21,7 +22,9 @@ export class TaskRowComponent implements OnInit {
 
   isMobile = isMobile;
   flag = faFlag;
-  more = faEllipsisV
+  more = faEllipsisV;
+  eye = faEye;
+  edit = faEdit;
 
   constructor(
     public familiesQuery: FamiliesQuery,

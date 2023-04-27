@@ -3,7 +3,7 @@
   <div class="task-box" *ngFor="let task of _tasks"
        [ngClass]="{'highlighted-row': highlightedTaskId === task.id}">
 
-    <div class="first-row" (click)="expandSet.has(task.id) ? expandSet.delete(task.id) : expandSet.add(task.id)">
+    <div class="first-row" (click)="viewTask.emit(task)">
 
       <div>
 
@@ -29,41 +29,14 @@
           <fa-icon style="color: grey" [icon]="repeat"></fa-icon>
         </div>
 
-        <div style="width: 18px; text-align: center" class="ms-2 me-3">
+        <div style="width: 18px; text-align: center" class="ms-2">
 
           <fa-icon style="color: grey" *ngIf="task.ownerType === 'family'" [icon]="household"></fa-icon>
           <fa-icon style="color: grey" *ngIf="task.ownerType === 'user'" [icon]="personal"></fa-icon>
 
         </div>
 
-        <fa-icon *ngIf="!expandSet.has(task.id)" style="cursor: pointer" [icon]="arrowDown"></fa-icon>
-
-        <fa-icon *ngIf="expandSet.has(task.id)" style="cursor: pointer" [icon]="arrowUp"></fa-icon>
-
       </div>
-
-    </div>
-
-    <div *ngIf="expandSet.has(task.id)" class="second-row">
-
-      <div class="d-flex justify-content-evenly">
-
-        <div class="d-flex flex-column align-items-center" (click)="editTask.emit(task)">
-          <fa-icon class="text-primary" [icon]="edit"></fa-icon>
-          Edit
-        </div>
-
-        <div class="d-flex flex-column align-items-center" nz-popconfirm nzPopconfirmTitle="Are you sure?"
-             (nzOnConfirm)="deleteTask(task)">
-          <fa-icon class="text-danger" [icon]="delete"></fa-icon>
-          Delete
-        </div>
-
-      </div>
-
-      <nz-divider style="margin: 16px 0" *ngIf="task.description"></nz-divider>
-
-      {{task.description}}
 
     </div>
 

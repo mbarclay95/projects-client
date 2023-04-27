@@ -1,5 +1,4 @@
-<nz-modal [(nzVisible)]="isVisible" nzTitle="View Task" [nzWidth]="modalWidth" (nzOnCancel)="isVisible = false"
-          [nzOkText]="null" nzCancelText="Close" [nzStyle]="modalStyle"
+<nz-modal [(nzVisible)]="isVisible" nzTitle="View Task" [nzWidth]="modalWidth" [nzStyle]="modalStyle"
           [nzBodyStyle]="{background: '#333232'}">
 
   <ng-container *nzModalContent>
@@ -15,6 +14,10 @@
           <fa-icon style="color: grey" class="fa-lg" *ngIf="model.ownerType === 'family'" [icon]="household"></fa-icon>
           <fa-icon style="color: grey" class="fa-lg" *ngIf="model.ownerType === 'user'" [icon]="personal"></fa-icon>
 
+        </div>
+
+        <div class="mt-3 ps-1" *ngIf="model.description">
+          {{model.description}}
         </div>
 
         <nz-divider></nz-divider>
@@ -33,7 +36,7 @@
 
           <div *ngIf="model.isActive">{{model.dueDate | date}}, {{model.dueDate | dueDateHumanReadable}}</div>
 
-          <div *ngIf="!model.isActive" class="text-warning">*Paused</div>
+          <div *ngIf="!model.isActive" class="text-warning">Paused</div>
 
         </div>
 
@@ -119,6 +122,25 @@
 
   </ng-container>
 
+  <div *nzModalFooter class="d-flex justify-content-between">
+
+    <div>
+
+      <button nz-button nzType="primary" nzDanger nz-popconfirm (nzOnConfirm)="deleteTask()"
+              nzPopconfirmTitle="Are you sure?" [nzLoading]="deleting" [disabled]="deleting">Delete
+      </button>
+
+    </div>
+
+    <div>
+
+      <button nz-button nzType="primary" (click)="editTaskClicked()" [disabled]="deleting">Edit</button>
+
+      <button nz-button nzType="default" (click)="isVisible = false" [disabled]="deleting">Close</button>
+
+    </div>
+
+  </div>
 
 </nz-modal>
 

@@ -15,7 +15,7 @@ import {isMobile} from '../../../app.component';
   styleUrls: ['./create-edit-task-modal-mobile.component.scss']
 })
 export class CreateEditTaskModalMobileComponent extends CreateEditTaskModalComponent {
-  recurringExpanded = true;
+  recurringExpanded = false;
   advancedExpanded = false;
   modalStyle = isMobile ? {top: '20px'} : {};
   modalWidth = isMobile ? '95%' : '500px';
@@ -38,8 +38,8 @@ export class CreateEditTaskModalMobileComponent extends CreateEditTaskModalCompo
   override ngOnInit() {
     this.openModal.pipe(
       takeUntil(this.subscriptionDestroyer)
-    ).subscribe(() => {
-      this.recurringExpanded = true;
+    ).subscribe(task => {
+      this.recurringExpanded = task.id !== 0;
       this.advancedExpanded = false;
     });
     super.ngOnInit();

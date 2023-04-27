@@ -29,6 +29,7 @@ export class TaskTableMobileComponent implements OnInit {
 
   @Input() ui!: TaskUiState;
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
+  @Output() viewTask: EventEmitter<Task> = new EventEmitter<Task>();
 
   highlightedTaskId?: number;
   _tasks: Task[] = [];

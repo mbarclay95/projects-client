@@ -9,7 +9,7 @@
     <app-tasks-table *ngIf="!isMobile" [tasks]="tasks" (editTask)="editTask.emit($event)" [ui]="ui"></app-tasks-table>
 
     <app-task-table-mobile *ngIf="isMobile" [tasks]="tasks" (editTask)="editTask.emit($event)"
-                           [ui]="ui"></app-task-table-mobile>
+                           [ui]="ui" (viewTask)="viewTask.emit($event)"></app-task-table-mobile>
 
   </ng-container>
 
@@ -18,3 +18,5 @@
 </div>
 
 <app-create-edit-task-modal-mobile *ngIf="isMobile" [openModal]="createEditTask"></app-create-edit-task-modal-mobile>
+
+<app-view-task-modal [openModal]="viewTask.asObservable()" (editTask)="editTask.emit($event)"></app-view-task-modal>

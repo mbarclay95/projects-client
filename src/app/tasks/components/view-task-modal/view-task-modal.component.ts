@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {Task} from '../../models/task.model';
 import {DefaultModalComponent} from '../../../shared/components/default-modal/default-modal.component';
 import {FamiliesQuery} from '../../services/families/state/families.query';
 import {faChevronDown, faChevronUp, faFlag, faPeopleRoof, faUser} from '@fortawesome/free-solid-svg-icons';
 import {TasksService} from '../../services/tasks/state/tasks.service';
 import {TasksQuery} from '../../services/tasks/state/tasks.query';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-view-task-modal',
@@ -12,9 +13,11 @@ import {TasksQuery} from '../../services/tasks/state/tasks.query';
   styleUrls: ['./view-task-modal.component.scss']
 })
 export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
+  @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
 
   showHistory = false;
   loadingHistory = false;
+  deleting = false;
   flag = faFlag;
   household = faPeopleRoof;
   personal = faUser;
@@ -24,7 +27,8 @@ export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
   constructor(
     public familiesQuery: FamiliesQuery,
     private tasksService: TasksService,
-    private tasksQuery: TasksQuery
+    private tasksQuery: TasksQuery,
+    private nzMessageService: NzMessageService
   ) {
     super();
   }
@@ -38,9 +42,36 @@ export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
   async loadTaskHistory(): Promise<void> {
     if (this.model && this.model.taskHistory === undefined) {
       this.loadingHistory = true;
-      await this.tasksService.loadTaskHistoryIfNeeded(this.model);
-      this.model = this.tasksQuery.getEntity(this.model.id);
+      try {
+        await this.tasksService.loadTaskHistoryIfNeeded(this.model);
+        this.model = this.tasksQuery.getEntity(this.model.id);
+      } catch (e) {
+        this.nzMessageService.error('There was an error getting task history');
+      }
       this.loadingHistory = false;
     }
+  }
+
+  async deleteTask() {
+    if (!this.model) {
+      return;
+    }
+    this.deleting = true;
+    try {
+      await this.tasksService.deleteTask(this.model);
+    } catch (e) {
+      this.nzMessageService.error('There was an error deleting the task');
+      this.deleting = false;
+      return;
+    }
+
+    this.deleting = false;
+    this.nzMessageService.success('Task deleted');
+    this.isVisible = false;
+  }
+
+  editTaskClicked() {
+    this.isVisible = false;
+    this.editTask.emit(this.model);
   }
 }

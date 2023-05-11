@@ -37,9 +37,12 @@ export class TasksService {
     void this.tagsService.getTags();
   }
 
-  async updateTask(taskId: number, task: Partial<Task>, getTags = true, removeFromList = false): Promise<Task> {
-    const newTask = {...this.tasksQuery.getEntity(taskId), ...task};
-    const t = await firstValueFrom(this.http.put<Task>(`${environment.apiUrl}/tasks/${taskId}`, newTask).pipe(
+  async updateTask(taskId: number, task: Partial<Task>, getTags = true, removeFromList = false): Promise<Task | undefined> {
+    const currentTask = this.tasksQuery.getEntity(taskId);
+    if (!currentTask) {
+      return undefined;
+    }
+    const newTask = await firstValueFrom(this.http.put<Task>(`${environment.apiUrl}/tasks/${taskId}`, {...currentTask, ...task}).pipe(
       map(task => createTask(task)),
       tap(task => {
         removeFromList ?
@@ -51,7 +54,7 @@ export class TasksService {
       void this.tagsService.getTags();
     }
 
-    return t;
+    return newTask;
   }
 
   async deleteTask(task: Task) {
@@ -73,7 +76,7 @@ export class TasksService {
       return;
     }
     await firstValueFrom(this.http.get<TaskHistory[]>(`${environment.apiUrl}/tasks/${task.id}/history`).pipe(
-      map(histories=> histories.map(history => createTaskHistory(history))),
+      map(histories => histories.map(history => createTaskHistory(history))),
       tap(histories => this.tasksStore.update(task.id, {taskHistory: histories}))
     ));
   }

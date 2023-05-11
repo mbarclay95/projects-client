@@ -3,7 +3,7 @@
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'weekly-tasks'}" queryParamsHandling="merge">
       Weekly Tasks
     </a>
-    <app-weekly-tasks-page (editTask)="openTaskModal.next($event)"
+    <app-weekly-tasks-page (editTask)="openTaskModal.next($event)" (skipTask)="openSkipTaskModal.next($event)"
                            (viewTask)="openViewTaskModal.next($event)"></app-weekly-tasks-page>
   </nz-tab>
   <nz-tab *ngIf="familiesQuery.selectActive() | async" (nzSelect)="selectedTab = 'My Family'">
@@ -38,3 +38,5 @@
 
 <app-view-task-modal [openModal]="openViewTaskModal.asObservable()"
                      (editTask)="openTaskModal.next($event)"></app-view-task-modal>
+
+<app-skip-task-modal [openModal]="openSkipTaskModal.asObservable()"></app-skip-task-modal>

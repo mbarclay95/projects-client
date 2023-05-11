@@ -10,6 +10,7 @@ export class TasksListComponent implements OnInit {
   @Input() tasks!: Task[]|null;
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
   @Output() viewTask: EventEmitter<Task> = new EventEmitter<Task>();
+  @Output() skipTask: EventEmitter<Task> = new EventEmitter<Task>();
 
   constructor() { }
 

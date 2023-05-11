@@ -1,6 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Task} from "../../models/task.model";
-import {faEdit, faEllipsisV, faFlag} from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRightToBracket,
+  faEdit,
+  faEllipsisV,
+  faFlag
+} from "@fortawesome/free-solid-svg-icons";
 import {FamiliesQuery} from "../../services/families/state/families.query";
 import {AuthQuery} from "../../../auth/services/state/auth.query";
 import {TasksService} from "../../services/tasks/state/tasks.service";
@@ -19,12 +24,14 @@ export class TaskRowComponent implements OnInit {
   @Input() task!: Task;
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
   @Output() viewTask: EventEmitter<Task> = new EventEmitter<Task>();
+  @Output() skipTask: EventEmitter<Task> = new EventEmitter<Task>();
 
   isMobile = isMobile;
   flag = faFlag;
   more = faEllipsisV;
   eye = faEye;
   edit = faEdit;
+  skip = faArrowRightToBracket;
 
   constructor(
     public familiesQuery: FamiliesQuery,
@@ -42,7 +49,9 @@ export class TaskRowComponent implements OnInit {
   async completedTask(taskId: number) {
     try {
       const completedTask = await this.tasksService.updateTask(taskId, {completedAt: new Date()}, true, true);
-      this.taskUserConfigsService.addCompletedTaskToActive(completedTask);
+      if (completedTask) {
+        this.taskUserConfigsService.addCompletedTaskToActive(completedTask);
+      }
     } catch (e) {
       console.log(e);
       this.nzMessageService.error('There was an error');

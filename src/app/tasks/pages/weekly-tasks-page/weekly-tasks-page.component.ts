@@ -18,6 +18,7 @@ import {TaskUserConfigsService} from '../../services/task-user-configs/state/tas
 export class WeeklyTasksPageComponent implements OnInit {
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
   @Output() viewTask: EventEmitter<Task> = new EventEmitter<Task>();
+  @Output() skipTask: EventEmitter<Task> = new EventEmitter<Task>();
   isMobile = isMobile;
 
   createEditTask: Observable<Task> = merge(

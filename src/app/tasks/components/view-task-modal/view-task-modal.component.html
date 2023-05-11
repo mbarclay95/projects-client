@@ -1,5 +1,5 @@
 <nz-modal [(nzVisible)]="isVisible" nzTitle="View Task" [nzWidth]="modalWidth" [nzStyle]="modalStyle"
-          [nzBodyStyle]="{background: '#333232'}">
+          [nzBodyStyle]="{background: '#333232'}" (nzOnCancel)="isVisible = false">
 
   <ng-container *nzModalContent>
 
@@ -25,7 +25,7 @@
         <div *ngIf="model.recurring" class="d-flex w-100 justify-content-between">
 
           <div>Recurs:</div>
-          <div>Every {{model.frequencyAmount}} {{model.frequencyUnit + (model.frequencyAmount === 1 ? '' : 's')}}</div>
+          <div>Every {{model | frequencyToString}}</div>
 
         </div>
 
@@ -60,9 +60,9 @@
 
         <div>Priority:</div>
 
-        <div>
-          <fa-icon class="me-1" style="color: {{model.priority === 0 ? 'grey' : '#922724'}}" [icon]="flag"></fa-icon>
-          {{model.priority === 0 ? 'Normal' : 'High'}}
+        <div class="d-flex">
+          <fa-icon class="me-2" style="color: {{model.priority === 0 ? 'grey' : '#922724'}}" [icon]="flag"></fa-icon>
+          <div>{{model.priority === 0 ? 'Normal' : 'High'}}</div>
         </div>
 
 
@@ -100,10 +100,8 @@
               <div *ngIf="model.taskHistory.length > 0">
 
                 <div *ngFor="let taskHistory of model.taskHistory" class="w-100 d-flex pt-2">
-                  <div class="d-flex justify-content-between me-4" style="min-width: 100px">
-                    <div>{{taskHistory.completedAt | date}}</div>
-                    <div>-</div>
-                  </div>
+                  <div style="width: 90px">{{taskHistory.completedAt | date}}</div>
+                  <div class="mx-4">-</div>
                   <div style="font-style: italic">{{taskHistory.completedByName}}</div>
                 </div>
 

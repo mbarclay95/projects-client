@@ -5,7 +5,7 @@
   <app-weekly-progress [userConfig]="taskUserConfigsQuery.activeUserConfig$ | async"></app-weekly-progress>
 
   <app-tasks-list [tasks]="tasksQuery.filteredTasks$ | async" (editTask)="editTask.emit($event)"
-                  (viewTask)="viewTask.emit($event)"></app-tasks-list>
+                  (viewTask)="viewTask.emit($event)" (skipTask)="skipTask.emit($event)"></app-tasks-list>
 
 </div>
 
@@ -13,3 +13,5 @@
 
 <app-view-task-modal *ngIf="isMobile" [openModal]="viewTask.asObservable()"
                      (editTask)="editTask.emit($event)"></app-view-task-modal>
+
+<app-skip-task-modal *ngIf="isMobile" [openModal]="skipTask.asObservable()"></app-skip-task-modal>

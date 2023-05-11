@@ -62,6 +62,8 @@ import { StatsPageComponent } from './pages/stats-page/stats-page.component';
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import { ViewTaskModalComponent } from './components/view-task-modal/view-task-modal.component';
 import {NzSpinModule} from 'ng-zorro-antd/spin';
+import { SkipTaskModalComponent } from './components/skip-task-modal/skip-task-modal.component';
+import { FrequencyToStringPipe } from './pipes/frequency-to-string.pipe';
 
 @NgModule({
   declarations: [
@@ -97,6 +99,8 @@ import {NzSpinModule} from 'ng-zorro-antd/spin';
     WeeklyTasksSegmentComponent,
     StatsPageComponent,
     ViewTaskModalComponent,
+    SkipTaskModalComponent,
+    FrequencyToStringPipe,
   ],
   imports: [
     CommonModule,

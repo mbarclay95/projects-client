@@ -17,6 +17,7 @@ export class TaskTabsComponent implements OnInit {
   selectedTab: 'Task' | 'Family' | 'My Family' = 'Task';
   openFamilyModal: Subject<Family> = new Subject<Family>();
   openTaskModal: Subject<Task> = new Subject<Task>();
+  openSkipTaskModal: Subject<Task> = new Subject<Task>();
   openViewTaskModal: Subject<Task> = new Subject<Task>();
 
   constructor(

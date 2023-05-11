@@ -37,12 +37,14 @@
 
     <nz-dropdown-menu #menu="nzDropdownMenu">
 
-      <ul nz-menu style="width: 100px">
-        <li nz-menu-item style="font-size: 16px" class="py-2" (click)="viewTask.emit(task)">
+      <ul nz-menu class="quick-action-menu">
+        <li nz-menu-item (click)="viewTask.emit(task)">
           <fa-icon class="me-2" [icon]="eye"></fa-icon>View
         </li>
-<!--        <li nz-menu-item>Skip</li>-->
-        <li nz-menu-item style="font-size: 16px" class="py-2" (click)="editTask.emit(task)">
+        <li nz-menu-item *ngIf="task.recurring" (click)="skipTask.emit(task)">
+          <fa-icon class="me-2" [icon]="skip"></fa-icon>Skip
+        </li>
+        <li nz-menu-item (click)="editTask.emit(task)">
           <fa-icon class="me-2" [icon]="edit"></fa-icon>Edit
         </li>
       </ul>

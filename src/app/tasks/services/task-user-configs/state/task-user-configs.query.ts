@@ -48,10 +48,9 @@ export class TaskUserConfigsQuery extends QueryEntity<TaskUserConfigsState> {
     return this.getValue().ui;
   }
 
-  buildQueryString(): string {
+  buildQueryString(familyId?: number): string {
     const ui = this.getUi();
-    const familyId = this.familiesQuery.getActiveId();
 
-    return `familyId=${familyId}&weekOffset=${ui.weekOffset}`;
+    return `familyId=${familyId ?? this.familiesQuery.getActiveId()}&weekOffset=${ui.weekOffset}`;
   }
 }

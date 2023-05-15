@@ -23,8 +23,8 @@ export class TaskUserConfigsService {
   ) {
   }
 
-  async get(setActive = true): Promise<void> {
-    const queryString = this.taskUserConfigsQuery.buildQueryString();
+  async get(familyId: number | undefined = undefined, setActive = true): Promise<void> {
+    const queryString = this.taskUserConfigsQuery.buildQueryString(familyId);
     await firstValueFrom(this.http.get<TaskUserConfig[]>(`${environment.apiUrl}/task-user-config?${queryString}`).pipe(
       map(configs => configs.map(config => createTaskUserConfig(config))),
       tap(configs => {

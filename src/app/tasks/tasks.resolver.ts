@@ -29,14 +29,18 @@ export class TasksResolver implements Resolve<void> {
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
     this.mobileFooterService.setFooterButtonsForTasksPage();
+    const familyId = this.authQuery.getValue().familyId;
+    // Have to load these first so new configs will be created before family is loaded
+    if (familyId) {
+      await this.taskUserConfigsService.get(familyId);
+    }
     await Promise.all([
-      this.handleFamilies(),
+      this.handleFamilies(familyId),
       this.tagsService.getTags()
     ]);
   }
 
-  private async handleFamilies(): Promise<void> {
-    const familyId = this.authQuery.getValue().familyId;
+  private async handleFamilies(familyId: number | null): Promise<void> {
     if (this.permissionsService.hasPermissionTo(Permissions.FAMILIES_TAB)) {
       await Promise.all([
         this.familiesService.getFamilies(),
@@ -47,7 +51,6 @@ export class TasksResolver implements Resolve<void> {
     }
     if (familyId) {
       this.familiesService.setActive(familyId);
-      await this.taskUserConfigsService.get();
     }
   }
 }

@@ -63,9 +63,9 @@
         <div class="w-100 d-flex align-items-end">
 
           <nz-upload class="w-100" nzType="drag" [nzMultiple]="false" [nzAction]="getUploadPath()"
-                     (nzChange)="handleChange($event)" nzFileType="image/png" nzAccept=".png" [(nzFileList)]="fileList">
+                     (nzChange)="handleChange($event)" [(nzFileList)]="fileList">
 
-            <p class="ant-upload-text">Click or drag file to this area to upload (must be png)</p>
+            <p class="ant-upload-text">Click or drag file to this area to upload (must be png or svg)</p>
 
           </nz-upload>
 

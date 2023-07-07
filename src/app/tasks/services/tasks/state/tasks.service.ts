@@ -7,7 +7,6 @@ import {firstValueFrom} from "rxjs";
 import {environment} from "../../../../../environments/environment";
 import {TasksQuery} from "./tasks.query";
 import {TagsService} from "../../tags.service";
-import {setLoading} from '@datorama/akita';
 import {differenceInDays, endOfWeek} from 'date-fns';
 import {createTaskHistory, TaskHistory} from '../../../models/task-history.model';
 
@@ -21,11 +20,18 @@ export class TasksService {
   ) {
   }
 
-  async getTasks(queryString: string): Promise<void> {
+  async getTasks(queryString: string, showLoading = true): Promise<void> {
+    if (showLoading) {
+      this.tasksStore.update({loading: true});
+    }
     await firstValueFrom(this.http.get<Task[]>(`${environment.apiUrl}/tasks?${queryString}`).pipe(
-      setLoading(this.tasksStore),
       map(tasks => tasks.map(task => createTask(task))),
-      tap(tasks => this.tasksStore.set(tasks))
+      tap(tasks => {
+        this.tasksStore.set(tasks);
+        if (showLoading) {
+          this.tasksStore.update({loading: false});
+        }
+      })
     ));
   }
 
@@ -63,11 +69,11 @@ export class TasksService {
     ));
   }
 
-  updateUi(newState: Partial<TaskUiState>, reloadTasks = true): void {
+  updateUi(newState: Partial<TaskUiState>, reloadTasks = true, showLoading = true): void {
     const newUi = {...this.tasksQuery.getUi(), ...newState};
     this.tasksStore.update({ui: newUi});
     if (reloadTasks) {
-      void this.getTasks(this.tasksQuery.getQueryString(newUi));
+      void this.getTasks(this.tasksQuery.getQueryString(newUi), showLoading);
     }
   }
 
@@ -79,6 +85,11 @@ export class TasksService {
       map(histories => histories.map(history => createTaskHistory(history))),
       tap(histories => this.tasksStore.update(task.id, {taskHistory: histories}))
     ));
+  }
+
+  loadNextWeekOfTasks(): void {
+    const ui = this.tasksQuery.getUi();
+    this.updateUi({numOfDays: (ui.numOfDays ?? 0) + 7}, true, false);
   }
 
   loadWeeklyTasksPage(): void {

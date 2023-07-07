@@ -8,6 +8,14 @@
 
   </ng-container>
 
-  <nz-empty *ngIf="tasks?.length === 0" class="my-4" nzNotFoundContent="No Tasks"></nz-empty>
+  <div *ngIf="tasks.length > 0" class="load-more-container">
+
+    <button nz-button nzSize="large" nzType="primary" (click)="tasksService.loadNextWeekOfTasks()" nzBlock>
+      Load Next Week's Tasks
+    </button>
+
+  </div>
+
+  <nz-empty *ngIf="tasks.length === 0" class="my-4" nzNotFoundContent="No Tasks"></nz-empty>
 
 </div>

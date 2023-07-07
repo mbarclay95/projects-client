@@ -4,7 +4,7 @@
 
   <app-weekly-progress [userConfig]="taskUserConfigsQuery.activeUserConfig$ | async"></app-weekly-progress>
 
-  <app-tasks-list [tasks]="tasksQuery.filteredTasks$ | async" (editTask)="editTask.emit($event)"
+  <app-tasks-list [tasks]="(tasksQuery.filteredTasks$ | async) ?? []" (editTask)="editTask.emit($event)"
                   (viewTask)="viewTask.emit($event)" (skipTask)="skipTask.emit($event)"></app-tasks-list>
 
 </div>

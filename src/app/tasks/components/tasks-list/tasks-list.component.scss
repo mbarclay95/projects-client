@@ -3,3 +3,14 @@
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px;
 }
+
+.load-more-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  //box-sizing: border-box;
+  //box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.4);
+  padding: 0.25rem 0.75rem;
+  //cursor: pointer;
+  height: 63px;
+}

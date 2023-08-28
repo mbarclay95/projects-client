@@ -8,17 +8,25 @@ import {
 import {catchError, Observable, throwError} from 'rxjs';
 import {AuthStorageService} from "./auth-storage.service";
 import {Router} from "@angular/router";
+import {environment} from '../../../environments/environment';
+import {AuthQuery} from './state/auth.query';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
     private authStorageService: AuthStorageService,
-    private router: Router
+    private router: Router,
+    private authQuery: AuthQuery,
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const authToken = this.authStorageService.getAuthToken();
+    let authToken: string | undefined;
+    if (request.url.includes(environment.apiUrl)) {
+      authToken = this.authStorageService.getAuthToken();
+    } else if (request.url.includes(environment.moneyAppApiUrl)) {
+      authToken = this.authQuery.getUser().userConfig.moneyAppToken ?? undefined;
+    }
 
     if (authToken) {
       request = request.clone({

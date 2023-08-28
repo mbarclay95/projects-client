@@ -1,0 +1,13 @@
+<div class="w-100 money-page-container p-2">
+
+  <ng-container *ngIf="!(entriesQuery.selectLoading() | async)">
+
+    <ng-container *ngIf="entriesQuery.entries$ | async as entries">
+
+      <app-entry-rows [entries]="entries"></app-entry-rows>
+
+    </ng-container>
+
+  </ng-container>
+
+</div>

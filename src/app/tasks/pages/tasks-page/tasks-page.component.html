@@ -6,12 +6,12 @@
 
     <ng-container *ngIf="tasksQuery.filteredTasks$ | async as tasks">
 
-    <app-tasks-table *ngIf="!isMobile" [tasks]="tasks" (editTask)="editTask.emit($event)" [ui]="ui"></app-tasks-table>
+      <app-tasks-table *ngIf="!isMobile" [tasks]="tasks" (editTask)="editTask.emit($event)" [ui]="ui"></app-tasks-table>
 
-    <app-task-table-mobile *ngIf="isMobile" [tasks]="tasks" (editTask)="editTask.emit($event)"
-                           [ui]="ui" (viewTask)="viewTask.emit($event)"></app-task-table-mobile>
+      <app-task-table-mobile *ngIf="isMobile" [tasks]="tasks" (editTask)="editTask.emit($event)"
+                             [ui]="ui" (viewTask)="viewTask.emit($event)"></app-task-table-mobile>
 
-  </ng-container>
+    </ng-container>
 
   </ng-container>
 

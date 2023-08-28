@@ -1,0 +1,42 @@
+.entry-border {
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+.entry-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.4);
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  height: 93px;
+  color: white;
+}
+
+.missing-attribute-text {
+  color: rgba(var(--bs-warning-rgb), 1);
+  font-style: italic;
+}
+
+.category-text {
+  font-size: 15px;
+}
+
+.date-amount-text {
+  display: flex;
+  font-size: 13px;
+}
+
+.description-text {
+  font-size: 12px;
+}
+
+.divider-line {
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin: 0.5rem 0;
+}
+

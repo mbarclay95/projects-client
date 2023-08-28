@@ -1,0 +1,47 @@
+<div class="w-100 entry-border">
+
+  <div class="entry-box" *ngFor="let entry of entries" [ngClass]="">
+
+    <div>
+
+      <div class="category-text">
+
+        <div *ngIf="entry.subCategory">{{entry.category.name}}: {{entry.subCategory.name}}</div>
+
+        <div *ngIf="!entry.subCategory" class="missing-attribute-text">Missing Category</div>
+
+      </div>
+
+      <div class="date-amount-text">
+
+        <span *ngIf="entry.dateSpent">{{entry.dateSpent | date : 'shortDate'}}</span>
+
+        <span *ngIf="!entry.dateSpent" class="missing-attribute-text">Missing Date</span>
+
+        <span class="mx-1">-</span>
+
+        <span *ngIf="entry.amount">{{entry.amount | currency}}</span>
+
+        <span *ngIf="!entry.amount" class="missing-attribute-text">Missing Amount</span>
+
+      </div>
+
+      <div *ngIf="entry.description" class="divider-line"></div>
+
+      <div class="description-text">
+        {{entry.description}}
+      </div>
+
+
+
+    </div>
+
+    <div>
+      B
+    </div>
+
+  </div>
+
+  <nz-empty *ngIf="entries.length === 0" class="my-4" nzNotFoundContent="No Transactions"></nz-empty>
+
+</div>

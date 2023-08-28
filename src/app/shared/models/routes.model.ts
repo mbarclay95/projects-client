@@ -4,7 +4,7 @@ import {
   faBullseye,
   faCalendarDays,
   faFolderOpen, faGear,
-  faHome,
+  faHome, faMoneyCheckDollar,
   faTasks,
   faUpload,
   faUsers
@@ -47,6 +47,13 @@ export const routes: Route[] = [
     url: 'app/file-explorer',
     permission: Permissions.FILE_EXPLORER_PAGE,
     title: 'File Explorer',
+    queryParams: {}
+  },
+  {
+    icon: faMoneyCheckDollar,
+    url: 'app/money',
+    permission: Permissions.MONEY_APP_PAGE,
+    title: 'Money',
     queryParams: {}
   },
   {icon: faCalendarDays, url: 'app/events', permission: Permissions.EVENTS_PAGE, title: 'Events', queryParams: {}},

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {AuthService} from "./state/auth.service";
 import {AuthStorageService} from "./auth-storage.service";
@@ -107,6 +107,8 @@ export class LoginService {
         return 'app/users';
       case Roles.FILE_EXPLORER_ROLE:
         return 'app/file-explorer';
+      case Roles.MONEY_APP_ROLE:
+        return 'app/money';
     }
   }
 }

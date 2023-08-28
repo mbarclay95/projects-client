@@ -45,15 +45,17 @@ export class TasksService {
 
   async updateTask(taskId: number, task: Partial<Task>, getTags = true, removeFromList = false): Promise<Task | undefined> {
     const currentTask = this.tasksQuery.getEntity(taskId);
-    if (!currentTask) {
-      return undefined;
+    if (currentTask) {
+      task = {...currentTask, ...task};
     }
-    const newTask = await firstValueFrom(this.http.put<Task>(`${environment.apiUrl}/tasks/${taskId}`, {...currentTask, ...task}).pipe(
+    const newTask = await firstValueFrom(this.http.put<Task>(`${environment.apiUrl}/tasks/${taskId}`, task).pipe(
       map(task => createTask(task)),
       tap(task => {
-        removeFromList ?
-          this.tasksStore.remove(taskId) :
+        if (removeFromList) {
+          this.tasksStore.remove(taskId);
+        } else if (currentTask) {
           this.tasksStore.update(taskId, task);
+        }
       })
     ));
     if (getTags) {

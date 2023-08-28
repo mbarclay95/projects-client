@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {TasksService} from "./services/tasks/state/tasks.service";
 import {FamiliesService} from "./services/families/state/families.service";
 import {UsersService} from "../users/services/state/users.service";
 import {PermissionsService} from "../auth/services/permissions.service";
@@ -16,7 +15,6 @@ import {TaskUserConfigsService} from './services/task-user-configs/state/task-us
 export class TasksResolver implements Resolve<void> {
 
   constructor(
-    private tasksService: TasksService,
     private familiesService: FamiliesService,
     private usersService: UsersService,
     private permissionsService: PermissionsService,

@@ -7,6 +7,7 @@ export const enum Permissions {
   FAMILIES_TAB = 'client_view_families_tab',
   EVENTS_PAGE = 'client_view_events_page',
   FILE_EXPLORER_PAGE = 'client_view_file_explorer_page',
+  MONEY_APP_PAGE = 'client_view_money_app_page',
 }
 
 export const enum Roles {
@@ -17,5 +18,6 @@ export const enum Roles {
   TASKS_ROLE = 'task_role',
   EVENTS_ROLE = 'event_role',
   FILE_EXPLORER_ROLE = 'file_explorer_role',
+  MONEY_APP_ROLE = 'money_app_role',
 }
 

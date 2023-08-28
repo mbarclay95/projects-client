@@ -5,7 +5,6 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import {MobileFooterService} from './shared/services/mobile-footer.service';
-import {MobileHeaderService} from './shared/services/mobile-header.service';
 import {MobileHeaderResolver} from './mobile-header.resolver';
 
 @Injectable({
@@ -15,7 +14,6 @@ export class AppResolver implements Resolve<void> {
 
   constructor(
     private mobileFooterService: MobileFooterService,
-    private mobileHeaderService: MobileHeaderService,
     private mobileHeaderResolver: MobileHeaderResolver,
   ) {
   }

@@ -31,4 +31,8 @@ export class AuthQuery extends Query<User> {
   getUser(): User {
     return this.getValue();
   }
+
+  hasMoneyAppToken(): boolean {
+    return !!this.getUser().userConfig.moneyAppToken;
+  }
 }

@@ -12,6 +12,7 @@ import {EventsLayoutComponent} from "./events/events-layout/events-layout.compon
 import {EventSignupLayoutComponent} from "./event-signup/event-signup-layout/event-signup-layout.component";
 import {FileExplorerLayoutComponent} from './file-explorer/file-explorer-layout/file-explorer-layout.component';
 import {AppResolver} from './app.resolver';
+import {MoneyLayoutComponent} from './money/money-layout/money-layout.component';
 
 const routes: Routes = [
   {
@@ -58,6 +59,11 @@ const routes: Routes = [
         path: 'file-explorer', component: FileExplorerLayoutComponent, resolve: {AppResolver},
         data: {permission: Permissions.FILE_EXPLORER_PAGE, headerTitle: 'File Explorer', showCreateButton: true},
         loadChildren: () => import('./file-explorer/file-explorer.module').then(m => m.FileExplorerModule)
+      },
+      {
+        path: 'money', component: MoneyLayoutComponent, resolve: {AppResolver},
+        data: {permission: Permissions.MONEY_APP_PAGE, headerTitle: 'Money'},
+        loadChildren: () => import('./money/money.module').then(m => m.MoneyModule)
       }
     ]
   },

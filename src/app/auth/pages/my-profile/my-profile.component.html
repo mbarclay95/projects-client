@@ -14,6 +14,15 @@
 
   </div>
 
+  <div *ngIf="permissionsService.hasPermissionTo(moneyPermission)" class="mb-4">
+
+    Money App Token:
+
+    <input nz-input [(ngModel)]="user.userConfig.moneyAppToken" class="input-borders" [ngModelOptions]="{updateOn: 'blur'}"
+           (ngModelChange)="updateUserConfig({moneyAppToken: $event})">
+
+  </div>
+
   <div class="mb-4">
 
     <button nz-button nzType="primary" nzSize="default" (click)="changePasswordModal.next()">Change Password</button>

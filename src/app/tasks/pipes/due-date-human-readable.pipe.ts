@@ -25,8 +25,11 @@ export class DueDateHumanReadablePipe implements PipeTransform {
     if (diffInDays === -1) {
       return 'yesterday';
     }
+    if (diffInDays > -7) {
+      return `${diffInDays * -1} days ago`;
+    }
 
-    return `${diffInDays * -1} days ago`;
+    return `${Math.floor(diffInDays / -7)} weeks ago`;
   }
 
 }

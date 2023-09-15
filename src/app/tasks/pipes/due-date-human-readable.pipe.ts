@@ -29,7 +29,9 @@ export class DueDateHumanReadablePipe implements PipeTransform {
       return `${diffInDays * -1} days ago`;
     }
 
-    return `${Math.floor(diffInDays / -7)} weeks ago`;
+    const numOfWeeks = Math.floor(diffInDays / -7);
+    
+    return `${numOfWeeks} week${numOfWeeks === 1 ? '' : 's'} ago`;
   }
 
 }

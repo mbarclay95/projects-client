@@ -9,7 +9,6 @@ import {TaskUserConfigsQuery} from '../../services/task-user-configs/state/task-
   styleUrls: ['./week-selector.component.scss']
 })
 export class WeekSelectorComponent implements OnInit {
-
   left = faCaretLeft;
   right = faCaretRight;
 

@@ -18,11 +18,11 @@ export const defaultTaskButtons = [
     title: 'My Family',
     path: '/app/tasks/my-family'
   },
-  // {
-  //   icon: faChartPie,
-  //   title: 'Stats',
-  //   path: '/app/tasks/stats'
-  // },
+  {
+    icon: faChartPie,
+    title: 'Stats',
+    path: '/app/tasks/stats'
+  },
   {
     icon: faTableList,
     title: 'Tasks',

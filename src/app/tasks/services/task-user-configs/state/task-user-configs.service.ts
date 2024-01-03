@@ -5,7 +5,6 @@ import {createTaskUserConfig, TaskUserConfig} from '../../../models/task-user-co
 import {TaskUserConfigsStore, TaskUserConfigUiState} from './task-user-configs.store';
 import {firstValueFrom} from 'rxjs';
 import {environment} from '../../../../../environments/environment';
-import {FamiliesQuery} from '../../families/state/families.query';
 import {AuthQuery} from '../../../../auth/services/state/auth.query';
 import {TaskUserConfigsQuery} from './task-user-configs.query';
 import {Task} from '../../../models/task.model';
@@ -18,7 +17,6 @@ export class TaskUserConfigsService {
     private taskUserConfigsStore: TaskUserConfigsStore,
     private taskUserConfigsQuery: TaskUserConfigsQuery,
     private http: HttpClient,
-    private familiesQuery: FamiliesQuery,
     private authQuery: AuthQuery
   ) {
   }

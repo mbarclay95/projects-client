@@ -64,6 +64,8 @@ import { ViewTaskModalComponent } from './components/view-task-modal/view-task-m
 import {NzSpinModule} from 'ng-zorro-antd/spin';
 import { SkipTaskModalComponent } from './components/skip-task-modal/skip-task-modal.component';
 import { FrequencyToStringPipe } from './pipes/frequency-to-string.pipe';
+import { YearSelectorComponent } from './components/year-selector/year-selector.component';
+import { FamilyMemberStatsComponent } from './components/family-member-stats/family-member-stats.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +103,8 @@ import { FrequencyToStringPipe } from './pipes/frequency-to-string.pipe';
     ViewTaskModalComponent,
     SkipTaskModalComponent,
     FrequencyToStringPipe,
+    YearSelectorComponent,
+    FamilyMemberStatsComponent,
   ],
   imports: [
     CommonModule,

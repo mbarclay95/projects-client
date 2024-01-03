@@ -1,1 +1,7 @@
-<p>stats-page works!</p>
+<app-year-selector></app-year-selector>
+
+<div class="stats-page-container pt-2" *ngIf="(familyStatsService.stats$ | async) as familyMemberStats">
+
+  <app-family-member-stats *ngFor="let stats of familyMemberStats" [stats]="stats"></app-family-member-stats>
+
+</div>

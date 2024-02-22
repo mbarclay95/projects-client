@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Socket} from 'ngx-socket-io';
 import {createMonitorItem, MonitorItem} from '../models/monitor-item.model';
 import {createHeartbeatItem, HeartbeatItem, HeartbeatStatus} from '../models/heartbeat-item.model';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, distinctUntilChanged, Observable, startWith, take, tap, timer} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -15,6 +15,11 @@ export class UptimeKumaService {
   );
   hasDownItems$: Observable<boolean> = this.downItems$.pipe(
     map(items => items.length > 0)
+  );
+  isConnected$: Observable<boolean> = timer(5000, 60000).pipe(
+    map(() => this.socket.connect().connected as boolean),
+    distinctUntilChanged(),
+    startWith(true),
   );
 
   constructor(

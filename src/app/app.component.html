@@ -25,7 +25,7 @@
     <nz-sider *ngIf="sideMenuClosed !== undefined" nzCollapsible [(nzCollapsed)]="sideMenuClosed"
               (nzCollapsedChange)="authService.updateUserConfig({sideMenuOpen: !$event})" nzWidth="200px"
               [nzCollapsedWidth]="collapsedWidth">
-      <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed ?? true"
+      <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed"
                      (closeSideMenu)="closeSideMenu()" [isMobile]="isMobile"></app-side-menu>
     </nz-sider>
 
@@ -38,7 +38,7 @@
       <nz-sider *ngIf="sideMenuClosed !== undefined" nzCollapsible [(nzCollapsed)]="sideMenuClosed" [nzTrigger]="null"
                 (nzCollapsedChange)="authService.updateUserConfig({sideMenuOpen: !$event}, false)"
                 nzWidth="200px" [nzCollapsedWidth]="collapsedWidth">
-        <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed ?? true"
+        <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed"
                        (closeSideMenu)="closeSideMenu(false)" [isMobile]="isMobile"></app-side-menu>
       </nz-sider>
 

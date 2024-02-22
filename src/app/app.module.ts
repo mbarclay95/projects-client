@@ -26,7 +26,8 @@ registerLocaleData(en);
 
 const config: SocketIoConfig = {
   url: 'wss://uptime-kuma.bigmike.dev/', options: {
-    transports: ['websocket']
+    transports: ['websocket'],
+    reconnectionAttempts: 10
   }
 };
 

@@ -11,8 +11,11 @@
 
 .site-box {
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
   box-sizing: border-box;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  width: 100%;
 }
 
 .cdk-drag-preview {
@@ -40,3 +43,10 @@
 .site-box.cdk-drop-list-dragging .site-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.site-box-second-row {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+

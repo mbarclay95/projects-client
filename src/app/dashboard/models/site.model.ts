@@ -7,7 +7,7 @@ export interface Site {
   name: string;
   description: string;
   show: boolean;
-  sort: number;
+  sort: number | null;
   url: string;
   folderId: number;
   siteImage: SiteImage;
@@ -21,7 +21,7 @@ export function createSite(params: Partial<Site>): Site {
     name: params.name ?? null,
     description: params.description ?? null,
     url: params.url ?? null,
-    sort: Number.isNaN(params.sort) ? null : Number(params.sort),
+    sort: params.sort === null ? null : Number(params.sort),
     folderId: Number.isNaN(params.folderId) ? null : Number(params.folderId),
     show: !!params.show,
     siteImage: params.siteImage ? createSiteImage(params.siteImage) : null

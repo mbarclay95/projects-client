@@ -7,6 +7,7 @@ import {environment} from "../../../../../environments/environment";
 import {FoldersQuery} from "./folders.query";
 import {createSite, Site} from "../../../models/site.model";
 import {arrayAdd, arrayRemove, arrayUpdate} from "@datorama/akita";
+import {firstValueFrom} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class FoldersService {
@@ -19,42 +20,42 @@ export class FoldersService {
   }
 
   async getFolders(): Promise<void> {
-    await this.http.get<Folder[]>(`${environment.apiUrl}/folders`).pipe(
+    await firstValueFrom(this.http.get<Folder[]>(`${environment.apiUrl}/folders`).pipe(
       map(o => o.map(f => createFolder(f))),
       tap(o => this.foldersStore.set(o))
-    ).toPromise();
+    ));
   }
 
   async createFolder(folder: Folder): Promise<void> {
-    await this.http.post<Folder>(`${environment.apiUrl}/folders`, folder).pipe(
+    await firstValueFrom(this.http.post<Folder>(`${environment.apiUrl}/folders`, folder).pipe(
       map(f => createFolder(f)),
       tap(f => this.foldersStore.add(f))
-    ).toPromise();
+    ));
   }
 
   async updateFolder(folder: Folder): Promise<void> {
-    await this.http.put<Folder>(`${environment.apiUrl}/folders/${folder.id}`, folder).pipe(
+    await firstValueFrom(this.http.put<Folder>(`${environment.apiUrl}/folders/${folder.id}`, folder).pipe(
       map(f => createFolder(f)),
       tap(f => this.foldersStore.update(f.id, f))
-    ).toPromise();
+    ));
   }
 
   async deleteFolder(folderId: number): Promise<void> {
-    await this.http.delete(`${environment.apiUrl}/folders/${folderId}`).toPromise();
+    await firstValueFrom(this.http.delete(`${environment.apiUrl}/folders/${folderId}`));
     await this.getFolders(); // refresh so that sorts will be up to date
   }
 
   async createSite(site: Site): Promise<void> {
-    await this.http.post<Site>(`${environment.apiUrl}/sites`, site).pipe(
+    await firstValueFrom(this.http.post<Site>(`${environment.apiUrl}/sites`, site).pipe(
       map(s => createSite(s)),
       tap(s => this.foldersStore.update(site.folderId, ({sites}) => ({
         sites: arrayAdd(sites, s)
       })))
-    ).toPromise();
+    ));
   }
 
   async updateSite(site: Site, oldFolderId: number): Promise<void> {
-    await this.http.put<Site>(`${environment.apiUrl}/sites/${site.id}`, site).pipe(
+    await firstValueFrom(this.http.put<Site>(`${environment.apiUrl}/sites/${site.id}`, site).pipe(
       map(s => createSite(s)),
       tap(s => {
         if (s.folderId === oldFolderId) {
@@ -70,11 +71,11 @@ export class FoldersService {
           }));
         }
       })
-    ).toPromise();
+    ));
   }
 
   async deleteSite(folderId: number, siteId: number): Promise<void> {
-    await this.http.delete(`${environment.apiUrl}/sites/${siteId}`).toPromise();
+    await firstValueFrom(this.http.delete(`${environment.apiUrl}/sites/${siteId}`));
     await this.getFolders(); // refresh so that sorts will be up to-date
   }
 
@@ -88,8 +89,8 @@ export class FoldersService {
     }));
   }
 
-  async updateSiteSort(movedSites: { id: number; sort: number }[]): Promise<void> {
-    await this.http.patch(`${environment.apiUrl}/site-sorts`, {data: movedSites}).toPromise();
+  async updateSiteSort(folderId: number, movedSites: { id: number; sort: number }[]): Promise<void> {
+    await firstValueFrom(this.http.patch(`${environment.apiUrl}/site-sorts`, {folderId, data: movedSites}));
   }
 
   async moveFolder(folder: Folder, direction: number): Promise<void> {

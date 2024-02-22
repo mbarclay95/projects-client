@@ -38,11 +38,17 @@ export class FolderComponent implements OnInit {
   dropSite({event}: { event: any }): void {
     const oldPosition = event.previousIndex + 1;
     const newPosition = event.currentIndex + 1;
+    if (oldPosition === newPosition) {
+      return;
+    }
 
     const movedSites: { id: number, sort: number }[] = [];
     const movedDown: boolean = oldPosition - newPosition > 0;
 
-    this.folder.sites.filter(s => {
+    this.folder.sites.filter((s): s is Site & {sort: number} => {
+      if (!s.sort) {
+        return false;
+      }
       if (movedDown) {
         return s.sort <= oldPosition && s.sort >= newPosition;
       } else {
@@ -58,7 +64,7 @@ export class FolderComponent implements OnInit {
       }
     });
 
-    void this.foldersService.updateSiteSort(movedSites);
+    void this.foldersService.updateSiteSort(this.folder.id, movedSites);
   }
 
 }

@@ -10,6 +10,22 @@
 
 </div>
 
+<div *ngIf="!(uptimeKumaService.isConnected$ | async)" class="site-down p-4 m-2 d-flex align-items-center">
+
+  <fa-icon [icon]="down" class="text-danger fa-xl"></fa-icon>
+
+  <div class="ms-3">
+
+    <h4 class="m-0">
+
+      Unable to connect to Uptime Kuma
+
+    </h4>
+
+  </div>
+
+</div>
+
 <div *ngIf="uptimeKumaService.hasDownItems$ | async" class="site-down p-4 m-2 d-flex align-items-center">
 
   <fa-icon [icon]="down" class="text-danger fa-xl"></fa-icon>

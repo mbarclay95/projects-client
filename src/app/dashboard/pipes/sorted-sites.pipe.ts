@@ -17,7 +17,7 @@ export class SortedSitesPipe implements PipeTransform {
 
   transform(folder: Folder): Observable<Site[]> {
     return this.foldersQuery.editMode$.pipe(
-      map(editMode => folder.sites.filter(s => editMode ? true : s.show).sort((a, b) => a.sort - b.sort))
+      map(editMode => folder.sites.filter(s => editMode ? true : s.show).sort((a, b) => (a.sort ?? 1000) - (b.sort ?? 1000))) // 1000 is an arbitrary large number
     );
   }
 

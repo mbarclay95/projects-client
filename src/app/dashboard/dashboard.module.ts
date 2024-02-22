@@ -22,6 +22,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
+import {NzSwitchModule} from 'ng-zorro-antd/switch';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
         DragDropModule,
         NzPopconfirmModule,
         NzToolTipModule,
-        NzCheckboxModule
+        NzCheckboxModule,
+        NzSwitchModule
     ]
 })
 export class DashboardModule { }

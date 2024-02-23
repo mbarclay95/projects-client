@@ -29,13 +29,13 @@
 
   </div>
 
-  <div class="w-25 mb-4">
+  <div class="responsive-width mb-4">
 
     <div class="mb-2">Features:</div>
 
     <ng-container *ngFor="let role of rolesQuery.roles$ | async">
 
-      <div class="d-flex justify-content-between w-100 mb-2" style="font-size: 13px">
+      <div class="d-flex justify-content-between w-100 mb-2" style="font-size: 14px">
 
         {{role | displayRoleName}}
 

@@ -5,3 +5,13 @@
   color: white;
   background: #1f1f1f;
 }
+
+.responsive-width {
+  width: 25%;
+}
+
+@media only screen and (max-width: 950px) {
+  .responsive-width {
+    width: 100%;
+  }
+}

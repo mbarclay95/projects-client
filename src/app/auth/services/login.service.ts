@@ -93,6 +93,8 @@ export class LoginService {
   getRedirectUrl(): string {
     const me = this.authQuery.getUser();
     switch (me.userConfig.homePageRole) {
+      case null:
+        return 'my-profile';
       case Roles.DASHBOARD_ROLE:
         return 'app/dashboard';
       case Roles.BACKUPS_ROLE:
@@ -103,12 +105,11 @@ export class LoginService {
         return 'app/goals';
       case Roles.TASKS_ROLE:
         return isMobile ? 'app/tasks/weekly-tasks' : 'app/tasks?tab=weekly-tasks';
-      case Roles.USERS_ROLE:
-        return 'app/users';
       case Roles.FILE_EXPLORER_ROLE:
         return 'app/file-explorer';
       case Roles.MONEY_APP_ROLE:
         return 'app/money';
     }
+    throw new Error('Un-configured role set to homepage')
   }
 }

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {DefaultModalComponent} from '../../../shared/components/default-modal/default-modal.component';
 import {Task} from '../../models/task.model';
-import {addDays, addMonths, addWeeks, differenceInCalendarDays, endOfDay, setDay} from 'date-fns';
+import {addDays, addMonths, addWeeks, addYears, differenceInCalendarDays, endOfDay, setDay} from 'date-fns';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {TasksService} from '../../services/tasks/state/tasks.service';
 
@@ -32,6 +32,9 @@ export class SkipTaskModalComponent extends DefaultModalComponent<Task> {
           break;
         case 'month':
           this.newDate = addMonths(this.newDate, this.model.frequencyAmount ?? 1);
+          break;
+        case 'year':
+          this.newDate = addYears(this.newDate, this.model.frequencyAmount ?? 1);
           break;
       }
     }

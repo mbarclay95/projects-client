@@ -15,9 +15,7 @@ import {FormsModule} from "@angular/forms";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import { RolesToIdsPipe } from './pipes/roles-to-ids.pipe';
-import { DisplayRoleNamePipe } from './pipes/display-role-name.pipe';
 import {NzSwitchModule} from "ng-zorro-antd/switch";
-import { HasRolePipe } from './pipes/has-role.pipe';
 import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
@@ -27,8 +25,6 @@ import {SharedModule} from '../shared/shared.module';
     UserTableComponent,
     CreateEditUserModalComponent,
     RolesToIdsPipe,
-    DisplayRoleNamePipe,
-    HasRolePipe,
   ],
     imports: [
         CommonModule,

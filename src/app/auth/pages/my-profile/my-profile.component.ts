@@ -5,9 +5,11 @@ import {AuthService} from '../../services/state/auth.service';
 import {User} from '../../../users/models/user.model';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Router} from '@angular/router';
-import {Permissions} from '../../permissions';
+import {Permissions, Roles} from '../../permissions';
 import {PermissionsService} from '../../services/permissions.service';
 import {UserConfig} from '../../../users/models/user-config.model';
+import {RolesQuery} from '../../../users/services/roles/state/roles.query';
+import {Role} from '../../../users/models/role.model';
 
 @Component({
   selector: 'app-my-profile',
@@ -25,7 +27,8 @@ export class MyProfileComponent implements OnInit {
     private authService: AuthService,
     private nzMessageService: NzMessageService,
     private router: Router,
-    public permissionsService: PermissionsService
+    public permissionsService: PermissionsService,
+    public rolesQuery: RolesQuery
   ) {
   }
 
@@ -62,5 +65,21 @@ export class MyProfileComponent implements OnInit {
     this.nzMessageService.success('You have been logged out');
     this.loggingOut = false;
     await this.router.navigateByUrl('/login');
+  }
+
+  async updateUsersRoles(checked: boolean, role: Role, user: User) {
+    let newRoles = [...user.roles];
+    if (checked) {
+      newRoles.push(role);
+    } else {
+      newRoles = newRoles.filter(r => r.id !== role.id);
+    }
+    await this.updateMe({roles: newRoles})
+
+    let userHomePageRole = user.userConfig.homePageRole;
+    if (!newRoles.find(r => r.name === userHomePageRole)) {
+      userHomePageRole = newRoles.length === 0 ? null : newRoles[0].name as Roles;
+      await this.updateUserConfig({homePageRole: userHomePageRole});
+    }
   }
 }

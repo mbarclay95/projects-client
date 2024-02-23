@@ -11,6 +11,8 @@ import {LongPressDirective} from './directives/long-press.directive';
 import {PageHeaderComponent} from './components/page-header/page-header.component';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import { DefaultModalComponent } from './components/default-modal/default-modal.component';
+import { DisplayRoleNamePipe } from './pipes/display-role-name.pipe';
+import { HasRolePipe } from './pipes/has-role.pipe';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { DefaultModalComponent } from './components/default-modal/default-modal.
     SideMenuComponent,
     PageHeaderComponent,
     DefaultModalComponent,
+    DisplayRoleNamePipe,
+    HasRolePipe,
   ],
   exports: [
     NgLetDirective,
@@ -29,6 +33,8 @@ import { DefaultModalComponent } from './components/default-modal/default-modal.
     SideMenuComponent,
     MobileFooterComponent,
     PageHeaderComponent,
+    DisplayRoleNamePipe,
+    HasRolePipe,
   ],
   imports: [
     CommonModule,

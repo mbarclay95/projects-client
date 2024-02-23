@@ -34,7 +34,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     const hasPermission = this.permissionsService.hasPermissionTo(childRoute.data['permission'] as unknown as Permissions|undefined);
 
     if (!hasPermission) {
-      void this.router.navigateByUrl('login');
+      console.log(`does not have ${childRoute.data['permission']} permission`)
+      void this.router.navigateByUrl('my-profile');
     }
 
     return hasPermission;

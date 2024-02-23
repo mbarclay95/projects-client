@@ -13,6 +13,10 @@ import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 import {NzDividerModule} from "ng-zorro-antd/divider";
 import { ChangePasswordModalComponent } from './components/change-password-modal/change-password-modal.component';
 import {NzModalModule} from 'ng-zorro-antd/modal';
+import {NzSwitchModule} from 'ng-zorro-antd/switch';
+import {SharedModule} from '../shared/shared.module';
+import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
+import {NzSelectModule} from 'ng-zorro-antd/select';
 
 
 @NgModule({
@@ -32,7 +36,11 @@ import {NzModalModule} from 'ng-zorro-antd/modal';
     NzInputModule,
     NzDividerModule,
     FormsModule,
-    NzModalModule
+    NzModalModule,
+    NzSwitchModule,
+    SharedModule,
+    NzPopconfirmModule,
+    NzSelectModule
   ]
 })
 export class AuthModule { }

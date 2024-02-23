@@ -1,0 +1,24 @@
+
+.menu-title {
+  width: 100%;
+  color: rgba(255, 255, 255, 0.65);
+  padding-left: 24px;
+  font-size: 22px;
+  border-bottom: 1px solid;
+}
+
+.list-item-open {
+  padding-left: 24px;
+}
+
+.list-item-closed {
+  padding-left: 0 !important;
+}
+
+.list-icon-open {
+  padding-left: 9px;
+}
+
+.list-icon-closed {
+  padding-left: 23px;
+}

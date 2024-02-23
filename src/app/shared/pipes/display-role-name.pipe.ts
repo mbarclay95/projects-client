@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Role} from "../models/role.model";
+import {Role} from '../../users/models/role.model';
 
 @Pipe({
   name: 'displayRoleName'
@@ -22,5 +22,4 @@ export class DisplayRoleNamePipe implements PipeTransform {
 
     return roleName;
   }
-
 }

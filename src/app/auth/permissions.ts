@@ -11,7 +11,8 @@ export const enum Permissions {
 }
 
 export const enum Roles {
-  USERS_ROLE = 'users_role',
+  ADMIN_ROLE = 'admin_role',
+  USERS_ROLE = 'admin_role',
   GOALS_ROLE = 'goals_role',
   BACKUPS_ROLE = 'backups_role',
   DASHBOARD_ROLE = 'dashboard_role',

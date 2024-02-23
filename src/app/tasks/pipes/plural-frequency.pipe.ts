@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PluralFrequencyPipe implements PipeTransform {
 
-  transform(amount?: number, ...args: unknown[]): string {
+  transform(amount?: number): string {
     return amount && amount > 1 ? 's' : '';
   }
 

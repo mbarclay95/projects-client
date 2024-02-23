@@ -14,24 +14,53 @@
 
   </div>
 
-  <div *ngIf="permissionsService.hasPermissionTo(moneyPermission)" class="mb-4">
-
-    Money App Token:
-
-    <input nz-input [(ngModel)]="user.userConfig.moneyAppToken" class="input-borders" [ngModelOptions]="{updateOn: 'blur'}"
-           (ngModelChange)="updateUserConfig({moneyAppToken: $event})">
-
-  </div>
-
   <div class="mb-4">
 
     <button nz-button nzType="primary" nzSize="default" (click)="changePasswordModal.next()">Change Password</button>
 
   </div>
 
+  <div *ngIf="permissionsService.hasPermissionTo(moneyPermission)" class="mb-4">
+
+    Money App Token:
+
+    <input nz-input [(ngModel)]="user.userConfig.moneyAppToken" class="input-borders" [ngModelOptions]="{updateOn: 'blur'}"
+           (ngModelChange)="updateUserConfig({moneyAppToken: $event})" type="password">
+
+  </div>
+
+  <div class="w-25 mb-4">
+
+    <div class="mb-2">Features:</div>
+
+    <ng-container *ngFor="let role of rolesQuery.roles$ | async">
+
+      <div class="d-flex justify-content-between w-100 mb-2" style="font-size: 13px">
+
+        {{role | displayRoleName}}
+
+        <nz-switch [ngModel]="user | hasRole : role.id" (ngModelChange)="updateUsersRoles($event, role, user)"></nz-switch>
+      </div>
+
+    </ng-container>
+
+  </div>
+
+  <div class="w-100 mb-4">
+
+    <div class="mb-2">Home Page:</div>
+
+    <nz-select [ngModel]="user.userConfig.homePageRole" (ngModelChange)="updateUserConfig({homePageRole: $event})"
+               style="width: 300px" [nzAllowClear]="true">
+      <nz-option *ngFor="let role of user.roles" [nzLabel]="role | displayRoleName" [nzValue]="role.name"></nz-option>
+    </nz-select>
+
+  </div>
+
   <div class="">
 
-    <button nz-button nzType="primary" nzSize="default" (click)="logout()">Logout</button>
+    <button nz-button nz-popconfirm nzPopconfirmTitle="Are you sure?" nzType="primary" nzSize="default"
+            (nzOnConfirm)="logout()">Logout</button>
 
   </div>
 

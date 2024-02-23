@@ -9,13 +9,8 @@ import {User} from "../../../users/models/user.model";
 export class AuthQuery extends Query<User> {
   auth$: Observable<User> = this.select();
 
-  sideMenuClosed$: Observable<boolean> = this.select().pipe(
-    map(user => !user.userConfig.sideMenuOpen)
-  );
-
   isLoggedIn$: Observable<boolean> = this.select().pipe(
     map(auth => !!auth.id),
-    // debounceTime(1000)
   );
 
   constructor(

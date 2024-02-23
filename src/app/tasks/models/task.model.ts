@@ -11,7 +11,7 @@ export interface Task {
   ownerId: number;
   recurring: boolean;
   frequencyAmount?: number;
-  frequencyUnit?: 'day' | 'week' | 'month';
+  frequencyUnit?: 'day' | 'week' | 'month' | 'year';
   tags: string[];
   taskPoint?: number;
   isActive: boolean;

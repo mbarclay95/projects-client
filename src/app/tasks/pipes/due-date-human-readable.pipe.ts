@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {differenceInDays, endOfDay, startOfDay} from "date-fns";
+import {differenceInDays, differenceInMonths, differenceInWeeks, differenceInYears, startOfToday} from "date-fns";
 
 @Pipe({
   name: 'dueDateHumanReadable'
@@ -11,27 +11,49 @@ export class DueDateHumanReadablePipe implements PipeTransform {
       return '';
     }
 
-    const diffInDays = differenceInDays(dueDate, startOfDay(new Date()));
+    const today = startOfToday();
+    let dateDiff = differenceInDays(dueDate, today);
 
-    if (diffInDays > 1) {
-      return `in ${diffInDays} days`;
-    }
-    if (diffInDays === 1) {
+    if (dateDiff === 1) {
       return 'tomorrow';
     }
-    if (diffInDays === 0) {
+    if (dateDiff === 0) {
       return 'today';
     }
-    if (diffInDays === -1) {
+    if (dateDiff === -1) {
       return 'yesterday';
     }
-    if (diffInDays > -7) {
-      return `${diffInDays * -1} days ago`;
+    const absoluteDays = Math.abs(dateDiff);
+    let unit = 'day';
+    if (absoluteDays > 365) {
+      unit = 'year';
+      dateDiff = differenceInYears(dueDate, today);
+    } else if (absoluteDays > 30) {
+      unit = 'month'
+      dateDiff = differenceInMonths(dueDate, today);
+    } else if (absoluteDays > 7) {
+      unit = 'week';
+      dateDiff = differenceInWeeks(dueDate, today);
     }
 
-    const numOfWeeks = Math.floor(diffInDays / -7);
-    
-    return `${numOfWeeks} week${numOfWeeks === 1 ? '' : 's'} ago`;
+    if (dateDiff < 0) {
+      dateDiff = Math.abs(dateDiff);
+      return `${dateDiff} ${unit}${dateDiff === 1 ? '' : 's'} ago`;
+    }
+
+    return `in ${dateDiff} ${unit}${dateDiff === 1 ? '' : 's'}`;
+
+
+    // if (diffInDays > 1) {
+    //   return `in ${diffInDays} days`;
+    // }
+    // if (diffInDays > -7) {
+    //   return `${diffInDays * -1} days ago`;
+    // }
+    //
+    // const numOfWeeks = Math.floor(diffInDays / -7);
+    //
+    // return `${numOfWeeks} week${numOfWeeks === 1 ? '' : 's'} ago`;
   }
 
 }

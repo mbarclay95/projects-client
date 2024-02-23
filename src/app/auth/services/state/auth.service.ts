@@ -54,7 +54,10 @@ export class AuthService {
 
   async logout(): Promise<void> {
     await firstValueFrom(this.http.post(`${environment.apiUrl}/logout`, {}).pipe(
-      tap(() => this.authStorageService.clearToken())
+      tap(() => {
+        this.authStorageService.clearToken();
+        this.authStore.update(createUser({}));
+      })
     ));
   }
 

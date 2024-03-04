@@ -2,7 +2,8 @@
 export interface FamilyMemberStats {
   name: string,
   totalTasks: number,
-  totalPoints: number,
+  totalEarnedPoints: number,
+  totalExpectedPoints: number,
   topTasks: TopTask[]
 }
 
@@ -15,7 +16,8 @@ export function createFamilyMemberStats(params: Partial<FamilyMemberStats>) {
   return {
     name: params.name ?? '',
     totalTasks: params.totalTasks ?? 0,
-    totalPoints: params.totalPoints ?? 0,
+    totalEarnedPoints: params.totalEarnedPoints ?? 0,
+    totalExpectedPoints: params.totalExpectedPoints ?? 0,
     topTasks: (params.topTasks ?? []).map((t) => createTopTask(t)),
   } as FamilyMemberStats;
 }

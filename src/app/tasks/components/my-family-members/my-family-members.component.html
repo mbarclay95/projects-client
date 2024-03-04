@@ -6,7 +6,7 @@
 
       <div style="font-size: 20px">{{memberConfig | firstName}}</div>
 
-      <fa-icon *ngIf="weekOffset === 0" class="cursor-pointer ms-2" [icon]="settings" nz-popover
+      <fa-icon *ngIf="weekOffset === 0 || weekOffset === 1" class="cursor-pointer ms-2" [icon]="settings" nz-popover
                nzPopoverTrigger="click" [nzPopoverContent]="memberSettings" nzPopoverPlacement="bottom"
                style="color: grey" (nzPopoverVisibleChange)="saveSettings(memberConfig, $event)"></fa-icon>
 

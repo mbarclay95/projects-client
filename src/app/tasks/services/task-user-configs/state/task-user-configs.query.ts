@@ -27,7 +27,7 @@ export class TaskUserConfigsQuery extends QueryEntity<TaskUserConfigsState> {
   );
 
   weekForwardDisabled$: Observable<boolean> = this.select('ui').pipe(
-    map(ui => ui.weekOffset === 0)
+    map(ui => ui.weekOffset === 1)
   );
 
   weekBehindDisabled$: Observable<boolean> = combineLatest([

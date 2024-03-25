@@ -10,7 +10,7 @@ import {isMobile} from '../../../app.component';
 export class DefaultModalComponent<T> implements OnInit, OnDestroy {
   @Input() openModal!: Observable<T>;
 
-  model?: T;
+  model!: T;
   isVisible: boolean = false;
   saving = false;
   modalStyle = isMobile ? {top: '20px'} : {};
@@ -24,7 +24,7 @@ export class DefaultModalComponent<T> implements OnInit, OnDestroy {
     this.openModal.pipe(
       takeUntil(this.subscriptionDestroyer)
     ).subscribe(model => {
-      this.model = model;
+      this.model = this.createModel(model);
       this.onOpenModal();
       this.isVisible = true;
     });
@@ -36,5 +36,9 @@ export class DefaultModalComponent<T> implements OnInit, OnDestroy {
   }
 
   onOpenModal(): void {}
+
+  createModel(model: T): T {
+    return {...model};
+  }
 
 }

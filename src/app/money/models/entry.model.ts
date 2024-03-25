@@ -13,6 +13,7 @@ export interface Entry {
   description: string | null;
   bank: Bank | null;
   categoryTags: CategoryTag[];
+  duplicate: boolean;
 }
 
 export function createEntry(params: Partial<Entry>): Entry {
@@ -26,5 +27,6 @@ export function createEntry(params: Partial<Entry>): Entry {
     fromSavingsSubCategory: params.fromSavingsSubCategory ? createSubCategory(params.fromSavingsSubCategory) : null,
     bank: !!params.bank ? createBank(params.bank) : null,
     categoryTags: params.categoryTags ? params.categoryTags.map(c => createCategoryTag(c)) : [],
+    duplicate: params.duplicate ?? false,
   } as Entry;
 }

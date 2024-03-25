@@ -4,10 +4,12 @@
 
     <ng-container *ngIf="entriesQuery.entries$ | async as entries">
 
-      <app-entry-rows [entries]="entries"></app-entry-rows>
+      <app-entry-rows [entries]="entries" (editEntry)="createEditEntry.next($event)"></app-entry-rows>
 
     </ng-container>
 
   </ng-container>
 
 </div>
+
+<app-create-edit-entry-modal [openModal]="createEditEntry.asObservable()"></app-create-edit-entry-modal>

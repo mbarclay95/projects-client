@@ -12,6 +12,15 @@ import { EntryRowItemComponent } from './components/entry-row-item/entry-row-ite
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NzEmptyModule} from 'ng-zorro-antd/empty';
 import {NzDividerModule} from 'ng-zorro-antd/divider';
+import { CreateEditEntryModalComponent } from './components/create-edit-entry-modal/create-edit-entry-modal.component';
+import {FormsModule} from '@angular/forms';
+import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
+import {NzInputModule} from 'ng-zorro-antd/input';
+import {NzModalModule} from 'ng-zorro-antd/modal';
+import {NzSelectModule} from 'ng-zorro-antd/select';
+import {NzUploadModule} from 'ng-zorro-antd/upload';
+import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
+import {NzDatePickerModule} from 'ng-zorro-antd/date-picker';
 
 
 @NgModule({
@@ -20,7 +29,8 @@ import {NzDividerModule} from 'ng-zorro-antd/divider';
     IncompleteEntriesComponent,
     IncorrectConfigComponent,
     EntryRowsComponent,
-    EntryRowItemComponent
+    EntryRowItemComponent,
+    CreateEditEntryModalComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +39,15 @@ import {NzDividerModule} from 'ng-zorro-antd/divider';
     NzButtonModule,
     FontAwesomeModule,
     NzEmptyModule,
-    NzDividerModule
+    NzDividerModule,
+    FormsModule,
+    NzCheckboxModule,
+    NzInputModule,
+    NzModalModule,
+    NzSelectModule,
+    NzUploadModule,
+    NzPopconfirmModule,
+    NzDatePickerModule
   ]
 })
 export class MoneyModule { }

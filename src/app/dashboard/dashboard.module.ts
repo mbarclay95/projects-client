@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
@@ -51,7 +51,8 @@ import {NzSwitchModule} from 'ng-zorro-antd/switch';
         NzPopconfirmModule,
         NzToolTipModule,
         NzCheckboxModule,
-        NzSwitchModule
+        NzSwitchModule,
+        NgOptimizedImage
     ]
 })
 export class DashboardModule { }

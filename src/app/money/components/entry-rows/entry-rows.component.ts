@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Entry} from '../../models/entry.model';
 
 @Component({
@@ -8,6 +8,7 @@ import {Entry} from '../../models/entry.model';
 })
 export class EntryRowsComponent implements OnInit {
   @Input() entries: Entry[] = [];
+  @Output() editEntry: EventEmitter<Entry> = new EventEmitter<Entry>();
 
   constructor() { }
 

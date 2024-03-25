@@ -40,11 +40,11 @@ export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
   }
 
   async loadTaskHistory(): Promise<void> {
-    if (this.model && this.model.taskHistory === undefined) {
+    if (this.model.taskHistory === undefined) {
       this.loadingHistory = true;
       try {
         await this.tasksService.loadTaskHistoryIfNeeded(this.model);
-        this.model = this.tasksQuery.getEntity(this.model.id);
+        this.model.taskHistory = this.tasksQuery.getEntity(this.model.id)?.taskHistory;
       } catch (e) {
         this.nzMessageService.error('There was an error getting task history');
       }

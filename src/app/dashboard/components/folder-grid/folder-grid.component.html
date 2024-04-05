@@ -10,39 +10,43 @@
 
 </div>
 
-<div *ngIf="!(uptimeKumaService.isConnected$ | async)" class="site-down p-4 m-2 d-flex align-items-center">
+<ng-container *ngIf="showUptimeKuma">
 
-  <fa-icon [icon]="down" class="text-danger fa-xl"></fa-icon>
+  <div *ngIf="!uptimeKumaIsConnected" class="site-down p-4 m-2 d-flex align-items-center">
 
-  <div class="ms-3">
+    <fa-icon [icon]="down" class="text-danger fa-xl"></fa-icon>
 
-    <h4 class="m-0">
+    <div class="ms-3">
 
-      Unable to connect to Uptime Kuma
+      <h4 class="m-0">
 
-    </h4>
+        Unable to connect to Uptime Kuma
+
+      </h4>
+
+    </div>
 
   </div>
 
-</div>
+  <div *ngIf="downItems.length > 0" class="site-down p-4 m-2 d-flex align-items-center">
 
-<div *ngIf="uptimeKumaService.hasDownItems$ | async" class="site-down p-4 m-2 d-flex align-items-center">
+    <fa-icon [icon]="down" class="text-danger fa-xl"></fa-icon>
 
-  <fa-icon [icon]="down" class="text-danger fa-xl"></fa-icon>
+    <div class="ms-3">
 
-  <div class="ms-3">
+      <h4 class="m-0" *ngFor="let item of downItems">
 
-    <h4 class="m-0" *ngFor="let item of uptimeKumaService.downItems$ | async">
-
-      {{item.name}} is<span style="font-style: italic"
-                            [ngClass]="{'text-warning': item.lastHeartBeat?.status === sitePending, 'text-danger': item.lastHeartBeat?.status === siteDown}">
+        {{item.name}} is<span style="font-style: italic"
+                              [ngClass]="{'text-warning': item.lastHeartBeat?.status === sitePending, 'text-danger': item.lastHeartBeat?.status === siteDown}">
       {{item.lastHeartBeat?.status === sitePending ? 'pending' : 'down'}}</span>
 
-    </h4>
+      </h4>
+
+    </div>
 
   </div>
 
-</div>
+</ng-container>
 
 <div class="w-100 d-flex responsive-layout">
 

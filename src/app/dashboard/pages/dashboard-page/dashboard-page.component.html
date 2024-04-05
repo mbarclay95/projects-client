@@ -1,6 +1,8 @@
 <div class="d-flex flex-column w-100">
 
-  <app-folder-grid></app-folder-grid>
+  <app-folder-grid [showUptimeKuma]="(showUptimeKuma$ | async) ?? false"
+                   [downItems]="(uptimeKumaService.downItems$ | async) ?? []"
+                   [uptimeKumaIsConnected]="(uptimeKumaService.isConnected$ | async) ?? false"></app-folder-grid>
 
 </div>
 

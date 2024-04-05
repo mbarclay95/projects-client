@@ -8,6 +8,7 @@ export const enum Permissions {
   EVENTS_PAGE = 'client_view_events_page',
   FILE_EXPLORER_PAGE = 'client_view_file_explorer_page',
   MONEY_APP_PAGE = 'client_view_money_app_page',
+  LISTEN_TO_UPTIME_KUMA = 'client_listen_to_uptime_kuma_websocket'
 }
 
 export const enum Roles {

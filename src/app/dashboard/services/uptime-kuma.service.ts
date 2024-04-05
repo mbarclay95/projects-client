@@ -1,38 +1,44 @@
 import {Injectable} from '@angular/core';
-import {Socket} from 'ngx-socket-io';
+import {Socket, SocketIoConfig} from 'ngx-socket-io';
 import {createMonitorItem, MonitorItem} from '../models/monitor-item.model';
 import {createHeartbeatItem, HeartbeatItem, HeartbeatStatus} from '../models/heartbeat-item.model';
-import {BehaviorSubject, distinctUntilChanged, Observable, startWith, take, tap, timer} from 'rxjs';
+import {BehaviorSubject, distinctUntilChanged, Observable, startWith, timer} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UptimeKumaService {
+export class UptimeKumaService extends Socket {
   private monitorItemsSubject: BehaviorSubject<MonitorItem[]> = new BehaviorSubject<MonitorItem[]>([]);
   downItems$: Observable<MonitorItem[]> = this.monitorItemsSubject.asObservable().pipe(
-    map(items => items.filter(item => item.isDown))
-  );
-  hasDownItems$: Observable<boolean> = this.downItems$.pipe(
-    map(items => items.length > 0)
+    map(items => items.filter(item => item.isActive && item.isDown))
   );
   isConnected$: Observable<boolean> = timer(5000, 60000).pipe(
-    map(() => this.socket.connect().connected as boolean),
+    map(() => this.connect().connected as boolean),
     distinctUntilChanged(),
     startWith(true),
   );
 
-  constructor(
-    private socket: Socket
-  ) {
+  constructor() {
+    const config: SocketIoConfig = {
+      url: 'wss://uptime-kuma.bigmike.dev/', options: {
+        transports: ['websocket'],
+        reconnectionAttempts: 10,
+        autoConnect: false
+      }
+    };
+    super(config);
   }
 
   initSocket(): void {
-    this.socket.on('monitorList', (payload: { [key: number]: MonitorItem }) => {
+    if (!this.connect().connected) {
+      this.connect();
+    }
+    this.on('monitorList', (payload: { [key: number]: MonitorItem }) => {
       this.monitorItemsSubject.next(Object.values(payload).map(item => createMonitorItem(item)));
     });
 
-    this.socket.on('heartbeatList', (monitorId: number, payload: HeartbeatItem[]) => {
+    this.on('heartbeatList', (monitorId: number, payload: HeartbeatItem[]) => {
       const lastHeartbeat = createHeartbeatItem({...{monitorID: monitorId}, ...payload[payload.length - 1]});
       let item = this.findItem(lastHeartbeat.monitorId);
       if (!item) {
@@ -43,7 +49,8 @@ export class UptimeKumaService {
       this.mergeItems(item);
     });
 
-    this.socket.on('heartbeat', (payload: HeartbeatItem) => {
+    this.on('heartbeat', (payload: HeartbeatItem) => {
+      console.log(payload);
       const heartbeat = createHeartbeatItem(payload);
       let item = this.findItem(heartbeat.monitorId);
       if (!item) {
@@ -56,6 +63,12 @@ export class UptimeKumaService {
       item.lastHeartBeat = heartbeat;
       this.mergeItems(item);
     });
+  }
+
+  public disconnectSocket(): void {
+    if (this.connect().connected) {
+      this.disconnect();
+    }
   }
 
   private findItem(monitorId: number): MonitorItem | undefined {

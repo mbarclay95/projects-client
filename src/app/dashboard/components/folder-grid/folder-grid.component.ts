@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {faCircleExclamation, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {Subject} from "rxjs";
 import {createFolder, Folder} from "../../models/folder.model";
 import {Site} from "../../models/site.model";
 import {FoldersQuery} from "../../services/folder/state/folders.query";
-import {UptimeKumaService} from '../../services/uptime-kuma.service';
 import {HeartbeatStatus} from '../../models/heartbeat-item.model';
 import {isMobile} from '../../../app.component';
+import {MonitorItem} from '../../models/monitor-item.model';
 
 @Component({
   selector: 'app-folder-grid',
@@ -14,6 +14,9 @@ import {isMobile} from '../../../app.component';
   styleUrls: ['./folder-grid.component.scss']
 })
 export class FolderGridComponent implements OnInit {
+  @Input() showUptimeKuma = false;
+  @Input() uptimeKumaIsConnected = false;
+  @Input() downItems: MonitorItem[] = [];
   isMobile = isMobile;
   add = faPlus;
   openFolderModal: Subject<Folder> = new Subject<Folder>();
@@ -25,7 +28,6 @@ export class FolderGridComponent implements OnInit {
 
   constructor(
     public foldersQuery: FoldersQuery,
-    public uptimeKumaService: UptimeKumaService
   ) { }
 
   ngOnInit(): void {

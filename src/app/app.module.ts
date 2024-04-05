@@ -20,16 +20,8 @@ import {NzMessageModule} from "ng-zorro-antd/message";
 import {SharedModule} from "./shared/shared.module";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzSpinModule} from "ng-zorro-antd/spin";
-import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 
 registerLocaleData(en);
-
-const config: SocketIoConfig = {
-  url: 'wss://uptime-kuma.bigmike.dev/', options: {
-    transports: ['websocket'],
-    reconnectionAttempts: 10
-  }
-};
 
 @NgModule({
   declarations: [
@@ -50,7 +42,6 @@ const config: SocketIoConfig = {
     SharedModule,
     NzButtonModule,
     NzSpinModule,
-    SocketIoModule.forRoot(config)
   ],
   providers: [
     {

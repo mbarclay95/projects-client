@@ -50,7 +50,6 @@ export class UptimeKumaService extends Socket {
     });
 
     this.on('heartbeat', (payload: HeartbeatItem) => {
-      console.log(payload);
       const heartbeat = createHeartbeatItem(payload);
       let item = this.findItem(heartbeat.monitorId);
       if (!item) {

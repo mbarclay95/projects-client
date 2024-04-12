@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TaskStrategy} from "../../models/family.model";
-import {FamiliesService} from "../../services/families/state/families.service";
 import {faArrowRotateLeft, faCog, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {Task} from "../../models/task.model";
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -19,6 +18,7 @@ export class MyFamilyMembersComponent implements OnInit {
   @Input() familyTaskStrategy!: TaskStrategy;
   @Input() membersConfig: TaskUserConfig[] | null = [];
   @Input() weekOffset!: number | null;
+  @Input() loading = false;
 
   newTasksPerWeek?: number;
   isMobile = isMobile;
@@ -28,7 +28,6 @@ export class MyFamilyMembersComponent implements OnInit {
   loadingUndoId: number|null = null;
 
   constructor(
-    private familiesService: FamiliesService,
     public familiesQuery: FamiliesQuery,
     private nzMessageService: NzMessageService,
     private tasksService: TasksService,

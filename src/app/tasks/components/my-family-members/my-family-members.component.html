@@ -1,52 +1,63 @@
 <div class="members-container">
 
-  <div class="member-container" *ngFor="let memberConfig of membersConfig">
+  <div *ngIf="loading else notLoading">
 
-    <div class="d-flex align-items-center justify-content-center w-100 mb-2">
+    <nz-spin></nz-spin>
 
-      <div style="font-size: 20px">{{memberConfig | firstName}}</div>
+  </div>
 
-      <fa-icon *ngIf="weekOffset === 0 || weekOffset === 1" class="cursor-pointer ms-2" [icon]="settings" nz-popover
-               nzPopoverTrigger="click" [nzPopoverContent]="memberSettings" nzPopoverPlacement="bottom"
-               style="color: grey" (nzPopoverVisibleChange)="saveSettings(memberConfig, $event)"></fa-icon>
+  <ng-template #notLoading>
 
-      <ng-template #memberSettings>
-        <div>
-          <div class="mb-1">Task{{familyTaskStrategy === 'per task' ? 's' : ' Points'}} Per Week:</div>
-          <nz-input-number style="width: 140px" [ngModel]="memberConfig.tasksPerWeek" nzSize="large"
-                           (ngModelChange)="tasksPerWeekChanged($event)" [nzMin]="0"></nz-input-number>
-        </div>
-      </ng-template>
+    <div class="member-container" *ngFor="let memberConfig of membersConfig">
 
-    </div>
+      <div class="d-flex align-items-center justify-content-center w-100 mb-2">
 
-    <nz-progress nzType="circle" [nzPercent]="memberConfig | weeklyProgressPercent : false"
-                 class="mb-4" [nzFormat]="taskProgress"></nz-progress>
+        <div style="font-size: 20px">{{memberConfig | firstName}}</div>
 
-    <ng-template #taskProgress>
+        <fa-icon *ngIf="weekOffset === 0 || weekOffset === 1" class="cursor-pointer ms-2" [icon]="settings" nz-popover
+                 nzPopoverTrigger="click" [nzPopoverContent]="memberSettings" nzPopoverPlacement="bottom"
+                 style="color: grey" (nzPopoverVisibleChange)="saveSettings(memberConfig, $event)"></fa-icon>
+
+        <ng-template #memberSettings>
+          <div>
+            <div class="mb-1">Task{{familyTaskStrategy === 'per task' ? 's' : ' Points'}} Per Week:</div>
+            <nz-input-number style="width: 140px" [ngModel]="memberConfig.tasksPerWeek" nzSize="large"
+                             (ngModelChange)="tasksPerWeekChanged($event)" [nzMin]="0"></nz-input-number>
+          </div>
+        </ng-template>
+
+      </div>
+
+      <nz-progress nzType="circle" [nzPercent]="memberConfig | weeklyProgressPercent : false"
+                   class="mb-4" [nzFormat]="taskProgress"></nz-progress>
+
+      <ng-template #taskProgress>
       <span style="font-size: 19px; line-height: 1.3">
         {{memberConfig | totalCompletedTasks}}/{{memberConfig.tasksPerWeek}}<br>
         {{(familiesQuery.familyTaskStrategy$ | async) === 'per task' ? 'tasks' : 'points'}}
       </span>
-    </ng-template>
+      </ng-template>
 
-    <div class="w-100 d-flex justify-content-center align-items-center mb-2"
-         *ngFor="let task of memberConfig.completedFamilyTasks">
+      <div class="w-100 d-flex justify-content-center align-items-center mb-2"
+           *ngFor="let task of memberConfig.completedFamilyTasks">
 
-      <fa-icon *ngIf="loadingUndoId === task.id" [icon]="spinner" [spin]="true" class="me-2"></fa-icon>
+        <fa-icon *ngIf="loadingUndoId === task.id" [icon]="spinner" [spin]="true" class="me-2"></fa-icon>
 
-      <fa-icon *ngIf="weekOffset === 0 && loadingUndoId !== task.id" [icon]="undo" class="me-2"
-               style="color: grey; cursor: pointer" nz-popconfirm (nzOnConfirm)="undoTask(memberConfig.id, task)"
-               nzPopconfirmPlacement="topLeft" nzPopconfirmTitle="Are you sure you want to undo this chore?"></fa-icon>
+        <fa-icon *ngIf="weekOffset === 0 && loadingUndoId !== task.id" [icon]="undo" class="me-2"
+                 style="color: grey; cursor: pointer" nz-popconfirm (nzOnConfirm)="undoTask(memberConfig.id, task)"
+                 nzPopconfirmPlacement="topLeft"
+                 nzPopconfirmTitle="Are you sure you want to undo this chore?"></fa-icon>
 
-      <div style="font-size: 16px">{{task.name}}
-        <span *ngIf="familyTaskStrategy === 'per task point'" style="font-style: italic">- {{task.taskPoint}}
-          point{{task.taskPoint === 1 ? '' : 's'}}</span></div>
+        <div style="font-size: 16px">{{task.name}}
+          <span *ngIf="familyTaskStrategy === 'per task point'" style="font-style: italic">- {{task.taskPoint}}
+            point{{task.taskPoint === 1 ? '' : 's'}}</span></div>
+
+      </div>
+
+      <nz-divider *ngIf="isMobile"></nz-divider>
 
     </div>
 
-    <nz-divider *ngIf="isMobile"></nz-divider>
-
-  </div>
+  </ng-template>
 
 </div>

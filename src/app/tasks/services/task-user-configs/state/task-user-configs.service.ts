@@ -8,7 +8,7 @@ import {environment} from '../../../../../environments/environment';
 import {AuthQuery} from '../../../../auth/services/state/auth.query';
 import {TaskUserConfigsQuery} from './task-user-configs.query';
 import {Task} from '../../../models/task.model';
-import {arrayRemove} from '@datorama/akita';
+import {arrayRemove, setLoading} from '@datorama/akita';
 
 @Injectable({providedIn: 'root'})
 export class TaskUserConfigsService {
@@ -24,6 +24,7 @@ export class TaskUserConfigsService {
   async get(familyId: number | undefined = undefined, setActive = true): Promise<void> {
     const queryString = this.taskUserConfigsQuery.buildQueryString(familyId);
     await firstValueFrom(this.http.get<TaskUserConfig[]>(`${environment.apiUrl}/task-user-config?${queryString}`).pipe(
+      setLoading(this.taskUserConfigsStore),
       map(configs => configs.map(config => createTaskUserConfig(config))),
       tap(configs => {
         this.taskUserConfigsStore.set(configs);

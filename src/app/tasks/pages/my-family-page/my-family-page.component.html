@@ -5,6 +5,7 @@
   <app-my-family-edit-family [myFamily]="myFamily"></app-my-family-edit-family>
 
   <app-my-family-members [familyTaskStrategy]="myFamily.taskStrategy" [weekOffset]="taskUserConfigsQuery.weekOffset$ | async"
-                         [membersConfig]="taskUserConfigsQuery.userConfigs$ | async"></app-my-family-members>
+                         [membersConfig]="taskUserConfigsQuery.userConfigs$ | async"
+                         [loading]="(taskUserConfigsQuery.selectLoading() | async) ?? false"></app-my-family-members>
 
 </div>

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Query} from '@datorama/akita';
 import {AuthStore} from './auth.store';
-import {distinctUntilChanged, Observable, tap} from "rxjs";
+import {distinctUntilChanged, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {User} from "../../../users/models/user.model";
 import {Permissions} from '../../permissions';
@@ -17,7 +17,6 @@ export class AuthQuery extends Query<User> {
   showUptimeKuma$: Observable<boolean> = this.select().pipe(
     map(auth => !!auth.clientPermissions.find(p => p === Permissions.LISTEN_TO_UPTIME_KUMA)),
     distinctUntilChanged(),
-    tap(x => console.log(x))
   );
 
   constructor(

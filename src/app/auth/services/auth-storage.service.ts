@@ -11,14 +11,14 @@ export class AuthStorageService {
   }
 
   private loadAuthToken(): void {
-    let token = localStorage.getItem('token');
+    let token = localStorage.getItem('project-app-token');
     if (token) {
       this.authToken = JSON.parse(token);
     }
   }
 
   setAuthToken(token: string): void {
-    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('project-app-token', JSON.stringify(token));
     this.authToken = token;
   }
 
@@ -32,6 +32,6 @@ export class AuthStorageService {
 
   clearToken(): void {
     this.authToken = undefined;
-    localStorage.removeItem('token');
+    localStorage.removeItem('project-app-token');
   }
 }

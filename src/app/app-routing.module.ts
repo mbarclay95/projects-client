@@ -13,6 +13,7 @@ import {EventSignupLayoutComponent} from "./event-signup/event-signup-layout/eve
 import {FileExplorerLayoutComponent} from './file-explorer/file-explorer-layout/file-explorer-layout.component';
 import {AppResolver} from './app.resolver';
 import {MoneyLayoutComponent} from './money/money-layout/money-layout.component';
+import {LoggingLayoutComponent} from './logging/logging-layout/logging-layout.component';
 
 const routes: Routes = [
   {
@@ -64,6 +65,11 @@ const routes: Routes = [
         path: 'money', component: MoneyLayoutComponent, resolve: {AppResolver},
         data: {permission: Permissions.MONEY_APP_PAGE, headerTitle: 'Money'},
         loadChildren: () => import('./money/money.module').then(m => m.MoneyModule)
+      },
+      {
+        path: 'logging', component: LoggingLayoutComponent, resolve: {AppResolver},
+        data: {permission: Permissions.LOGGING_PAGE, headerTitle: 'Logging'},
+        loadChildren: () => import('./logging/logging.module').then(m => m.LoggingModule)
       }
     ]
   },

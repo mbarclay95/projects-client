@@ -2,7 +2,7 @@ import {IconDefinition} from '@fortawesome/free-brands-svg-icons';
 import {Permissions} from '../../auth/permissions';
 import {
   faBullseye,
-  faCalendarDays,
+  faCalendarDays, faDatabase,
   faFolderOpen, faGear,
   faHome, faMoneyCheckDollar,
   faTasks,
@@ -57,6 +57,7 @@ export const routes: Route[] = [
     queryParams: {}
   },
   {icon: faCalendarDays, url: 'app/events', permission: Permissions.EVENTS_PAGE, title: 'Events', queryParams: {}},
+  {icon: faDatabase, url: 'app/logging', permission: Permissions.LOGGING_PAGE, title: 'Logging', queryParams: {}},
   {icon: faUsers, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users', queryParams: {}},
   {icon: faGear, url: 'my-profile', permission: true, title: 'My Profile', queryParams: {}},
 ];

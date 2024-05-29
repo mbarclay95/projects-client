@@ -26,6 +26,7 @@ export class TaskRowComponent implements OnInit {
   @Output() viewTask: EventEmitter<Task> = new EventEmitter<Task>();
   @Output() skipTask: EventEmitter<Task> = new EventEmitter<Task>();
 
+  menuVisible = false;
   isMobile = isMobile;
   flag = faFlag;
   more = faEllipsisV;

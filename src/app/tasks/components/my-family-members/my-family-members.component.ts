@@ -21,18 +21,20 @@ export class MyFamilyMembersComponent implements OnInit {
   @Input() loading = false;
 
   newTasksPerWeek?: number;
+  newDefaultTasksPerWeek?: number;
   isMobile = isMobile;
   settings = faCog;
   undo = faArrowRotateLeft;
   spinner = faSpinner;
-  loadingUndoId: number|null = null;
+  loadingUndoId: number | null = null;
 
   constructor(
     public familiesQuery: FamiliesQuery,
     private nzMessageService: NzMessageService,
     private tasksService: TasksService,
     private taskUserConfigsService: TaskUserConfigsService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
   }
@@ -44,7 +46,13 @@ export class MyFamilyMembersComponent implements OnInit {
         newTaskConfig.tasksPerWeek = this.newTasksPerWeek;
         this.newTasksPerWeek = undefined;
       }
-      if (memberConfig.tasksPerWeek !== newTaskConfig.tasksPerWeek) {
+      if (this.newDefaultTasksPerWeek !== undefined) {
+        newTaskConfig.defaultTasksPerWeek = this.newDefaultTasksPerWeek;
+        this.newDefaultTasksPerWeek = undefined;
+      }
+      if (memberConfig.tasksPerWeek !== newTaskConfig.tasksPerWeek ||
+        memberConfig.defaultTasksPerWeek !== newTaskConfig.defaultTasksPerWeek
+      ) {
         void this.taskUserConfigsService.updateTaskUserConfig(newTaskConfig);
       }
     }
@@ -54,9 +62,13 @@ export class MyFamilyMembersComponent implements OnInit {
     this.newTasksPerWeek = newTasksPerWeek;
   }
 
+  defaultTasksPerWeekChanged(newDefaultTasksPerWeek: number) {
+    this.newDefaultTasksPerWeek = newDefaultTasksPerWeek;
+  }
+
   async undoTask(memberConfigId: number, task: Task) {
-    this.loadingUndoId  = task.id;
-    await this.tasksService.updateTask(task.id,  {...task,  ...{completedAt: undefined}}, false);
+    this.loadingUndoId = task.id;
+    await this.tasksService.updateTask(task.id, {...task, ...{completedAt: undefined}}, false);
     this.taskUserConfigsService.removeTaskFromConfig(memberConfigId, task.id);
     this.loadingUndoId = null;
     this.nzMessageService.success('Chore has been removed!');

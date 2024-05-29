@@ -1,4 +1,4 @@
-<div class="task-box">
+<div class="task-box" (click)="menuVisible = true">
 
   <div class="d-flex align-items-center">
 
@@ -29,7 +29,7 @@
 
   <div class="d-flex">
 
-    <button nz-button nzType="text" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+    <button nz-button nzType="text" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" [(nzVisible)]="menuVisible">
 
       <fa-icon class="fa-lg" [icon]="more"></fa-icon>
 
@@ -52,6 +52,5 @@
     </nz-dropdown-menu>
 
   </div>
-
 
 </div>

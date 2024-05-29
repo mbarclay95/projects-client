@@ -19,10 +19,16 @@
                  style="color: grey" (nzPopoverVisibleChange)="saveSettings(memberConfig, $event)"></fa-icon>
 
         <ng-template #memberSettings>
-          <div>
-            <div class="mb-1">Task{{familyTaskStrategy === 'per task' ? 's' : ' Points'}} Per Week:</div>
-            <nz-input-number style="width: 140px" [ngModel]="memberConfig.tasksPerWeek" nzSize="large"
+          <div class="task-settings-title">Task{{familyTaskStrategy === 'per task' ? '' : ' Point'}} Settings</div>
+          <div class="task-settings-field mb-3">
+            <div>This week:</div>
+            <nz-input-number [ngModel]="memberConfig.tasksPerWeek" nzSize="large"
                              (ngModelChange)="tasksPerWeekChanged($event)" [nzMin]="0"></nz-input-number>
+          </div>
+          <div class="task-settings-field">
+            <div>Default:</div>
+            <nz-input-number [ngModel]="memberConfig.defaultTasksPerWeek" nzSize="large"
+                             (ngModelChange)="defaultTasksPerWeekChanged($event)" [nzMin]="0"></nz-input-number>
           </div>
         </ng-template>
 

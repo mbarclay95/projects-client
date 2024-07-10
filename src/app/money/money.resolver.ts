@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot, Router
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@angular/router';
 import {AuthQuery} from '../auth/services/state/auth.query';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MoneyResolver implements Resolve<boolean> {
+export class MoneyResolver  {
 
   constructor(
     private authQuery: AuthQuery,

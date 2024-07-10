@@ -1,16 +1,12 @@
 import {Injectable} from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import {MobileFooterService} from './shared/services/mobile-footer.service';
 import {MobileHeaderResolver} from './mobile-header.resolver';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppResolver implements Resolve<void> {
+export class AppResolver  {
 
   constructor(
     private mobileFooterService: MobileFooterService,

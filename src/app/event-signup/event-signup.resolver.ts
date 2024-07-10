@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import {EventService} from "./services/event.service";
 import {EventCacheService} from "./services/event-cache.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class EventSignupResolver implements Resolve<Promise<void>> {
+export class EventSignupResolver  {
 
   constructor(
     private eventService: EventService,

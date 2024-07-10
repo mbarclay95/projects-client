@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import {MobileHeaderService} from "./shared/services/mobile-header.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class MobileHeaderResolver implements Resolve<void> {
+export class MobileHeaderResolver  {
 
   constructor(
     private mobileHeaderService: MobileHeaderService

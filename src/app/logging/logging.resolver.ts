@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import {LogEventService} from './services/log-event/state/log-event.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoggingResolver implements Resolve<void> {
+export class LoggingResolver  {
 
   constructor(
     private logEventService: LogEventService

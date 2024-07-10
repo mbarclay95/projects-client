@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import {TargetsService} from "./services/targets/state/targets.service";
 import {BackupsService} from "./services/backups/state/backups.service";
 import {ScheduledBackupsService} from "./services/scheduled-backups/state/scheduled-backups.service";
@@ -11,7 +7,7 @@ import {ScheduledBackupsService} from "./services/scheduled-backups/state/schedu
 @Injectable({
   providedIn: 'root'
 })
-export class BackupsResolver implements Resolve<void> {
+export class BackupsResolver  {
 
   constructor(
     private backupsService: BackupsService,

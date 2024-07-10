@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import {RolesService} from '../users/services/roles/state/roles.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthResolver implements Resolve<Promise<void>> {
+export class AuthResolver  {
   constructor(
     private rolesService: RolesService,
   ) {

@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FileExplorerResolver implements Resolve<void> {
+export class FileExplorerResolver  {
 
   constructor(
   ) {

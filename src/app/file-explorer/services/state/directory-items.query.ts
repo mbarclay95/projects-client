@@ -4,13 +4,14 @@ import {DirectoryItemsStore, DirectoryItemsState} from './directory-items.store'
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {DirectoryItem} from '../../models/directory-item.model';
+import {WorkingDirectoryItem} from '../../models/working-directory-item';
 
 @Injectable({providedIn: 'root'})
 export class DirectoryItemsQuery extends QueryEntity<DirectoryItemsState> {
   items$: Observable<DirectoryItem[]> = this.selectAll();
 
-  workingDirectory$: Observable<{ sort: number, path: string }[]> = this.select('ui').pipe(
-    map(ui => ui.workingDirectory.sort((a, b) => a.sort - b.sort))
+  workingDirectory$: Observable<WorkingDirectoryItem[]> = this.select('ui').pipe(
+    map(ui => [...ui.workingDirectory].sort((a, b) => a.sort - b.sort))
   );
 
   noWorkingDirectory$: Observable<boolean> = this.select('ui').pipe(
@@ -22,17 +23,4 @@ export class DirectoryItemsQuery extends QueryEntity<DirectoryItemsState> {
   ) {
     super(store);
   }
-
-
-  getWorkingDirectory(): { sort: number, path: string }[] {
-    return this.getValue().ui.workingDirectory;
-  }
-
-  getWorkingDirectoryAsString(): string {
-    return [...this.getValue().ui.workingDirectory]
-      .sort((a, b) => a.sort - b.sort)
-      .map(part => part.path)
-      .join('/');
-  }
-
 }

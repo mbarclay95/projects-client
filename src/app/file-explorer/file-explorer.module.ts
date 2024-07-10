@@ -14,7 +14,8 @@ import {NzModalModule} from 'ng-zorro-antd/modal';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {FormsModule} from '@angular/forms';
 import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
-
+import {NzButtonModule} from 'ng-zorro-antd/button';
+import {NzRadioModule} from 'ng-zorro-antd/radio';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,9 @@ import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
         NzModalModule,
         NzInputModule,
         FormsModule,
-        NzPopconfirmModule
+        NzPopconfirmModule,
+        NzButtonModule,
+        NzRadioModule
     ]
 })
 export class FileExplorerModule { }

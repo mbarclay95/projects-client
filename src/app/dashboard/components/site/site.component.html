@@ -17,6 +17,8 @@
 
         <img *ngIf="site.siteImage" [srcset]="site.siteImage.imagePath" class="site-image">
 
+        <div *ngIf="!site.siteImage" class="site-image"></div>
+
       </div>
 
       <div>

@@ -5,21 +5,19 @@ import {firstValueFrom, tap} from 'rxjs';
 import {createDirectoryItem, DirectoryItem} from '../../models/directory-item.model';
 import {environment} from '../../../../environments/environment';
 import {map} from 'rxjs/operators';
-import {DirectoryItemsQuery} from './directory-items.query';
 import {setLoading} from '@datorama/akita';
+import {WorkingDirectoryItem, workingDirectoryToString} from '../../models/working-directory-item';
 
 @Injectable({providedIn: 'root'})
 export class DirectoryItemsService {
 
   constructor(
     private directoryItemsStore: DirectoryItemsStore,
-    private directoryItemsQuery: DirectoryItemsQuery,
     private http: HttpClient
   ) {
   }
 
-  async getItems(): Promise<void> {
-    const path = encodeURI(this.directoryItemsQuery.getWorkingDirectoryAsString());
+  async getItems(path: string): Promise<void> {
     await firstValueFrom(this.http.get<DirectoryItem[]>(`${environment.apiUrl}/file-explorer/directory-items?path=${path}`).pipe(
       setLoading(this.directoryItemsStore),
       map(items => items.map(item => createDirectoryItem(item))),
@@ -27,12 +25,12 @@ export class DirectoryItemsService {
     ));
   }
 
-  private setPath(workingDirectory: { sort: number, path: string }[]): void {
+  setPath(workingDirectory: { sort: number, path: string }[]): void {
     this.directoryItemsStore.update({ui: {workingDirectory}});
   }
 
-  appendPath(path: string): void {
-    let current = [...this.directoryItemsQuery.getWorkingDirectory()];
+  appendPath(path: string, workingDirectory: WorkingDirectoryItem[]): void {
+    let current = [...workingDirectory];
     current.push({
       sort: current.length + 1,
       path
@@ -44,45 +42,58 @@ export class DirectoryItemsService {
     this.setPath([]);
   }
 
-  clickedWorkingDirectory(newDir: { sort: number, path: string }): void {
-    let current = [...this.directoryItemsQuery.getWorkingDirectory()];
+  clickedWorkingDirectory(newDir: { sort: number, path: string }, workingDirectory: WorkingDirectoryItem[]): void {
+    let current = [...workingDirectory];
     current = current.filter(dir => dir.sort <= newDir.sort);
     this.setPath(current);
   }
 
-  async createDirectory(item: (DirectoryItem & { newName: string })): Promise<void> {
-    const workingDirectory = this.directoryItemsQuery.getWorkingDirectoryAsString();
+  async createDirectory(item: DirectoryItem, newName: string, workingDirectory: WorkingDirectoryItem[], refreshAfter = true): Promise<void> {
+    const workingDirectoryString = workingDirectoryToString(workingDirectory);
     await firstValueFrom(this.http.post<DirectoryItem>(`${environment.apiUrl}/file-explorer/directory-items`, {
-      ...item,
-      ...{
-        workingDirectory
-      }
+      type: item.type,
+      newName,
+      workingDirectory: workingDirectoryString
     }).pipe(
       map(item => createDirectoryItem(item)),
-      tap(item => this.directoryItemsStore.add(item))
+      tap(item => {
+        if (refreshAfter) {
+          void this.getItems(workingDirectoryString);
+        } else {
+          this.directoryItemsStore.add(item)
+        }
+      })
     ));
   }
 
-  async updateItem(item: (DirectoryItem & { newName: string })): Promise<void> {
-    const workingDirectory = this.directoryItemsQuery.getWorkingDirectoryAsString();
+  async updateItem(item: DirectoryItem, workingDirectory: WorkingDirectoryItem[], newPath: string, mode: 'cp' | 'mv' = 'mv',  refreshAfter = true): Promise<void> {
+    const workingDirectoryString = workingDirectoryToString(workingDirectory);
     await firstValueFrom(this.http.patch<DirectoryItem>(`${environment.apiUrl}/file-explorer/directory-items`, {
       ...item,
       ...{
-        workingDirectory
+        workingDirectory: workingDirectoryString,
+        mode,
+        newPath
       }
     }).pipe(
       map(item => createDirectoryItem(item)),
-      tap(newItem => this.directoryItemsStore.update(item.id, newItem))
+      tap(newItem => {
+        if (refreshAfter) {
+          void this.getItems(workingDirectoryString);
+        } else {
+          this.directoryItemsStore.update(item.id, newItem);
+        }
+      })
     ));
   }
 
-  async deleteItem(item: DirectoryItem): Promise<void> {
+  async deleteItem(item: DirectoryItem, workingDirectory: WorkingDirectoryItem[]): Promise<void> {
     this.directoryItemsStore.remove(item.id);
-    const workingDirectory = this.directoryItemsQuery.getWorkingDirectoryAsString();
+    const workingDirectoryString = workingDirectoryToString(workingDirectory);
     await firstValueFrom(this.http.patch(`${environment.apiUrl}/file-explorer/directory-items/delete`, {
       ...item,
       ...{
-        workingDirectory
+        workingDirectory: workingDirectoryString
       }
     }));
   }

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {merge, Observable, Subject} from 'rxjs';
+import {filter, merge, Observable, shareReplay, Subject, tap} from 'rxjs';
 import {DirectoryItem} from '../../models/directory-item.model';
 import {map} from 'rxjs/operators';
 import {MobileHeaderService} from '../../../shared/services/mobile-header.service';
 import {isMobile} from '../../../app.component';
+import {WorkingDirectoryItem, workingDirectoryToString} from '../../models/working-directory-item';
+import {DirectoryItemsQuery} from '../../services/state/directory-items.query';
+import {DirectoryItemsService} from '../../services/state/directory-items.service';
 
 @Component({
   selector: 'app-file-explorer-page',
@@ -25,13 +28,32 @@ export class FileExplorerPageComponent implements OnInit {
       } as (DirectoryItem & { createOrUpdate: 'Create' | 'Update'})))
     ),
     this.openCreateEditModal.asObservable()
+  ).pipe(
+    filter(() => !this.newLocationBeingSelected)
+  );
+  newLocationSelected: Subject<WorkingDirectoryItem[] | undefined> = new Subject<WorkingDirectoryItem[] | undefined>();
+
+  workingDirectory$: Observable<WorkingDirectoryItem[]> = this.directoryItemsQuery.workingDirectory$.pipe(
+    tap((workingDirectory) => this.directoryItemsService.getItems(workingDirectoryToString(workingDirectory))),
+    shareReplay()
   );
 
+  newLocationBeingSelected?: WorkingDirectoryItem[];
+
   constructor(
-    private mobileHeaderService: MobileHeaderService
+    private mobileHeaderService: MobileHeaderService,
+    private directoryItemsQuery: DirectoryItemsQuery,
+    private directoryItemsService: DirectoryItemsService
   ) { }
 
   ngOnInit(): void {
+  }
+
+  newLocationSelectedOrCanceled(newLocation?: WorkingDirectoryItem[]): void {
+    this.directoryItemsService.setPath(this.newLocationBeingSelected!);
+    this.newLocationBeingSelected = undefined;
+    setTimeout(() => this.newLocationSelected.next(newLocation), 100);
+
   }
 
   createNewDirectory(): void {

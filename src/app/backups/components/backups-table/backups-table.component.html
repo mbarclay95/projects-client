@@ -12,7 +12,7 @@
   <ng-container *ngFor="let backup of backupsTable?.data">
     <tr>
       <td [nzExpand]="expandSet.has(backup.id)" (nzExpandChange)="onExpandChange(backup.id, $event)"></td>
-      <td>{{backup.id}}</td>
+      <td>{{backup.name}}</td>
       <td>{{backup.startedAt | date : 'medium'}}</td>
       <td>{{backup | backupRunTime}}</td>
       <td class="w-100 d-flex justify-content-center">

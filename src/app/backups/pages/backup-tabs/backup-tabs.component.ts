@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from "rxjs";
 import {Backup, createBackup} from "../../models/backup.model";
 import {BackupsPollingService} from "../../services/backups-polling.service";
@@ -10,7 +10,7 @@ import {createScheduledBackup, ScheduledBackup} from "../../models/scheduled-bac
   templateUrl: './backup-tabs.component.html',
   styleUrls: ['./backup-tabs.component.scss']
 })
-export class BackupTabsComponent implements OnInit {
+export class BackupTabsComponent implements OnInit, OnDestroy {
   selectedTab: 'Backup Job' | 'Scheduled Backup Job' | 'Target' = 'Backup Job';
   openBackupsDrawer: Subject<Backup> = new Subject<Backup>();
   openScheduledBackupsDrawer: Subject<ScheduledBackup> = new Subject<ScheduledBackup>();
@@ -22,6 +22,10 @@ export class BackupTabsComponent implements OnInit {
 
   ngOnInit(): void {
     this.backupsPollingService.startPolling();
+  }
+
+  ngOnDestroy(): void {
+    this.backupsPollingService.stopPolling();
   }
 
   selectBackupTab() {

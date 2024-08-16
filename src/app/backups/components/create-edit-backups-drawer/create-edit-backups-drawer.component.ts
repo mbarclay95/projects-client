@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 import {Backup} from "../../models/backup.model";
-import {createBackupStep} from "../../models/backup-step.model";
+import {createBackupStep, isS3Upload, isTarZip} from "../../models/backup-step.model";
 import {faGripVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {TargetsQuery} from "../../services/targets/state/targets.query";
 import {createTarget, Target} from "../../models/target.model";
@@ -48,10 +48,10 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy{
   }
 
   selectNewTarget({target, backupStepId}: {target: Target, backupStepId: number}): void {
-    const backupStep = this.backup.backupSteps.find(step => step.id === backupStepId);
-    if (backupStep) {
-      backupStep.target = target;
-    }
+    // const backupStep = this.backup.backupSteps.find(step => step.id === backupStepId);
+    // if (backupStep) {
+    //   backupStep.target = target;
+    // }
   }
 
   addBackupStep() {
@@ -82,4 +82,7 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy{
     this.saving = false;
     this.isVisible = false;
   }
+
+  protected readonly isTarZip = isTarZip;
+  protected readonly isS3Upload = isS3Upload;
 }

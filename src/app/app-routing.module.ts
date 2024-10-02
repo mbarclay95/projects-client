@@ -14,6 +14,7 @@ import {FileExplorerLayoutComponent} from './file-explorer/file-explorer-layout/
 import {AppResolver} from './app.resolver';
 import {MoneyLayoutComponent} from './money/money-layout/money-layout.component';
 import {LoggingLayoutComponent} from './logging/logging-layout/logging-layout.component';
+import {GamingLayoutComponent} from './gaming/gaming-layout/gaming-layout.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'events', component: EventSignupLayoutComponent, resolve: {AppResolver}, data: {headerTitle: 'Signup'},
     loadChildren: () => import('./event-signup/event-signup.module').then(m => m.EventSignupModule)
+  },
+  {
+    path: 'games', component: GamingLayoutComponent, resolve: {AppResolver}, data: {headerTitle: 'Games'},
+    loadChildren: () => import('./gaming/gaming.module').then(m => m.GamingModule)
   },
   {
     path: 'app', canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [

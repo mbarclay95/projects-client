@@ -1,9 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
-    "schematicCollections": [
-      "@datorama/akita"
-    ],
     "analytics": false
   },
   "version": 1,

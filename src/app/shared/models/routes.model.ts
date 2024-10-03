@@ -2,7 +2,7 @@ import {IconDefinition} from '@fortawesome/free-brands-svg-icons';
 import {Permissions} from '../../auth/permissions';
 import {
   faBullseye,
-  faCalendarDays, faDatabase,
+  faCalendarDays, faChessKnight, faDatabase,
   faFolderOpen, faGear,
   faHome, faMoneyCheckDollar,
   faTasks,
@@ -47,6 +47,13 @@ export const routes: Route[] = [
     url: 'app/file-explorer',
     permission: Permissions.FILE_EXPLORER_PAGE,
     title: 'File Explorer',
+    queryParams: {}
+  },
+  {
+    icon: faChessKnight,
+    url: 'games/admin',
+    permission: Permissions.GAMING_SESSIONS_ADMIN_PAGE,
+    title: 'Games Admin',
     queryParams: {}
   },
   {

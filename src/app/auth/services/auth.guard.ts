@@ -26,6 +26,11 @@ export class AuthGuard  {
       await this.router.navigateByUrl('login');
       return false;
     }
+    const hasPermission = this.permissionsService.hasPermissionTo(route.data['permission'] as unknown as Permissions|undefined);
+    if (!hasPermission) {
+      console.log(`does not have ${route.data['permission']} permission`)
+      void this.router.navigateByUrl('my-profile');
+    }
 
     return this.authQuery.isLoggedIn();
   }

@@ -1,7 +1,11 @@
 import { ResolveFn } from '@angular/router';
 import {inject} from '@angular/core';
-import {GamingDevicesService} from './services/gaming-devices.service';
+import {GamingSessionsFacadeService} from './services/gaming-sessions-facade.service';
 
-export const gamingResolver: ResolveFn<Promise<void>> = async (route, state) => {
-  await inject(GamingDevicesService).get();
+export const gamingResolver: ResolveFn<boolean> = (route, state) => {
+  const gamingFacade = inject(GamingSessionsFacadeService);
+  gamingFacade.loadSessions();
+  gamingFacade.loadDevices();
+
+  return true;
 };

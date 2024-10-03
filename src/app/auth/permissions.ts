@@ -9,6 +9,7 @@ export const enum Permissions {
   FILE_EXPLORER_PAGE = 'client_view_file_explorer_page',
   MONEY_APP_PAGE = 'client_view_money_app_page',
   LOGGING_PAGE = 'client_view_logging_page',
+  GAMING_SESSIONS_ADMIN_PAGE = 'client_view_gaming_session_admin_page',
   LISTEN_TO_UPTIME_KUMA = 'client_listen_to_uptime_kuma_websocket'
 }
 
@@ -21,5 +22,6 @@ export const enum Roles {
   EVENTS_ROLE = 'event_role',
   FILE_EXPLORER_ROLE = 'file_explorer_role',
   MONEY_APP_ROLE = 'money_app_role',
+  GAMING_SESSION_ADMIN_ROLE = 'gaming_session_admin_role',
 }
 

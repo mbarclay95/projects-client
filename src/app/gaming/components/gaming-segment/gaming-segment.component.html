@@ -1,0 +1,20 @@
+<div class="w-100 d-flex justify-content-center mb-3">
+  <nz-segmented [nzOptions]="pages" nzSize="default" [ngModel]="activeTab"
+                (ngModelChange)="changePage($event)" [nzLabelTemplate]="templateRef"></nz-segmented>
+  <ng-template #customSegment let-index="index">
+    @switch (index) {
+      @case (0) {
+        <div class="d-flex align-items-center px-2">
+          <fa-icon [icon]="sessions" class="me-2"></fa-icon>
+          Sessions
+        </div>
+      }
+      @case (1) {
+        <div class="d-flex align-items-center px-2">
+          <fa-icon [icon]="devices" class="me-2"></fa-icon>
+          Devices
+        </div>
+      }
+    }
+  </ng-template>
+</div>

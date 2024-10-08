@@ -1,1 +1,32 @@
-<p>gaming-devices-list works!</p>
+@for (device of devices; track device.id) {
+
+  <div class="device-box">
+
+    <div class="first-row" (click)="editDevice.emit(device)">
+
+      <div>
+
+        <div class="title">{{device.deviceCommunicationId}}</div>
+
+        <div class="due-text d-flex align-items-center">
+
+          <div>Last Seen: {{device.lastSeen | date}}</div>
+
+        </div>
+
+      </div>
+
+      <div style="width: 18px; text-align: center">
+        @if (device | deviceOnline) {
+          <fa-icon style="color: #82dd55" [icon]="online"></fa-icon>
+        } @else {
+          <fa-icon style="color: #e23636" [icon]="offline"></fa-icon>
+        }
+      </div>
+
+    </div>
+
+  </div>
+
+}
+

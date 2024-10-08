@@ -17,9 +17,15 @@ export class GamingDevicesService {
     return this.httpClient.get<GamingDevice[]>(`${environment.apiUrl}/gaming/devices`);
   }
 
-  async create(): Promise<void> {
-    await firstValueFrom(this.httpClient.post(`${environment.apiUrl}/gaming/devices`, {
-      deviceCommunicationId: 'yS9gBd'
-    }));
+  create(device: GamingDevice): Observable<GamingDevice> {
+    return this.httpClient.post<GamingDevice>(`${environment.apiUrl}/gaming/devices`, device);
+  }
+
+  update(device: GamingDevice): Observable<GamingDevice> {
+    return this.httpClient.patch<GamingDevice>(`${environment.apiUrl}/gaming/devices/${device.id}`, device);
+  }
+
+  ping(): Observable<{}> {
+    return this.httpClient.patch(`${environment.apiUrl}/gaming/device-action/yS9gBd`, {action: 'ping'});
   }
 }

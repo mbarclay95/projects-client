@@ -1,0 +1,22 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Device'" [nzWidth]="modalWidth"
+          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveDevice()"
+          [nzStyle]="modalStyle" [nzCancelDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false"
+          [nzOkDisabled]="saving">
+
+  <ng-container *nzModalContent>
+
+    <div *ngIf="model">
+
+      <div class="w-100">
+
+        Communication Id:
+
+        <input nz-input [(ngModel)]="model.deviceCommunicationId" class="w-100">
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</nz-modal>

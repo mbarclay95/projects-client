@@ -3,6 +3,16 @@ import {AsyncPipe, NgIf} from '@angular/common';
 import {GamingSegmentComponent} from '../../components/gaming-segment/gaming-segment.component';
 import {GamingSessionsFacadeService} from '../../services/gaming-sessions-facade.service';
 import {NzSpinComponent} from 'ng-zorro-antd/spin';
+import {MobileHeaderService} from '../../../shared/services/mobile-header.service';
+import {Observable} from 'rxjs';
+import {createGamingDevice, GamingDevice} from '../../models/gaming-device.model';
+import {map} from 'rxjs/operators';
+import {createGamingSession, GamingSession} from '../../models/gaming-session.model';
+import {SharedModule} from '../../../shared/shared.module';
+import {
+  CreateEditDeviceModalComponent
+} from '../../components/create-edit-device-modal/create-edit-device-modal.component';
+import {GamingDevicesListComponent} from '../../components/gaming-devices-list/gaming-devices-list.component';
 
 @Component({
   selector: 'app-gaming-sessions-admin-page',
@@ -11,7 +21,10 @@ import {NzSpinComponent} from 'ng-zorro-antd/spin';
     AsyncPipe,
     NgIf,
     GamingSegmentComponent,
-    NzSpinComponent
+    NzSpinComponent,
+    SharedModule,
+    CreateEditDeviceModalComponent,
+    GamingDevicesListComponent
   ],
   templateUrl: './gaming-sessions-admin-page.component.html',
   styleUrl: './gaming-sessions-admin-page.component.scss'
@@ -19,8 +32,13 @@ import {NzSpinComponent} from 'ng-zorro-antd/spin';
 export class GamingSessionsAdminPageComponent {
   tab: 'sessions' | 'devices' = 'sessions';
 
+  openModal$: Observable<GamingDevice> = this.mobileHeaderService.clickedButton$.pipe(
+    map(() => createGamingDevice({}))
+  );
+
   constructor(
-    public gamingSessionsFacadeService: GamingSessionsFacadeService
+    public gamingSessionsFacadeService: GamingSessionsFacadeService,
+    private mobileHeaderService: MobileHeaderService
   ) {
   }
 

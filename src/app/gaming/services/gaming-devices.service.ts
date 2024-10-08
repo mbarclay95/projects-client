@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {firstValueFrom, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {GamingDevice} from '../models/gaming-device.model';
 

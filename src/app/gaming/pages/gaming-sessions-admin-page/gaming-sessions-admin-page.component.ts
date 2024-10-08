@@ -7,7 +7,6 @@ import {MobileHeaderService} from '../../../shared/services/mobile-header.servic
 import {Observable} from 'rxjs';
 import {createGamingDevice, GamingDevice} from '../../models/gaming-device.model';
 import {map} from 'rxjs/operators';
-import {createGamingSession, GamingSession} from '../../models/gaming-session.model';
 import {SharedModule} from '../../../shared/shared.module';
 import {
   CreateEditDeviceModalComponent

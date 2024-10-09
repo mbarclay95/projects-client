@@ -1,1 +1,31 @@
-<p>gaming-sessions-list works!</p>
+@for (session of sessions; track session.id) {
+
+  <div class="session-box">
+
+    <div class="first-row" (click)="test(session)">
+
+      <div>
+
+        <div class="title">{{session.name}}</div>
+
+        <div class="last-seen d-flex align-items-center">
+
+<!--          <div>Last Seen: {{device.lastSeen | date}}</div>-->
+
+        </div>
+
+      </div>
+
+      <div style="width: 18px; text-align: center">
+        @if (session.isActive) {
+          <fa-icon style="color: #82dd55" [icon]="online"></fa-icon>
+        } @else {
+          <fa-icon style="color: #e23636" [icon]="offline"></fa-icon>
+        }
+      </div>
+
+    </div>
+
+  </div>
+
+}

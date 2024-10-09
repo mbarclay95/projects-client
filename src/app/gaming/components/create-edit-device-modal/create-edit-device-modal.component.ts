@@ -3,10 +3,11 @@ import {DefaultModalComponent} from '../../../shared/components/default-modal/de
 import {GamingDevice} from '../../models/gaming-device.model';
 import {NgIf} from '@angular/common';
 import {NzInputDirective} from 'ng-zorro-antd/input';
-import {NzModalComponent, NzModalContentDirective} from 'ng-zorro-antd/modal';
+import {NzModalComponent, NzModalContentDirective, NzModalModule} from 'ng-zorro-antd/modal';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {GamingSessionsFacadeService} from '../../services/gaming-sessions-facade.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzOptionComponent, NzSelectComponent} from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'app-create-edit-device-modal',
@@ -17,7 +18,10 @@ import {NzMessageService} from 'ng-zorro-antd/message';
     NzModalComponent,
     ReactiveFormsModule,
     FormsModule,
-    NzModalContentDirective
+    NzModalContentDirective,
+    NzModalModule,
+    NzOptionComponent,
+    NzSelectComponent,
   ],
   templateUrl: './create-edit-device-modal.component.html',
   styleUrl: './create-edit-device-modal.component.scss'
@@ -34,10 +38,10 @@ export class CreateEditDeviceModalComponent extends DefaultModalComponent<Gaming
   async saveDevice(): Promise<void> {
     this.saving = true;
     try {
-      if (this.model.id) {
-        await this.gamingSessionsFacadeService.updateDevicePromise(this.model);
-      } else {
+      if (this.model.id === 0) {
         await this.gamingSessionsFacadeService.createDevicePromise(this.model);
+      } else {
+        await this.gamingSessionsFacadeService.updateDevicePromise(this.model);
       }
     } catch (err) {
       this.nzMessageService.error('There was an error saving the device');

@@ -1,0 +1,37 @@
+@if (gamingSessionsFacadeService.devicesLoading() || gamingSessionsFacadeService.sessionsLoading()) {
+  <div class="d-flex w-100 justify-content-center align-items-center" style="height: 50vh">
+    <nz-spin></nz-spin>
+  </div>
+} @else {
+  <div class="page-container mt-2">
+
+    @if (gamingSessionsFacadeService.userHasSessionDevice$ | async) {
+
+    } @else {
+      <app-connect-to-device
+        [devices]="(gamingSessionsFacadeService.inactiveSessionDevices$ | async) ?? []"
+        [activeSession]="(gamingSessionsFacadeService.activeGamingSession$ | async) ?? undefined"
+        (deviceSelected)="openModal.next($event)"
+      ></app-connect-to-device>
+    }
+  </div>
+
+<!--  <div class="device-containers active-background mt-4">-->
+
+<!--    <div class="title">Connected Devices</div>-->
+<!--    <ng-container *ngLet="gamingSessionsFacadeService.activeSessionDevices$ | async as activeDevices">-->
+<!--      @for (activeDevice of activeDevices; track activeDevice.id) {-->
+<!--        <div>{{ activeDevice.deviceCommunicationId }}</div>-->
+<!--      }-->
+<!--      @if (activeDevices.length === 0) {-->
+<!--        <span class="ps-2" style="font-style: italic">No devices connected</span>-->
+<!--      }-->
+<!--    </ng-container>-->
+
+
+<!--  </div>-->
+
+  <app-create-edit-session-device-modal
+    [openModal]="openModal.asObservable()"
+  ></app-create-edit-session-device-modal>
+}

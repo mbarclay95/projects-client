@@ -1,0 +1,33 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Session'" [nzWidth]="modalWidth"
+          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveSession()"
+          [nzStyle]="modalStyle" [nzCancelDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false"
+          [nzOkDisabled]="saving">
+
+  <ng-container *nzModalContent>
+
+    <div *ngIf="model">
+
+      <div class="w-100">
+
+        Name:
+
+        <input nz-input [(ngModel)]="model.name" class="w-100">
+
+      </div>
+
+      <div class="w-100 mt-3">
+
+        <div>Type:</div>
+
+        <nz-select class="w-100" [(ngModel)]="model.sessionType">
+          <nz-option nzValue="static" nzLabel="Static Turn Order"></nz-option>
+          <nz-option nzValue="variable" nzLabel="Variable Turn Order"></nz-option>
+        </nz-select>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</nz-modal>

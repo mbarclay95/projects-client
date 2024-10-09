@@ -83,4 +83,4 @@ export class AppComponent {
   }
 }
 
-export const isMobile = screen.width < 800;
+export const isMobile = screen.width < 900;

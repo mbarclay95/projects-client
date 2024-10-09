@@ -8,11 +8,24 @@ import {
 } from './pages/gaming-sessions-admin-page/gaming-sessions-admin-page.component';
 import {Permissions} from '../auth/permissions';
 import {MobileHeaderResolver} from '../mobile-header.resolver';
+import {GamingSessionViewPageComponent} from './pages/gaming-session-view-page/gaming-session-view-page.component';
+import {viewSessionResolver} from './view-session.resolver';
 
 const routes: Routes = [
   {
     path: '', resolve: {gamingResolver}, children: [
-      {path: '', component: GamingSessionsPageComponent},
+      {
+        path: '',
+        component: GamingSessionsPageComponent,
+        resolve: {MobileHeaderResolver},
+        data: {showCreateButton: true}
+      },
+      {
+        path: 'session/:id',
+        resolve: {viewSessionResolver, MobileHeaderResolver},
+        data: {showCreateButton: false},
+        component: GamingSessionViewPageComponent
+      },
       {
         path: 'admin',
         canActivate: [AuthGuard],

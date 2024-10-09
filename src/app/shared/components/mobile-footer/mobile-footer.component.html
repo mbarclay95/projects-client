@@ -2,7 +2,7 @@
 
   <ng-container *ngLet="mobileFooterService.footerButtons$ | async as footerButtons">
 
-    <div *ngIf="footerButtons.length === 0" style="padding: 24px 50px; font-size: 14px">Big Mike ©2022</div>
+    <div *ngIf="footerButtons.length === 0" style="padding: 24px 50px; font-size: 14px">Big Mike ©2024</div>
 
     <div class="footer-button {{currentRoute === footerButton.path ? 'selected' : 'unselected'}}"
          *ngFor="let footerButton of footerButtons" [routerLink]="footerButton.path">

@@ -1,0 +1,22 @@
+.session-box {
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.4);
+  padding: 0.25rem 0.75rem;
+
+  .first-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 63px;
+  }
+
+}
+
+.title {
+  font-size: 17px;
+  color: white;
+}
+
+

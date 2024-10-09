@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AsyncPipe, NgIf} from '@angular/common';
 import {GamingSegmentComponent} from '../../components/gaming-segment/gaming-segment.component';
 import {GamingSessionsFacadeService} from '../../services/gaming-sessions-facade.service';
 import {NzSpinComponent} from 'ng-zorro-antd/spin';
 import {MobileHeaderService} from '../../../shared/services/mobile-header.service';
-import {Observable} from 'rxjs';
+import {Observable, Subject, merge} from 'rxjs';
 import {createGamingDevice, GamingDevice} from '../../models/gaming-device.model';
 import {map} from 'rxjs/operators';
 import {SharedModule} from '../../../shared/shared.module';
@@ -12,6 +12,11 @@ import {
   CreateEditDeviceModalComponent
 } from '../../components/create-edit-device-modal/create-edit-device-modal.component';
 import {GamingDevicesListComponent} from '../../components/gaming-devices-list/gaming-devices-list.component';
+import {createGamingSession, GamingSession} from '../../models/gaming-session.model';
+import {GamingSessionsListComponent} from '../../components/gaming-sessions-list/gaming-sessions-list.component';
+import {
+  CreateEditSessionModalComponent
+} from '../../components/create-edit-session-modal/create-edit-session-modal.component';
 
 @Component({
   selector: 'app-gaming-sessions-admin-page',
@@ -23,16 +28,28 @@ import {GamingDevicesListComponent} from '../../components/gaming-devices-list/g
     NzSpinComponent,
     SharedModule,
     CreateEditDeviceModalComponent,
-    GamingDevicesListComponent
+    GamingDevicesListComponent,
+    GamingSessionsListComponent,
+    CreateEditSessionModalComponent
   ],
   templateUrl: './gaming-sessions-admin-page.component.html',
   styleUrl: './gaming-sessions-admin-page.component.scss'
 })
 export class GamingSessionsAdminPageComponent {
   tab: 'sessions' | 'devices' = 'sessions';
-
-  openModal$: Observable<GamingDevice> = this.mobileHeaderService.clickedButton$.pipe(
-    map(() => createGamingDevice({}))
+  editDevice: Subject<GamingDevice> = new Subject<GamingDevice>();
+  editSession: Subject<GamingSession> = new Subject<GamingSession>();
+  openDeviceModal$: Observable<GamingDevice> = merge(
+    this.mobileHeaderService.clickedButton$.pipe(
+      map(() => createGamingDevice({}))
+    ),
+    this.editDevice.asObservable()
+  );
+  openSessionModal$: Observable<GamingSession> = merge(
+    this.mobileHeaderService.clickedButton$.pipe(
+      map(() => createGamingSession({}))
+    ),
+    this.editSession.asObservable()
   );
 
   constructor(

@@ -1,4 +1,4 @@
-<div class="w-100 sessions-container p-2">
+<div class="w-100 page-container p-2">
 
   <app-gaming-segment [tab]="tab" (tabChanged)="tab = $event"></app-gaming-segment>
 
@@ -14,7 +14,14 @@
 
     } @else {
 
-      Sessions
+      <app-gaming-sessions-list
+        [sessions]="(gamingSessionsFacadeService.gamingSessions$ | async) ?? []"
+        (editSession)="editSession.next($event)"
+      ></app-gaming-sessions-list>
+
+      <app-create-edit-session-modal
+        [openModal]="openSessionModal$"
+        ></app-create-edit-session-modal>
 
     }
   } @else {
@@ -29,10 +36,11 @@
 
       <app-gaming-devices-list
         [devices]="(gamingSessionsFacadeService.gamingDevices$ | async) ?? []"
+        (editDevice)="editDevice.next($event)"
       ></app-gaming-devices-list>
 
       <app-create-edit-device-modal
-        [openModal]="openModal$"
+        [openModal]="openDeviceModal$"
       ></app-create-edit-device-modal>
 
     }

@@ -33,6 +33,7 @@
     "ng-zorro-antd": "^17.4.1",
     "ngx-color": "^7.3.3",
     "ngx-socket-io": "4.6",
+    "pusher-js": "^8.4.0-rc2",
     "rxjs": "~7.5.0",
     "tslib": "^2.4.1",
     "zone.js": "~0.14.7"

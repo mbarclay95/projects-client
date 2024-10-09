@@ -1,0 +1,22 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="model | sessionDeviceTitle" [nzWidth]="modalWidth"
+          (nzOnCancel)="isVisible = false" [nzOkText]="model?.id === 0 ? 'Connect' : 'Update'"
+          nzCancelText="Cancel" (nzOnOk)="save()" [nzStyle]="modalStyle" [nzCancelDisabled]="saving"
+          [nzOkLoading]="saving" [nzMaskClosable]="false" [nzOkDisabled]="saving">
+
+  <ng-container *nzModalContent>
+
+    <div *ngIf="model">
+
+      <div class="w-100">
+
+        Enter your name:
+
+        <input nz-input [(ngModel)]="model.name" class="w-100">
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</nz-modal>

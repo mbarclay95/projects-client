@@ -50,7 +50,7 @@
         <div class="w-100 d-flex justify-content-evenly">
 
           <span *ngFor="let taskPoint of familiesQuery.taskPoints$ | async" (click)="updateTaskPoint(taskPoint)"
-                class="me-2 task-points {{task.taskPoint | selectedTaskPointColor : taskPoint}}">
+                class="me-2 task-points cursor-pointer {{task.taskPoint | selectedTaskPointColor : taskPoint}}">
             {{taskPoint}}
           </span>
 

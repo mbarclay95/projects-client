@@ -15,6 +15,7 @@ import {AppResolver} from './app.resolver';
 import {MoneyLayoutComponent} from './money/money-layout/money-layout.component';
 import {LoggingLayoutComponent} from './logging/logging-layout/logging-layout.component';
 import {GamingLayoutComponent} from './gaming/gaming-layout/gaming-layout.component';
+import {tryAuthGuard} from './auth/services/try-auth.guard';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
     loadChildren: () => import('./event-signup/event-signup.module').then(m => m.EventSignupModule)
   },
   {
-    path: 'games', component: GamingLayoutComponent, resolve: {AppResolver}, data: {headerTitle: 'Games'},
+    path: 'games', canActivate: [tryAuthGuard], component: GamingLayoutComponent, resolve: {AppResolver}, data: {headerTitle: 'Games'},
     loadChildren: () => import('./gaming/gaming.module').then(m => m.GamingModule)
   },
   {

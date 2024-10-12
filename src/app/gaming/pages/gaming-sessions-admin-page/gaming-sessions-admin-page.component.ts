@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {AsyncPipe, NgIf} from '@angular/common';
 import {GamingSegmentComponent} from '../../components/gaming-segment/gaming-segment.component';
 import {GamingSessionsFacadeService} from '../../services/gaming-sessions-facade.service';
@@ -35,7 +35,7 @@ import {
   templateUrl: './gaming-sessions-admin-page.component.html',
   styleUrl: './gaming-sessions-admin-page.component.scss'
 })
-export class GamingSessionsAdminPageComponent {
+export class GamingSessionsAdminPageComponent implements OnDestroy {
   tab: 'sessions' | 'devices' = 'sessions';
   editDevice: Subject<GamingDevice> = new Subject<GamingDevice>();
   editSession: Subject<GamingSession> = new Subject<GamingSession>();
@@ -56,6 +56,10 @@ export class GamingSessionsAdminPageComponent {
     public gamingSessionsFacadeService: GamingSessionsFacadeService,
     private mobileHeaderService: MobileHeaderService
   ) {
+  }
+
+  ngOnDestroy(): void {
+    // this.gamingSessionsFacadeService.stopDevicePolling();
   }
 
 }

@@ -45,11 +45,14 @@ export class GamingSessionsFacadeService {
     }),
     shareReplay()
   );
-  userHasSessionDevice$: Observable<boolean> = combineLatest([
+  userSessionDeviceId$: Observable<number | undefined> = combineLatest([
     this.activeGamingSession$,
     this.userGamingSessionsService.sessionUserState$
   ]).pipe(
-    map(([session, userState]) => session ? userState[session.id]?.gamingSessionDeviceId !== undefined : false)
+    map(([session, userState]) => session ? userState[session.id]?.gamingSessionDeviceId : undefined)
+  );
+  userHasSessionDevice$: Observable<boolean> = this.userSessionDeviceId$.pipe(
+    map((id) => !!id)
   );
 
   devicesLoading: WritableSignal<boolean> = signal(true);
@@ -61,7 +64,7 @@ export class GamingSessionsFacadeService {
 
   activeSessionDevices$: Observable<GamingDevice[]> = combineLatest([
     this.activeGamingSession$,
-    this.gamingDevices$
+    this.onlineGamingDevices$
   ]).pipe(
     map(([activeSession, devices]) => {
       if (!activeSession) {
@@ -75,14 +78,14 @@ export class GamingSessionsFacadeService {
 
   inactiveSessionDevices$: Observable<GamingDevice[]> = combineLatest([
     this.activeGamingSession$,
-    this.gamingDevices$
+    this.onlineGamingDevices$
   ]).pipe(
     map(([activeSession, devices]) => {
       if (!activeSession) {
         return [];
       }
 
-      const activeSessionDeviceIds = activeSession.gamingSessionDevices.flatMap(d => d.id);
+      const activeSessionDeviceIds = activeSession.gamingSessionDevices.flatMap(d => d.gamingDevice.id);
       return devices.filter((device) => !activeSessionDeviceIds.includes(device.id));
     })
   );

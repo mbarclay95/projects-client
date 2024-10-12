@@ -1,0 +1,68 @@
+<div>
+  <div class="d-flex w-100 justify-content-between">
+
+    <div>
+
+      <div class="title">Session Joined!</div>
+      <div class="mb-4">Waiting to start...</div>
+
+    </div>
+
+    <div>
+      <button nz-button nzType="text" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+
+        <fa-icon class="fa-lg" [icon]="more"></fa-icon>
+
+      </button>
+
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+
+        <ul nz-menu class="quick-action-menu">
+          <li nz-menu-item>
+            <fa-icon class="me-2" [icon]="pause"></fa-icon>Pause
+          </li>
+          <li nz-menu-item>
+            <fa-icon class="me-2" [icon]="settings"></fa-icon>Settings
+          </li>
+        </ul>
+
+      </nz-dropdown-menu>
+    </div>
+
+  </div>
+
+  <div cdkDropList (cdkDropListDropped)="dropSessionDevice({event : $event})" class="devices-container">
+
+    @for (sessionDevice of activeSession.gamingSessionDevices; track sessionDevice.id) {
+
+      <div class="session-device-container" cdkDrag>
+
+        <div>
+
+          <div class="d-flex align-items-center">
+
+            <button nz-button nzType="text" class="me-1" style="cursor: move" cdkDragHandle>
+
+              <fa-icon [icon]="grip"></fa-icon>
+
+            </button>
+
+            <fa-icon [icon]="button" style="color: {{sessionDevice.gamingDevice.buttonColor}}"></fa-icon>
+
+            <div class="ms-3">{{sessionDevice.name}}</div>
+
+          </div>
+
+        </div>
+
+        <div>
+          @if (sessionDevice.id === userSessionDeviceId) {
+            <fa-icon (click)="editClicked(sessionDevice)" [icon]="settings"></fa-icon>
+          }
+        </div>
+
+      </div>
+
+    }
+  </div>
+</div>

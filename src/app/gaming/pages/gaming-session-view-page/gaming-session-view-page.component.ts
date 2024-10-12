@@ -10,6 +10,7 @@ import {GamingSessionDevice} from '../../models/gaming-session-device.model';
 import {
   CreateEditSessionDeviceModalComponent
 } from '../../components/create-edit-session-device-modal/create-edit-session-device-modal.component';
+import {JoinedSessionComponent} from '../../components/joined-session/joined-session.component';
 
 @Component({
   selector: 'app-gaming-session-view-page',
@@ -20,7 +21,8 @@ import {
     SharedModule,
     FaIconComponent,
     ConnectToDeviceComponent,
-    CreateEditSessionDeviceModalComponent
+    CreateEditSessionDeviceModalComponent,
+    JoinedSessionComponent
   ],
   templateUrl: './gaming-session-view-page.component.html',
   styleUrl: './gaming-session-view-page.component.scss'

@@ -17,10 +17,10 @@
       </div>
 
       <div style="width: 18px; text-align: center">
-        @if (session.isActive) {
-          <fa-icon style="color: #82dd55" [icon]="online"></fa-icon>
-        } @else {
+        @if (session.endedAt) {
           <fa-icon style="color: #e23636" [icon]="offline"></fa-icon>
+        } @else {
+          <fa-icon style="color: #82dd55" [icon]="online"></fa-icon>
         }
       </div>
 

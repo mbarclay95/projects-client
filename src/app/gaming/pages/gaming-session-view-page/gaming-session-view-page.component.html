@@ -6,7 +6,11 @@
   <div class="page-container mt-2">
 
     @if (gamingSessionsFacadeService.userHasSessionDevice$ | async) {
-
+      <app-joined-session
+        [activeSession]="(gamingSessionsFacadeService.activeGamingSession$ | async)!"
+        [userSessionDeviceId]="(gamingSessionsFacadeService.userSessionDeviceId$ | async)!"
+        (editSessionDevice)="openModal.next($event)"
+      ></app-joined-session>
     } @else {
       <app-connect-to-device
         [devices]="(gamingSessionsFacadeService.inactiveSessionDevices$ | async) ?? []"

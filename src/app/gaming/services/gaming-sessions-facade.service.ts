@@ -19,6 +19,7 @@ import {MobileHeaderService} from '../../shared/services/mobile-header.service';
 import {UserGamingSessionsService} from './user-gaming-sessions.service';
 import {createGamingSessionDevice, GamingSessionDevice} from '../models/gaming-session-device.model';
 import {GamingSessionDevicesService} from './gaming-session-devices.service';
+import {webSocket} from 'rxjs/webSocket';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,8 @@ export class GamingSessionsFacadeService {
       }
       return activeSession;
     }),
-    shareReplay()
+    shareReplay(),
+    tap(x => console.log(x))
   );
   userSessionDeviceId$: Observable<number | undefined> = combineLatest([
     this.activeGamingSession$,
@@ -101,7 +103,8 @@ export class GamingSessionsFacadeService {
   ) {
   }
 
-  // connectToWs(): void {
+  connectToWs(): void {
+    webSocket('ws://10.5.10.11:1880/ws/gaming/testing').subscribe(x => console.log(x));
   // const subject = webSocket('ws://localhost:8080');
   // subject.subscribe(
   //   msg => console.log(msg)
@@ -114,7 +117,7 @@ export class GamingSessionsFacadeService {
   // });
   // pusher.connect();
   // pusher.bind()
-  // }
+  }
 
   setSessionActiveId(id: number) {
     this.activeGamingSessionId.next(id);
@@ -232,5 +235,32 @@ export class GamingSessionsFacadeService {
         tap((devices) => this.gamingDevicesSubject.next(devices))
       ))
     ).subscribe();
+  }
+
+  updateSessionDeviceTurnOrderCache(sessionId: number, sessionDeviceId: number, newTurnOrder: number): void {
+    const updatedSessions = [...this.gamingSessionsSubject.getValue()].map((session) => {
+      if (session.id === sessionId) {
+        const updatedSessionDevices = session.gamingSessionDevices.map((sessionDevice) => {
+          if (sessionDevice.id === sessionDeviceId) {
+            return createGamingSessionDevice({...sessionDevice, ...{currentTurnOrder: newTurnOrder}});
+          }
+
+          return sessionDevice;
+        });
+        return createGamingSession({...session, ...{gamingSessionDevices: updatedSessionDevices}});
+      }
+
+      return session;
+    });
+
+    this.gamingSessionsSubject.next(updatedSessions);
+  }
+
+  updateSessionDeviceSort(sessionId: number, movedSessionDevices: { id: number; turnOrder: number }[]): void {
+    this.gamingSessionsService.updateSessionDeviceSort(sessionId, movedSessionDevices).subscribe();
+  }
+
+  testing(): void {
+    this.gamingSessionDevicesService.testing().subscribe();
   }
 }

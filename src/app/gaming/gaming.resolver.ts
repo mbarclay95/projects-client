@@ -10,7 +10,7 @@ export const gamingResolver: ResolveFn<boolean> = (route, state) => {
   gamingFacade.loadSessions();
   gamingFacade.loadDevices();
   gamingFacade.startDevicePolling();
-  // gamingFacade.connectToWs();
+  gamingFacade.connectToWs();
 
   return true;
 };

@@ -90,9 +90,9 @@
               </button>
             }
 
-            <fa-icon [icon]="button" style="color: {{sessionDevice.gamingDevice.buttonColor}}"></fa-icon>
+            <fa-icon [icon]="button" [style.color]="sessionDevice.gamingDevice.buttonColor"></fa-icon>
 
-            <div class="ms-3">{{ sessionDevice.name }}</div>
+            <div class="ms-2">{{ sessionDevice.name }}</div>
 
           </div>
 

@@ -45,7 +45,6 @@ export class GamingSessionsFacadeService {
       return activeSession;
     }),
     shareReplay(),
-    tap(x => console.log(x))
   );
   userSessionDeviceId$: Observable<number | undefined> = combineLatest([
     this.activeGamingSession$,
@@ -62,20 +61,6 @@ export class GamingSessionsFacadeService {
   gamingDevices$: Observable<GamingDevice[]> = this.gamingDevicesSubject.asObservable();
   onlineGamingDevices$: Observable<GamingDevice[]> = this.gamingDevices$.pipe(
     map(devices => devices.filter(device => differenceInSeconds(new Date(), device.lastSeen) < 120))
-  );
-
-  activeSessionDevices$: Observable<GamingDevice[]> = combineLatest([
-    this.activeGamingSession$,
-    this.onlineGamingDevices$
-  ]).pipe(
-    map(([activeSession, devices]) => {
-      if (!activeSession) {
-        return [];
-      }
-
-      const activeSessionDeviceIds = activeSession.gamingSessionDevices.flatMap(d => d.id);
-      return devices.filter((device) => activeSessionDeviceIds.includes(device.id));
-    })
   );
 
   inactiveSessionDevices$: Observable<GamingDevice[]> = combineLatest([
@@ -106,7 +91,6 @@ export class GamingSessionsFacadeService {
 
   connectToWs(): void {
     webSocket<WebSocketEvent>('wss://node-red.bigmike.dev/ws/gaming').subscribe((webSocketEvent) => {
-      console.log(webSocketEvent);
       if (webSocketEvent.event === 'gamingSessions') {
         this.gamingSessionsSubject.next(webSocketEvent.data.map(session => createGamingSession(session)));
       } else if (webSocketEvent.event === 'gamingDevices') {

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {GamingDevice} from '../../models/gaming-device.model';
 import {DatePipe, NgIf} from '@angular/common';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
-import {faCircleCheck, faCircleXmark} from '@fortawesome/free-solid-svg-icons';
+import {faCircle, faCircleCheck, faCircleXmark} from '@fortawesome/free-solid-svg-icons';
 import {DeviceOnlinePipe} from '../../pipes/device-online.pipe';
 
 @Component({
@@ -23,4 +23,5 @@ export class GamingDevicesListComponent {
 
   online = faCircleCheck;
   offline = faCircleXmark;
+  button = faCircle;
 }

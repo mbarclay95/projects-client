@@ -6,7 +6,13 @@
 
       <div>
 
-        <div class="title">{{device.deviceCommunicationId}}</div>
+        <div class="d-flex align-items-center">
+
+          <fa-icon [icon]="button" [style.color]="device.buttonColor"></fa-icon>
+
+          <div class="ms-2 title">{{device.deviceCommunicationId}}</div>
+
+        </div>
 
         <div class="last-seen d-flex align-items-center">
 

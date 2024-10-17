@@ -1,11 +1,23 @@
 <div>
-  <div class="d-flex w-100 justify-content-between">
+  <div class="d-flex w-100 justify-content-between mb-3">
 
-    <div class="mb-3">
+    <div>
 
-      <div class="title">Session Joined!</div>
-      <div>Waiting to start...</div>
-<!--      <button nz-button nzType="primary">Start</button>-->
+      <div class="title">
+        @if (!activeSession.startedAt) {
+          Session Joined!
+        } @else {
+          Session Active!
+        }
+      </div>
+
+      <div>
+        @if (!activeSession.startedAt) {
+          Waiting to start...
+        } @else if (activeSession.isPaused) {
+          <span class="text-warning" style="font-style: italic">Paused</span>
+        }
+      </div>
 
     </div>
 
@@ -19,12 +31,22 @@
       <nz-dropdown-menu #menu="nzDropdownMenu">
 
         <ul nz-menu class="quick-action-menu">
-          <li nz-menu-item (click)="togglePause()">
-            <fa-icon class="me-2" [icon]="pause"></fa-icon>Pause
-          </li>
+          @if (activeSession.startedAt && !activeSession.isPaused) {
+            <li nz-menu-item (click)="togglePause()">
+              <fa-icon class="me-2" [icon]="pause"></fa-icon>
+              Pause
+            </li>
+          }
           <li nz-menu-item (click)="editSession()">
-            <fa-icon class="me-2" [icon]="settings"></fa-icon>Settings
+            <fa-icon class="me-2" [icon]="settings"></fa-icon>
+            Settings
           </li>
+          @if (activeSession.startedAt) {
+            <li nz-menu-item (click)="endSession()">
+              <fa-icon class="me-2" [icon]="finish"></fa-icon>
+              End Session
+            </li>
+          }
         </ul>
 
       </nz-dropdown-menu>
@@ -34,33 +56,43 @@
 
   </div>
 
-  <div class="w-100 d-flex justify-content-center mb-3">
-    <button nz-button nzType="primary" nzSize="large" (click)="startSession()" [nzLoading]="updating"
-            [disabled]="updating">
-      <fa-icon class="me-2" [icon]="play"></fa-icon>Start Session
-    </button>
-    <button nz-button (click)="gamingSessionsFacadeService.testing()">Testing</button>
-  </div>
+    <div class="w-100 d-flex justify-content-center mb-3">
+      @if (!activeSession.startedAt) {
+      <button nz-button nzType="primary" nzSize="large" (click)="startSession()" [nzLoading]="updating"
+              [disabled]="updating">
+        <fa-icon class="me-2" [icon]="play"></fa-icon>
+        Start Session
+      </button>
+      } @else if (activeSession.isPaused) {
+        <button nz-button nzType="primary" nzSize="large" (click)="togglePause()">
+          <fa-icon class="me-2" [icon]="play"></fa-icon>
+          Resume
+        </button>
+      }
+    </div>
 
   <div cdkDropList (cdkDropListDropped)="dropSessionDevice({event : $event})" class="devices-container">
 
     @for (sessionDevice of activeSession.gamingSessionDevices; track sessionDevice.id) {
 
-      <div class="session-device-container" cdkDrag>
+      <div [class.active-player]="sessionDevice.currentTurnOrder === activeSession.currentTurn"
+           class="session-device-container" cdkDrag [cdkDragDisabled]="activeSession.startedAt && !activeSession.isPaused">
 
         <div>
 
           <div class="d-flex align-items-center">
 
-            <button nz-button nzType="text" class="me-1" style="cursor: move" cdkDragHandle>
+            @if (!activeSession.startedAt || activeSession.isPaused) {
+              <button nz-button nzType="text" class="me-1" style="cursor: move" cdkDragHandle>
 
-              <fa-icon [icon]="grip"></fa-icon>
+                <fa-icon [icon]="grip"></fa-icon>
 
-            </button>
+              </button>
+            }
 
             <fa-icon [icon]="button" style="color: {{sessionDevice.gamingDevice.buttonColor}}"></fa-icon>
 
-            <div class="ms-3">{{sessionDevice.name}}</div>
+            <div class="ms-3">{{ sessionDevice.name }}</div>
 
           </div>
 

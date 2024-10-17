@@ -4,11 +4,10 @@ import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {
   faCircle,
   faEllipsisV,
-  faGear, faGripVertical, faPause, faPlay,
+  faGear, faGripVertical, faPause, faPlay, faStop,
 } from '@fortawesome/free-solid-svg-icons';
 import {createGamingSessionDevice, GamingSessionDevice} from '../../models/gaming-session-device.model';
 import {CdkDragHandle, CdkDropList, DragDropModule} from '@angular/cdk/drag-drop';
-import {NgIf} from '@angular/common';
 import {NzButtonComponent} from 'ng-zorro-antd/button';
 import {NzDropdownButtonDirective, NzDropDownDirective, NzDropdownMenuComponent} from 'ng-zorro-antd/dropdown';
 import {NzMenuDirective, NzMenuItemComponent} from 'ng-zorro-antd/menu';
@@ -16,6 +15,7 @@ import {Subject} from 'rxjs';
 import {CreateEditSessionModalComponent} from '../create-edit-session-modal/create-edit-session-modal.component';
 import {GamingSessionsFacadeService} from '../../services/gaming-sessions-facade.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-joined-session',
@@ -24,7 +24,6 @@ import {NzMessageService} from 'ng-zorro-antd/message';
     FaIconComponent,
     CdkDropList,
     CdkDragHandle,
-    NgIf,
     NzButtonComponent,
     DragDropModule,
     NzDropDownDirective,
@@ -49,11 +48,13 @@ export class JoinedSessionComponent {
   grip = faGripVertical;
   pause = faPause;
   play = faPlay;
+  finish = faStop;
   openSessionModal: Subject<GamingSession> = new Subject<GamingSession>();
 
   constructor(
     public gamingSessionsFacadeService: GamingSessionsFacadeService,
-    private nzMessageService: NzMessageService
+    private nzMessageService: NzMessageService,
+    private router: Router
   ) {
   }
 
@@ -106,10 +107,21 @@ export class JoinedSessionComponent {
     this.updating = false;
   }
 
+  async endSession(): Promise<void> {
+    try {
+      await this.gamingSessionsFacadeService.updateSessionPromise(createGamingSession({...this.activeSession, ...{endedAt: new Date()}}));
+      this.nzMessageService.success('Session ended!');
+      await this.router.navigateByUrl('games');
+    } catch (error) {
+      this.nzMessageService.error('There was an error ending the session');
+    }
+  }
+
   async togglePause(): Promise<void> {
+    const isPaused = this.activeSession.isPaused;
     try {
       await this.gamingSessionsFacadeService.updateSessionPromise(createGamingSession({...this.activeSession, ...{isPaused: !this.activeSession.isPaused}}));
-      this.nzMessageService.success('Session paused!');
+      this.nzMessageService.success(`Session ${isPaused ? 'resumed' : 'paused'}!`);
     } catch (error) {
       this.nzMessageService.error('There was an error pausing the session');
     }

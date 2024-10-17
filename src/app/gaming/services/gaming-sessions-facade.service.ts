@@ -101,22 +101,19 @@ export class GamingSessionsFacadeService {
     private mobileHeaderService: MobileHeaderService,
     private userGamingSessionsService: UserGamingSessionsService
   ) {
+    this.connectToWs();
   }
 
   connectToWs(): void {
-    webSocket('ws://10.5.10.11:1880/ws/gaming/testing').subscribe(x => console.log(x));
-  // const subject = webSocket('ws://localhost:8080');
-  // subject.subscribe(
-  //   msg => console.log(msg)
-  // );
-  // const pusher = new Pusher('efslrhkkyd6cya63yryy', {
-  //   cluster: '',
-  //   wsHost: 'localhost',
-  //   wsPort: 8080,
-  //   forceTLS: false,
-  // });
-  // pusher.connect();
-  // pusher.bind()
+    webSocket<WebSocketEvent>('wss://node-red.bigmike.dev/ws/gaming').subscribe((webSocketEvent) => {
+      console.log(webSocketEvent);
+      if (webSocketEvent.event === 'gamingSessions') {
+        this.gamingSessionsSubject.next(webSocketEvent.data.map(session => createGamingSession(session)));
+      } else if (webSocketEvent.event === 'gamingDevices') {
+        this.gamingDevicesSubject.next(webSocketEvent.data.map(device => createGamingDevice(device)));
+
+      }
+    });
   }
 
   setSessionActiveId(id: number) {
@@ -264,3 +261,11 @@ export class GamingSessionsFacadeService {
     this.gamingSessionDevicesService.testing().subscribe();
   }
 }
+
+type WebSocketEvent = {
+  event: 'gamingDevices',
+  data: GamingDevice[]
+} | {
+  event: 'gamingSessions',
+  data: GamingSession[]
+};

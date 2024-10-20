@@ -4,7 +4,7 @@ import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {
   faCircle,
   faEllipsisV,
-  faGear, faGripVertical, faPause, faPlay, faStop,
+  faGear, faGripVertical, faPause, faPlay, faShuffle, faStop,
 } from '@fortawesome/free-solid-svg-icons';
 import {createGamingSessionDevice, GamingSessionDevice} from '../../models/gaming-session-device.model';
 import {CdkDragHandle, CdkDropList, DragDropModule} from '@angular/cdk/drag-drop';
@@ -16,6 +16,9 @@ import {CreateEditSessionModalComponent} from '../create-edit-session-modal/crea
 import {GamingSessionsFacadeService} from '../../services/gaming-sessions-facade.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Router} from '@angular/router';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {PermissionsService} from '../../../auth/services/permissions.service';
+import {Permissions} from '../../../auth/permissions';
 
 @Component({
   selector: 'app-joined-session',
@@ -49,12 +52,16 @@ export class JoinedSessionComponent {
   pause = faPause;
   play = faPlay;
   finish = faStop;
+  random = faShuffle;
   openSessionModal: Subject<GamingSession> = new Subject<GamingSession>();
+  adminPermission = Permissions.GAMING_SESSIONS_ADMIN_PAGE;
 
   constructor(
     public gamingSessionsFacadeService: GamingSessionsFacadeService,
     private nzMessageService: NzMessageService,
-    private router: Router
+    private router: Router,
+    private nzModalService: NzModalService,
+    public permissionsService: PermissionsService
   ) {
   }
 
@@ -83,7 +90,10 @@ export class JoinedSessionComponent {
         movedSessionDevices.push({id: sessionDevice.id, turnOrder: newPosition});
         this.gamingSessionsFacadeService.updateSessionDeviceTurnOrderCache(this.activeSession.id, sessionDevice.id, newPosition);
       } else {
-        movedSessionDevices.push({id: sessionDevice.id, turnOrder: sessionDevice.currentTurnOrder + (movedDown ? 1 : -1)});
+        movedSessionDevices.push({
+          id: sessionDevice.id,
+          turnOrder: sessionDevice.currentTurnOrder + (movedDown ? 1 : -1)
+        });
         this.gamingSessionsFacadeService.updateSessionDeviceTurnOrderCache(this.activeSession.id, sessionDevice.id, sessionDevice.currentTurnOrder + (movedDown ? 1 : -1));
       }
     });
@@ -93,6 +103,20 @@ export class JoinedSessionComponent {
 
   editSession(): void {
     this.openSessionModal.next(createGamingSession(this.activeSession));
+  }
+
+  async setCurrentTurn(turn: number): Promise<void> {
+    if (turn === this.activeSession.currentTurn) {
+      return;
+    }
+    this.updating = true;
+    try {
+      await this.gamingSessionsFacadeService.updateSessionPromise(createGamingSession({...this.activeSession, ...{currentTurn: turn}}));
+    } catch (error) {
+      this.nzMessageService.error('There was an error activating the player\'s turn');
+    }
+
+    this.updating = false;
   }
 
   async startSession(): Promise<void> {
@@ -118,6 +142,7 @@ export class JoinedSessionComponent {
   }
 
   async togglePause(): Promise<void> {
+    this.updating = true;
     const isPaused = this.activeSession.isPaused;
     try {
       await this.gamingSessionsFacadeService.updateSessionPromise(createGamingSession({...this.activeSession, ...{isPaused: !this.activeSession.isPaused}}));
@@ -125,5 +150,24 @@ export class JoinedSessionComponent {
     } catch (error) {
       this.nzMessageService.error('There was an error pausing the session');
     }
+    this.updating = false;
+  }
+
+  selectRandomFirstPlayer(): void {
+    const randomPlayerIndex = Math.floor(Math.random() * (this.activeSession.gamingSessionDevices.length));
+    const sessionDevice = this.activeSession.gamingSessionDevices[randomPlayerIndex];
+    this.nzModalService.confirm({
+      nzTitle: 'First player is:',
+      nzContent: `<b class="font-size">${sessionDevice.name}</b>`,
+      nzStyle: {'font-size': '20px !important'},
+      nzOkText: 'Accept',
+      nzCancelText: 'Cancel',
+      nzOnOk: () => this.dropSessionDevice({
+        event: {
+          previousIndex: randomPlayerIndex,
+          currentIndex: 0
+        }
+      })
+    });
   }
 }

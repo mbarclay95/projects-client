@@ -41,6 +41,12 @@
             <fa-icon class="me-2" [icon]="settings"></fa-icon>
             Settings
           </li>
+          @if (!activeSession.startedAt || activeSession.isPaused) {
+            <li nz-menu-item (click)="selectRandomFirstPlayer()">
+              <fa-icon class="me-2" [icon]="random"></fa-icon>
+              Random 1st player
+            </li>
+          }
           @if (activeSession.startedAt) {
             <li nz-menu-item (click)="endSession()">
               <fa-icon class="me-2" [icon]="finish"></fa-icon>
@@ -56,27 +62,29 @@
 
   </div>
 
-    <div class="w-100 d-flex justify-content-center mb-3">
-      @if (!activeSession.startedAt) {
+  <div class="w-100 d-flex justify-content-center mb-3">
+    @if (!activeSession.startedAt) {
       <button nz-button nzType="primary" nzSize="large" (click)="startSession()" [nzLoading]="updating"
               [disabled]="updating">
         <fa-icon class="me-2" [icon]="play"></fa-icon>
         Start Session
       </button>
-      } @else if (activeSession.isPaused) {
-        <button nz-button nzType="primary" nzSize="large" (click)="togglePause()">
-          <fa-icon class="me-2" [icon]="play"></fa-icon>
-          Resume
-        </button>
-      }
-    </div>
+    } @else if (activeSession.isPaused) {
+      <button nz-button nzType="primary" nzSize="large" (click)="togglePause()" [nzLoading]="updating"
+              [disabled]="updating">
+        <fa-icon class="me-2" [class.ms-2]="updating" [icon]="play"></fa-icon>
+        Resume
+      </button>
+    }
+  </div>
 
   <div cdkDropList (cdkDropListDropped)="dropSessionDevice({event : $event})" class="devices-container">
 
     @for (sessionDevice of activeSession.gamingSessionDevices; track sessionDevice.id) {
 
       <div [class.active-player]="sessionDevice.currentTurnOrder === activeSession.currentTurn"
-           class="session-device-container" cdkDrag [cdkDragDisabled]="activeSession.startedAt && !activeSession.isPaused">
+           class="session-device-container" cdkDrag
+           [cdkDragDisabled]="activeSession.startedAt && !activeSession.isPaused">
 
         <div>
 
@@ -99,7 +107,31 @@
         </div>
 
         <div>
-          @if (sessionDevice.id === userSessionDeviceId) {
+          @if (activeSession.startedAt && activeSession.isPaused) {
+            <button nz-button nzType="text" nz-dropdown nzTrigger="click" [nzDropdownMenu]="playerMenu">
+
+              <fa-icon class="fa-lg" [icon]="more"></fa-icon>
+
+            </button>
+
+            <nz-dropdown-menu #playerMenu="nzDropdownMenu">
+
+              <ul nz-menu class="quick-action-menu">
+                <li nz-menu-item (click)="setCurrentTurn(sessionDevice.currentTurnOrder)"
+                    [nzDisabled]="sessionDevice.currentTurnOrder === activeSession.currentTurn">
+                  <fa-icon class="me-2" [icon]="play"></fa-icon>
+                  Activate Turn
+                </li>
+                @if (sessionDevice.id === userSessionDeviceId || permissionsService.hasPermissionTo(adminPermission)) {
+                  <li nz-menu-item (click)="editClicked(sessionDevice)">
+                    <fa-icon class="me-2" [icon]="settings"></fa-icon>
+                    Settings
+                  </li>
+                }
+              </ul>
+
+            </nz-dropdown-menu>
+          } @else if (sessionDevice.id === userSessionDeviceId || permissionsService.hasPermissionTo(adminPermission)) {
             <fa-icon (click)="editClicked(sessionDevice)" [icon]="settings"></fa-icon>
           }
         </div>

@@ -50,3 +50,9 @@
 .session-device-container.cdk-drop-list-dragging .site-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+::ng-deep {
+  .font-size {
+    font-size: 21px;
+  }
+}

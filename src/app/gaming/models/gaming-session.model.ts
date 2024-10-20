@@ -3,6 +3,7 @@ import {createGamingSessionDevice, GamingSessionDevice} from './gaming-session-d
 export interface GamingSession {
   id: number;
   name: string;
+  createdAt: Date | null;
   startedAt: Date | null;
   endedAt: Date | null;
   turnOrderType: 'static' | 'variable';
@@ -19,6 +20,7 @@ export function createGamingSession(params: Partial<GamingSession>) {
   return {
     id: params.id ?? 0,
     name: params.name ?? '',
+    createdAt: params.createdAt ? new Date(params.createdAt) : null,
     startedAt: params.startedAt ? new Date(params.startedAt) : null,
     endedAt: params.endedAt ? new Date(params.endedAt) : null,
     turnOrderType: params.turnOrderType ?? 'static',

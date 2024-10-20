@@ -13,8 +13,8 @@ export class GamingSessionsService {
     private httpClient: HttpClient
   ) { }
 
-  get(): Observable<GamingSession[]> {
-    return this.httpClient.get<GamingSession[]>(`${environment.apiUrl}/gaming/sessions`);
+  get(queryParams: string): Observable<GamingSession[]> {
+    return this.httpClient.get<GamingSession[]>(`${environment.apiUrl}/gaming/sessions?${queryParams}`);
   }
 
   create(session: GamingSession): Observable<GamingSession> {

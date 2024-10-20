@@ -10,6 +10,7 @@ import {Permissions} from '../auth/permissions';
 import {MobileHeaderResolver} from '../mobile-header.resolver';
 import {GamingSessionViewPageComponent} from './pages/gaming-session-view-page/gaming-session-view-page.component';
 import {viewSessionResolver} from './view-session.resolver';
+import {guestGamingResolver} from './guest-gaming.resolver';
 
 const routes: Routes = [
   {
@@ -17,12 +18,12 @@ const routes: Routes = [
       {
         path: '',
         component: GamingSessionsPageComponent,
-        resolve: {MobileHeaderResolver},
+        resolve: {MobileHeaderResolver, guestGamingResolver},
         data: {showCreateButton: true}
       },
       {
         path: 'session/:id',
-        resolve: {viewSessionResolver, MobileHeaderResolver},
+        resolve: {viewSessionResolver, MobileHeaderResolver, guestGamingResolver},
         data: {showCreateButton: false},
         component: GamingSessionViewPageComponent
       },

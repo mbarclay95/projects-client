@@ -7,7 +7,7 @@ export const gamingResolver: ResolveFn<boolean> = (route, state) => {
   const gamingFacade = inject(GamingSessionsFacadeService);
   const userGamingSessionsService = inject(UserGamingSessionsService);
   userGamingSessionsService.initialize();
-  gamingFacade.loadSessions();
+  // gamingFacade.loadSessions();
   gamingFacade.loadDevices();
 
   return true;

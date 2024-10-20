@@ -7,7 +7,7 @@ import {
   combineLatest,
   shareReplay,
   Subject,
-  exhaustMap, takeUntil, interval
+  exhaustMap, takeUntil, interval, switchMap
 } from 'rxjs';
 import {createGamingSession, GamingSession} from '../models/gaming-session.model';
 import {createGamingDevice, GamingDevice} from '../models/gaming-device.model';
@@ -27,8 +27,14 @@ import {webSocket} from 'rxjs/webSocket';
 export class GamingSessionsFacadeService {
   sessionsLoading: WritableSignal<boolean> = signal(true);
   private gamingSessionsSubject: BehaviorSubject<GamingSession[]> = new BehaviorSubject<GamingSession[]>([]);
+  private gamingSessionsUiSubject: BehaviorSubject<GamingSessionsUi> = new BehaviorSubject<GamingSessionsUi>({
+    showArchived: false
+  });
   private activeGamingSessionId: BehaviorSubject<number | undefined> = new BehaviorSubject<number | undefined>(undefined);
   gamingSessions$: Observable<GamingSession[]> = this.gamingSessionsSubject.asObservable();
+  gamingSessionsUi$: Observable<GamingSessionsUi> = this.gamingSessionsUiSubject.asObservable().pipe(
+    switchMap((ui) => this.loadSessions$(ui))
+  );
   activeGamingSession$: Observable<GamingSession | undefined> = combineLatest([
     this.gamingSessions$,
     this.activeGamingSessionId.asObservable()
@@ -100,19 +106,29 @@ export class GamingSessionsFacadeService {
     });
   }
 
+  emptyGamingSessions(): boolean {
+    return this.gamingSessionsSubject.getValue().length === 0;
+  }
+
+  updateUi(newUi: Partial<GamingSessionsUi>): void {
+    this.gamingSessionsUiSubject.next({...this.gamingSessionsUiSubject.getValue(), ...newUi});
+  }
+
   setSessionActiveId(id: number) {
     this.activeGamingSessionId.next(id);
   }
 
-  loadSessions(): void {
+  loadSessions$<T extends GamingSessionsUi | undefined>(ui: T): Observable<T> {
+    const queryParams = ui?.showArchived ? 'withArchived=1' : '';
     this.sessionsLoading.set(true);
-    this.gamingSessionsService.get().pipe(
+    return this.gamingSessionsService.get(queryParams).pipe(
       map((sessions) => sessions.map((session) => createGamingSession(session))),
       tap((sessions) => {
         this.gamingSessionsSubject.next(sessions);
         this.sessionsLoading.set(false);
-      })
-    ).subscribe();
+      }),
+      map(() => ui)
+    );
   }
 
   loadDevices(): void {
@@ -252,4 +268,8 @@ type WebSocketEvent = {
 } | {
   event: 'gamingSessions',
   data: GamingSession[]
+};
+
+export type GamingSessionsUi = {
+  showArchived: boolean;
 };

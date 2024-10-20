@@ -17,6 +17,8 @@ import {GamingSessionsListComponent} from '../../components/gaming-sessions-list
 import {
   CreateEditSessionModalComponent
 } from '../../components/create-edit-session-modal/create-edit-session-modal.component';
+import {NzSwitchComponent} from 'ng-zorro-antd/switch';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-gaming-sessions-admin-page',
@@ -30,12 +32,14 @@ import {
     CreateEditDeviceModalComponent,
     GamingDevicesListComponent,
     GamingSessionsListComponent,
-    CreateEditSessionModalComponent
+    CreateEditSessionModalComponent,
+    NzSwitchComponent,
+    FormsModule
   ],
   templateUrl: './gaming-sessions-admin-page.component.html',
   styleUrl: './gaming-sessions-admin-page.component.scss'
 })
-export class GamingSessionsAdminPageComponent implements OnDestroy {
+export class GamingSessionsAdminPageComponent {
   tab: 'sessions' | 'devices' = 'sessions';
   editDevice: Subject<GamingDevice> = new Subject<GamingDevice>();
   editSession: Subject<GamingSession> = new Subject<GamingSession>();
@@ -56,10 +60,6 @@ export class GamingSessionsAdminPageComponent implements OnDestroy {
     public gamingSessionsFacadeService: GamingSessionsFacadeService,
     private mobileHeaderService: MobileHeaderService
   ) {
-  }
-
-  ngOnDestroy(): void {
-    // this.gamingSessionsFacadeService.stopDevicePolling();
   }
 
 }

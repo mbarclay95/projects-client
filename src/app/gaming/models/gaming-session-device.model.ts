@@ -18,7 +18,7 @@ export function createGamingSessionDevice(params: Partial<GamingSessionDevice>) 
     name: params.name ?? '',
     gamingDevice: createGamingDevice(params.gamingDevice ?? {}),
     gamingSessionId: params.gamingSessionId,
-    turnTimeDisplayMode: params.turnTimeDisplayMode ?? 'none',
+    turnTimeDisplayMode: params.turnTimeDisplayMode ?? 'numeric',
     currentTurnOrder: params.currentTurnOrder,
     nextTurnOrder: params.nextTurnOrder ?? null,
     skip: params.skip ?? false,

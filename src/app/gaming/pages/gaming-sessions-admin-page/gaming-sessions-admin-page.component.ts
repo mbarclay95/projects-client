@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component} from '@angular/core';
 import {AsyncPipe, NgIf} from '@angular/common';
 import {GamingSegmentComponent} from '../../components/gaming-segment/gaming-segment.component';
 import {GamingSessionsFacadeService} from '../../services/gaming-sessions-facade.service';

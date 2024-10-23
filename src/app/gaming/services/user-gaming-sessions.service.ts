@@ -25,6 +25,13 @@ export class UserGamingSessionsService {
     localStorage.setItem(GAMING_STORAGE_KEY, JSON.stringify(state));
     this.sessionUserState.next(state);
   }
+
+  clearForSession(gamingSessionId: number): void {
+    const state= this.sessionUserState.getValue();
+    delete state[gamingSessionId];
+    localStorage.setItem(GAMING_STORAGE_KEY, JSON.stringify(state));
+    this.sessionUserState.next(state);
+  }
 }
 
 export type UserGamingSessions = {

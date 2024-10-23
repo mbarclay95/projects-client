@@ -21,9 +21,7 @@ export class GamingSessionDevicesService {
     return this.httpClient.patch<GamingSessionDevice>(`${environment.apiUrl}/gaming/session-devices/${sessionDevice.id}`, sessionDevice);
   }
 
-  testing(): Observable<Object> {
-    return this.httpClient.patch(`${environment.apiUrl}/gaming/device-action/yS9gBd`, {
-      action: 'buttonPress'
-    });
+  delete(sessionDeviceId: number): Observable<Object> {
+    return this.httpClient.delete(`${environment.apiUrl}/gaming/session-devices/${sessionDeviceId}`);
   }
 }

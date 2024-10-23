@@ -4,7 +4,7 @@ import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {
   faCircle,
   faEllipsisV,
-  faGear, faGripVertical, faPause, faPlay, faShuffle, faStop,
+  faGear, faGripVertical, faPause, faPlay, faShuffle, faStop, faUserSlash,
 } from '@fortawesome/free-solid-svg-icons';
 import {createGamingSessionDevice, GamingSessionDevice} from '../../models/gaming-session-device.model';
 import {CdkDragHandle, CdkDropList, DragDropModule} from '@angular/cdk/drag-drop';
@@ -53,6 +53,7 @@ export class JoinedSessionComponent {
   play = faPlay;
   finish = faStop;
   random = faShuffle;
+  leave = faUserSlash;
   openSessionModal: Subject<GamingSession> = new Subject<GamingSession>();
   adminPermission = Permissions.GAMING_SESSIONS_ADMIN_PAGE;
 
@@ -168,6 +169,19 @@ export class JoinedSessionComponent {
           currentIndex: 0
         }
       })
+    });
+  }
+
+  disconnectFromSession(sessionDevice: GamingSessionDevice): void {
+    this.nzModalService.warning({
+      nzTitle: 'Are you sure?',
+      nzContent: 'Disconnecting will remove you from this session',
+      nzOkText: 'Disconnect',
+      nzCancelText: 'Cancel',
+      nzOnOk: () => {
+        this.gamingSessionsFacadeService.deleteSessionDevice(this.activeSession.id, sessionDevice.id, this.userSessionDeviceId === sessionDevice.id)
+        void this.router.navigateByUrl('games');
+      }
     });
   }
 }

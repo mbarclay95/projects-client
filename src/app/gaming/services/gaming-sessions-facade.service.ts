@@ -6,8 +6,7 @@ import {
   tap,
   combineLatest,
   shareReplay,
-  Subject,
-  exhaustMap, takeUntil, interval, switchMap
+  switchMap
 } from 'rxjs';
 import {createGamingSession, GamingSession} from '../models/gaming-session.model';
 import {createGamingDevice, GamingDevice} from '../models/gaming-device.model';
@@ -82,8 +81,6 @@ export class GamingSessionsFacadeService {
       return devices.filter((device) => !activeSessionDeviceIds.includes(device.id));
     })
   );
-
-  private destroyDevicePolling: Subject<void> = new Subject<void>();
 
   constructor(
     private gamingSessionsService: GamingSessionsService,
@@ -161,14 +158,7 @@ export class GamingSessionsFacadeService {
   }
 
   async createSessionPromise(session: GamingSession): Promise<void> {
-    await firstValueFrom(this.gamingSessionsService.create(session).pipe(
-      map(s => createGamingSession(s)),
-      tap(s => {
-        const sessions = [...this.gamingSessionsSubject.getValue()];
-        sessions.push(s);
-        this.gamingSessionsSubject.next(sessions);
-      })
-    ));
+    await firstValueFrom(this.gamingSessionsService.create(session));
   }
 
   async updateSessionPromise(session: GamingSession): Promise<void> {
@@ -181,18 +171,7 @@ export class GamingSessionsFacadeService {
   async createSessionDevicePromise(sessionDevice: GamingSessionDevice): Promise<void> {
     const activeSessionId = this.activeGamingSessionId.getValue()!;
     await firstValueFrom(this.gamingSessionDevicesService.create(sessionDevice).pipe(
-      map(s => createGamingSessionDevice(s)),
-      tap(s => {
-        this.userGamingSessionsService.setSessionUser(activeSessionId, s.id);
-        const sessions = [...this.gamingSessionsSubject.getValue()];
-        this.gamingSessionsSubject.next(sessions.map((session) => {
-          if (session.id === activeSessionId) {
-            session.gamingSessionDevices.push(s);
-          }
-
-          return session;
-        }));
-      })
+      tap(s => this.userGamingSessionsService.setSessionUser(activeSessionId, s.id))
     ));
   }
 
@@ -220,20 +199,6 @@ export class GamingSessionsFacadeService {
     ));
   }
 
-  stopDevicePolling(): void {
-    this.destroyDevicePolling.next();
-  }
-
-  startDevicePolling(): void {
-    interval(10000).pipe(
-      takeUntil(this.destroyDevicePolling),
-      exhaustMap(() => this.gamingDevicesService.get().pipe(
-        map((devices) => devices.map((device) => createGamingDevice(device))),
-        tap((devices) => this.gamingDevicesSubject.next(devices))
-      ))
-    ).subscribe();
-  }
-
   updateSessionDeviceTurnOrderCache(sessionId: number, sessionDeviceId: number, newTurnOrder: number): void {
     const updatedSessions = [...this.gamingSessionsSubject.getValue()].map((session) => {
       if (session.id === sessionId) {
@@ -257,9 +222,13 @@ export class GamingSessionsFacadeService {
     this.gamingSessionsService.updateSessionDeviceSort(sessionId, movedSessionDevices).subscribe();
   }
 
-  testing(): void {
-    this.gamingSessionDevicesService.testing().subscribe();
+  deleteSessionDevice(sessionId: number, sessionDeviceId: number, isUser: boolean): void {
+    this.gamingSessionDevicesService.delete(sessionDeviceId).subscribe();
+    if (isUser) {
+      this.userGamingSessionsService.clearForSession(sessionId);
+    }
   }
+
 }
 
 type WebSocketEvent = {

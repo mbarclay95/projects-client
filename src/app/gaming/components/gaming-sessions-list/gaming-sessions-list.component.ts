@@ -3,7 +3,7 @@ import {GamingSession} from '../../models/gaming-session.model';
 import {DatePipe} from '@angular/common';
 import {DeviceOnlinePipe} from '../../pipes/device-online.pipe';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
-import {faCircleCheck, faCircleXmark} from '@fortawesome/free-solid-svg-icons';
+import {faChevronRight, faCircleCheck, faCircleXmark} from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
 
 @Component({
@@ -19,6 +19,7 @@ import {Router} from '@angular/router';
 })
 export class GamingSessionsListComponent {
   @Input() sessions: GamingSession[] = [];
+  @Input() forAdmin = false;
   @Output() editSession: EventEmitter<GamingSession> = new EventEmitter<GamingSession>();
 
   online = faCircleCheck;
@@ -32,4 +33,6 @@ export class GamingSessionsListComponent {
   test(session: GamingSession): void {
     void this.router.navigateByUrl(`games/session/${session.id}`)
   }
+
+    protected readonly arrow = faChevronRight;
 }

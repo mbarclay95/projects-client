@@ -8,19 +8,27 @@
 
         <div class="title">{{session.name}}</div>
 
-        <div class="last-seen d-flex align-items-center">
+        <div class="sub-header d-flex align-items-center">
 
-          <div>{{session.createdAt | date}}</div>
+          @if (forAdmin) {
+            <div>{{session.createdAt | date}}</div>
+          } @else {
+            {{session.gamingSessionDevices.length}} players joined
+          }
 
         </div>
 
       </div>
 
       <div style="width: 18px; text-align: center">
-        @if (session.endedAt) {
-          <fa-icon style="color: #e23636" [icon]="offline"></fa-icon>
+        @if (forAdmin) {
+          @if (session.endedAt) {
+            <fa-icon style="color: #e23636" [icon]="offline"></fa-icon>
+          } @else {
+            <fa-icon style="color: #82dd55" [icon]="online"></fa-icon>
+          }
         } @else {
-          <fa-icon style="color: #82dd55" [icon]="online"></fa-icon>
+          <fa-icon [icon]="arrow"></fa-icon>
         }
       </div>
 

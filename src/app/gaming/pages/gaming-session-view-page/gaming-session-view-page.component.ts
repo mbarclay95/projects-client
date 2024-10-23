@@ -31,7 +31,7 @@ export class GamingSessionViewPageComponent {
   openModal: Subject<GamingSessionDevice> = new Subject<GamingSessionDevice>();
 
   constructor(
-    public gamingSessionsFacadeService: GamingSessionsFacadeService
+    public gamingSessionsFacadeService: GamingSessionsFacadeService,
   ) {
   }
 

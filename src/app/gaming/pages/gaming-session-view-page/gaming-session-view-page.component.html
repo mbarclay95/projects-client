@@ -20,21 +20,6 @@
     }
   </div>
 
-<!--  <div class="device-containers active-background mt-4">-->
-
-<!--    <div class="title">Connected Devices</div>-->
-<!--    <ng-container *ngLet="gamingSessionsFacadeService.activeSessionDevices$ | async as activeDevices">-->
-<!--      @for (activeDevice of activeDevices; track activeDevice.id) {-->
-<!--        <div>{{ activeDevice.deviceCommunicationId }}</div>-->
-<!--      }-->
-<!--      @if (activeDevices.length === 0) {-->
-<!--        <span class="ps-2" style="font-style: italic">No devices connected</span>-->
-<!--      }-->
-<!--    </ng-container>-->
-
-
-<!--  </div>-->
-
   <app-create-edit-session-device-modal
     [openModal]="openModal.asObservable()"
   ></app-create-edit-session-device-modal>

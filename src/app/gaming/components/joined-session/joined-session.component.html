@@ -128,6 +128,12 @@
                     Settings
                   </li>
                 }
+                @if (sessionDevice.id === userSessionDeviceId || permissionsService.hasPermissionTo(adminPermission)) {
+                  <li nz-menu-item (click)="disconnectFromSession(sessionDevice)">
+                    <fa-icon class="me-2" [icon]="leave"></fa-icon>
+                    Leave Session
+                  </li>
+                }
               </ul>
 
             </nz-dropdown-menu>

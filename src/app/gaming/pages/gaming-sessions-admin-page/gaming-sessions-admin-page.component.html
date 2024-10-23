@@ -12,7 +12,7 @@
     </div>
   }
 
-  <div class="w-100 table-border">
+  <div class="w-100 table-border mb-2">
 
     @if (tab === 'sessions') {
 
@@ -26,6 +26,7 @@
 
         <app-gaming-sessions-list
           [sessions]="(gamingSessionsFacadeService.gamingSessions$ | async) ?? []"
+          [forAdmin]="true"
           (editSession)="editSession.next($event)"
         ></app-gaming-sessions-list>
 

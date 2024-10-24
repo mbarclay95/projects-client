@@ -2,7 +2,7 @@
 
   <app-gaming-segment [tab]="tab" (tabChanged)="tab = $event"></app-gaming-segment>
 
-  @if (tab === 'sessions') {
+  @if (tab === 'sessions' && !!ui) {
     <div class="w-100 d-flex justify-content-end mb-3">
       <div>
         Show Archived

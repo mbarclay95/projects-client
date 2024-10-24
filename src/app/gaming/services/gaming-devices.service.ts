@@ -24,8 +24,4 @@ export class GamingDevicesService {
   update(device: GamingDevice): Observable<GamingDevice> {
     return this.httpClient.patch<GamingDevice>(`${environment.apiUrl}/gaming/devices/${device.id}`, device);
   }
-
-  ping(): Observable<{}> {
-    return this.httpClient.patch(`${environment.apiUrl}/gaming/device-action/yS9gBd`, {action: 'ping'});
-  }
 }

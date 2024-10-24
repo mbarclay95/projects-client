@@ -3,21 +3,50 @@
     <nz-spin></nz-spin>
   </div>
 } @else {
-  <div class="page-container mt-2">
+  <div class="page-container mt-2" *ngLet="gamingSessionsFacadeService.activeGamingSession$ | async as activeSession">
 
-    @if (gamingSessionsFacadeService.userHasSessionDevice$ | async) {
-      <app-joined-session
-        [activeSession]="(gamingSessionsFacadeService.activeGamingSession$ | async)!"
-        [userSessionDeviceId]="(gamingSessionsFacadeService.userSessionDeviceId$ | async)!"
-        (editSessionDevice)="openModal.next($event)"
-      ></app-joined-session>
+    @if (activeSession === undefined) {
+      <div class="d-flex align-items-center justify-content-center w-100" style="height: 50vh">
+
+        <nz-result nzStatus="404" nzTitle="Session not found" nzSubTitle="Sorry, this session does not exist">
+
+          <div nz-result-extra>
+
+            <button nz-button nzType="primary" routerLink="/games">Back to Active Sessions</button>
+
+          </div>
+
+        </nz-result>
+
+      </div>
+
     } @else {
-      <app-connect-to-device
-        [devices]="(gamingSessionsFacadeService.inactiveSessionDevices$ | async) ?? []"
-        [activeSession]="(gamingSessionsFacadeService.activeGamingSession$ | async) ?? undefined"
-        (deviceSelected)="openModal.next($event)"
-      ></app-connect-to-device>
+
+      @if (activeSession.ended_at) {
+
+        <div>Session Ended</div>
+
+        <button nz-button nzType="primary" routerLink="/games">Back to Active Sessions</button>
+
+      } @else {
+
+        @if (gamingSessionsFacadeService.userHasSessionDevice$ | async) {
+          <app-joined-session
+            [activeSession]="activeSession"
+            [userSessionDeviceId]="(gamingSessionsFacadeService.userSessionDeviceId$ | async)!"
+            (editSessionDevice)="openModal.next($event)"
+          ></app-joined-session>
+        } @else {
+          <app-connect-to-device
+            [devices]="(gamingSessionsFacadeService.inactiveSessionDevices$ | async) ?? []"
+            [activeSession]="activeSession"
+            (deviceSelected)="openModal.next($event)"
+          ></app-connect-to-device>
+        }
+
+      }
     }
+
   </div>
 
   <app-create-edit-session-device-modal

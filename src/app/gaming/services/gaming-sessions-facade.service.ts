@@ -6,7 +6,7 @@ import {
   tap,
   combineLatest,
   shareReplay,
-  switchMap
+  switchMap, Subject, takeUntil
 } from 'rxjs';
 import {createGamingSession, GamingSession} from '../models/gaming-session.model';
 import {createGamingDevice, GamingDevice} from '../models/gaming-device.model';
@@ -82,6 +82,10 @@ export class GamingSessionsFacadeService {
     })
   );
 
+  webSocketSubject = webSocket<WebSocketEvent>('wss://node-red.bigmike.dev/ws/gaming');
+  webSocketDestroyer: Subject<void> = new Subject<void>();
+  webSocketRetries = 0;
+
   constructor(
     private gamingSessionsService: GamingSessionsService,
     private gamingDevicesService: GamingDevicesService,
@@ -93,14 +97,27 @@ export class GamingSessionsFacadeService {
   }
 
   connectToWs(): void {
-    webSocket<WebSocketEvent>('wss://node-red.bigmike.dev/ws/gaming').subscribe((webSocketEvent) => {
-      if (webSocketEvent.event === 'gamingSessions') {
-        this.gamingSessionsSubject.next(webSocketEvent.data.map(session => createGamingSession(session)));
-      } else if (webSocketEvent.event === 'gamingDevices') {
-        this.gamingDevicesSubject.next(webSocketEvent.data.map(device => createGamingDevice(device)));
+    this.webSocketDestroyer.next();
+    this.webSocketSubject.pipe(
+      takeUntil(this.webSocketDestroyer)
+    ).subscribe({
+      next: (webSocketEvent) => {
+        this.webSocketRetries = 0;
+        if (webSocketEvent.event === 'gamingSessions') {
+          this.gamingSessionsSubject.next(webSocketEvent.data.map(session => createGamingSession(session)));
+        } else if (webSocketEvent.event === 'gamingDevices') {
+          this.gamingDevicesSubject.next(webSocketEvent.data.map(device => createGamingDevice(device)));
 
-      }
+        }
+      },
+      error: () => {
+        this.webSocketRetries++;
+        if (this.webSocketRetries < 3) {
+          this.connectToWs();
+        }
+      },
     });
+
   }
 
   emptyGamingSessions(): boolean {

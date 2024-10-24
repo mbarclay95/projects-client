@@ -11,6 +11,9 @@ import {
   CreateEditSessionDeviceModalComponent
 } from '../../components/create-edit-session-device-modal/create-edit-session-device-modal.component';
 import {JoinedSessionComponent} from '../../components/joined-session/joined-session.component';
+import {NzResultComponent, NzResultExtraDirective} from 'ng-zorro-antd/result';
+import {NzButtonComponent} from 'ng-zorro-antd/button';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-gaming-session-view-page',
@@ -22,7 +25,11 @@ import {JoinedSessionComponent} from '../../components/joined-session/joined-ses
     FaIconComponent,
     ConnectToDeviceComponent,
     CreateEditSessionDeviceModalComponent,
-    JoinedSessionComponent
+    JoinedSessionComponent,
+    NzResultComponent,
+    NzResultExtraDirective,
+    NzButtonComponent,
+    RouterLink
   ],
   templateUrl: './gaming-session-view-page.component.html',
   styleUrl: './gaming-session-view-page.component.scss'

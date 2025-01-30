@@ -59,54 +59,54 @@
 
         <div class="mb-4" style="border-bottom: 1px solid #606060">Backup Steps:</div>
 
-        <ng-container *ngFor="let step of scheduledBackup.scheduledBackupSteps">
+<!--        <ng-container *ngFor="let step of scheduledBackup.scheduledBackupSteps">-->
 
-          <div class="d-flex align-items-center ps-1 mb-4 pb-4" style="border-bottom: 1px solid #606060">
+<!--          <div class="d-flex align-items-center ps-1 mb-4 pb-4" style="border-bottom: 1px solid #606060">-->
 
-            <fa-icon [icon]="grip" class="me-4"></fa-icon>
+<!--            <fa-icon [icon]="grip" class="me-4"></fa-icon>-->
 
-            <div class="w-100">
+<!--            <div class="w-100">-->
 
-              <div class="w-100 mb-2">
+<!--              <div class="w-100 mb-2">-->
 
-                <div class="mb-1">Backup Step Name:</div>
+<!--                <div class="mb-1">Backup Step Name:</div>-->
 
-                <input nz-input [(ngModel)]="step.name" class="w-100">
+<!--                <input nz-input [(ngModel)]="step.name" class="w-100">-->
 
-              </div>
+<!--              </div>-->
 
-              <div class="w-100 mb-2">
+<!--              <div class="w-100 mb-2">-->
 
-                <div class="mb-1">Source Directory:</div>
+<!--                <div class="mb-1">Source Directory:</div>-->
 
-                <input nz-input [(ngModel)]="step.sourceDir" class="w-100">
+<!--                <input nz-input [(ngModel)]="step.sourceDir" class="w-100">-->
 
-              </div>
+<!--              </div>-->
 
-              <div class="w-100 mb-2">
+<!--              <div class="w-100 mb-2">-->
 
-                <div class="mb-1">Target Directory:</div>
+<!--                <div class="mb-1">Target Directory:</div>-->
 
-                <nz-select [(ngModel)]="step.target" class="w-100" [compareWith]="targetCompare"
-                           [nzDropdownRender]="addTarget">
-                  <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target"
-                             [nzLabel]="target.name"></nz-option>
-                </nz-select>
+<!--                <nz-select [(ngModel)]="step.target" class="w-100" [compareWith]="targetCompare"-->
+<!--                           [nzDropdownRender]="addTarget">-->
+<!--                  <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target"-->
+<!--                             [nzLabel]="target.name"></nz-option>-->
+<!--                </nz-select>-->
 
-                <ng-template #addTarget>
-                  <nz-divider class="my-1"></nz-divider>
-                  <div class="d-flex justify-content-center w-100 align-items-center">
-                    <button nz-button nzType="primary" (click)="createNewTarget(step.id)">Create New Target</button>
-                  </div>
-                </ng-template>
+<!--                <ng-template #addTarget>-->
+<!--                  <nz-divider class="my-1"></nz-divider>-->
+<!--                  <div class="d-flex justify-content-center w-100 align-items-center">-->
+<!--                    <button nz-button nzType="primary" (click)="createNewTarget(step.id)">Create New Target</button>-->
+<!--                  </div>-->
+<!--                </ng-template>-->
 
-              </div>
+<!--              </div>-->
 
-            </div>
+<!--            </div>-->
 
-          </div>
+<!--          </div>-->
 
-        </ng-container>
+<!--        </ng-container>-->
 
         <button nz-button nzType="primary" (click)="addScheduledBackupStep()" class="">
           <fa-icon [icon]="plus" class="me-2"></fa-icon>

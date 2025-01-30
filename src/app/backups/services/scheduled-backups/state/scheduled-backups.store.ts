@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
-import { ScheduledBackup } from '../../../models/scheduled-backup.model';
+import {Schedule} from '../../../models/scheduled.model';
 
-export interface ScheduledBackupsState extends EntityState<ScheduledBackup> {}
+export interface ScheduledBackupsState extends EntityState<Schedule> {}
 
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'scheduled-backups' })

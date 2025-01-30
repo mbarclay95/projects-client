@@ -1,16 +1,14 @@
-import {createScheduledBackupStep, ScheduledBackupStep} from "./scheduled-backup-step.model";
 
-export interface ScheduledBackup {
+export interface Schedule {
   id: number;
   name: string;
   schedule: WeeklySchedule|MonthlySchedule;
   startTime: number;
   fullEveryNDays: number;
   enabled: boolean;
-  scheduledBackupSteps: ScheduledBackupStep[];
 }
 
-export function createScheduledBackup(params: Partial<ScheduledBackup>) {
+export function createSchedule(params: Partial<Schedule>) {
   return {
     id: params.id ?? 0,
     name: params.name ?? '',
@@ -18,8 +16,7 @@ export function createScheduledBackup(params: Partial<ScheduledBackup>) {
     startTime: params.startTime ?? 0,
     fullEveryNDays: params.fullEveryNDays ?? 0,
     enabled: !!params.enabled,
-    scheduledBackupSteps: params.scheduledBackupSteps?.map(step => createScheduledBackupStep(step)) ?? [],
-  } as ScheduledBackup;
+  } as Schedule;
 }
 
 const defaultSchedule: WeeklySchedule = {

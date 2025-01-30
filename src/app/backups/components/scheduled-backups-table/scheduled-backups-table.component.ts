@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NzTableComponent} from "ng-zorro-antd/table";
 import {faEdit} from "@fortawesome/free-solid-svg-icons";
-import {ScheduledBackup} from "../../models/scheduled-backup.model";
+import {Schedule} from '../../models/scheduled.model';
 
 @Component({
   selector: 'app-scheduled-backups-table',
@@ -9,15 +9,15 @@ import {ScheduledBackup} from "../../models/scheduled-backup.model";
   styleUrls: ['./scheduled-backups-table.component.scss']
 })
 export class ScheduledBackupsTableComponent implements OnInit {
-  @ViewChild('scheduledBackupsTableTag', {static: true}) scheduledBackupsTable: NzTableComponent<ScheduledBackup> | undefined;
-  @Input() set scheduledBackups(scheduledBackups: ScheduledBackup[] | null) {
+  @ViewChild('scheduledBackupsTableTag', {static: true}) scheduledBackupsTable: NzTableComponent<Schedule> | undefined;
+  @Input() set scheduledBackups(scheduledBackups: Schedule[] | null) {
     if (scheduledBackups) {
       this._scheduleBackups = scheduledBackups;
     }
   };
-  @Output() editScheduledBackup: EventEmitter<ScheduledBackup> = new EventEmitter<ScheduledBackup>();
+  @Output() editScheduledBackup: EventEmitter<Schedule> = new EventEmitter<Schedule>();
 
-  _scheduleBackups: ScheduledBackup[] = [];
+  _scheduleBackups: Schedule[] = [];
   edit = faEdit;
 
   constructor() { }

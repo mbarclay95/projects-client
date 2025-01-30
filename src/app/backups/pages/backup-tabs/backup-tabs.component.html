@@ -6,12 +6,12 @@
     </a>
     <app-backups-page></app-backups-page>
   </nz-tab>
-  <nz-tab (nzSelect)="selectedTab = 'Scheduled Backup Job'">
-    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'scheduled'}" queryParamsHandling="merge">
-      Scheduled Backup Jobs
-    </a>
-    <app-scheduled-backups-page></app-scheduled-backups-page>
-  </nz-tab>
+<!--  <nz-tab (nzSelect)="selectedTab = 'Scheduled Backup Job'">-->
+<!--    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'scheduled'}" queryParamsHandling="merge">-->
+<!--      Scheduled Backup Jobs-->
+<!--    </a>-->
+<!--    <app-scheduled-backups-page></app-scheduled-backups-page>-->
+<!--  </nz-tab>-->
   <nz-tab (nzSelect)="selectedTab = 'Target'">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'targets'}" queryParamsHandling="merge">
       Targets

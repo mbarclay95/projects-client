@@ -1,13 +1,9 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
-import {Backup} from "../../models/backup.model";
 import {faGripVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {createTarget, Target} from "../../models/target.model";
-import {daysOfMonth, daysOfWeek, ScheduledBackup} from "../../models/scheduled-backup.model";
-import {createBackupStep} from "../../models/backup-step.model";
-import {createScheduledBackupStep} from "../../models/scheduled-backup-step.model";
+import {daysOfMonth, daysOfWeek, Schedule} from "../../models/scheduled.model";
 import {TargetsQuery} from "../../services/targets/state/targets.query";
-import {BackupsService} from "../../services/backups/state/backups.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {ScheduledBackupsService} from "../../services/scheduled-backups/state/scheduled-backups.service";
 
@@ -17,10 +13,10 @@ import {ScheduledBackupsService} from "../../services/scheduled-backups/state/sc
   styleUrls: ['./create-edit-scheduled-backup-drawer.component.scss']
 })
 export class CreateEditScheduledBackupDrawerComponent implements OnInit, OnDestroy {
-  @Input() openModal!: Observable<ScheduledBackup>;
+  @Input() openModal!: Observable<Schedule>;
 
   isVisible: boolean = false;
-  scheduledBackup!: ScheduledBackup;
+  scheduledBackup!: Schedule;
   plus = faPlus;
   grip = faGripVertical;
   openTargetModal: Subject<{target: Target, backupStepId: number}> = new Subject<{target: Target, backupStepId: number}>();
@@ -51,15 +47,15 @@ export class CreateEditScheduledBackupDrawerComponent implements OnInit, OnDestr
   }
 
   selectNewTarget({target, backupStepId}: {target: Target, backupStepId: number}): void {
-    const backupStep = this.scheduledBackup.scheduledBackupSteps.find(step => step.id === backupStepId);
-    if (backupStep) {
-      backupStep.target = target;
-    }
+    // const backupStep = this.scheduledBackup.scheduledBackupSteps.find(step => step.id === backupStepId);
+    // if (backupStep) {
+    //   backupStep.target = target;
+    // }
   }
 
   addScheduledBackupStep() {
-    const sort = this.scheduledBackup.scheduledBackupSteps.length + 1;
-    this.scheduledBackup.scheduledBackupSteps.push(createScheduledBackupStep({id: sort, sort}));
+    // const sort = this.scheduledBackup.scheduledBackupSteps.length + 1;
+    // this.scheduledBackup.scheduledBackupSteps.push(createScheduledBackupStep({id: sort, sort}));
   }
 
   targetCompare(a: Target, b: Target): boolean {

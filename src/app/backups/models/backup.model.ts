@@ -1,24 +1,24 @@
 import {BackupStep, createBackupStep} from "./backup-step.model";
+import {BackupJob, createBackupJob} from './backup-job.model';
+import {createSchedule, Schedule} from './scheduled.model';
 
 export interface Backup {
   id: number;
   name: string;
-  startedAt?: Date;
-  completedAt?: Date;
-  erroredAt?: Date;
-  scheduledBackupId?: number;
   backupSteps: BackupStep[];
+  backupJobs: BackupJob[];
+  schedules: Schedule[];
 }
 
 export function createBackup(params: Partial<Backup>) {
   return {
     id: params.id ?? 0,
     name: params.name ?? '',
-    startedAt: params.startedAt ? new Date(params.startedAt) : undefined,
-    completedAt: params.completedAt ? new Date(params.completedAt) : undefined,
-    erroredAt: params.erroredAt ? new Date(params.erroredAt) : undefined,
-    scheduledBackupId: params.scheduledBackupId,
     backupSteps: params.backupSteps?.map(backupStep => createBackupStep(backupStep)) ?? [],
+    backupJobs: (params.backupJobs?.map(job => createBackupJob(job)) ?? []).sort((a, b) => {
+      return b.createdAt.getTime() - a.createdAt.getTime();
+    }),
+    schedules: params.schedules?.map(schedule => createSchedule(schedule)) ?? [],
   } as Backup;
 }
 

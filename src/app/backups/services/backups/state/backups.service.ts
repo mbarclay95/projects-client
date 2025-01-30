@@ -15,6 +15,10 @@ export class BackupsService {
   ) {
   }
 
+  async runBackup(backupId: number): Promise<void> {
+    await firstValueFrom(this.http.post(`${environment.apiUrl}/run-backup/${backupId}`, {}));
+  }
+
   async getBackups(): Promise<void> {
     await firstValueFrom(this.getBackups$());
   }

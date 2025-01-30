@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ScheduledBackupsStore } from './scheduled-backups.store';
 import {firstValueFrom} from "rxjs";
-import {createScheduledBackup, ScheduledBackup} from "../../../models/scheduled-backup.model";
 import {environment} from "../../../../../environments/environment";
 import {map, tap} from "rxjs/operators";
+import {createSchedule, Schedule} from '../../../models/scheduled.model';
 
 @Injectable({ providedIn: 'root' })
 export class ScheduledBackupsService {
@@ -16,8 +16,8 @@ export class ScheduledBackupsService {
   }
 
   async getScheduledBackups(): Promise<void> {
-    await firstValueFrom(this.http.get<ScheduledBackup[]>(`${environment.apiUrl}/scheduled-backups`).pipe(
-      map(scheduledBackups => scheduledBackups.map(scheduledBackup => createScheduledBackup(scheduledBackup))),
+    await firstValueFrom(this.http.get<Schedule[]>(`${environment.apiUrl}/scheduled-backups`).pipe(
+      map(scheduledBackups => scheduledBackups.map(scheduledBackup => createSchedule(scheduledBackup))),
       tap(scheduledBackups => this.scheduledBackupsStore.set(scheduledBackups))
     ));
   }

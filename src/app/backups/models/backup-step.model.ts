@@ -1,9 +1,6 @@
 export interface BackupStep {
   id: number;
   name: string;
-  startedAt?: Date;
-  completedAt?: Date;
-  erroredAt?: Date;
   sort: number;
   backupStepType: 'tar_zip' | 's3_upload';
   config: {}
@@ -40,9 +37,6 @@ export function createBackupStep(params: Partial<BackupStep>): BackupStep {
   return {
     id: params.id ?? 0,
     name: params.name ?? '',
-    startedAt: params.startedAt ? new Date(params.startedAt) : undefined,
-    completedAt: params.completedAt ? new Date(params.completedAt) : undefined,
-    erroredAt: params.erroredAt ? new Date(params.erroredAt) : undefined,
     sort: params.sort ?? 0,
     backupStepType: params.backupStepType ?? null,
     config: params.config ?? {}

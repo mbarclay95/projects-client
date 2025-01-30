@@ -26,10 +26,11 @@ export class BackupsPollingService {
       takeUntil(this.stopPollingSubject),
       tap(() => {
         const backups = this.backupsQuery.getAll();
-        const numberOfNotCompleted = backups.filter((b) => !b.completedAt && !b.erroredAt).length;
-        if (numberOfNotCompleted === 0) {
-          this.stopPolling();
+        if (backups.some((backup) => backup.backupJobs.some(backupJob => !backupJob.completedAt && !backupJob.erroredAt))) {
+          return;
         }
+
+        this.stopPolling();
       }),
       exhaustMap(() => this.backupsService.getBackups$())
     ).subscribe();

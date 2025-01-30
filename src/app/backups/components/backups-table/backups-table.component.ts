@@ -1,8 +1,11 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {NzTableComponent} from "ng-zorro-antd/table";
 import {Backup} from "../../models/backup.model";
-import {faCheckCircle, faExclamationCircle, faPauseCircle, faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {SizeProp} from "@fortawesome/fontawesome-svg-core";
+import {
+  faPlay,
+} from "@fortawesome/free-solid-svg-icons";
+import {BackupsService} from '../../services/backups/state/backups.service';
+import {BackupsPollingService} from '../../services/backups-polling.service';
 
 @Component({
   selector: 'app-backups-table',
@@ -19,8 +22,12 @@ export class BackupsTableComponent implements OnInit {
 
   _backups: Backup[] = [];
   expandSet = new Set<number>();
+  play = faPlay;
 
-  constructor() { }
+  constructor(
+    private backupsService: BackupsService,
+    private backupsPollingService: BackupsPollingService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -33,4 +40,9 @@ export class BackupsTableComponent implements OnInit {
     }
   }
 
+  runBackup(backup: Backup): void {
+    void this.backupsService.runBackup(backup.id);
+    void this.backupsService.getBackups();
+    this.backupsPollingService.startPolling();
+  }
 }

@@ -1,6 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BackupStatus} from "../../models/backup.model";
-import {faCheckCircle, faExclamationCircle, faPauseCircle, faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheckCircle,
+  faCircleXmark,
+  faExclamationCircle,
+  faSpinner
+} from "@fortawesome/free-solid-svg-icons";
 import {SizeProp} from "@fortawesome/fontawesome-svg-core";
 
 @Component({
@@ -14,7 +19,8 @@ export class StatusIconComponent implements OnInit {
 
   completed = faCheckCircle;
   inProgress = faSpinner;
-  queued = faPauseCircle;
+  // queued = faPauseCircle;
+  queued = faCircleXmark;
   error = faExclamationCircle;
 
   constructor() { }

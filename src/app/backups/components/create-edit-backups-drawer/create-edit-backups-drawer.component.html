@@ -2,158 +2,163 @@
            [nzMaskClosable]="false" [nzFooter]="footer">
   <ng-container *nzDrawerContent>
 
-    <div class="drawer-container" *ngIf="backup">
+    @if (backup) {
 
-      <div class="w-100 mb-4">
+      <div class="drawer-container">
 
-        <div class="mb-1">Backup Name:</div>
+        <div class="w-100 mb-4">
 
-        <input nz-input [(ngModel)]="backup.name" class="w-100">
+          <div class="mb-1">Backup Name:</div>
 
-      </div>
+          <input nz-input [(ngModel)]="backup.name" class="w-100">
 
-      <div class="p-3 border-radius" style="border: 1px solid #606060">
+        </div>
 
-        <div class="mb-4" style="border-bottom: 1px solid #606060">Backup Steps:</div>
+        <div class="p-3 border-radius" style="border: 1px solid #606060">
 
-        @for (backupStep of backup.backupSteps | sortBackupSteps; track backupStep.id) {
+          <div class="mb-4" style="border-bottom: 1px solid #606060">Backup Steps:</div>
 
-          <div class="d-flex align-items-center ps-1 mb-4 pb-4" style="border-bottom: 1px solid #606060">
+          @for (backupStep of backup.backupSteps | sortGeneric; track backupStep.sort) {
 
-            <fa-icon [icon]="grip" class="me-4 cursor-pointer"></fa-icon>
+            <div class="d-flex align-items-center ps-1 mb-4 pb-4" style="border-bottom: 1px solid #606060">
 
-            <div class="flex-grow-1">
+              <fa-icon [icon]="grip" class="me-4 cursor-pointer"></fa-icon>
 
-              <div class="w-100 mb-2">
+              <div class="flex-grow-1">
 
-                <div class="mb-1">Type:</div>
+                <div class="w-100 mb-2">
 
-                <nz-select [(ngModel)]="backupStep.backupStepType" (ngModelChange)="backupStep.config = {}"
-                           class="w-100">
-                  <nz-option nzValue="tar_zip" nzLabel="Tar Zip"></nz-option>
-                  <nz-option nzValue="s3_upload" nzLabel="S3 Upload"></nz-option>
-                </nz-select>
+                  <div class="mb-1">Type:</div>
+
+                  <nz-select [(ngModel)]="backupStep.backupStepType" (ngModelChange)="backupStep.config = {}"
+                             class="w-100">
+                    <nz-option nzValue="tar_zip" nzLabel="Tar Zip"></nz-option>
+                    <nz-option nzValue="s3_upload" nzLabel="S3 Upload"></nz-option>
+                  </nz-select>
+
+                </div>
+
+                <div class="w-100 mb-2">
+
+                  <div class="mb-1">Backup Step Name:</div>
+
+                  <input nz-input [(ngModel)]="backupStep.name" class="w-100">
+
+                </div>
+
+                <ng-container *ngIf="isTarZip(backupStep)">
+
+                  <div class="w-100 mb-2">
+
+                    <div class="mb-1">Source Target:</div>
+
+                    <nz-select [(ngModel)]="backupStep.config.sourceTargetId" class="w-100"
+                               [nzDropdownRender]="addTarget">
+                      <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target.id"
+                                 [nzLabel]="target.name"></nz-option>
+                    </nz-select>
+
+                  </div>
+
+                  <div class="w-100 mb-2">
+
+                    <div class="mb-1">Destination Target:</div>
+
+                    <nz-select [(ngModel)]="backupStep.config.destinationTargetId" class="w-100"
+                               [nzDropdownRender]="addTarget">
+                      <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target.id"
+                                 [nzLabel]="target.name"></nz-option>
+                    </nz-select>
+
+                  </div>
+
+                  <div class="w-100 mb-2">
+
+                    <div class="mb-1">Destination File Name:</div>
+
+                    <input nz-input [(ngModel)]="backupStep.config.fileName" class="w-100">
+
+                  </div>
+
+                </ng-container>
+
+                <ng-container *ngIf="isS3Upload(backupStep)">
+
+                  <div class="w-100 mb-2">
+
+                    <div class="mb-1">Driver:</div>
+
+                    <nz-select [(ngModel)]="backupStep.config.s3Driver" class="w-100">
+                      <nz-option nzValue="aws-s3" nzLabel="AWS"></nz-option>
+                      <nz-option nzValue="minio-s3" nzLabel="Local Minio"></nz-option>
+                    </nz-select>
+
+                  </div>
+
+                  <div class="w-100 mb-2">
+
+                    <div class="mb-1">Source Target:</div>
+
+                    <nz-select [(ngModel)]="backupStep.config.sourceTargetId" class="w-100"
+                               [nzDropdownRender]="addTarget">
+                      <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target.id"
+                                 [nzLabel]="target.name"></nz-option>
+                    </nz-select>
+
+                  </div>
+
+                  <div class="w-100 mb-2">
+
+                    <div class="mb-1">Source File Name:</div>
+
+                    <input nz-input [(ngModel)]="backupStep.config.fileName" class="w-100">
+
+                  </div>
+
+                  <div class="w-100 mb-2">
+
+                    <div class="mb-1">Destination Target:</div>
+
+                    <nz-select [(ngModel)]="backupStep.config.destinationTargetId" class="w-100"
+                               [nzDropdownRender]="addTarget">
+                      <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target.id"
+                                 [nzLabel]="target.name"></nz-option>
+                    </nz-select>
+
+                  </div>
+
+                </ng-container>
+
+                <ng-template #addTarget>
+                  <nz-divider class="my-1"></nz-divider>
+                  <div class="d-flex justify-content-center w-100 align-items-center">
+                    <button nz-button nzType="primary" (click)="createNewTarget(backupStep.id)">Create New Target
+                    </button>
+                  </div>
+                </ng-template>
 
               </div>
 
-              <div class="w-100 mb-2">
+              <button nz-button class="ant-btn-icon-only ms-4 align-self-start" nzType="text"
+                      (click)="removeBackupStep(backupStep)">
+                <fa-icon [icon]="delete" class="text-warning"></fa-icon>
+              </button>
 
-                <div class="mb-1">Backup Step Name:</div>
-
-                <input nz-input [(ngModel)]="backupStep.name" class="w-100">
-
-              </div>
-
-              <ng-container *ngIf="isTarZip(backupStep)">
-
-                <div class="w-100 mb-2">
-
-                  <div class="mb-1">Source Target:</div>
-
-                  <nz-select [(ngModel)]="backupStep.config.sourceTargetId" class="w-100"
-                             [nzDropdownRender]="addTarget">
-                    <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target.id"
-                               [nzLabel]="target.name"></nz-option>
-                  </nz-select>
-
-                </div>
-
-                <div class="w-100 mb-2">
-
-                  <div class="mb-1">Destination Target:</div>
-
-                  <nz-select [(ngModel)]="backupStep.config.destinationTargetId" class="w-100"
-                             [nzDropdownRender]="addTarget">
-                    <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target.id"
-                               [nzLabel]="target.name"></nz-option>
-                  </nz-select>
-
-                </div>
-
-                <div class="w-100 mb-2">
-
-                  <div class="mb-1">Destination File Name:</div>
-
-                  <input nz-input [(ngModel)]="backupStep.config.fileName" class="w-100">
-
-                </div>
-
-              </ng-container>
-
-              <ng-container *ngIf="isS3Upload(backupStep)">
-
-                <div class="w-100 mb-2">
-
-                  <div class="mb-1">Driver:</div>
-
-                  <nz-select [(ngModel)]="backupStep.config.s3Driver" class="w-100">
-                    <nz-option nzValue="aws-s3" nzLabel="AWS"></nz-option>
-                    <nz-option nzValue="minio-s3" nzLabel="Local Minio"></nz-option>
-                  </nz-select>
-
-                </div>
-
-                <div class="w-100 mb-2">
-
-                  <div class="mb-1">Source Target:</div>
-
-                  <nz-select [(ngModel)]="backupStep.config.sourceTargetId" class="w-100"
-                             [nzDropdownRender]="addTarget">
-                    <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target.id"
-                               [nzLabel]="target.name"></nz-option>
-                  </nz-select>
-
-                </div>
-
-                <div class="w-100 mb-2">
-
-                  <div class="mb-1">Source File Name:</div>
-
-                  <input nz-input [(ngModel)]="backupStep.config.fileName" class="w-100">
-
-                </div>
-
-                <div class="w-100 mb-2">
-
-                  <div class="mb-1">Destination Target:</div>
-
-                  <nz-select [(ngModel)]="backupStep.config.destinationTargetId" class="w-100"
-                             [nzDropdownRender]="addTarget">
-                    <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target.id"
-                               [nzLabel]="target.name"></nz-option>
-                  </nz-select>
-
-                </div>
-
-              </ng-container>
-
-              <ng-template #addTarget>
-                <nz-divider class="my-1"></nz-divider>
-                <div class="d-flex justify-content-center w-100 align-items-center">
-                  <button nz-button nzType="primary" (click)="createNewTarget(backupStep.id)">Create New Target</button>
-                </div>
-              </ng-template>
 
             </div>
 
-            <button nz-button class="ant-btn-icon-only ms-4 align-self-start" nzType="text"
-                    (click)="removeBackupStep(backupStep)">
-              <fa-icon [icon]="delete" class="text-warning"></fa-icon>
-            </button>
+          }
 
+          <button nz-button nzType="primary" (click)="addBackupStep()" class="">
+            <fa-icon [icon]="plus" class="me-2"></fa-icon>
+            Add Backup Step
+          </button>
 
-          </div>
-
-        }
-
-        <button nz-button nzType="primary" (click)="addBackupStep()" class="">
-          <fa-icon [icon]="plus" class="me-2"></fa-icon>
-          Add Backup Step
-        </button>
+        </div>
 
       </div>
 
-    </div>
+    }
 
   </ng-container>
 
@@ -165,5 +170,5 @@
   </ng-template>
 </nz-drawer>
 
-<app-create-edit-target-modal [openModal]="openTargetModal.asObservable()"
-                              (selectNewTarget)="selectNewTarget($event)"></app-create-edit-target-modal>
+<!--<app-create-edit-target-modal [openModal]="openTargetModal.asObservable()"-->
+<!--                              (selectNewTarget)="selectNewTarget($event)"></app-create-edit-target-modal>-->

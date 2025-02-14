@@ -2,7 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 import {Backup, createBackup} from "../../models/backup.model";
 import {BackupStep, createBackupStep, isS3Upload, isTarZip} from "../../models/backup-step.model";
-import {faEdit, faGripVertical, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faGripVertical, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {TargetsQuery} from "../../services/targets/state/targets.query";
 import {createTarget, Target} from "../../models/target.model";
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -44,6 +44,7 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy {
     this.openModal.pipe(
       takeUntil(this.subscriptionDestroyer)
     ).subscribe(backup => {
+      console.log(backup);
       this.backup = createBackup(backup);
       this.isVisible = true;
     });
@@ -64,7 +65,7 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy {
   addBackupStep() {
     if (this.backup) {
       const sort = this.backup.backupSteps.length + 1;
-      this.backup.backupSteps.push(createBackupStep({id: sort * -1, sort}));
+      this.backup.backupSteps = [...this.backup.backupSteps, ...[createBackupStep({id: sort * -1, sort})]];
     }
   }
 

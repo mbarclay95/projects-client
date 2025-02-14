@@ -11,53 +11,95 @@
   </tr>
   </thead>
   <tbody>
-  <ng-container *ngFor="let backup of backupsTable?.data">
-    <tr>
-      <td [nzExpand]="expandSet.has(backup.id)" (nzExpandChange)="onExpandChange(backup.id, $event)"></td>
-      <td>
-        <button nz-button class="ant-btn-icon-only" nzType="text" nz-popconfirm
-                nzPopconfirmTitle="Are you sure you want to run this backup?"
-                (nzOnConfirm)="runBackup(backup)">
-          <fa-icon [icon]="play" size="1x" class="text-success"></fa-icon>
-        </button>
-        <button nz-button class="ant-btn-icon-only" nzType="text"
-                (click)="editBackup.emit(backup)">
-          <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
-        </button>
-        <button nz-button class="ant-btn-icon-only" nzType="text" nz-popconfirm
-                nzPopconfirmTitle="Are you sure you want to archive this backup?"
-                (nzOnConfirm)="backupsService.deleteBackups(backup)">
-          <fa-icon [icon]="archive" size="1x" class="text-warning"></fa-icon>
-        </button>
-      </td>
-      <td>{{backup.name}}</td>
-      <td>{{ backup.backupJobs.length > 0 ? (backup.backupJobs[0].startedAt | date : 'medium') : 'Never run' }}</td>
-      <td>{{backup.backupJobs.length > 0 ? (backup.backupJobs[0] | backupRunTime) : 'NA'}}</td>
-      <td>{{backup.backupJobs.length}}</td>
-      <td class="w-100 d-flex justify-content-center">
-        @if (backup.backupJobs.length === 0) {
-          <app-status-icon status="completed" iconSize="2x"></app-status-icon>
-        } @else {
-          <app-status-icon [status]="backup.backupJobs[0] | backupStatus" iconSize="2x"></app-status-icon>
-        }
-      </td>
-    </tr>
-    <tr [nzExpand]="expandSet.has(backup.id)">
-        <nz-collapse>
-          @for (backupJob of backup.backupJobs; track backupJob.id) {
-            <nz-collapse-panel [nzHeader]="(backupJob.startedAt | date : 'medium')!" [nzExtra]="statusIcon">
-              <div class="d-flex w-100" >
+    @if (backupsTable) {
 
-              </div>
-            </nz-collapse-panel>
-            <ng-template #statusIcon>
-              <app-status-icon [status]="backupJob | backupStatus"></app-status-icon>
-            </ng-template>
-          }
-        </nz-collapse>
+      @for (backup of backupsTable.data; track backup.id) {
+        <tr>
+          <td [nzExpand]="expandSet.has(backup.id)" (nzExpandChange)="onExpandChange(backup.id, $event)"></td>
+          <td>
+            <button nz-button class="ant-btn-icon-only" nzType="text" nz-popconfirm
+                    nzPopconfirmTitle="Are you sure you want to run this backup?"
+                    (nzOnConfirm)="runBackup(backup)">
+              <fa-icon [icon]="play" size="1x" class="text-success"></fa-icon>
+            </button>
+            <button nz-button class="ant-btn-icon-only" nzType="text"
+                    (click)="editBackup.emit(backup)">
+              <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
+            </button>
+            <button nz-button class="ant-btn-icon-only" nzType="text" nz-popconfirm
+                    nzPopconfirmTitle="Are you sure you want to archive this backup?"
+                    (nzOnConfirm)="backupsService.deleteBackups(backup)">
+              <fa-icon [icon]="archive" size="1x" class="text-warning"></fa-icon>
+            </button>
+          </td>
+          <td>{{ backup.name }}</td>
+          <td>{{ backup.backupJobs.length > 0 ? (backup.backupJobs[0].startedAt | date : 'medium') : 'Never run' }}</td>
+          <td>{{ backup.backupJobs.length > 0 ? (backup.backupJobs[0] | backupRunTime) : 'NA' }}</td>
+          <td>{{ backup.backupJobs.length }}</td>
+          <td class="w-100 d-flex justify-content-center">
+            @if (backup.backupJobs.length === 0) {
+              <app-status-icon status="completed" iconSize="2x"></app-status-icon>
+            } @else {
+              <app-status-icon [status]="backup.backupJobs[0] | backupStatus" iconSize="2x"></app-status-icon>
+            }
+          </td>
+        </tr>
+        <tr [nzExpand]="expandSet.has(backup.id)">
 
-    </tr>
-  </ng-container>
+          <nz-collapse>
+
+            @for (backupJob of backup.backupJobs; track backupJob.id) {
+
+              <nz-collapse-panel [nzHeader]="backupJobHeader" [nzExtra]="statusIcon">
+
+                <div class="d-flex flex-column w-100">
+
+                  @for (backupStepJob of backupJob.backupStepJobs | sortGeneric; track backupStepJob.id) {
+
+                    <div class="d-flex">
+
+                      <app-status-icon [status]="backupStepJob | backupStatus"></app-status-icon>
+
+                      <span class="ms-2 me-4">#{{ backupStepJob.sort }}:</span>
+
+                      <span>{{ backupStepJob.backupStep.name }}</span>
+
+                    </div>
+
+                    @if (backupStepJob.errorMessage) {
+                      <div class="ms-4 my-2">{{backupStepJob.errorMessage}}</div>
+                    }
+
+                  }
+
+                </div>
+
+              </nz-collapse-panel>
+
+              <ng-template #backupJobHeader>
+
+                <span>{{ backupJob.startedAt | date : 'medium' }}</span>
+
+                <span class="mx-3">-</span>
+
+                <span>{{ backupJob | backupRunTime }}</span>
+
+              </ng-template>
+
+              <ng-template #statusIcon>
+
+                <app-status-icon [status]="backupJob | backupStatus"></app-status-icon>
+
+              </ng-template>
+
+            }
+
+          </nz-collapse>
+
+        </tr>
+      }
+    }
+
   </tbody>
 
 </nz-table>

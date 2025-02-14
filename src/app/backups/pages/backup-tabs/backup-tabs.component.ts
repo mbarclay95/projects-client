@@ -3,7 +3,6 @@ import {Subject} from "rxjs";
 import {Backup, createBackup} from "../../models/backup.model";
 import {BackupsPollingService} from "../../services/backups-polling.service";
 import {createTarget, Target} from "../../models/target.model";
-import {Schedule} from '../../models/scheduled.model';
 
 @Component({
   selector: 'app-backup-tabs',
@@ -13,7 +12,7 @@ import {Schedule} from '../../models/scheduled.model';
 export class BackupTabsComponent implements OnInit, OnDestroy {
   selectedTab: 'Backup Job' | 'Target' = 'Backup Job';
   openBackupsDrawer: Subject<Backup> = new Subject<Backup>();
-  openScheduledBackupsDrawer: Subject<Schedule> = new Subject<Schedule>();
+  // openScheduledBackupsDrawer: Subject<Schedule> = new Subject<Schedule>();
   openTargetModal: Subject<{target: Target}> = new Subject<{target: Target}>();
 
   constructor(

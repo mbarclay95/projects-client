@@ -33,8 +33,7 @@ import { CreateEditScheduledBackupDrawerComponent } from './components/create-ed
 import {NzInputNumberModule} from "ng-zorro-antd/input-number";
 import {NzRadioModule} from "ng-zorro-antd/radio";
 import {NzPopconfirmDirective} from 'ng-zorro-antd/popconfirm';
-import {SortBackupStepsPipe} from './pipes/sort-backup-steps.pipe';
-
+import {SortGenericPipe} from '../shared/pipes/sort-generic.pipe';
 
 @NgModule({
   declarations: [
@@ -53,27 +52,27 @@ import {SortBackupStepsPipe} from './pipes/sort-backup-steps.pipe';
     ScheduledBackupsTableComponent,
     CreateEditScheduledBackupDrawerComponent
   ],
-    imports: [
-        CommonModule,
-        BackupsRoutingModule,
-        NzLayoutModule,
-        NzTabsModule,
-        NzButtonModule,
-        NzDrawerModule,
-        FormsModule,
-        NzInputModule,
-        FontAwesomeModule,
-        NzSwitchModule,
-        NzSelectModule,
-        NzDividerModule,
-        NzModalModule,
-        NzTableModule,
-        NzStepsModule,
-        NzCollapseModule,
-        NzInputNumberModule,
-        NzRadioModule,
-        NzPopconfirmDirective,
-        SortBackupStepsPipe
-    ]
+  imports: [
+    CommonModule,
+    BackupsRoutingModule,
+    NzLayoutModule,
+    NzTabsModule,
+    NzButtonModule,
+    NzDrawerModule,
+    FormsModule,
+    NzInputModule,
+    FontAwesomeModule,
+    NzSwitchModule,
+    NzSelectModule,
+    NzDividerModule,
+    NzModalModule,
+    NzTableModule,
+    NzStepsModule,
+    NzCollapseModule,
+    NzInputNumberModule,
+    NzRadioModule,
+    NzPopconfirmDirective,
+    SortGenericPipe,
+  ]
 })
 export class BackupsModule { }

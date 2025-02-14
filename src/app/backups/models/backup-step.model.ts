@@ -39,6 +39,6 @@ export function createBackupStep(params: Partial<BackupStep>): BackupStep {
     name: params.name ?? '',
     sort: params.sort ?? 0,
     backupStepType: params.backupStepType ?? null,
-    config: params.config ?? {}
+    config: {...params.config} ?? {}
   } as BackupStep;
 }

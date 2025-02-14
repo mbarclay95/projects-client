@@ -32,6 +32,8 @@ import { ScheduledBackupsTableComponent } from './components/scheduled-backups-t
 import { CreateEditScheduledBackupDrawerComponent } from './components/create-edit-scheduled-backup-drawer/create-edit-scheduled-backup-drawer.component';
 import {NzInputNumberModule} from "ng-zorro-antd/input-number";
 import {NzRadioModule} from "ng-zorro-antd/radio";
+import {NzPopconfirmDirective} from 'ng-zorro-antd/popconfirm';
+import {SortBackupStepsPipe} from './pipes/sort-backup-steps.pipe';
 
 
 @NgModule({
@@ -51,25 +53,27 @@ import {NzRadioModule} from "ng-zorro-antd/radio";
     ScheduledBackupsTableComponent,
     CreateEditScheduledBackupDrawerComponent
   ],
-  imports: [
-    CommonModule,
-    BackupsRoutingModule,
-    NzLayoutModule,
-    NzTabsModule,
-    NzButtonModule,
-    NzDrawerModule,
-    FormsModule,
-    NzInputModule,
-    FontAwesomeModule,
-    NzSwitchModule,
-    NzSelectModule,
-    NzDividerModule,
-    NzModalModule,
-    NzTableModule,
-    NzStepsModule,
-    NzCollapseModule,
-    NzInputNumberModule,
-    NzRadioModule
-  ]
+    imports: [
+        CommonModule,
+        BackupsRoutingModule,
+        NzLayoutModule,
+        NzTabsModule,
+        NzButtonModule,
+        NzDrawerModule,
+        FormsModule,
+        NzInputModule,
+        FontAwesomeModule,
+        NzSwitchModule,
+        NzSelectModule,
+        NzDividerModule,
+        NzModalModule,
+        NzTableModule,
+        NzStepsModule,
+        NzCollapseModule,
+        NzInputNumberModule,
+        NzRadioModule,
+        NzPopconfirmDirective,
+        SortBackupStepsPipe
+    ]
 })
 export class BackupsModule { }

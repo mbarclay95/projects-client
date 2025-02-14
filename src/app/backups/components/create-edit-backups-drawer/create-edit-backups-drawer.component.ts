@@ -1,8 +1,8 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
-import {Backup} from "../../models/backup.model";
-import {createBackupStep, isS3Upload, isTarZip} from "../../models/backup-step.model";
-import {faGripVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {Backup, createBackup} from "../../models/backup.model";
+import {BackupStep, createBackupStep, isS3Upload, isTarZip} from "../../models/backup-step.model";
+import {faEdit, faGripVertical, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {TargetsQuery} from "../../services/targets/state/targets.query";
 import {createTarget, Target} from "../../models/target.model";
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -14,30 +14,37 @@ import {BackupsPollingService} from "../../services/backups-polling.service";
   templateUrl: './create-edit-backups-drawer.component.html',
   styleUrls: ['./create-edit-backups-drawer.component.scss']
 })
-export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy{
+export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Backup>;
 
   isVisible: boolean = false;
-  backup!: Backup;
+  backup?: Backup;
   plus = faPlus;
   grip = faGripVertical;
-  openTargetModal: Subject<{target: Target, backupStepId: number}> = new Subject<{target: Target, backupStepId: number}>();
+  delete = faTrash;
+  openTargetModal: Subject<{ target: Target, backupStepId: number }> = new Subject<{
+    target: Target,
+    backupStepId: number
+  }>();
   saving: boolean = false;
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
+  protected readonly isTarZip = isTarZip;
+  protected readonly isS3Upload = isS3Upload;
 
   constructor(
     public targetsQuery: TargetsQuery,
     private backupsService: BackupsService,
     private nzMessageService: NzMessageService,
     private backupsPollingService: BackupsPollingService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.openModal.pipe(
       takeUntil(this.subscriptionDestroyer)
     ).subscribe(backup => {
-      this.backup = backup;
+      this.backup = createBackup(backup);
       this.isVisible = true;
     });
   }
@@ -47,7 +54,7 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy{
     this.subscriptionDestroyer.complete();
   }
 
-  selectNewTarget({target, backupStepId}: {target: Target, backupStepId: number}): void {
+  selectNewTarget({target, backupStepId}: { target: Target, backupStepId: number }): void {
     // const backupStep = this.backup.backupSteps.find(step => step.id === backupStepId);
     // if (backupStep) {
     //   backupStep.target = target;
@@ -55,8 +62,10 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy{
   }
 
   addBackupStep() {
-    const sort = this.backup.backupSteps.length + 1;
-    this.backup.backupSteps.push(createBackupStep({id: sort, sort}));
+    if (this.backup) {
+      const sort = this.backup.backupSteps.length + 1;
+      this.backup.backupSteps.push(createBackupStep({id: sort * -1, sort}));
+    }
   }
 
   targetCompare(a: Target, b: Target): boolean {
@@ -68,9 +77,14 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy{
   }
 
   async saveBackup() {
+    if (!this.backup) {
+      return;
+    }
     this.saving = true;
     try {
-      await this.backupsService.createNewBackups(this.backup);
+      this.backup.id === 0 ?
+        await this.backupsService.createNewBackups(this.backup) :
+        await this.backupsService.updateBackups(this.backup);
       this.backupsPollingService.startPolling();
     } catch (e) {
       this.saving = false;
@@ -83,6 +97,19 @@ export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy{
     this.isVisible = false;
   }
 
-  protected readonly isTarZip = isTarZip;
-  protected readonly isS3Upload = isS3Upload;
+  removeBackupStep(backupStep: BackupStep): void {
+    if (!this.backup) {
+      return;
+    }
+    const sort = backupStep.sort;
+    this.backup.backupSteps = this.backup.backupSteps
+      .filter((bs) => bs.id !== backupStep.id)
+      .map((bs) => {
+        if (bs.sort > sort) {
+          bs.sort--;
+        }
+
+        return bs;
+      });
+  }
 }

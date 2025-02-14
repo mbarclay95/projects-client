@@ -2,10 +2,11 @@
   <thead>
   <tr>
     <th nzWidth="60px"></th>
-    <th>Actions</th>
+    <th nzWidth="120px">Actions</th>
     <th>Backup Name</th>
     <th>Last Run</th>
     <th>Run time</th>
+    <th># of Runs</th>
     <th nzWidth="80px">Status</th>
   </tr>
   </thead>
@@ -14,14 +15,25 @@
     <tr>
       <td [nzExpand]="expandSet.has(backup.id)" (nzExpandChange)="onExpandChange(backup.id, $event)"></td>
       <td>
-        <button nz-button class="ant-btn-icon-only" nzType="text"
-                (click)="runBackup(backup)">
+        <button nz-button class="ant-btn-icon-only" nzType="text" nz-popconfirm
+                nzPopconfirmTitle="Are you sure you want to run this backup?"
+                (nzOnConfirm)="runBackup(backup)">
           <fa-icon [icon]="play" size="1x" class="text-success"></fa-icon>
+        </button>
+        <button nz-button class="ant-btn-icon-only" nzType="text"
+                (click)="editBackup.emit(backup)">
+          <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
+        </button>
+        <button nz-button class="ant-btn-icon-only" nzType="text" nz-popconfirm
+                nzPopconfirmTitle="Are you sure you want to archive this backup?"
+                (nzOnConfirm)="backupsService.deleteBackups(backup)">
+          <fa-icon [icon]="archive" size="1x" class="text-warning"></fa-icon>
         </button>
       </td>
       <td>{{backup.name}}</td>
       <td>{{ backup.backupJobs.length > 0 ? (backup.backupJobs[0].startedAt | date : 'medium') : 'Never run' }}</td>
       <td>{{backup.backupJobs.length > 0 ? (backup.backupJobs[0] | backupRunTime) : 'NA'}}</td>
+      <td>{{backup.backupJobs.length}}</td>
       <td class="w-100 d-flex justify-content-center">
         @if (backup.backupJobs.length === 0) {
           <app-status-icon status="completed" iconSize="2x"></app-status-icon>

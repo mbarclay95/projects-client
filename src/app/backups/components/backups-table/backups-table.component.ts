@@ -1,7 +1,9 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NzTableComponent} from "ng-zorro-antd/table";
 import {Backup} from "../../models/backup.model";
 import {
+  faArchive,
+  faEdit,
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import {BackupsService} from '../../services/backups/state/backups.service';
@@ -19,13 +21,16 @@ export class BackupsTableComponent implements OnInit {
       this._backups = backups;
     }
   }
+  @Output() editBackup: EventEmitter<Backup> = new EventEmitter<Backup>();
 
   _backups: Backup[] = [];
   expandSet = new Set<number>();
   play = faPlay;
+  edit = faEdit;
+  archive = faArchive;
 
   constructor(
-    private backupsService: BackupsService,
+    public backupsService: BackupsService,
     private backupsPollingService: BackupsPollingService
   ) { }
 

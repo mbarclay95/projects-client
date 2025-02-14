@@ -4,7 +4,7 @@
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'backups'}" queryParamsHandling="merge">
       Backup Jobs
     </a>
-    <app-backups-page></app-backups-page>
+    <app-backups-page (editBackup)="openBackupsDrawer.next($event)"></app-backups-page>
   </nz-tab>
 <!--  <nz-tab (nzSelect)="selectedTab = 'Scheduled Backup Job'">-->
 <!--    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'scheduled'}" queryParamsHandling="merge">-->

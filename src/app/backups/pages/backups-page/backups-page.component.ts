@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {BackupsQuery} from "../../services/backups/state/backups.query";
+import {Backup} from '../../models/backup.model';
 
 @Component({
   selector: 'app-backups-page',
@@ -7,6 +8,7 @@ import {BackupsQuery} from "../../services/backups/state/backups.query";
   styleUrls: ['./backups-page.component.scss']
 })
 export class BackupsPageComponent implements OnInit {
+  @Output() editBackup: EventEmitter<Backup> = new EventEmitter<Backup>();
 
   constructor(
     public backupsQuery: BackupsQuery

@@ -37,5 +37,17 @@ export class BackupsService {
     ));
   }
 
+  async updateBackups(newBackup: Backup): Promise<void> {
+    await firstValueFrom(this.http.put<Backup>(`${environment.apiUrl}/backups/${newBackup.id}`, newBackup).pipe(
+      map(backup => createBackup(backup)),
+      tap(backup => this.backupsStore.update(backup.id, backup))
+    ));
+  }
+
+  async deleteBackups(backup: Backup): Promise<void> {
+    await firstValueFrom(this.http.delete<Backup>(`${environment.apiUrl}/backups/${backup.id}`).pipe(
+      tap(() => this.backupsStore.remove(backup.id))
+    ));
+  }
 
 }

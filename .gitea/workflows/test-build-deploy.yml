@@ -1,0 +1,31 @@
+name: Build, and deploy actions
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          tags: type=sha
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          file: ./docker/Dockerfile
+          tags: |
+            docker-registry.bigmike.dev/projects-client:latest
+            docker-registry.bigmike.dev/projects-client:${{ steps.meta.outputs.tags }}
+  run-portainer-webhook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run curl command
+        run: curl --location --request POST 'http://10.5.10.11:9000/api/stacks/webhooks/f10856f0-d5ab-4c89-9283-f5fd7456654f'
+

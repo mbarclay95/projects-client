@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Goal} from '../../models/goal.model';
-import {faEdit} from '@fortawesome/free-solid-svg-icons';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Goal } from '../../models/goal.model';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-goals-table-mobile',
   templateUrl: './goals-table-mobile.component.html',
-  styleUrls: ['./goals-table-mobile.component.scss']
+  styleUrls: ['./goals-table-mobile.component.scss'],
 })
 export class GoalsTableMobileComponent implements OnInit {
   @Input() set goals(goals: Goal[] | null) {
@@ -18,9 +18,7 @@ export class GoalsTableMobileComponent implements OnInit {
   _goals: Goal[] = [];
   edit = faEdit;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

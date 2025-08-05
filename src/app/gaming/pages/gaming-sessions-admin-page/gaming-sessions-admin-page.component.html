@@ -1,64 +1,43 @@
-<div class="w-100 page-container p-2" *ngLet="(gamingSessionsFacadeService.gamingSessionsUi$ | async) as ui">
-
+<div class="w-100 page-container p-2" *ngLet="gamingSessionsFacadeService.gamingSessionsUi$ | async as ui">
   <app-gaming-segment [tab]="tab" (tabChanged)="tab = $event"></app-gaming-segment>
 
-  @if (tab === 'sessions' && !!ui) {
+  @if (tab === "sessions" && !!ui) {
     <div class="w-100 d-flex justify-content-end mb-3">
       <div>
         Show Archived
-        <nz-switch [ngModel]="ui.showArchived"
-                   (ngModelChange)="gamingSessionsFacadeService.updateUi({showArchived: $event})"></nz-switch>
+        <nz-switch [ngModel]="ui.showArchived" (ngModelChange)="gamingSessionsFacadeService.updateUi({ showArchived: $event })"></nz-switch>
       </div>
     </div>
   }
 
   <div class="w-100 table-border mb-2">
-
-    @if (tab === 'sessions') {
-
+    @if (tab === "sessions") {
       @if (gamingSessionsFacadeService.sessionsLoading()) {
-
         <div class="d-flex w-100 justify-content-center align-items-center" style="height: 50vh">
           <nz-spin></nz-spin>
         </div>
-
       } @else {
-
         <app-gaming-sessions-list
           [sessions]="(gamingSessionsFacadeService.gamingSessions$ | async) ?? []"
           [forAdmin]="true"
           (editSession)="editSession.next($event)"
         ></app-gaming-sessions-list>
 
-        <app-create-edit-session-modal
-          [openModal]="openSessionModal$"
-        ></app-create-edit-session-modal>
-
+        <app-create-edit-session-modal [openModal]="openSessionModal$"></app-create-edit-session-modal>
       }
     } @else {
-
       @if (gamingSessionsFacadeService.devicesLoading()) {
-
         <div class="d-flex w-100 justify-content-center align-items-center" style="height: 50vh">
           <nz-spin></nz-spin>
         </div>
-
       } @else {
-
         <app-gaming-devices-list
           [devices]="(gamingSessionsFacadeService.gamingDevices$ | async) ?? []"
           (editDevice)="editDevice.next($event)"
         ></app-gaming-devices-list>
 
-        <app-create-edit-device-modal
-          [openModal]="openDeviceModal$"
-        ></app-create-edit-device-modal>
-
+        <app-create-edit-device-modal [openModal]="openDeviceModal$"></app-create-edit-device-modal>
       }
-
     }
-
   </div>
-
 </div>
-

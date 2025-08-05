@@ -1,38 +1,29 @@
 <div>
-
   <div *ngFor="let goal of _goals" class="goal-container w-100 mb-3">
-
     <div class="d-flex justify-content-between align-items-center mb-3 w-100">
-
       <div class="goal-title">
-
         <fa-icon class="me-2" [icon]="edit" (click)="editGoal.emit(goal)"></fa-icon>
 
-        <div style="font-size: 18px">{{goal.title}}</div>
-
+        <div style="font-size: 18px">{{ goal.title }}</div>
       </div>
 
-      <div class="goal-progress">
-
-        {{goal.currentAmount}} / {{goal.expectedAmount}} {{goal.expectedAmount | pluralizeGoal : goal}}
-
-      </div>
-
-
+      <div class="goal-progress">{{ goal.currentAmount }} / {{ goal.expectedAmount }} {{ goal.expectedAmount | pluralizeGoal: goal }}</div>
     </div>
 
     <div class="d-flex w-100 days-container">
-
-      <div *ngFor="let goalDay of goal.id | goalDays | async; let last = last; let i = index"
-           [ngClass]="{'day-right-border': !last, 'today-box': goalDay.isToday && !last, 'today-box-last': goalDay.isToday && last}"
-           class="day-box">
-        <app-goal-day-button [day]="goalDay.dayString" [goalDay]="goalDay.goalDay" [showBottomLeft]="i === 0 || i === 1"
-                             [showBottomRight]="i === 5 || i === 6" [goal]="goal"></app-goal-day-button>
+      <div
+        *ngFor="let goalDay of goal.id | goalDays | async; let last = last; let i = index"
+        [ngClass]="{ 'day-right-border': !last, 'today-box': goalDay.isToday && !last, 'today-box-last': goalDay.isToday && last }"
+        class="day-box"
+      >
+        <app-goal-day-button
+          [day]="goalDay.dayString"
+          [goalDay]="goalDay.goalDay"
+          [showBottomLeft]="i === 0 || i === 1"
+          [showBottomRight]="i === 5 || i === 6"
+          [goal]="goal"
+        ></app-goal-day-button>
       </div>
-
-
     </div>
-
   </div>
-
 </div>

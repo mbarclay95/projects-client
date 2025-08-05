@@ -1,15 +1,15 @@
-import {getYear} from 'date-fns';
+import { getYear } from 'date-fns';
 
 export interface Family {
   id: number;
   name: string;
-  members: {id: number, name: string}[];
+  members: { id: number; name: string }[];
   tasksPerWeek: number;
   totalFamilyTasks: number;
   taskPoints: number[];
   taskStrategy: TaskStrategy;
-  minWeekOffset: number
-  minYear: number
+  minWeekOffset: number;
+  minYear: number;
 }
 
 export type TaskStrategy = 'per task' | 'per task point';

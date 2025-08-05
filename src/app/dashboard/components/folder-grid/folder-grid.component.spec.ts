@@ -8,9 +8,8 @@ describe('FolderGridComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FolderGridComponent ]
-    })
-    .compileComponents();
+      declarations: [FolderGridComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

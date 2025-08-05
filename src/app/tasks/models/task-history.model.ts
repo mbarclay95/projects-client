@@ -1,8 +1,7 @@
-
 export interface TaskHistory {
   id: number;
-  completedByName: string
-  completedAt: Date
+  completedByName: string;
+  completedAt: Date;
 }
 
 export function createTaskHistory(params: Partial<TaskHistory>) {
@@ -12,4 +11,3 @@ export function createTaskHistory(params: Partial<TaskHistory>) {
     completedAt: params.completedAt ? new Date(params.completedAt) : null,
   } as TaskHistory;
 }
-

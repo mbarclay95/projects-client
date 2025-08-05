@@ -1,4 +1,4 @@
-import {BackupStep, createBackupStep} from './backup-step.model';
+import { BackupStep, createBackupStep } from './backup-step.model';
 
 export interface BackupStepJob {
   id: number;

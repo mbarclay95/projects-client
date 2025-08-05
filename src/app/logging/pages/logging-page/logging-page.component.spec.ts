@@ -8,9 +8,8 @@ describe('LoggingPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoggingPageComponent ]
-    })
-    .compileComponents();
+      declarations: [LoggingPageComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoggingPageComponent);
     component = fixture.componentInstance;

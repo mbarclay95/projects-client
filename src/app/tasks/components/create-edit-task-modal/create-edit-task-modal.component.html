@@ -1,100 +1,93 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(task?.id === 0 ? 'Create' : 'Edit') + ' Task'" [nzWidth]="'500px'"
-          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveTask()"
-          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
-
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="(task?.id === 0 ? 'Create' : 'Edit') + ' Task'"
+  [nzWidth]="'500px'"
+  (nzOnCancel)="isVisible = false"
+  nzOkText="Save"
+  nzCancelText="Close"
+  (nzOnOk)="saveTask()"
+  [nzCancelDisabled]="saving"
+  [nzOkDisabled]="saving"
+  [nzOkLoading]="saving"
+  [nzMaskClosable]="false"
+>
   <ng-container *nzModalContent>
-
     <div *ngIf="task">
-
       <div *ngIf="task.id !== 0 && task.recurring" class="w-100 d-flex justify-content-between align-items-center mb-4">
-
         <div class="">Pause Recurring Task:</div>
 
         <nz-switch [ngModel]="!task.isActive" (ngModelChange)="task.isActive = !$event"></nz-switch>
-
       </div>
 
       <div class="w-100 mb-4">
-
         <div class="mb-2">Task Name: <span class="text-danger">*</span></div>
 
-        <input nz-input [(ngModel)]="task.name" class="w-100">
-
+        <input nz-input [(ngModel)]="task.name" class="w-100" />
       </div>
 
       <div class="w-100 d-flex justify-content-between align-items-center mb-4">
-
         <div class="">High Priority:</div>
 
         <nz-switch [ngModel]="task.priority === 1" (ngModelChange)="task.priority = !!$event ? 1 : 0"></nz-switch>
-
       </div>
 
       <div class="w-100 mb-4">
-
         <div class="mb-2">Description:</div>
 
         <textarea nz-input [(ngModel)]="task.description" class="w-100"></textarea>
-
       </div>
 
       <div class="w-100 mb-4 d-flex justify-content-between align-items-center">
-
         <div class="">Task Type:</div>
 
-        <nz-radio-group [(ngModel)]="task.ownerType" nzButtonStyle="solid"
-                        (ngModelChange)="changeOwner($event)">
+        <nz-radio-group [(ngModel)]="task.ownerType" nzButtonStyle="solid" (ngModelChange)="changeOwner($event)">
           <label nz-radio-button nzValue="user">Personal</label>
           <label nz-radio-button nzValue="family">Family</label>
         </nz-radio-group>
-
       </div>
 
       <div *ngIf="(familiesQuery.familyTaskStrategy$ | async) === 'per task point'" class="w-100 mb-4">
-
         <div class="">Task Points: <span class="text-danger">*</span></div>
 
         <nz-select [ngModel]="task.taskPoint" (ngModelChange)="updateTaskPoint($event)" class="w-100">
-          <nz-option *ngFor="let taskPoint of familiesQuery.taskPoints$ | async" [nzValue]="taskPoint"
-                     [nzLabel]="taskPoint + (taskPoint === 1 ? ' point' : ' points')"></nz-option>
+          <nz-option
+            *ngFor="let taskPoint of familiesQuery.taskPoints$ | async"
+            [nzValue]="taskPoint"
+            [nzLabel]="taskPoint + (taskPoint === 1 ? ' point' : ' points')"
+          ></nz-option>
         </nz-select>
-
       </div>
 
       <div class="w-100 mb-4">
-
         <div class="">Task Tags:</div>
 
         <nz-select class="w-100" nzMode="tags" [(ngModel)]="task.tags">
           <nz-option *ngFor="let tag of tagsService.tags$ | async" [nzLabel]="tag" [nzValue]="tag"></nz-option>
         </nz-select>
-
       </div>
 
       <div class="w-100 d-flex justify-content-between align-items-center mb-4">
-
         <div class="">Recurring:</div>
 
-        <nz-switch [(ngModel)]="task.recurring" (ngModelChange)="updateRecurring($event)"
-                   [nzDisabled]="task.id !== 0"></nz-switch>
-
+        <nz-switch [(ngModel)]="task.recurring" (ngModelChange)="updateRecurring($event)" [nzDisabled]="task.id !== 0"></nz-switch>
       </div>
 
       <div class="w-100 mb-4" *ngIf="!task.recurring">
-
         <div class="mb-2">Due Date: <span class="text-danger">*</span></div>
 
-        <nz-date-picker [(ngModel)]="task.dueDate" class="w-100" [nzDisabledDate]="disabledDate"
-                        nzFormat="MM/dd/yyyy" [nzInputReadOnly]="true"></nz-date-picker>
-
+        <nz-date-picker
+          [(ngModel)]="task.dueDate"
+          class="w-100"
+          [nzDisabledDate]="disabledDate"
+          nzFormat="MM/dd/yyyy"
+          [nzInputReadOnly]="true"
+        ></nz-date-picker>
       </div>
 
       <div class="w-100 mb-4" *ngIf="task.recurring">
-
         <div class="mb-2">Frequency: <span class="text-danger">*</span></div>
 
         <div class="d-flex align-items-center">
-
           Every
 
           <nz-input-number class="mx-3" [nzMin]="1" [(ngModel)]="task.frequencyAmount"></nz-input-number>
@@ -105,23 +98,20 @@
             <nz-option nzValue="month" [nzLabel]="'Month' + (task.frequencyAmount | pluralFrequency)"></nz-option>
             <nz-option nzValue="year" [nzLabel]="'Year' + (task.frequencyAmount | pluralFrequency)"></nz-option>
           </nz-select>
-
         </div>
-
       </div>
 
       <div class="w-100 mb-4" *ngIf="task.recurring">
+        <div class="mb-2">{{ task.id === 0 ? "First" : "Next" }} Due Date: <span class="text-danger">*</span></div>
 
-        <div class="mb-2">{{task.id === 0 ? 'First' : 'Next'}} Due Date: <span class="text-danger">*</span></div>
-
-        <nz-date-picker [(ngModel)]="task.dueDate" class="w-100" [nzDisabledDate]="disabledDate"
-                        nzFormat="MM/dd/yyyy" [nzInputReadOnly]="true"></nz-date-picker>
-
+        <nz-date-picker
+          [(ngModel)]="task.dueDate"
+          class="w-100"
+          [nzDisabledDate]="disabledDate"
+          nzFormat="MM/dd/yyyy"
+          [nzInputReadOnly]="true"
+        ></nz-date-picker>
       </div>
-
     </div>
-
   </ng-container>
-
-
 </nz-modal>

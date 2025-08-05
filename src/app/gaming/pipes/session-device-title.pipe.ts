@@ -1,12 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {GamingSessionDevice} from '../models/gaming-session-device.model';
+import { GamingSessionDevice } from '../models/gaming-session-device.model';
 
 @Pipe({
   name: 'sessionDeviceTitle',
-  standalone: true
+  standalone: true,
 })
 export class SessionDeviceTitlePipe implements PipeTransform {
-
   transform(sessionDevice: GamingSessionDevice | undefined): string {
     if (!sessionDevice) {
       return '';
@@ -18,5 +17,4 @@ export class SessionDeviceTitlePipe implements PipeTransform {
 
     return 'Update your name';
   }
-
 }

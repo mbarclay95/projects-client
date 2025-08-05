@@ -8,9 +8,8 @@ describe('ScheduledBackupsPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScheduledBackupsPageComponent ]
-    })
-    .compileComponents();
+      declarations: [ScheduledBackupsPageComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

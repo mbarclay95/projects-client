@@ -1,47 +1,49 @@
 <nz-table #tasksTableTag [nzData]="_tasks" nzSize="small" [nzFrontPagination]="false">
-  <ng-container *ngLet="(familiesQuery.familyTaskStrategy$ | async) as familyTaskStrategy">
+  <ng-container *ngLet="familiesQuery.familyTaskStrategy$ | async as familyTaskStrategy">
     <thead>
-    <tr>
-      <th nzWidth="60px"></th>
-      <th>Name</th>
-      <th>Due Date</th>
-      <th>Frequency</th>
-      <th>Type</th>
-      <th *ngIf="familyTaskStrategy === 'per task point'" nzWidth="50px">Points</th>
-    </tr>
+      <tr>
+        <th nzWidth="60px"></th>
+        <th>Name</th>
+        <th>Due Date</th>
+        <th>Frequency</th>
+        <th>Type</th>
+        <th *ngIf="familyTaskStrategy === 'per task point'" nzWidth="50px">Points</th>
+      </tr>
     </thead>
     <tbody>
-    <ng-container *ngFor="let task of tasksTable?.data">
-      <tr [ngClass]="{'highlighted-row': highlightedTaskId === task.id}">
-        <td class="d-flex">
-          <button nz-button class="ant-btn-icon-only" nzType="text"
-                  (click)="editTask.emit(task)">
-            <fa-icon [icon]="edit" class="text-primary"></fa-icon>
-          </button>
-          <button nz-button class="ant-btn-icon-only" nzType="text" nz-popconfirm nzPopconfirmTitle="Are you sure?"
-                  (nzOnConfirm)="deleteTask(task)">
-            <fa-icon [icon]="delete" class=""></fa-icon>
-          </button>
-        </td>
-        <td>{{task.name}}</td>
-        <td *ngIf="task.isActive">{{task.dueDate | date : 'shortDate'}}</td>
-        <td *ngIf="!task.isActive" class="text-warning" style="font-style: italic">*Paused</td>
-        <td style="width: 18px; text-align: center">
-          <fa-icon *ngIf="task.recurring" [icon]="repeat"></fa-icon>
-          <fa-icon *ngIf="!task.recurring" [icon]="single"></fa-icon>
-        </td>
-        <td style="width: 18px; text-align: center">
-          <fa-icon style="color: white"
-                   *ngIf="task.ownerType === 'family'" [icon]="household"></fa-icon>
-          <fa-icon style="color: white"
-                   *ngIf="task.ownerType === 'user'" [icon]="personal"></fa-icon>
-        </td>
-        <td *ngIf="familyTaskStrategy === 'per task point'" class="text-center">
-          {{task.taskPoint ?? 0}}
-        </td>
-      </tr>
-    </ng-container>
+      <ng-container *ngFor="let task of tasksTable?.data">
+        <tr [ngClass]="{ 'highlighted-row': highlightedTaskId === task.id }">
+          <td class="d-flex">
+            <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editTask.emit(task)">
+              <fa-icon [icon]="edit" class="text-primary"></fa-icon>
+            </button>
+            <button
+              nz-button
+              class="ant-btn-icon-only"
+              nzType="text"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure?"
+              (nzOnConfirm)="deleteTask(task)"
+            >
+              <fa-icon [icon]="delete" class=""></fa-icon>
+            </button>
+          </td>
+          <td>{{ task.name }}</td>
+          <td *ngIf="task.isActive">{{ task.dueDate | date: "shortDate" }}</td>
+          <td *ngIf="!task.isActive" class="text-warning" style="font-style: italic">*Paused</td>
+          <td style="width: 18px; text-align: center">
+            <fa-icon *ngIf="task.recurring" [icon]="repeat"></fa-icon>
+            <fa-icon *ngIf="!task.recurring" [icon]="single"></fa-icon>
+          </td>
+          <td style="width: 18px; text-align: center">
+            <fa-icon style="color: white" *ngIf="task.ownerType === 'family'" [icon]="household"></fa-icon>
+            <fa-icon style="color: white" *ngIf="task.ownerType === 'user'" [icon]="personal"></fa-icon>
+          </td>
+          <td *ngIf="familyTaskStrategy === 'per task point'" class="text-center">
+            {{ task.taskPoint ?? 0 }}
+          </td>
+        </tr>
+      </ng-container>
     </tbody>
   </ng-container>
-
 </nz-table>

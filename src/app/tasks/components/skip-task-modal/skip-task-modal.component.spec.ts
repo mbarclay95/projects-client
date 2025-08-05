@@ -8,9 +8,8 @@ describe('SkipTaskModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SkipTaskModalComponent ]
-    })
-    .compileComponents();
+      declarations: [SkipTaskModalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SkipTaskModalComponent);
     component = fixture.componentInstance;

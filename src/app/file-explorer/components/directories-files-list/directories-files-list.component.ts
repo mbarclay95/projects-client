@@ -1,21 +1,22 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DirectoryItemsQuery} from '../../services/state/directory-items.query';
-import {faArrowsRotate, faChevronLeft, faEdit, faFile, faFolder, faTrash} from '@fortawesome/free-solid-svg-icons';
-import {DirectoryItemsService} from '../../services/state/directory-items.service';
-import {DirectoryItem} from '../../models/directory-item.model';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {WorkingDirectoryItem, workingDirectoryToString} from '../../models/working-directory-item';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DirectoryItemsQuery } from '../../services/state/directory-items.query';
+import { faArrowsRotate, faChevronLeft, faEdit, faFile, faFolder, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { DirectoryItemsService } from '../../services/state/directory-items.service';
+import { DirectoryItem } from '../../models/directory-item.model';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/working-directory-item';
 
 @Component({
   selector: 'app-directories-files-list',
   templateUrl: './directories-files-list.component.html',
-  styleUrls: ['./directories-files-list.component.scss']
+  styleUrls: ['./directories-files-list.component.scss'],
 })
 export class DirectoriesFilesListComponent implements OnInit {
   @Input() workingDirectory: WorkingDirectoryItem[] = [];
   @Input() newLocationBeingSelected = false;
-  @Output() openCreateEditModal: EventEmitter<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }> =
-    new EventEmitter<DirectoryItem & { createOrUpdate: "Create" | "Update" }>();
+  @Output() openCreateEditModal: EventEmitter<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }> = new EventEmitter<
+    DirectoryItem & { createOrUpdate: 'Create' | 'Update' }
+  >();
   @Output() cancelNewLocation: EventEmitter<void> = new EventEmitter<void>();
   @Output() selectNewLocation: EventEmitter<WorkingDirectoryItem[]> = new EventEmitter<WorkingDirectoryItem[]>();
   file = faFile;
@@ -28,12 +29,10 @@ export class DirectoriesFilesListComponent implements OnInit {
   constructor(
     public directoryItemsService: DirectoryItemsService,
     public directoryItemsQuery: DirectoryItemsQuery,
-    private nzMessageService: NzMessageService
-  ) {
-  }
+    private nzMessageService: NzMessageService,
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   clickedDirectory(item: DirectoryItem): void {
     this.directoryItemsService.appendPath(item.id, this.workingDirectory);
@@ -70,7 +69,7 @@ export class DirectoriesFilesListComponent implements OnInit {
     this.openCreateEditModal.emit({
       id: item.id,
       type: item.type,
-      createOrUpdate: 'Update'
+      createOrUpdate: 'Update',
     });
   }
 
@@ -80,8 +79,7 @@ export class DirectoriesFilesListComponent implements OnInit {
     } catch (e) {
       this.nzMessageService.error('There was an error');
     }
-    this.nzMessageService.success(`${item.type === 'dir' ? 'Directory' : 'File'} deleted`)
-
+    this.nzMessageService.success(`${item.type === 'dir' ? 'Directory' : 'File'} deleted`);
   }
 
   refreshDir(): void {

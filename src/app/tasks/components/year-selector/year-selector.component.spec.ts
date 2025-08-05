@@ -8,9 +8,8 @@ describe('YearSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ YearSelectorComponent ]
-    })
-    .compileComponents();
+      declarations: [YearSelectorComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(YearSelectorComponent);
     component = fixture.componentInstance;

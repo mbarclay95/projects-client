@@ -1,23 +1,16 @@
 @for (session of sessions; track session.id) {
-
   <div class="session-box">
-
     <div class="first-row" (click)="test(session)">
-
       <div>
-
-        <div class="title">{{session.name}}</div>
+        <div class="title">{{ session.name }}</div>
 
         <div class="sub-header d-flex align-items-center">
-
           @if (forAdmin) {
-            <div>{{session.createdAt | date}}</div>
+            <div>{{ session.createdAt | date }}</div>
           } @else {
-            {{session.gamingSessionDevices.length}} players joined
+            {{ session.gamingSessionDevices.length }} players joined
           }
-
         </div>
-
       </div>
 
       <div style="width: 18px; text-align: center">
@@ -31,9 +24,6 @@
           <fa-icon [icon]="arrow"></fa-icon>
         }
       </div>
-
     </div>
-
   </div>
-
 }

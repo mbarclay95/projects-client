@@ -1,28 +1,27 @@
-import {Injectable} from '@angular/core';
-import {EntityState, EntityStore, StoreConfig} from '@datorama/akita';
-import {Task, TaskOwnerType} from '../../../models/task.model';
+import { Injectable } from '@angular/core';
+import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { Task, TaskOwnerType } from '../../../models/task.model';
 
 export interface TasksState extends EntityState<Task> {
-  ui: TaskUiState
+  ui: TaskUiState;
 }
 
 export interface TaskUiState {
-  ownerType: TaskOwnerType | null,
+  ownerType: TaskOwnerType | null;
   completedStatus: 'completed' | 'notCompleted' | 'both';
   recurringType: boolean | 'both';
   sort: string;
   sortDir: 'asc' | 'desc';
-  numOfDays: number|null;
-  search: string|null;
+  numOfDays: number | null;
+  search: string | null;
   tags: string[];
   showPaused: boolean;
   highPriorityFirst: boolean;
 }
 
-@Injectable({providedIn: 'root'})
-@StoreConfig({name: 'tasks'})
+@Injectable({ providedIn: 'root' })
+@StoreConfig({ name: 'tasks' })
 export class TasksStore extends EntityStore<TasksState> {
-
   constructor() {
     super({
       ui: {
@@ -35,9 +34,8 @@ export class TasksStore extends EntityStore<TasksState> {
         search: null,
         tags: [],
         showPaused: false,
-        highPriorityFirst: true
-      }
+        highPriorityFirst: true,
+      },
     });
   }
-
 }

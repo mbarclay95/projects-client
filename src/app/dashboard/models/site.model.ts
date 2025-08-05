@@ -1,4 +1,4 @@
-import {createSiteImage, SiteImage} from './site-image.model';
+import { createSiteImage, SiteImage } from './site-image.model';
 
 export interface Site {
   id: number;
@@ -24,6 +24,6 @@ export function createSite(params: Partial<Site>): Site {
     sort: params.sort === null ? null : Number(params.sort),
     folderId: Number.isNaN(params.folderId) ? null : Number(params.folderId),
     show: !!params.show,
-    siteImage: params.siteImage ? createSiteImage(params.siteImage) : null
+    siteImage: params.siteImage ? createSiteImage(params.siteImage) : null,
   } as Site;
 }

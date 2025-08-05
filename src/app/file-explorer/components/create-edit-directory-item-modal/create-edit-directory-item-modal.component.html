@@ -1,56 +1,48 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="createOrUpdate + (item?.type === 'dir' ? ' Directory' : ' File')" [nzWidth]="modalWidth"
-          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveItem()"
-          [nzStyle]="modalStyle" [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving"
-          [nzMaskClosable]="false">
-
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="createOrUpdate + (item?.type === 'dir' ? ' Directory' : ' File')"
+  [nzWidth]="modalWidth"
+  (nzOnCancel)="isVisible = false"
+  nzOkText="Save"
+  nzCancelText="Close"
+  (nzOnOk)="saveItem()"
+  [nzStyle]="modalStyle"
+  [nzCancelDisabled]="saving"
+  [nzOkDisabled]="saving"
+  [nzOkLoading]="saving"
+  [nzMaskClosable]="false"
+>
   <ng-container *nzModalContent>
-
     <div *ngIf="item">
-
       <div class="w-100 mb-4">
+        <div class="mb-2">{{ item.type === "dir" ? "Directory" : "File" }} Name:</div>
 
-        <div class="mb-2">{{item.type === 'dir' ? 'Directory' : 'File'}} Name:</div>
-
-        <input nz-input #directoryName [(ngModel)]="newName" class="w-100">
-
+        <input nz-input #directoryName [(ngModel)]="newName" class="w-100" />
       </div>
 
       <div class="w-100 mb-4" *ngIf="item.type === 'file'">
-
         <div class="mb-3">Change File Location:</div>
 
         <div class="ms-2">
-
-          <div *ngIf="newWorkingDirectory" class="mb-2">
-            New Directory: {{workingDirectoryToString(newWorkingDirectory)}}
-          </div>
+          <div *ngIf="newWorkingDirectory" class="mb-2">New Directory: {{ workingDirectoryToString(newWorkingDirectory) }}</div>
 
           <nz-radio-group *ngIf="newWorkingDirectory" class="mb-2" [(ngModel)]="newLocationMode">
-
             <label nz-radio nzValue="mv">Move</label>
 
             <label nz-radio nzValue="cp">Copy</label>
-
           </nz-radio-group>
 
           <div class="d-flex">
-
-            <button *ngIf="newWorkingDirectory" nz-button class="me-2" nzType="default"
-                    (click)="newWorkingDirectory = undefined">Cancel</button>
-
-            <button nz-button nzType="primary" (click)="selectNewLocationClicked()">
-              Select {{ newWorkingDirectory ? 'different' : '' }} Directory
+            <button *ngIf="newWorkingDirectory" nz-button class="me-2" nzType="default" (click)="newWorkingDirectory = undefined">
+              Cancel
             </button>
 
+            <button nz-button nzType="primary" (click)="selectNewLocationClicked()">
+              Select {{ newWorkingDirectory ? "different" : "" }} Directory
+            </button>
           </div>
-
         </div>
-
       </div>
-
     </div>
-
   </ng-container>
-
-
 </nz-modal>

@@ -1,25 +1,16 @@
 @for (device of devices; track device.id) {
-
   <div class="device-box">
-
     <div class="first-row" (click)="editDevice.emit(device)">
-
       <div>
-
         <div class="d-flex align-items-center">
-
           <fa-icon [icon]="button" [style.color]="device.buttonColor"></fa-icon>
 
-          <div class="ms-2 title">{{device.deviceCommunicationId}}</div>
-
+          <div class="ms-2 title">{{ device.deviceCommunicationId }}</div>
         </div>
 
         <div class="last-seen d-flex align-items-center">
-
-          <div>Last Seen: {{device.lastSeen | date : 'short'}}</div>
-
+          <div>Last Seen: {{ device.lastSeen | date: "short" }}</div>
         </div>
-
       </div>
 
       <div style="width: 18px; text-align: center">
@@ -29,10 +20,6 @@
           <fa-icon style="color: #e23636" [icon]="offline"></fa-icon>
         }
       </div>
-
     </div>
-
   </div>
-
 }
-

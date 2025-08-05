@@ -8,9 +8,8 @@ describe('IncompleteEntriesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IncompleteEntriesComponent ]
-    })
-    .compileComponents();
+      declarations: [IncompleteEntriesComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IncompleteEntriesComponent);
     component = fixture.componentInstance;

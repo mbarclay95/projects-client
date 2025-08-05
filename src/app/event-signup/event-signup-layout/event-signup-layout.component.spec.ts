@@ -8,9 +8,8 @@ describe('EventSignupLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventSignupLayoutComponent ]
-    })
-    .compileComponents();
+      declarations: [EventSignupLayoutComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EventSignupLayoutComponent);
     component = fixture.componentInstance;

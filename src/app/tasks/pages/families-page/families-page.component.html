@@ -1,8 +1,5 @@
 <div>
-
-  <app-families-table [families]="familiesQuery.families$ | async"
-                      (openFamilyModal)="openFamilyModal.emit($event)"></app-families-table>
+  <app-families-table [families]="familiesQuery.families$ | async" (openFamilyModal)="openFamilyModal.emit($event)"></app-families-table>
 </div>
 
-<app-create-edit-family-modal *ngIf="isMobile" [showFamilyMembers]="true"
-                              [openModal]="createEditFamily"></app-create-edit-family-modal>
+<app-create-edit-family-modal *ngIf="isMobile" [showFamilyMembers]="true" [openModal]="createEditFamily"></app-create-edit-family-modal>

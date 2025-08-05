@@ -7,15 +7,17 @@ import { CategoriesStore } from './categories.store';
 
 @Injectable({ providedIn: 'root' })
 export class CategoriesService {
-
-  constructor(private categoriesStore: CategoriesStore, private http: HttpClient) {
-  }
-
+  constructor(
+    private categoriesStore: CategoriesStore,
+    private http: HttpClient,
+  ) {}
 
   get() {
-    return this.http.get<Category[]>('https://api.com').pipe(tap(entities => {
-      this.categoriesStore.set(entities);
-    }));
+    return this.http.get<Category[]>('https://api.com').pipe(
+      tap((entities) => {
+        this.categoriesStore.set(entities);
+      }),
+    );
   }
 
   add(category: Category) {
@@ -29,5 +31,4 @@ export class CategoriesService {
   remove(id: ID) {
     this.categoriesStore.remove(id);
   }
-
 }

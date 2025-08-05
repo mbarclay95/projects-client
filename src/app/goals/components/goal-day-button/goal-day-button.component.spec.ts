@@ -8,9 +8,8 @@ describe('GoalDayButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GoalDayButtonComponent ]
-    })
-    .compileComponents();
+      declarations: [GoalDayButtonComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GoalDayButtonComponent);
     component = fixture.componentInstance;

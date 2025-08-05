@@ -4,9 +4,7 @@ import { SubCategoriesStore, SubCategoriesState } from './sub-categories.store';
 
 @Injectable({ providedIn: 'root' })
 export class SubCategoriesQuery extends QueryEntity<SubCategoriesState> {
-
   constructor(protected store: SubCategoriesStore) {
     super(store);
   }
-
 }

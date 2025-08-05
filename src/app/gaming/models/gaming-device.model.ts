@@ -12,8 +12,6 @@ export function createGamingDevice(params: Partial<GamingDevice>) {
     deviceCommunicationId: params.deviceCommunicationId ?? '',
     tempName: params.tempName ?? null,
     lastSeen: params.lastSeen ? new Date(params.lastSeen) : new Date(),
-    buttonColor: params.buttonColor ?? null
+    buttonColor: params.buttonColor ?? null,
   } as GamingDevice;
 }
-
-

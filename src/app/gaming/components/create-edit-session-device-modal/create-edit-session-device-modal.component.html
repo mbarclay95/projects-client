@@ -1,34 +1,34 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="model | sessionDeviceTitle" [nzWidth]="modalWidth"
-          (nzOnCancel)="isVisible = false" [nzOkText]="model?.id === 0 ? 'Connect' : 'Update'"
-          nzCancelText="Cancel" (nzOnOk)="save()" [nzStyle]="modalStyle" [nzCancelDisabled]="saving"
-          [nzOkLoading]="saving" [nzMaskClosable]="false" [nzOkDisabled]="saving">
-
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="model | sessionDeviceTitle"
+  [nzWidth]="modalWidth"
+  (nzOnCancel)="isVisible = false"
+  [nzOkText]="model?.id === 0 ? 'Connect' : 'Update'"
+  nzCancelText="Cancel"
+  (nzOnOk)="save()"
+  [nzStyle]="modalStyle"
+  [nzCancelDisabled]="saving"
+  [nzOkLoading]="saving"
+  [nzMaskClosable]="false"
+  [nzOkDisabled]="saving"
+>
   <ng-container *nzModalContent>
-
     <div *ngIf="model">
-
       <div class="w-100">
-
         Enter your name:
 
-        <input nz-input [(ngModel)]="model.name" class="w-100">
-
+        <input nz-input [(ngModel)]="model.name" class="w-100" />
       </div>
 
       <div class="w-100 mt-3">
-
         <div>Remaining turn time display mode:</div>
 
         <nz-select class="w-100" [(ngModel)]="model.turnTimeDisplayMode">
           <nz-option nzValue="none" nzLabel="Don't show anything"></nz-option>
-<!--          <nz-option nzValue="graph" nzLabel="Show progress bar"></nz-option>-->
+          <!--          <nz-option nzValue="graph" nzLabel="Show progress bar"></nz-option>-->
           <nz-option nzValue="numeric" nzLabel="Show numeric countdown"></nz-option>
         </nz-select>
-
       </div>
-
     </div>
-
   </ng-container>
-
 </nz-modal>

@@ -1,13 +1,13 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {EventsUiState} from "../../services/events/state/events.store";
-import {EventsService} from "../../services/events/state/events.service";
-import {Observable, Subject, takeUntil} from "rxjs";
-import {debounceTime} from "rxjs/operators";
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { EventsUiState } from '../../services/events/state/events.store';
+import { EventsService } from '../../services/events/state/events.service';
+import { Subject, takeUntil } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-events-filters',
   templateUrl: './events-filters.component.html',
-  styleUrls: ['./events-filters.component.scss']
+  styleUrls: ['./events-filters.component.scss'],
 })
 export class EventsFiltersComponent implements OnInit, OnDestroy {
   @Input() ui!: EventsUiState;
@@ -15,9 +15,7 @@ export class EventsFiltersComponent implements OnInit, OnDestroy {
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 
-  constructor(
-    public eventsService: EventsService
-  ) { }
+  constructor(public eventsService: EventsService) {}
 
   ngOnInit(): void {
     this.subscribeToSearch();
@@ -29,14 +27,12 @@ export class EventsFiltersComponent implements OnInit, OnDestroy {
   }
 
   subscribeToSearch() {
-    this.search$.pipe(
-      debounceTime(200),
-      takeUntil(this.subscriptionDestroyer)
-    ).subscribe(search => this.eventsService.updateUi({search}));
+    this.search$
+      .pipe(debounceTime(200), takeUntil(this.subscriptionDestroyer))
+      .subscribe((search) => this.eventsService.updateUi({ search }));
   }
 
   updateSearch(search: string) {
     this.search$.next(search);
   }
-
 }

@@ -8,10 +8,9 @@ describe('GamingSessionsPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GamingSessionsPageComponent]
-    })
-    .compileComponents();
-    
+      imports: [GamingSessionsPageComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(GamingSessionsPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

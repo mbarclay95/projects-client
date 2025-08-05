@@ -1,95 +1,89 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(task?.id === 0 ? 'Create' : 'Edit') + ' Task'" [nzWidth]="modalWidth"
-          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveTask()"
-          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false"
-          [nzStyle]="modalStyle" [nzBodyStyle]="{background: '#333232', padding: '1px 0'}">
-
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="(task?.id === 0 ? 'Create' : 'Edit') + ' Task'"
+  [nzWidth]="modalWidth"
+  (nzOnCancel)="isVisible = false"
+  nzOkText="Save"
+  nzCancelText="Close"
+  (nzOnOk)="saveTask()"
+  [nzCancelDisabled]="saving"
+  [nzOkDisabled]="saving"
+  [nzOkLoading]="saving"
+  [nzMaskClosable]="false"
+  [nzStyle]="modalStyle"
+  [nzBodyStyle]="{ background: '#333232', padding: '1px 0' }"
+>
   <ng-container *nzModalContent>
-
     <div *ngIf="task">
-
       <div class="d-flex justify-content-evenly form-section">
-
-        <div *ngIf="task.id !== 0" class="d-flex flex-column align-items-center"
-             (click)="task.isActive = !task.isActive">
-          <fa-icon class="fa-xl" [ngClass]="{'text-warning': !task.isActive, 'text-muted': task.isActive}"
-                   [icon]="pause"></fa-icon>
+        <div *ngIf="task.id !== 0" class="d-flex flex-column align-items-center" (click)="task.isActive = !task.isActive">
+          <fa-icon class="fa-xl" [ngClass]="{ 'text-warning': !task.isActive, 'text-muted': task.isActive }" [icon]="pause"></fa-icon>
         </div>
 
         <div class="d-flex flex-column align-items-center" (click)="task.priority = task.priority === 0 ? 1 : 0">
-          <fa-icon class="fa-xl"
-                   [ngClass]="{'color-high-priority': task.priority === 1, 'text-muted': task.priority === 0}"
-                   [icon]="flag"></fa-icon>
+          <fa-icon
+            class="fa-xl"
+            [ngClass]="{ 'color-high-priority': task.priority === 1, 'text-muted': task.priority === 0 }"
+            [icon]="flag"
+          ></fa-icon>
         </div>
-
       </div>
 
       <div class="form-section">
-
         <div class="mb-2">Task Name: <span class="text-danger">*</span></div>
 
-        <input nz-input [(ngModel)]="task.name" class="w-100" nzSize="large">
-
+        <input nz-input [(ngModel)]="task.name" class="w-100" nzSize="large" />
       </div>
 
       <div class="d-flex justify-content-between align-items-center form-section">
-
         <div class="">Task Type:</div>
 
-        <nz-radio-group [(ngModel)]="task.ownerType" nzButtonStyle="solid" nzSize="large"
-                        (ngModelChange)="changeOwner($event)">
+        <nz-radio-group [(ngModel)]="task.ownerType" nzButtonStyle="solid" nzSize="large" (ngModelChange)="changeOwner($event)">
           <label nz-radio-button nzValue="user">Personal</label>
           <label nz-radio-button nzValue="family">Family</label>
         </nz-radio-group>
-
       </div>
 
       <div *ngIf="familiesQuery.isPerTaskPoint$ | async" class="form-section">
-
         <div class="mb-2">Task Points: <span class="text-danger">*</span></div>
 
         <div class="w-100 d-flex justify-content-evenly">
-
-          <span *ngFor="let taskPoint of familiesQuery.taskPoints$ | async" (click)="updateTaskPoint(taskPoint)"
-                class="me-2 task-points cursor-pointer {{task.taskPoint | selectedTaskPointColor : taskPoint}}">
-            {{taskPoint}}
+          <span
+            *ngFor="let taskPoint of familiesQuery.taskPoints$ | async"
+            (click)="updateTaskPoint(taskPoint)"
+            class="me-2 task-points cursor-pointer {{ task.taskPoint | selectedTaskPointColor: taskPoint }}"
+          >
+            {{ taskPoint }}
           </span>
-
         </div>
-
       </div>
 
       <div class="form-section" *ngIf="task.recurring || task.id === 0">
-
         <div *ngIf="task.id === 0" class="d-flex justify-content-between align-items-center">
-
           <div class="">Recurring:</div>
 
           <nz-switch [(ngModel)]="task.recurring" (ngModelChange)="updateRecurring($event)"></nz-switch>
-
         </div>
 
-        <div *ngIf="task.id !== 0 && task.recurring" (click)="recurringExpanded = !recurringExpanded"
-             class="d-flex justify-content-between align-items-center cursor-pointer">
-
+        <div
+          *ngIf="task.id !== 0 && task.recurring"
+          (click)="recurringExpanded = !recurringExpanded"
+          class="d-flex justify-content-between align-items-center cursor-pointer"
+        >
           <div class="">Recurring Details</div>
 
           <fa-icon *ngIf="!recurringExpanded" [icon]="arrowDown"></fa-icon>
           <fa-icon *ngIf="recurringExpanded" [icon]="arrowUp"></fa-icon>
-
         </div>
 
         <div *ngIf="(task.id === 0 && task.recurring) || recurringExpanded" class="ms-4">
-
           <div class="py-3">
-
             <div class="mb-2">Frequency: <span class="text-danger">*</span></div>
 
             <div class="d-flex align-items-center">
-
               Every
 
-              <nz-input-number class="mx-3" [nzMin]="1" [(ngModel)]="task.frequencyAmount"
-                               nzSize="large"></nz-input-number>
+              <nz-input-number class="mx-3" [nzMin]="1" [(ngModel)]="task.frequencyAmount" nzSize="large"></nz-input-number>
 
               <nz-select [(ngModel)]="task.frequencyUnit" class="w-100" nzSize="large">
                 <nz-option nzValue="day" [nzLabel]="'Day' + (task.frequencyAmount | pluralFrequency)"></nz-option>
@@ -97,72 +91,61 @@
                 <nz-option nzValue="month" [nzLabel]="'Month' + (task.frequencyAmount | pluralFrequency)"></nz-option>
                 <nz-option nzValue="year" [nzLabel]="'Year' + (task.frequencyAmount | pluralFrequency)"></nz-option>
               </nz-select>
-
             </div>
-
           </div>
 
           <div class="py-3">
+            <div class="mb-2">{{ task.id === 0 ? "First" : "Next" }} Due Date: <span class="text-danger">*</span></div>
 
-            <div class="mb-2">{{task.id === 0 ? 'First' : 'Next'}} Due Date: <span class="text-danger">*</span></div>
-
-            <nz-date-picker [(ngModel)]="task.dueDate" class="w-100" [nzDisabledDate]="disabledDate" nzSize="large"
-                            nzFormat="MM/dd/yyyy" [nzInputReadOnly]="true"></nz-date-picker>
-
+            <nz-date-picker
+              [(ngModel)]="task.dueDate"
+              class="w-100"
+              [nzDisabledDate]="disabledDate"
+              nzSize="large"
+              nzFormat="MM/dd/yyyy"
+              [nzInputReadOnly]="true"
+            ></nz-date-picker>
           </div>
-
         </div>
-
       </div>
 
       <div class="form-section" *ngIf="!task.recurring">
-
         <div class="mb-2">Due Date: <span class="text-danger">*</span></div>
 
-        <nz-date-picker [(ngModel)]="task.dueDate" class="w-100" [nzDisabledDate]="disabledDate" nzSize="large"
-                        nzFormat="MM/dd/yyyy" [nzInputReadOnly]="true"></nz-date-picker>
-
+        <nz-date-picker
+          [(ngModel)]="task.dueDate"
+          class="w-100"
+          [nzDisabledDate]="disabledDate"
+          nzSize="large"
+          nzFormat="MM/dd/yyyy"
+          [nzInputReadOnly]="true"
+        ></nz-date-picker>
       </div>
 
       <div class="form-section">
-
         <div (click)="advancedExpanded = !advancedExpanded" class="d-flex justify-content-between align-items-center cursor-pointer">
-
           <div class="">Advanced Details</div>
 
           <fa-icon *ngIf="!advancedExpanded" [icon]="arrowDown"></fa-icon>
           <fa-icon *ngIf="advancedExpanded" [icon]="arrowUp"></fa-icon>
-
         </div>
 
         <div *ngIf="advancedExpanded" class="ms-4">
-
           <div class="py-3">
-
             <div class="mb-2">Description:</div>
 
             <textarea nz-input [(ngModel)]="task.description" class="w-100"></textarea>
-
           </div>
 
           <div class="py-3">
-
             <div class="">Task Tags:</div>
 
             <nz-select class="w-100" nzMode="tags" [(ngModel)]="task.tags">
               <nz-option *ngFor="let tag of tagsService.tags$ | async" [nzLabel]="tag" [nzValue]="tag"></nz-option>
             </nz-select>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
-
   </ng-container>
-
-
 </nz-modal>
-

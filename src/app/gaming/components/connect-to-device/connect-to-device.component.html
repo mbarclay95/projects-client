@@ -1,37 +1,22 @@
 <div class="title">Select your device</div>
 
 @if (devices.length === 0) {
-
   <span class="ps-2" style="font-style: italic">No devices found</span>
-
 } @else {
-
   <div class="devices-container">
-
     @for (device of devices; track device.id) {
-
       <div class="device-container" (click)="selectDevice(device)">
-
         <div>
-
           <div class="d-flex align-items-center">
-            <fa-icon [icon]="button" style="color: {{device.buttonColor}}"></fa-icon>
-            <div class="ms-3">{{device.buttonColor}} player</div>
+            <fa-icon [icon]="button" style="color: {{ device.buttonColor }}"></fa-icon>
+            <div class="ms-3">{{ device.buttonColor }} player</div>
           </div>
-
         </div>
 
         <div>
           <fa-icon [icon]="arrow"></fa-icon>
         </div>
-
       </div>
-
     }
-
   </div>
-
 }
-
-
-

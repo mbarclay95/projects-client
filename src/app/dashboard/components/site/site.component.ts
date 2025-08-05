@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Site} from "../../models/site.model";
-import {faEdit, faGripVertical, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {FoldersService} from "../../services/folder/state/folders.service";
-import {NzMessageService} from 'ng-zorro-antd/message';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Site } from '../../models/site.model';
+import { faEdit, faGripVertical, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FoldersService } from '../../services/folder/state/folders.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-site',
   templateUrl: './site.component.html',
-  styleUrls: ['./site.component.scss']
+  styleUrls: ['./site.component.scss'],
 })
 export class SiteComponent implements OnInit {
   @Input() site!: Site;
@@ -21,19 +21,17 @@ export class SiteComponent implements OnInit {
 
   constructor(
     public foldersService: FoldersService,
-    private nzMessageService: NzMessageService
-  ) { }
+    private nzMessageService: NzMessageService,
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   async updateSiteShow(show: boolean): Promise<void> {
-    const updatedSite = {...this.site, ...{show}};
+    const updatedSite = { ...this.site, ...{ show } };
     try {
       await this.foldersService.updateSite(updatedSite, updatedSite.folderId);
     } catch (e) {
       this.nzMessageService.error('There was an error updating the site');
     }
   }
-
 }

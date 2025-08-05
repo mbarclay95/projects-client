@@ -1,11 +1,19 @@
 <div class="filter-container">
+  <input
+    nz-input
+    placeholder="Search"
+    [ngModel]="ui.search"
+    class="filter-boxes"
+    (ngModelChange)="tasksService.updateUi({ search: $event }, false)"
+  />
 
-    <input nz-input placeholder="Search" [ngModel]="ui.search" class="filter-boxes"
-           (ngModelChange)="tasksService.updateUi({search: $event}, false)">
-
-  <nz-select nzMode="multiple" [ngModel]="ui.tags" nzPlaceHolder="Tags" class="filter-boxes"
-             (ngModelChange)="tasksService.updateUi({tags: $event}, false)">
+  <nz-select
+    nzMode="multiple"
+    [ngModel]="ui.tags"
+    nzPlaceHolder="Tags"
+    class="filter-boxes"
+    (ngModelChange)="tasksService.updateUi({ tags: $event }, false)"
+  >
     <nz-option *ngFor="let tag of tagsService.tags$ | async" [nzLabel]="tag" [nzValue]="tag"></nz-option>
   </nz-select>
-
 </div>

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, Subject, tap} from "rxjs";
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MobileHeaderService {
   private titleSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -14,7 +14,7 @@ export class MobileHeaderService {
   private clickedButtonSubject: Subject<void> = new Subject<void>();
   clickedButton$: Observable<void> = this.clickedButtonSubject.asObservable();
 
-  constructor() { }
+  constructor() {}
 
   setTitle(title: string): void {
     this.titleSubject.next(title);

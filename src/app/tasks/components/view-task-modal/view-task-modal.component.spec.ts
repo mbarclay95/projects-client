@@ -8,9 +8,8 @@ describe('ViewTaskModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewTaskModalComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewTaskModalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ViewTaskModalComponent);
     component = fixture.componentInstance;

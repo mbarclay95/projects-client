@@ -1,4 +1,4 @@
-import {createEventParticipant, EventParticipant} from "./event-participant";
+import { createEventParticipant, EventParticipant } from './event-participant';
 
 export interface Event {
   id: number;
@@ -19,7 +19,11 @@ export function createEvent(params: Partial<Event>) {
     limitParticipants: params.limitParticipants ?? false,
     eventDate: params.eventDate ? new Date(params.eventDate) : null,
     numOfPeople: params.numOfPeople ?? 0,
-    eventParticipants: params.eventParticipants ? params.eventParticipants.filter(p => p.isGoing).map(p => createEventParticipant(p)) : [],
-    eventParticipantsNotGoing: params.eventParticipants ? params.eventParticipants.filter(p => !p.isGoing).map(p => createEventParticipant(p)) : [],
+    eventParticipants: params.eventParticipants
+      ? params.eventParticipants.filter((p) => p.isGoing).map((p) => createEventParticipant(p))
+      : [],
+    eventParticipantsNotGoing: params.eventParticipants
+      ? params.eventParticipants.filter((p) => !p.isGoing).map((p) => createEventParticipant(p))
+      : [],
   } as Event;
 }

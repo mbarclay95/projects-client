@@ -5,35 +5,35 @@ import { BackupsRoutingModule } from './backups-routing.module';
 import { BackupsLayoutComponent } from './backups-layout/backups-layout.component';
 import { BackupsPageComponent } from './pages/backups-page/backups-page.component';
 import { ScheduledBackupsPageComponent } from './pages/scheduled-backups-page/scheduled-backups-page.component';
-import {NzLayoutModule} from "ng-zorro-antd/layout";
-import {NzTabsModule} from "ng-zorro-antd/tabs";
-import {NzButtonModule} from "ng-zorro-antd/button";
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { BackupTabsComponent } from './pages/backup-tabs/backup-tabs.component';
 import { CreateEditBackupsDrawerComponent } from './components/create-edit-backups-drawer/create-edit-backups-drawer.component';
-import {NzDrawerModule} from "ng-zorro-antd/drawer";
-import {FormsModule} from "@angular/forms";
-import {NzInputModule} from "ng-zorro-antd/input";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {NzSwitchModule} from "ng-zorro-antd/switch";
-import {NzSelectModule} from "ng-zorro-antd/select";
-import {NzDividerModule} from "ng-zorro-antd/divider";
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { FormsModule } from '@angular/forms';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { CreateEditTargetModalComponent } from './components/create-edit-target-modal/create-edit-target-modal.component';
-import {NzModalModule} from "ng-zorro-antd/modal";
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { BackupsTableComponent } from './components/backups-table/backups-table.component';
-import {NzTableModule} from "ng-zorro-antd/table";
-import {NzStepsModule} from "ng-zorro-antd/steps";
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { BackupStatusPipe } from './pipes/backup-status.pipe';
 import { BackupRunTimePipe } from './pipes/backup-run-time.pipe';
-import {NzCollapseModule} from "ng-zorro-antd/collapse";
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { StatusIconComponent } from './components/status-icon/status-icon.component';
 import { TargetsPageComponent } from './pages/targets-page/targets-page.component';
 import { TargetsTableComponent } from './components/targets-table/targets-table.component';
 import { ScheduledBackupsTableComponent } from './components/scheduled-backups-table/scheduled-backups-table.component';
 import { CreateEditScheduledBackupDrawerComponent } from './components/create-edit-scheduled-backup-drawer/create-edit-scheduled-backup-drawer.component';
-import {NzInputNumberModule} from "ng-zorro-antd/input-number";
-import {NzRadioModule} from "ng-zorro-antd/radio";
-import {NzPopconfirmDirective} from 'ng-zorro-antd/popconfirm';
-import {SortGenericPipe} from '../shared/pipes/sort-generic.pipe';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { SortGenericPipe } from '../shared/pipes/sort-generic.pipe';
 
 @NgModule({
   declarations: [
@@ -50,7 +50,7 @@ import {SortGenericPipe} from '../shared/pipes/sort-generic.pipe';
     TargetsPageComponent,
     TargetsTableComponent,
     ScheduledBackupsTableComponent,
-    CreateEditScheduledBackupDrawerComponent
+    CreateEditScheduledBackupDrawerComponent,
   ],
   imports: [
     CommonModule,
@@ -73,6 +73,6 @@ import {SortGenericPipe} from '../shared/pipes/sort-generic.pipe';
     NzRadioModule,
     NzPopconfirmDirective,
     SortGenericPipe,
-  ]
+  ],
 })
-export class BackupsModule { }
+export class BackupsModule {}

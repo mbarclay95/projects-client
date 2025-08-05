@@ -1,18 +1,18 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {TasksQuery} from "../../services/tasks/state/tasks.query";
-import {createTask, Task} from "../../models/task.model";
-import {TasksService} from "../../services/tasks/state/tasks.service";
-import {merge, Observable} from "rxjs";
-import {map} from "rxjs/operators";
-import {MobileHeaderService} from "../../../shared/services/mobile-header.service";
-import {FamiliesQuery} from '../../services/families/state/families.query';
-import {isMobile} from '../../../app.component';
-import {TaskUserConfigsService} from '../../services/task-user-configs/state/task-user-configs.service';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { TasksQuery } from '../../services/tasks/state/tasks.query';
+import { createTask, Task } from '../../models/task.model';
+import { TasksService } from '../../services/tasks/state/tasks.service';
+import { merge, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { MobileHeaderService } from '../../../shared/services/mobile-header.service';
+import { FamiliesQuery } from '../../services/families/state/families.query';
+import { isMobile } from '../../../app.component';
+import { TaskUserConfigsService } from '../../services/task-user-configs/state/task-user-configs.service';
 
 @Component({
   selector: 'app-tasks-page',
   templateUrl: './tasks-page.component.html',
-  styleUrls: ['./tasks-page.component.scss']
+  styleUrls: ['./tasks-page.component.scss'],
 })
 export class TasksPageComponent implements OnInit {
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
@@ -21,9 +21,9 @@ export class TasksPageComponent implements OnInit {
   isMobile = isMobile;
   createEditTask: Observable<Task> = merge(
     this.mobileHeaderService.clickedButton$.pipe(
-      map(() => createTask({ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getMinTaskPoint()}))
+      map(() => createTask({ ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getMinTaskPoint() })),
     ),
-    this.editTask.asObservable()
+    this.editTask.asObservable(),
   );
 
   constructor(
@@ -31,9 +31,8 @@ export class TasksPageComponent implements OnInit {
     public tasksService: TasksService,
     private mobileHeaderService: MobileHeaderService,
     private familiesQuery: FamiliesQuery,
-    private taskUserConfigsService: TaskUserConfigsService
-  ) {
-  }
+    private taskUserConfigsService: TaskUserConfigsService,
+  ) {}
 
   ngOnInit(): void {
     if (this.isMobile) {
@@ -41,5 +40,4 @@ export class TasksPageComponent implements OnInit {
       this.taskUserConfigsService.resetWeekOffset();
     }
   }
-
 }

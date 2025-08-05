@@ -1,21 +1,19 @@
-import {Injectable} from '@angular/core';
-import {EntityState, EntityStore, StoreConfig} from '@datorama/akita';
-import {Goal} from '../../models/goal.model';
+import { Injectable } from '@angular/core';
+import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { Goal } from '../../models/goal.model';
 
 export interface GoalsState extends EntityState<Goal> {
-  ui: GoalsUiState
+  ui: GoalsUiState;
 }
 
 export interface GoalsUiState {
-  weekOffset: number | null
+  weekOffset: number | null;
 }
 
-@Injectable({providedIn: 'root'})
-@StoreConfig({name: 'goals'})
+@Injectable({ providedIn: 'root' })
+@StoreConfig({ name: 'goals' })
 export class GoalsStore extends EntityStore<GoalsState> {
-
   constructor() {
-    super({ui: {weekOffset: 0}});
+    super({ ui: { weekOffset: 0 } });
   }
-
 }

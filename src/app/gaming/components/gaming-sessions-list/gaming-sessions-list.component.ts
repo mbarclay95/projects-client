@@ -1,21 +1,16 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {GamingSession} from '../../models/gaming-session.model';
-import {DatePipe} from '@angular/common';
-import {DeviceOnlinePipe} from '../../pipes/device-online.pipe';
-import {FaIconComponent} from '@fortawesome/angular-fontawesome';
-import {faChevronRight, faCircleCheck, faCircleXmark} from '@fortawesome/free-solid-svg-icons';
-import {Router} from '@angular/router';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { GamingSession } from '../../models/gaming-session.model';
+import { DatePipe } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faChevronRight, faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gaming-sessions-list',
   standalone: true,
-  imports: [
-    DatePipe,
-    DeviceOnlinePipe,
-    FaIconComponent
-  ],
+  imports: [DatePipe, FaIconComponent],
   templateUrl: './gaming-sessions-list.component.html',
-  styleUrl: './gaming-sessions-list.component.scss'
+  styleUrl: './gaming-sessions-list.component.scss',
 })
 export class GamingSessionsListComponent {
   @Input() sessions: GamingSession[] = [];
@@ -25,14 +20,11 @@ export class GamingSessionsListComponent {
   online = faCircleCheck;
   offline = faCircleXmark;
 
-  constructor(
-    private router: Router
-  ) {
-  }
+  constructor(private router: Router) {}
 
   test(session: GamingSession): void {
-    void this.router.navigateByUrl(`games/session/${session.id}`)
+    void this.router.navigateByUrl(`games/session/${session.id}`);
   }
 
-    protected readonly arrow = faChevronRight;
+  protected readonly arrow = faChevronRight;
 }

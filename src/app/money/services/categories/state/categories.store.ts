@@ -7,9 +7,7 @@ export interface CategoriesState extends EntityState<Category> {}
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'categories' })
 export class CategoriesStore extends EntityStore<CategoriesState> {
-
   constructor() {
     super();
   }
-
 }

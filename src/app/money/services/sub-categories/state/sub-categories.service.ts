@@ -7,15 +7,17 @@ import { SubCategoriesStore } from './sub-categories.store';
 
 @Injectable({ providedIn: 'root' })
 export class SubCategoriesService {
-
-  constructor(private subCategoriesStore: SubCategoriesStore, private http: HttpClient) {
-  }
-
+  constructor(
+    private subCategoriesStore: SubCategoriesStore,
+    private http: HttpClient,
+  ) {}
 
   get() {
-    return this.http.get<SubCategory[]>('https://api.com').pipe(tap(entities => {
-      this.subCategoriesStore.set(entities);
-    }));
+    return this.http.get<SubCategory[]>('https://api.com').pipe(
+      tap((entities) => {
+        this.subCategoriesStore.set(entities);
+      }),
+    );
   }
 
   add(subCategory: SubCategory) {
@@ -29,5 +31,4 @@ export class SubCategoriesService {
   remove(id: ID) {
     this.subCategoriesStore.remove(id);
   }
-
 }

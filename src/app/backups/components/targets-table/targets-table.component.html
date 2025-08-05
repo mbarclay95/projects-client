@@ -1,25 +1,24 @@
 <nz-table #targetsTableTag [nzData]="_targets" nzSize="small">
   <thead>
-  <tr>
-    <th nzWidth="60px"></th>
-    <th>Name</th>
-    <th>Host</th>
-    <th>Path</th>
-  </tr>
+    <tr>
+      <th nzWidth="60px"></th>
+      <th>Name</th>
+      <th>Host</th>
+      <th>Path</th>
+    </tr>
   </thead>
   <tbody>
-  <ng-container *ngFor="let target of targetsTable?.data">
-    <tr>
-      <td>
-        <button nz-button class="ant-btn-icon-only" nzType="text"
-                (click)="this.editTarget.emit({target})">
-          <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
-        </button>
-      </td>
-      <td>{{target.name}}</td>
-      <td>{{target.hostName}}</td>
-      <td>{{target.targetUrl}}</td>
-  </ng-container>
+    <ng-container *ngFor="let target of targetsTable?.data">
+      <tr>
+        <td>
+          <button nz-button class="ant-btn-icon-only" nzType="text" (click)="this.editTarget.emit({ target })">
+            <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
+          </button>
+        </td>
+        <td>{{ target.name }}</td>
+        <td>{{ target.hostName }}</td>
+        <td>{{ target.targetUrl }}</td>
+      </tr></ng-container
+    >
   </tbody>
-
 </nz-table>

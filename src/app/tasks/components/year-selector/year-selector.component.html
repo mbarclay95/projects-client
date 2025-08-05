@@ -1,16 +1,11 @@
-<div class="d-flex justify-content-evenly align-items-center pb-2 container-width"
-     *ngLet="(familyStatsService.ui$ | async) as ui">
-
-  <button nz-button [disabled]="familyStatsService.yearBehindDisabled$ | async" nzType="text"
-          (click)="familyStatsService.previousYear()">
+<div class="d-flex justify-content-evenly align-items-center pb-2 container-width" *ngLet="familyStatsService.ui$ | async as ui">
+  <button nz-button [disabled]="familyStatsService.yearBehindDisabled$ | async" nzType="text" (click)="familyStatsService.previousYear()">
     <fa-icon class="fa-xl" [icon]="left"></fa-icon>
   </button>
 
   <div>{{ ui.year }}</div>
 
-  <button nz-button [disabled]="familyStatsService.yearAheadDisabled$ | async" nzType="text"
-          (click)="familyStatsService.nextYear()">
+  <button nz-button [disabled]="familyStatsService.yearAheadDisabled$ | async" nzType="text" (click)="familyStatsService.nextYear()">
     <fa-icon class="fa-xl" [icon]="right"></fa-icon>
   </button>
-
 </div>

@@ -1,4 +1,4 @@
-import {Directive, Input, TemplateRef, ViewContainerRef} from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 interface NgLetContext {
   $implicit: any;
@@ -6,7 +6,7 @@ interface NgLetContext {
 }
 
 @Directive({
-  selector: '[ngLet]'
+  selector: '[ngLet]',
 })
 export class NgLetDirective {
   @Input()
@@ -14,12 +14,12 @@ export class NgLetDirective {
     this.viewContainerRef.clear();
     this.viewContainerRef.createEmbeddedView(this.templateRef, {
       $implicit: value,
-      ngLet: value
+      ngLet: value,
     });
   }
 
   constructor(
     private viewContainerRef: ViewContainerRef,
-    private templateRef: TemplateRef<NgLetContext>
-  ) { }
+    private templateRef: TemplateRef<NgLetContext>,
+  ) {}
 }

@@ -8,9 +8,8 @@ describe('TargetsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TargetsTableComponent ]
-    })
-    .compileComponents();
+      declarations: [TargetsTableComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

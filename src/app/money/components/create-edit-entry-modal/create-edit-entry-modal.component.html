@@ -1,81 +1,76 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(model.id === 0 ? 'Create' : 'Edit') + ' Transaction'"
-          [nzWidth]="modalWidth" [nzStyle]="modalStyle" [nzClosable]="false">
-
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Transaction'"
+  [nzWidth]="modalWidth"
+  [nzStyle]="modalStyle"
+  [nzClosable]="false"
+>
   <ng-container *nzModalContent>
+    @if (model) {
+      <div class="d-flex">
+        <!--      <button nz-button nz-popconfirm nzPopconfirmTitle="Your changes will not be saved"-->
+        <!--              (nzOnConfirm)="isVisible = false">-->
+        <button nz-button (click)="isVisible = false">
+          <fa-icon [icon]="close"></fa-icon>
+        </button>
 
-    <div class="d-flex">
+        <button nz-button>
+          <fa-icon [icon]="previous"></fa-icon>
+        </button>
 
-<!--      <button nz-button nz-popconfirm nzPopconfirmTitle="Your changes will not be saved"-->
-<!--              (nzOnConfirm)="isVisible = false">-->
-      <button nz-button (click)="isVisible = false">
-        <fa-icon [icon]="close"></fa-icon>
-      </button>
+        <button nz-button>
+          <fa-icon [icon]="next"></fa-icon>
+        </button>
+      </div>
 
-      <button nz-button>
-        <fa-icon [icon]="previous"></fa-icon>
-      </button>
+      <nz-divider></nz-divider>
 
-      <button nz-button>
-        <fa-icon [icon]="next"></fa-icon>
-      </button>
+      <div class="form-box">
+        Category:
 
-    </div>
+        <nz-select></nz-select>
+      </div>
 
-    <nz-divider></nz-divider>
+      <div class="form-box">
+        Amount:
 
-    <div class="form-box">
+        <input nz-input [(ngModel)]="model.amount" />
+      </div>
 
-      Category:
+      <div class="form-box">
+        Date:
 
-      <nz-select></nz-select>
+        <nz-date-picker [(ngModel)]="model.dateSpent"></nz-date-picker>
+      </div>
 
-    </div>
+      <div class="form-box">
+        Bank:
 
-    <div class="form-box">
-
-      Amount:
-
-      <input nz-input [(ngModel)]="model.amount">
-
-    </div>
-
-    <div class="form-box">
-
-      Date:
-
-      <nz-date-picker [(ngModel)]="model.dateSpent"></nz-date-picker>
-
-    </div>
-
-    <div class="form-box">
-
-      Bank:
-
-      <nz-select></nz-select>
-
-    </div>
-
+        <nz-select></nz-select>
+      </div>
+    }
   </ng-container>
 
   <div *nzModalFooter class="d-flex justify-content-between">
-
     <div>
-
-      <button nz-button nzType="primary" nzDanger nz-popconfirm (nzOnConfirm)="deleteEntry()"
-              nzPopconfirmTitle="Are you sure?" [nzLoading]="deleting" [disabled]="deleting || saving">Delete
+      <button
+        nz-button
+        nzType="primary"
+        nzDanger
+        nz-popconfirm
+        (nzOnConfirm)="deleteEntry()"
+        nzPopconfirmTitle="Are you sure?"
+        [nzLoading]="deleting"
+        [disabled]="deleting || saving"
+      >
+        Delete
       </button>
-
     </div>
 
     <div>
-
       <button nz-button nzType="default" (click)="saveEntry()" [disabled]="deleting || saving">Save</button>
 
       <button nz-button nzType="primary" (click)="saveEntryAndNext()" [disabled]="deleting || saving">Save &</button>
-
     </div>
-
   </div>
-
 </nz-modal>
-

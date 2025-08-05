@@ -1,18 +1,23 @@
-<app-page-header *ngIf="!isMobile" buttonText="Create Event" title="Events"
-                 (createButtonClicked)="createNewEvent()"></app-page-header>
+<app-page-header *ngIf="!isMobile" buttonText="Create Event" title="Events" (createButtonClicked)="createNewEvent()"></app-page-header>
 
 <div class="w-100 events-page-container p-2">
-
   <app-events-filters *ngIf="eventsQuery.ui$ | async as ui" [ui]="ui"></app-events-filters>
 
-  <app-events-table *ngIf="!isMobile" [events]="eventsQuery.events$ | async"
-                    (editEvent)="openEventModal.next($event)" (archiveEvent)="archiveEvent($event)"
-                    (editParticipant)="openParticipantModal.next($event)"></app-events-table>
+  <app-events-table
+    *ngIf="!isMobile"
+    [events]="eventsQuery.events$ | async"
+    (editEvent)="openEventModal.next($event)"
+    (archiveEvent)="archiveEvent($event)"
+    (editParticipant)="openParticipantModal.next($event)"
+  ></app-events-table>
 
-  <app-mobile-events-table *ngIf="isMobile" [events]="eventsQuery.events$ | async"
-                           (editEvent)="openEventModal.next($event)" (archiveEvent)="archiveEvent($event)"
-                           (editParticipant)="openParticipantModal.next($event)"></app-mobile-events-table>
-
+  <app-mobile-events-table
+    *ngIf="isMobile"
+    [events]="eventsQuery.events$ | async"
+    (editEvent)="openEventModal.next($event)"
+    (archiveEvent)="archiveEvent($event)"
+    (editParticipant)="openParticipantModal.next($event)"
+  ></app-mobile-events-table>
 </div>
 
 <app-create-edit-event [openModal]="openEventModal$"></app-create-edit-event>

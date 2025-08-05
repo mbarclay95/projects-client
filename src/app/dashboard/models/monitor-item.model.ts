@@ -1,4 +1,4 @@
-import {HeartbeatItem} from './heartbeat-item.model';
+import { HeartbeatItem } from './heartbeat-item.model';
 
 export interface MonitorItem {
   id: number;
@@ -16,6 +16,6 @@ export function createMonitorItem(params: any): MonitorItem {
     isActive: params.active && !params.maintenance,
     url: params.url ?? '',
     isDown: false,
-    lastHeartBeat: undefined
+    lastHeartBeat: undefined,
   } as MonitorItem;
 }

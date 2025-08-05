@@ -7,9 +7,7 @@ export interface BackupsState extends EntityState<Backup> {}
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'backups' })
 export class BackupsStore extends EntityStore<BackupsState> {
-
   constructor() {
     super();
   }
-
 }

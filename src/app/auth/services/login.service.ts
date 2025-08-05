@@ -1,15 +1,15 @@
-import {Injectable} from '@angular/core';
-import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
-import {AuthService} from "./state/auth.service";
-import {AuthStorageService} from "./auth-storage.service";
-import {Router} from "@angular/router";
-import {AuthQuery} from "./state/auth.query";
-import {Roles} from "../permissions";
-import {isMobile} from '../../app.component';
-import {HttpErrorResponse} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { AuthService } from './state/auth.service';
+import { AuthStorageService } from './auth-storage.service';
+import { Router } from '@angular/router';
+import { AuthQuery } from './state/auth.query';
+import { Roles } from '../permissions';
+import { isMobile } from '../../app.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
   loginForm?: UntypedFormGroup;
@@ -24,12 +24,12 @@ export class LoginService {
     private authQuery: AuthQuery,
     private authStorageService: AuthStorageService,
     private router: Router,
-  ) { }
+  ) {}
 
   initializeForm(): void {
     this.loginForm = new UntypedFormGroup({
       email: new UntypedFormControl('', [Validators.required]),
-      password: new UntypedFormControl('', [Validators.required])
+      password: new UntypedFormControl('', [Validators.required]),
     });
   }
 
@@ -110,6 +110,6 @@ export class LoginService {
       case Roles.MONEY_APP_ROLE:
         return 'app/money';
     }
-    throw new Error('Un-configured role set to homepage')
+    throw new Error('Un-configured role set to homepage');
   }
 }

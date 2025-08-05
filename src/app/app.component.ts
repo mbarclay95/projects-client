@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import {AuthQuery} from "./auth/services/state/auth.query";
-import {PermissionsService} from "./auth/services/permissions.service";
-import {AuthService} from "./auth/services/state/auth.service";
-import {filter, take} from "rxjs";
-import {faBars, faPlus} from "@fortawesome/free-solid-svg-icons";
-import {MobileHeaderService} from "./shared/services/mobile-header.service";
-import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from "@angular/router";
+import { AuthQuery } from './auth/services/state/auth.query';
+import { PermissionsService } from './auth/services/permissions.service';
+import { AuthService } from './auth/services/state/auth.service';
+import { filter, take } from 'rxjs';
+import { faBars, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { MobileHeaderService } from './shared/services/mobile-header.service';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'projects-client';
@@ -26,18 +26,18 @@ export class AppComponent {
     public authService: AuthService,
     public permissionsService: PermissionsService,
     public mobileHeaderService: MobileHeaderService,
-    private router: Router
+    private router: Router,
   ) {
     if (this.isMobile) {
-        this.sideMenuClosed = true;
+      this.sideMenuClosed = true;
     } else {
-        this.getStartSideMenu();
+      this.getStartSideMenu();
     }
     this.subscribeToRouter();
   }
 
   subscribeToRouter() {
-    this.router.events.subscribe((event ) => {
+    this.router.events.subscribe((event) => {
       switch (true) {
         case event instanceof NavigationStart: {
           this.loading = true;
@@ -58,22 +58,24 @@ export class AppComponent {
   }
 
   getStartSideMenu() {
-    this.authQuery.auth$.pipe(
-      filter(user => !!user.id),
-      take(1)
-    ).subscribe(user => {
-      this.sideMenuClosed = false;
-      if (!user.userConfig.sideMenuOpen) {
-        setTimeout(() => {
-          this.sideMenuClosed = true;
-        },0);
-      }
-    });
+    this.authQuery.auth$
+      .pipe(
+        filter((user) => !!user.id),
+        take(1),
+      )
+      .subscribe((user) => {
+        this.sideMenuClosed = false;
+        if (!user.userConfig.sideMenuOpen) {
+          setTimeout(() => {
+            this.sideMenuClosed = true;
+          }, 0);
+        }
+      });
   }
 
   closeSideMenu(saveToServer = true) {
     this.sideMenuClosed = true;
-    void this.authService.updateUserConfig({sideMenuOpen: false}, saveToServer);
+    void this.authService.updateUserConfig({ sideMenuOpen: false }, saveToServer);
   }
 
   closeSideIfMobile() {

@@ -1,4 +1,4 @@
-import {BackupStepJob, createBackupStepJob} from './backup-step-job.model';
+import { BackupStepJob, createBackupStepJob } from './backup-step-job.model';
 
 export interface BackupJob {
   id: number;
@@ -7,7 +7,7 @@ export interface BackupJob {
   completedAt?: Date;
   erroredAt?: Date;
   errorMessage?: string;
-  backupStepJobs: BackupStepJob[]
+  backupStepJobs: BackupStepJob[];
 }
 
 export function createBackupJob(params: Partial<BackupJob>) {
@@ -18,6 +18,6 @@ export function createBackupJob(params: Partial<BackupJob>) {
     completedAt: params.completedAt ? new Date(params.completedAt) : undefined,
     erroredAt: params.erroredAt ? new Date(params.erroredAt) : undefined,
     errorMessage: params.errorMessage,
-    backupStepJobs: params.backupStepJobs?.map(stepJob => createBackupStepJob(stepJob)) ?? []
+    backupStepJobs: params.backupStepJobs?.map((stepJob) => createBackupStepJob(stepJob)) ?? [],
   } as BackupJob;
 }

@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {EntityState, EntityStore, StoreConfig} from '@datorama/akita';
-import {Event} from '../../../models/event.model';
+import { Injectable } from '@angular/core';
+import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { Event } from '../../../models/event.model';
 
 export interface EventsState extends EntityState<Event> {
-  ui: EventsUiState
+  ui: EventsUiState;
 }
 
 export interface EventsUiState {
@@ -11,12 +11,10 @@ export interface EventsUiState {
   search: string | null;
 }
 
-@Injectable({providedIn: 'root'})
-@StoreConfig({name: 'events'})
+@Injectable({ providedIn: 'root' })
+@StoreConfig({ name: 'events' })
 export class EventsStore extends EntityStore<EventsState> {
-
   constructor() {
-    super({ui: {showArchived: false, search: null}});
+    super({ ui: { showArchived: false, search: null } });
   }
-
 }

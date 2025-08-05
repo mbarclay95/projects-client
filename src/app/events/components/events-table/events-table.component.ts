@@ -1,25 +1,27 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NzTableComponent} from "ng-zorro-antd/table";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { NzTableComponent } from 'ng-zorro-antd/table';
 import {
   faBoxArchive,
-  faBoxOpen, faCircleMinus,
+  faBoxOpen,
   faCopy,
-  faEdit, faThumbsDown,
+  faEdit,
+  faThumbsDown,
   faThumbsUp,
-  faUpRightFromSquare, faUserPen
-} from "@fortawesome/free-solid-svg-icons";
-import {Event} from "../../models/event.model";
+  faUpRightFromSquare,
+  faUserPen,
+} from '@fortawesome/free-solid-svg-icons';
+import { Event } from '../../models/event.model';
 import { Clipboard } from '@angular/cdk/clipboard';
-import {NzMessageService} from "ng-zorro-antd/message";
-import {EventParticipant} from "../../models/event-participant";
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { EventParticipant } from '../../models/event-participant';
 
 @Component({
   selector: 'app-events-table',
   templateUrl: './events-table.component.html',
-  styleUrls: ['./events-table.component.scss']
+  styleUrls: ['./events-table.component.scss'],
 })
 export class EventsTableComponent implements OnInit {
-  @ViewChild('eventsTableTag', {static: true}) eventsTable: NzTableComponent<Event> | undefined;
+  @ViewChild('eventsTableTag', { static: true }) eventsTable: NzTableComponent<Event> | undefined;
 
   @Input() set events(events: Event[] | null) {
     if (events) {
@@ -40,16 +42,14 @@ export class EventsTableComponent implements OnInit {
   archive = faBoxArchive;
   participantGoing = faThumbsUp;
   participantNotGoing = faThumbsDown;
-  participantChange = faUserPen
+  participantChange = faUserPen;
 
   constructor(
     private clipboard: Clipboard,
-    private nzMessageService: NzMessageService
-  ) {
-  }
+    private nzMessageService: NzMessageService,
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onExpandChange(id: number, checked: boolean) {
     if (checked) {

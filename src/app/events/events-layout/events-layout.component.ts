@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-events-layout',
   templateUrl: './events-layout.component.html',
-  styleUrls: ['./events-layout.component.scss']
+  styleUrls: ['./events-layout.component.scss'],
 })
 export class EventsLayoutComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

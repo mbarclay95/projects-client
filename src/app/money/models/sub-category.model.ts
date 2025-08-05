@@ -1,4 +1,4 @@
-import {Category, createCategory} from './category.model';
+import { Category, createCategory } from './category.model';
 
 export interface SubCategory {
   id: number;
@@ -16,6 +16,6 @@ export function createSubCategory(params: Partial<SubCategory>): SubCategory {
     isActive: params.isActive ?? true,
     category: createCategory(params.category ?? {}),
     sort: params.sort ?? null,
-    showInBudget: params.showInBudget ?? false
+    showInBudget: params.showInBudget ?? false,
   } as SubCategory;
 }

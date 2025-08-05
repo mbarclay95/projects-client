@@ -8,9 +8,8 @@ describe('CreateEditScheduledBackupDrawerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateEditScheduledBackupDrawerComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateEditScheduledBackupDrawerComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

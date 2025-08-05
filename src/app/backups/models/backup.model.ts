@@ -1,6 +1,6 @@
-import {BackupStep, createBackupStep} from "./backup-step.model";
-import {BackupJob, createBackupJob} from './backup-job.model';
-import {createSchedule, Schedule} from './scheduled.model';
+import { BackupStep, createBackupStep } from './backup-step.model';
+import { BackupJob, createBackupJob } from './backup-job.model';
+import { createSchedule, Schedule } from './scheduled.model';
 
 export interface Backup {
   id: number;
@@ -14,11 +14,11 @@ export function createBackup(params: Partial<Backup>) {
   return {
     id: params.id ?? 0,
     name: params.name ?? '',
-    backupSteps: params.backupSteps?.map(backupStep => createBackupStep(backupStep)) ?? [],
-    backupJobs: (params.backupJobs?.map(job => createBackupJob(job)) ?? []).sort((a, b) => {
+    backupSteps: params.backupSteps?.map((backupStep) => createBackupStep(backupStep)) ?? [],
+    backupJobs: (params.backupJobs?.map((job) => createBackupJob(job)) ?? []).sort((a, b) => {
       return b.createdAt.getTime() - a.createdAt.getTime();
     }),
-    schedules: params.schedules?.map(schedule => createSchedule(schedule)) ?? [],
+    schedules: params.schedules?.map((schedule) => createSchedule(schedule)) ?? [],
   } as Backup;
 }
 

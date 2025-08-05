@@ -1,4 +1,4 @@
-import {Roles} from "../../auth/permissions";
+import { Roles } from '../../auth/permissions';
 
 export interface UserConfig {
   sideMenuOpen: boolean;

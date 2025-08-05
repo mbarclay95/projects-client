@@ -1,11 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Role} from '../../users/models/role.model';
+import { Role } from '../../users/models/role.model';
 
 @Pipe({
-  name: 'displayRoleName'
+  name: 'displayRoleName',
 })
 export class DisplayRoleNamePipe implements PipeTransform {
-
   transform(role: Role): string {
     const roleParts = role.name.split('_');
     if (roleParts.length === 0) {

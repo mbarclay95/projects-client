@@ -1,4 +1,4 @@
-import {environment} from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 export interface Bank {
   id: number;
@@ -12,6 +12,6 @@ export function createBank(params: Partial<Bank>): Bank {
     id: params.id,
     name: params.name ?? '',
     fileUploadId: params.fileUploadId ?? null,
-    filePath: params.fileUploadId ? `${environment.moneyAppApiUrl}/upload-file/${params.fileUploadId}` : null
+    filePath: params.fileUploadId ? `${environment.moneyAppApiUrl}/upload-file/${params.fileUploadId}` : null,
   } as Bank;
 }

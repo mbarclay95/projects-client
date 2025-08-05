@@ -1,15 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Goal} from '../../models/goal.model';
-import {GoalsQuery} from '../../services/state/goals.query';
-import {GoalsService} from '../../services/state/goals.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {faX} from '@fortawesome/free-solid-svg-icons';
-import {GoalDay} from '../../models/goal-day.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { Goal } from '../../models/goal.model';
+import { GoalsQuery } from '../../services/state/goals.query';
+import { GoalsService } from '../../services/state/goals.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { faX } from '@fortawesome/free-solid-svg-icons';
+import { GoalDay } from '../../models/goal-day.model';
 
 @Component({
   selector: 'app-goal-day-button',
   templateUrl: './goal-day-button.component.html',
-  styleUrls: ['./goal-day-button.component.scss']
+  styleUrls: ['./goal-day-button.component.scss'],
 })
 export class GoalDayButtonComponent implements OnInit {
   @Input() goal!: Goal;
@@ -30,12 +30,10 @@ export class GoalDayButtonComponent implements OnInit {
   constructor(
     private goalsQuery: GoalsQuery,
     private goalsService: GoalsService,
-    private nzMessageService: NzMessageService
-  ) {
-  }
+    private nzMessageService: NzMessageService,
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   async visibilityChange(isVisible: boolean) {
     if (!this._goalDay || isVisible || this._goalDay.amount === this.initialAmount) {
@@ -44,7 +42,7 @@ export class GoalDayButtonComponent implements OnInit {
     let showSuccess = true;
     try {
       // @ts-ignore
-      if ((this._goalDay.amount === null || this._goalDay.amount === '')) {
+      if (this._goalDay.amount === null || this._goalDay.amount === '') {
         if (this._goalDay.id === 0) {
           showSuccess = false;
         } else {
@@ -63,7 +61,7 @@ export class GoalDayButtonComponent implements OnInit {
 
     if (showSuccess) {
       this.nzMessageService.success('Goal updated', {
-        nzDuration: 1000
+        nzDuration: 1000,
       });
     }
   }

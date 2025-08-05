@@ -8,10 +8,9 @@ describe('CreateEditSessionModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateEditSessionModalComponent]
-    })
-    .compileComponents();
-    
+      imports: [CreateEditSessionModalComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(CreateEditSessionModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

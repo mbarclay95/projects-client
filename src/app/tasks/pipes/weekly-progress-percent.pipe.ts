@@ -1,16 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {FamiliesQuery} from "../services/families/state/families.query";
-import {TaskUserConfig} from '../models/task-user-config.model';
+import { FamiliesQuery } from '../services/families/state/families.query';
+import { TaskUserConfig } from '../models/task-user-config.model';
 
 @Pipe({
-  name: 'weeklyProgressPercent'
+  name: 'weeklyProgressPercent',
 })
 export class WeeklyProgressPercentPipe implements PipeTransform {
-
-  constructor(
-    private familiesQuery: FamiliesQuery
-  ) {
-  }
+  constructor(private familiesQuery: FamiliesQuery) {}
 
   transform(config: TaskUserConfig, returnFraction: boolean = true): number {
     if (config.tasksPerWeek === 0) {
@@ -20,9 +16,10 @@ export class WeeklyProgressPercentPipe implements PipeTransform {
     if (!activeFamily) {
       return 0;
     }
-    let totalCompleted = activeFamily.taskStrategy === 'per task' ?
-      config.completedFamilyTasks.length :
-      config.completedFamilyTasks.reduce((prev, curr) => prev + (curr.taskPoint ?? 0), 0);
+    let totalCompleted =
+      activeFamily.taskStrategy === 'per task'
+        ? config.completedFamilyTasks.length
+        : config.completedFamilyTasks.reduce((prev, curr) => prev + (curr.taskPoint ?? 0), 0);
 
     let progress = totalCompleted / config.tasksPerWeek;
     if (progress > 1) {
@@ -35,5 +32,4 @@ export class WeeklyProgressPercentPipe implements PipeTransform {
 
     return parseFloat((progress * 100.0).toFixed(0));
   }
-
 }

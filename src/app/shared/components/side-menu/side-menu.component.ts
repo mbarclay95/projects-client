@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Route} from '../../models/routes.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Route } from '../../models/routes.model';
 
 @Component({
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
-  styleUrls: ['./side-menu.component.scss']
+  styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent implements OnInit {
   @Input() routes: Route[] = [];
@@ -13,10 +13,9 @@ export class SideMenuComponent implements OnInit {
 
   @Output() closeSideMenu: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   closeIfMobile() {
     if (this.isMobile) {

@@ -8,10 +8,9 @@ describe('GamingSessionsAdminPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GamingSessionsAdminPageComponent]
-    })
-    .compileComponents();
-    
+      imports: [GamingSessionsAdminPageComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(GamingSessionsAdminPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

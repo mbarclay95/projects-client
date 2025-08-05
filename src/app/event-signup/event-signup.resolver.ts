@@ -1,19 +1,17 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import {EventService} from "./services/event.service";
-import {EventCacheService} from "./services/event-cache.service";
+import { EventService } from './services/event.service';
+import { EventCacheService } from './services/event-cache.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class EventSignupResolver  {
-
+export class EventSignupResolver {
   constructor(
     private eventService: EventService,
     private eventCacheService: EventCacheService,
     private router: Router,
-  ) {
-  }
+  ) {}
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
     const eventId = route.params['eventId'] as string | undefined;

@@ -1,20 +1,19 @@
-<div class="w-100 task-page-container p-2" *ngIf="(tasksQuery.ui$ | async) as ui">
-
+<div class="w-100 task-page-container p-2" *ngIf="tasksQuery.ui$ | async as ui">
   <app-tasks-filters [ui]="ui"></app-tasks-filters>
 
   <ng-container *ngIf="!(tasksQuery.selectLoading() | async)">
-
     <ng-container *ngIf="tasksQuery.filteredTasks$ | async as tasks">
-
       <app-tasks-table *ngIf="!isMobile" [tasks]="tasks" (editTask)="editTask.emit($event)" [ui]="ui"></app-tasks-table>
 
-      <app-task-table-mobile *ngIf="isMobile" [tasks]="tasks" (editTask)="editTask.emit($event)"
-                             [ui]="ui" (viewTask)="viewTask.emit($event)"></app-task-table-mobile>
-
+      <app-task-table-mobile
+        *ngIf="isMobile"
+        [tasks]="tasks"
+        (editTask)="editTask.emit($event)"
+        [ui]="ui"
+        (viewTask)="viewTask.emit($event)"
+      ></app-task-table-mobile>
     </ng-container>
-
   </ng-container>
-
 </div>
 
 <app-create-edit-task-modal-mobile *ngIf="isMobile" [openModal]="createEditTask"></app-create-edit-task-modal-mobile>

@@ -4,32 +4,20 @@
   </div>
 } @else {
   <div class="page-container mt-2" *ngLet="gamingSessionsFacadeService.activeGamingSession$ | async as activeSession">
-
     @if (activeSession === undefined) {
       <div class="d-flex align-items-center justify-content-center w-100" style="height: 50vh">
-
         <nz-result nzStatus="404" nzTitle="Session not found" nzSubTitle="Sorry, this session does not exist">
-
           <div nz-result-extra>
-
             <button nz-button nzType="primary" routerLink="/games">Back to Active Sessions</button>
-
           </div>
-
         </nz-result>
-
       </div>
-
     } @else {
-
       @if (activeSession.ended_at) {
-
         <div>Session Ended</div>
 
         <button nz-button nzType="primary" routerLink="/games">Back to Active Sessions</button>
-
       } @else {
-
         @if (gamingSessionsFacadeService.userHasSessionDevice$ | async) {
           <app-joined-session
             [activeSession]="activeSession"
@@ -43,13 +31,9 @@
             (deviceSelected)="openModal.next($event)"
           ></app-connect-to-device>
         }
-
       }
     }
-
   </div>
 
-  <app-create-edit-session-device-modal
-    [openModal]="openModal.asObservable()"
-  ></app-create-edit-session-device-modal>
+  <app-create-edit-session-device-modal [openModal]="openModal.asObservable()"></app-create-edit-session-device-modal>
 }

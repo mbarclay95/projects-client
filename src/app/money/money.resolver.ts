@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import { RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@angular/router';
-import {AuthQuery} from '../auth/services/state/auth.query';
+import { AuthQuery } from '../auth/services/state/auth.query';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class MoneyResolver  {
-
+export class MoneyResolver {
   constructor(
     private authQuery: AuthQuery,
-    private router: Router
-  ) {
-  }
+    private router: Router,
+  ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (!this.authQuery.hasMoneyAppToken()) {

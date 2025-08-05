@@ -8,9 +8,8 @@ describe('BackupsLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BackupsLayoutComponent ]
-    })
-    .compileComponents();
+      declarations: [BackupsLayoutComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

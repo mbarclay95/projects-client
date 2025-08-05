@@ -7,9 +7,7 @@ export interface LogEventState extends EntityState<LogEvent> {}
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'log-event' })
 export class LogEventStore extends EntityStore<LogEventState> {
-
   constructor() {
     super();
   }
-
 }

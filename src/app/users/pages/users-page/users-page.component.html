@@ -1,9 +1,7 @@
-<app-page-header *ngIf="!isMobile" buttonText="Create User" title="Users"
-                 (createButtonClicked)="createNewUser()"></app-page-header>
+<app-page-header *ngIf="!isMobile" buttonText="Create User" title="Users" (createButtonClicked)="createNewUser()"></app-page-header>
 
 <div>
   <app-user-table [users]="usersQuery.users$ | async" (editUser)="openUserModal.next($event)"></app-user-table>
 </div>
 
 <app-create-edit-user-modal [openModal]="openUserModal$"></app-create-edit-user-modal>
-

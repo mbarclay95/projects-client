@@ -1,28 +1,21 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {isMobile} from '../../../app.component';
-import {Observable, Subject, takeUntil} from 'rxjs';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators
-} from '@angular/forms';
-import {AuthService} from '../../services/state/auth.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { isMobile } from '../../../app.component';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AuthService } from '../../services/state/auth.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-change-password-modal',
   templateUrl: './change-password-modal.component.html',
-  styleUrls: ['./change-password-modal.component.scss']
+  styleUrls: ['./change-password-modal.component.scss'],
 })
 export class ChangePasswordModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<void>;
 
   isVisible = false;
   modalWidth = isMobile ? '95%' : '500px';
-  modalStyle = isMobile ? {top: '20px'} : {};
+  modalStyle = isMobile ? { top: '20px' } : {};
   form?: FormGroup;
   saving = false;
 
@@ -30,18 +23,19 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private nzMessageService: NzMessageService
-  ) { }
+    private nzMessageService: NzMessageService,
+  ) {}
 
   ngOnInit(): void {
-    this.openModal.pipe(
-      takeUntil(this.subscriptionDestroyer)
-    ).subscribe(() => {
-      this.form = new FormGroup({
-        currentPassword: new FormControl('', [Validators.required]),
-        newPassword: new FormControl('', [Validators.required]),
-        confirmPassword: new FormControl('', [Validators.required]),
-      }, [passwordsMatchValidator]);
+    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe(() => {
+      this.form = new FormGroup(
+        {
+          currentPassword: new FormControl('', [Validators.required]),
+          newPassword: new FormControl('', [Validators.required]),
+          confirmPassword: new FormControl('', [Validators.required]),
+        },
+        [passwordsMatchValidator],
+      );
       this.isVisible = true;
     });
   }
@@ -81,5 +75,5 @@ export const passwordsMatchValidator: ValidatorFn = (group: AbstractControl): Va
     return null;
   }
 
-  return {message: 'Passwords must match'};
-}
+  return { message: 'Passwords must match' };
+};

@@ -6,6 +6,6 @@ export interface DirectoryItem {
 export function createDirectoryItem(params: Partial<DirectoryItem>) {
   return {
     id: params.id,
-    type: params.type
+    type: params.type,
   } as DirectoryItem;
 }

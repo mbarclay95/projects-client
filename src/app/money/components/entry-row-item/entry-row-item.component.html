@@ -1,47 +1,35 @@
 <div class="entry-box" (click)="editEntry.emit()">
-
   <div class="inner-padding">
-
     <div class="category-text">
-
-      <div *ngIf="entry.subCategory">{{entry.category.name}}: {{entry.subCategory.name}}</div>
+      <div *ngIf="entry.subCategory">{{ entry.category.name }}: {{ entry.subCategory.name }}</div>
 
       <div *ngIf="!entry.subCategory" class="missing-attribute-text">Missing Category</div>
-
     </div>
 
     <div class="date-amount-text">
-
-      <span *ngIf="entry.dateSpent">{{entry.dateSpent | date : 'shortDate'}}</span>
+      <span *ngIf="entry.dateSpent">{{ entry.dateSpent | date: "shortDate" }}</span>
 
       <span *ngIf="!entry.dateSpent" class="missing-attribute-text">Missing Date</span>
 
       <span class="mx-1">-</span>
 
-      <span *ngIf="entry.amount">{{entry.amount | currency}}</span>
+      <span *ngIf="entry.amount">{{ entry.amount | currency }}</span>
 
       <span *ngIf="!entry.amount" class="missing-attribute-text">Missing Amount</span>
-
     </div>
 
     <div *ngIf="entry.description" class="description-text mt-3">
-      {{entry.description}}
+      {{ entry.description }}
     </div>
-
   </div>
 
   <div class="bank-text">
-
     <ng-container *ngIf="entry.bank as bank">
+      <img *ngIf="bank.filePath" [srcset]="bank.filePath" height="40" />
 
-      <img *ngIf="bank.filePath" [srcset]="bank.filePath" height="40">
-
-      <span *ngIf="!bank.filePath">{{bank.name}}</span>
-
+      <span *ngIf="!bank.filePath">{{ bank.name }}</span>
     </ng-container>
 
     <span *ngIf="!entry.bank" class="missing-attribute-text">Missing Bank</span>
-
   </div>
-
 </div>

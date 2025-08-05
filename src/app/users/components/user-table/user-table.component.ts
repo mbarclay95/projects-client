@@ -1,15 +1,15 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NzTableComponent} from "ng-zorro-antd/table";
-import {User} from "../../models/user.model";
-import {faEdit} from "@fortawesome/free-solid-svg-icons";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { NzTableComponent } from 'ng-zorro-antd/table';
+import { User } from '../../models/user.model';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-table',
   templateUrl: './user-table.component.html',
-  styleUrls: ['./user-table.component.scss']
+  styleUrls: ['./user-table.component.scss'],
 })
 export class UserTableComponent implements OnInit {
-  @ViewChild('usersTableTag', {static: true}) usersTable: NzTableComponent<User> | undefined;
+  @ViewChild('usersTableTag', { static: true }) usersTable: NzTableComponent<User> | undefined;
   @Input() set users(users: User[] | null) {
     if (users) {
       this._users = users;
@@ -20,11 +20,7 @@ export class UserTableComponent implements OnInit {
   _users: User[] = [];
   edit = faEdit;
 
-  constructor(
+  constructor() {}
 
-  ) { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

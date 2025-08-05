@@ -1,72 +1,65 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(event?.id === 0 ? 'Create' : 'Edit') + ' Event'" [nzWidth]="modalWidth"
-          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveEvent()"
-          [nzStyle]="modalStyle" [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving"
-          [nzMaskClosable]="false">
-
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="(event?.id === 0 ? 'Create' : 'Edit') + ' Event'"
+  [nzWidth]="modalWidth"
+  (nzOnCancel)="isVisible = false"
+  nzOkText="Save"
+  nzCancelText="Close"
+  (nzOnOk)="saveEvent()"
+  [nzStyle]="modalStyle"
+  [nzCancelDisabled]="saving"
+  [nzOkDisabled]="saving"
+  [nzOkLoading]="saving"
+  [nzMaskClosable]="false"
+>
   <ng-container *nzModalContent>
-
     <div *ngIf="event">
-
       <div class="w-100 mb-4">
-
         <div class="mb-2"><span class="text-danger">*</span> Event Title:</div>
 
-        <input nz-input [(ngModel)]="event.name" class="w-100">
-
+        <input nz-input [(ngModel)]="event.name" class="w-100" />
       </div>
 
       <div class="w-100 mb-4">
-
         <div class="mb-2"><span class="text-danger">*</span> Event Date:</div>
 
-        <nz-date-picker [(ngModel)]="event.eventDate" nzFormat="MM/dd/yyyy HH:mm" [nzShowNow]="false"
-                        [nzShowTime]="{nzFormat: 'HH:mm', nzUse12Hours: true, nzMinuteStep: 15}"></nz-date-picker>
-
+        <nz-date-picker
+          [(ngModel)]="event.eventDate"
+          nzFormat="MM/dd/yyyy HH:mm"
+          [nzShowNow]="false"
+          [nzShowTime]="{ nzFormat: 'HH:mm', nzUse12Hours: true, nzMinuteStep: 15 }"
+        ></nz-date-picker>
       </div>
 
       <div class="w-100 mb-4">
-
         <div class="mb-2">Event Details:</div>
 
         <textarea nz-input [(ngModel)]="event.notes"></textarea>
-
       </div>
 
       <div class="w-100 mb-4 d-flex align-items-end">
-
         <div class="me-4">Limit Participants:</div>
 
         <nz-switch [(ngModel)]="event.limitParticipants"></nz-switch>
-
       </div>
 
       <div class="w-100 mb-4" *ngIf="event.limitParticipants">
-
         <div class="mb-2">Max Spots:</div>
 
         <nz-input-number [(ngModel)]="event.numOfPeople"></nz-input-number>
-
       </div>
 
       <div class="w-100 mb-4 d-flex align-items-end">
-
         <div class="me-4">Notify On Signup:</div>
 
-        <nz-switch [ngModel]="event.notificationEmail !== undefined"
-                   (ngModelChange)="updateNotifySwitch($event)"></nz-switch>
-
+        <nz-switch [ngModel]="event.notificationEmail !== undefined" (ngModelChange)="updateNotifySwitch($event)"></nz-switch>
       </div>
 
       <div class="w-100 mb-4" *ngIf="event.notificationEmail !== undefined">
-
         <div class="mb-2">Email:</div>
 
-        <input nz-input [(ngModel)]="event.notificationEmail" class="w-100">
-
+        <input nz-input [(ngModel)]="event.notificationEmail" class="w-100" />
       </div>
-
     </div>
-
   </ng-container>
-
 </nz-modal>

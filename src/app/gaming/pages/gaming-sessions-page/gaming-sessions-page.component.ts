@@ -14,14 +14,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 @Component({
   selector: 'app-gaming-sessions-page',
   standalone: true,
-  imports: [
-    AsyncPipe,
-    CreateEditSessionModalComponent,
-    GamingSessionsListComponent,
-    NzSpinComponent,
-    SharedModule,
-    NzButtonComponent,
-  ],
+  imports: [AsyncPipe, CreateEditSessionModalComponent, GamingSessionsListComponent, NzSpinComponent, SharedModule, NzButtonComponent],
   templateUrl: './gaming-sessions-page.component.html',
   styleUrl: './gaming-sessions-page.component.scss',
 })

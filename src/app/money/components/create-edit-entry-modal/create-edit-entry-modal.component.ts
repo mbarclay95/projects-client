@@ -7,6 +7,7 @@ import { faChevronLeft, faChevronRight, faXmark } from '@fortawesome/free-solid-
   selector: 'app-create-edit-entry-modal',
   templateUrl: './create-edit-entry-modal.component.html',
   styleUrls: ['./create-edit-entry-modal.component.scss'],
+  standalone: false,
 })
 export class CreateEditEntryModalComponent extends DefaultModalComponent<Entry> {
   deleting = false;

@@ -12,6 +12,7 @@ import { DirectoryItemsService } from '../../services/state/directory-items.serv
   selector: 'app-file-explorer-page',
   templateUrl: './file-explorer-page.component.html',
   styleUrls: ['./file-explorer-page.component.scss'],
+  standalone: false,
 })
 export class FileExplorerPageComponent implements OnInit {
   isMobile = isMobile;

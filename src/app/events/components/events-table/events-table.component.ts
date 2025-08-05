@@ -19,6 +19,7 @@ import { EventParticipant } from '../../models/event-participant';
   selector: 'app-events-table',
   templateUrl: './events-table.component.html',
   styleUrls: ['./events-table.component.scss'],
+  standalone: false,
 })
 export class EventsTableComponent implements OnInit {
   @ViewChild('eventsTableTag', { static: true }) eventsTable: NzTableComponent<Event> | undefined;

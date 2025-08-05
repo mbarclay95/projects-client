@@ -7,6 +7,7 @@ import { GoalsService } from '../../services/state/goals.service';
   selector: 'app-week-selector',
   templateUrl: './week-selector.component.html',
   styleUrls: ['./week-selector.component.scss'],
+  standalone: false,
 })
 export class WeekSelectorComponent implements OnInit {
   left = faCaretLeft;

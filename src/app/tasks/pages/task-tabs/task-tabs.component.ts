@@ -12,6 +12,7 @@ import { TaskUserConfigsService } from '../../services/task-user-configs/state/t
   selector: 'app-task-tabs',
   templateUrl: './task-tabs.component.html',
   styleUrls: ['./task-tabs.component.scss'],
+  standalone: false,
 })
 export class TaskTabsComponent implements OnInit {
   selectedTab: 'Task' | 'Family' | 'My Family' = 'Task';

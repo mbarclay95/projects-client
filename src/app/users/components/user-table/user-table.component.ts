@@ -7,6 +7,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
   selector: 'app-user-table',
   templateUrl: './user-table.component.html',
   styleUrls: ['./user-table.component.scss'],
+  standalone: false,
 })
 export class UserTableComponent implements OnInit {
   @ViewChild('usersTableTag', { static: true }) usersTable: NzTableComponent<User> | undefined;

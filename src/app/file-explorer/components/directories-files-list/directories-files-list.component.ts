@@ -10,6 +10,7 @@ import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/wor
   selector: 'app-directories-files-list',
   templateUrl: './directories-files-list.component.html',
   styleUrls: ['./directories-files-list.component.scss'],
+  standalone: false,
 })
 export class DirectoriesFilesListComponent implements OnInit {
   @Input() workingDirectory: WorkingDirectoryItem[] = [];

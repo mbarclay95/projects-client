@@ -13,6 +13,7 @@ import { isMobile } from '../../../app.component';
   selector: 'app-create-edit-task-modal-mobile',
   templateUrl: './create-edit-task-modal-mobile.component.html',
   styleUrls: ['./create-edit-task-modal-mobile.component.scss'],
+  standalone: false,
 })
 export class CreateEditTaskModalMobileComponent extends CreateEditTaskModalComponent {
   recurringExpanded = false;

@@ -3,6 +3,7 @@ import { differenceInDays, differenceInMonths, differenceInWeeks, differenceInYe
 
 @Pipe({
   name: 'dueDateHumanReadable',
+  standalone: false,
 })
 export class DueDateHumanReadablePipe implements PipeTransform {
   transform(dueDate?: Date, ...args: unknown[]): string {

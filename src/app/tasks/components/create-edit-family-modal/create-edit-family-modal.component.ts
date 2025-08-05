@@ -12,6 +12,7 @@ import { isMobile } from '../../../app.component';
   selector: 'app-create-edit-family-modal',
   templateUrl: './create-edit-family-modal.component.html',
   styleUrls: ['./create-edit-family-modal.component.scss'],
+  standalone: false,
 })
 export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Family>;

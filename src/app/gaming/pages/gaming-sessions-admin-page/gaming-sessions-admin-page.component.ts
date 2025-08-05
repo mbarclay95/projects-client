@@ -18,7 +18,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-gaming-sessions-admin-page',
-  standalone: true,
   imports: [
     AsyncPipe,
     GamingSegmentComponent,

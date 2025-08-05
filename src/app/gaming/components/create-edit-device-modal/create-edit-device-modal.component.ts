@@ -11,7 +11,6 @@ import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'app-create-edit-device-modal',
-  standalone: true,
   imports: [
     NgIf,
     NzInputDirective,

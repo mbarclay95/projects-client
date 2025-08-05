@@ -13,6 +13,7 @@ import { BackupsPollingService } from '../../services/backups-polling.service';
   selector: 'app-create-edit-backups-drawer',
   templateUrl: './create-edit-backups-drawer.component.html',
   styleUrls: ['./create-edit-backups-drawer.component.scss'],
+  standalone: false,
 })
 export class CreateEditBackupsDrawerComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Backup>;

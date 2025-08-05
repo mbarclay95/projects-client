@@ -6,6 +6,7 @@ import { Target } from '../../models/target.model';
   selector: 'app-targets-page',
   templateUrl: './targets-page.component.html',
   styleUrls: ['./targets-page.component.scss'],
+  standalone: false,
 })
 export class TargetsPageComponent implements OnInit {
   @Output() editTarget: EventEmitter<{ target: Target }> = new EventEmitter<{ target: Target }>();

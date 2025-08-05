@@ -10,6 +10,7 @@ import { isMobile } from '../../../app.component';
   selector: 'app-families-page',
   templateUrl: './families-page.component.html',
   styleUrls: ['./families-page.component.scss'],
+  standalone: false,
 })
 export class FamiliesPageComponent implements OnInit {
   @Output() openFamilyModal: EventEmitter<Family> = new EventEmitter<Family>();

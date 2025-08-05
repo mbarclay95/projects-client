@@ -3,6 +3,7 @@ import { Role } from '../models/role.model';
 
 @Pipe({
   name: 'rolesToIds',
+  standalone: false,
 })
 export class RolesToIdsPipe implements PipeTransform {
   transform(roles: Role[]): number[] {

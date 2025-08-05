@@ -4,7 +4,6 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-gaming-layout',
-  standalone: true,
   imports: [NzContentComponent, RouterOutlet],
   templateUrl: './gaming-layout.component.html',
   styleUrl: './gaming-layout.component.scss',

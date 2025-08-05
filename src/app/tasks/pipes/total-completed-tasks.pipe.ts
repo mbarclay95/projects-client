@@ -4,6 +4,7 @@ import { TaskUserConfig } from '../models/task-user-config.model';
 
 @Pipe({
   name: 'totalCompletedTasks',
+  standalone: false,
 })
 export class TotalCompletedTasksPipe implements PipeTransform {
   constructor(private familiesQuery: FamiliesQuery) {}

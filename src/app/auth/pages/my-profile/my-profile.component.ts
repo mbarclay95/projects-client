@@ -15,6 +15,7 @@ import { Role } from '../../../users/models/role.model';
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.scss'],
+  standalone: false,
 })
 export class MyProfileComponent implements OnInit {
   loggingOut = false;

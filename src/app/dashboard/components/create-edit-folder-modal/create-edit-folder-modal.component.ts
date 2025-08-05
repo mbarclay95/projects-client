@@ -8,6 +8,7 @@ import { isMobile } from '../../../app.component';
   selector: 'app-create-edit-folder-modal',
   templateUrl: './create-edit-folder-modal.component.html',
   styleUrls: ['./create-edit-folder-modal.component.scss'],
+  standalone: false,
 })
 export class CreateEditFolderModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Folder>;

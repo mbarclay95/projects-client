@@ -6,7 +6,6 @@ import { faChessBoard, faMicrochip } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-gaming-segment',
-  standalone: true,
   imports: [FaIconComponent, NzSegmentedComponent, FormsModule],
   templateUrl: './gaming-segment.component.html',
   styleUrl: './gaming-segment.component.scss',

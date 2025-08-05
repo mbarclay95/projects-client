@@ -13,6 +13,7 @@ import { isMobile } from '../../../app.component';
   selector: 'app-create-edit-site-modal',
   templateUrl: './create-edit-site-modal.component.html',
   styleUrls: ['./create-edit-site-modal.component.scss'],
+  standalone: false,
 })
 export class CreateEditSiteModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Site>;

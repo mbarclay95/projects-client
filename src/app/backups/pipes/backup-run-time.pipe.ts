@@ -5,6 +5,7 @@ import { BackupStepJob } from '../models/backup-step-job.model';
 
 @Pipe({
   name: 'backupRunTime',
+  standalone: false,
 })
 export class BackupRunTimePipe implements PipeTransform {
   transform(backup: BackupJob | BackupStepJob): string {

@@ -12,6 +12,7 @@ import { TagsService } from '../../services/tags.service';
   selector: 'app-create-edit-task-modal',
   templateUrl: './create-edit-task-modal.component.html',
   styleUrls: ['./create-edit-task-modal.component.scss'],
+  standalone: false,
 })
 export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Task>;

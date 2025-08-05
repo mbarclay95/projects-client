@@ -12,6 +12,7 @@ import { isMobile } from '../../../app.component';
   selector: 'app-create-edit-user-modal',
   templateUrl: './create-edit-user-modal.component.html',
   styleUrls: ['./create-edit-user-modal.component.scss'],
+  standalone: false,
 })
 export class CreateEditUserModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<User>;

@@ -11,6 +11,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'app-view-task-modal',
   templateUrl: './view-task-modal.component.html',
   styleUrls: ['./view-task-modal.component.scss'],
+  standalone: false,
 })
 export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();

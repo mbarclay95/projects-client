@@ -7,6 +7,7 @@ import { TagsService } from '../../services/tags.service';
   selector: 'app-tasks-filters',
   templateUrl: './tasks-filters.component.html',
   styleUrls: ['./tasks-filters.component.scss'],
+  standalone: false,
 })
 export class TasksFiltersComponent implements OnInit {
   @Input() ui!: TaskUiState;

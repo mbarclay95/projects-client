@@ -8,6 +8,7 @@ import { faPeopleRoof, faUser } from '@fortawesome/free-solid-svg-icons';
   selector: 'app-weekly-tasks-segment',
   templateUrl: './weekly-tasks-segment.component.html',
   styleUrls: ['./weekly-tasks-segment.component.scss'],
+  standalone: false,
 })
 export class WeeklyTasksSegmentComponent implements OnInit {
   @ViewChild('customSegment', { static: true, read: TemplateRef }) templateRef!: TemplateRef<{

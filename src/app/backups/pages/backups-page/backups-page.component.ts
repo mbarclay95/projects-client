@@ -6,6 +6,7 @@ import { Backup } from '../../models/backup.model';
   selector: 'app-backups-page',
   templateUrl: './backups-page.component.html',
   styleUrls: ['./backups-page.component.scss'],
+  standalone: false,
 })
 export class BackupsPageComponent implements OnInit {
   @Output() editBackup: EventEmitter<Backup> = new EventEmitter<Backup>();

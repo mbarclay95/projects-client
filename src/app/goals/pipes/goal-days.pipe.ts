@@ -5,6 +5,7 @@ import { GoalDayButton } from '../models/goal-day.model';
 
 @Pipe({
   name: 'goalDays',
+  standalone: false,
 })
 export class GoalDaysPipe implements PipeTransform {
   constructor(private goalsQuery: GoalsQuery) {}

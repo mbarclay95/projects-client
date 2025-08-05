@@ -8,6 +8,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'app-create-edit-goal-modal',
   templateUrl: './create-edit-goal-modal.component.html',
   styleUrls: ['./create-edit-goal-modal.component.scss'],
+  standalone: false,
 })
 export class CreateEditGoalModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Goal>;

@@ -14,6 +14,7 @@ import { TaskUserConfigsService } from '../../services/task-user-configs/state/t
   selector: 'app-weekly-tasks-page',
   templateUrl: './weekly-tasks-page.component.html',
   styleUrls: ['./weekly-tasks-page.component.scss'],
+  standalone: false,
 })
 export class WeeklyTasksPageComponent implements OnInit {
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();

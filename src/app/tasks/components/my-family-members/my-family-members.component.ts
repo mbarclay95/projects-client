@@ -13,6 +13,7 @@ import { TaskUserConfigsService } from '../../services/task-user-configs/state/t
   selector: 'app-my-family-members',
   templateUrl: './my-family-members.component.html',
   styleUrls: ['./my-family-members.component.scss'],
+  standalone: false,
 })
 export class MyFamilyMembersComponent implements OnInit {
   @Input() familyTaskStrategy!: TaskStrategy;

@@ -4,6 +4,7 @@ import { EventParticipant } from '../models/event-participant';
 
 @Pipe({
   name: 'participantsGoing',
+  standalone: false,
 })
 export class ParticipantsGoingPipe implements PipeTransform {
   transform(event: Event): EventParticipant[] {

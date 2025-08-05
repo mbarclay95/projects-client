@@ -8,7 +8,6 @@ import { GamingSession } from '../../models/gaming-session.model';
 
 @Component({
   selector: 'app-connect-to-device',
-  standalone: true,
   imports: [FaIconComponent, SharedModule],
   templateUrl: './connect-to-device.component.html',
   styleUrl: './connect-to-device.component.scss',

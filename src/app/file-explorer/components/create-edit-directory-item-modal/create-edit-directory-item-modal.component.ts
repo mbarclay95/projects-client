@@ -10,6 +10,7 @@ import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/wor
   selector: 'app-create-edit-directory-item-modal',
   templateUrl: './create-edit-directory-item-modal.component.html',
   styleUrls: ['./create-edit-directory-item-modal.component.scss'],
+  standalone: false,
 })
 export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Input() openModal!: Observable<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }>;

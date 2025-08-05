@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-event-signup-layout',
   templateUrl: './event-signup-layout.component.html',
   styleUrls: ['./event-signup-layout.component.scss'],
+  standalone: false,
 })
 export class EventSignupLayoutComponent implements OnInit {
   constructor() {}

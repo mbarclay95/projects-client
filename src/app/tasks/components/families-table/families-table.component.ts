@@ -7,6 +7,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
   selector: 'app-families-table',
   templateUrl: './families-table.component.html',
   styleUrls: ['./families-table.component.scss'],
+  standalone: false,
 })
 export class FamiliesTableComponent implements OnInit {
   @ViewChild('familiesTableTag', { static: true }) familiesTable: NzTableComponent<Family> | undefined;

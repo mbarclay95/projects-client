@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-backups-layout',
   templateUrl: './backups-layout.component.html',
   styleUrls: ['./backups-layout.component.scss'],
+  standalone: false,
 })
 export class BackupsLayoutComponent implements OnInit {
   constructor() {}

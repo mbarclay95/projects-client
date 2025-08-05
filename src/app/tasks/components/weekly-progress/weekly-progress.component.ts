@@ -7,6 +7,7 @@ import { TaskUserConfig } from '../../models/task-user-config.model';
   selector: 'app-weekly-progress',
   templateUrl: './weekly-progress.component.html',
   styleUrls: ['./weekly-progress.component.scss'],
+  standalone: false,
 })
 export class WeeklyProgressComponent implements OnInit {
   @Input() userConfig!: TaskUserConfig | undefined | null;

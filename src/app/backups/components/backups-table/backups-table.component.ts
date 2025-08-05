@@ -9,6 +9,7 @@ import { BackupsPollingService } from '../../services/backups-polling.service';
   selector: 'app-backups-table',
   templateUrl: './backups-table.component.html',
   styleUrls: ['./backups-table.component.scss'],
+  standalone: false,
 })
 export class BackupsTableComponent implements OnInit {
   @ViewChild('backupsTableTag', { static: true }) backupsTable: NzTableComponent<Backup> | undefined;

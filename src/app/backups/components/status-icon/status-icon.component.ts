@@ -7,6 +7,7 @@ import { SizeProp } from '@fortawesome/fontawesome-svg-core';
   selector: 'app-status-icon',
   templateUrl: './status-icon.component.html',
   styleUrls: ['./status-icon.component.scss'],
+  standalone: false,
 })
 export class StatusIconComponent implements OnInit {
   @Input() status!: BackupStatus;

@@ -10,6 +10,7 @@ import { isMobile } from '../../../app.component';
   selector: 'app-create-edit-event',
   templateUrl: './create-edit-event.component.html',
   styleUrls: ['./create-edit-event.component.scss'],
+  standalone: false,
 })
 export class CreateEditEventComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Event>;

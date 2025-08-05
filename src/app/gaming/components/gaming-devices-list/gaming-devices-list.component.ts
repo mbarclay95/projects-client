@@ -7,7 +7,6 @@ import { DeviceOnlinePipe } from '../../pipes/device-online.pipe';
 
 @Component({
   selector: 'app-gaming-devices-list',
-  standalone: true,
   imports: [DatePipe, FaIconComponent, DeviceOnlinePipe],
   templateUrl: './gaming-devices-list.component.html',
   styleUrl: './gaming-devices-list.component.scss',

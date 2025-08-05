@@ -9,6 +9,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'app-change-password-modal',
   templateUrl: './change-password-modal.component.html',
   styleUrls: ['./change-password-modal.component.scss'],
+  standalone: false,
 })
 export class ChangePasswordModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<void>;

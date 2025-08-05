@@ -14,7 +14,6 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-gaming-session-view-page',
-  standalone: true,
   imports: [
     NzSpinComponent,
     AsyncPipe,

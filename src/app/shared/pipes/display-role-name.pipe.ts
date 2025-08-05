@@ -3,6 +3,7 @@ import { Role } from '../../users/models/role.model';
 
 @Pipe({
   name: 'displayRoleName',
+  standalone: false,
 })
 export class DisplayRoleNamePipe implements PipeTransform {
   transform(role: Role): string {

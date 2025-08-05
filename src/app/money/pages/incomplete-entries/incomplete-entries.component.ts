@@ -8,6 +8,7 @@ import { Entry } from '../../models/entry.model';
   selector: 'app-incomplete-entries',
   templateUrl: './incomplete-entries.component.html',
   styleUrls: ['./incomplete-entries.component.scss'],
+  standalone: false,
 })
 export class IncompleteEntriesComponent implements OnInit {
   createEditEntry: Subject<Entry> = new Subject<Entry>();

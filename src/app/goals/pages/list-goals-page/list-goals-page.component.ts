@@ -11,6 +11,7 @@ import { isMobile } from '../../../app.component';
   selector: 'app-list-goals-page',
   templateUrl: './list-goals-page.component.html',
   styleUrls: ['./list-goals-page.component.scss'],
+  standalone: false,
 })
 export class ListGoalsPageComponent implements OnInit {
   isMobile = isMobile;

@@ -8,6 +8,7 @@ import { debounceTime } from 'rxjs/operators';
   selector: 'app-events-filters',
   templateUrl: './events-filters.component.html',
   styleUrls: ['./events-filters.component.scss'],
+  standalone: false,
 })
 export class EventsFiltersComponent implements OnInit, OnDestroy {
   @Input() ui!: EventsUiState;

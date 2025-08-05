@@ -6,6 +6,7 @@ import { TaskUserConfigsQuery } from '../../services/task-user-configs/state/tas
   selector: 'app-my-family-page',
   templateUrl: './my-family-page.component.html',
   styleUrls: ['./my-family-page.component.scss'],
+  standalone: false,
 })
 export class MyFamilyPageComponent implements OnInit {
   constructor(

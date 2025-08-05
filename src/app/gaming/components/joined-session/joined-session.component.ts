@@ -28,7 +28,6 @@ import { Permissions } from '../../../auth/permissions';
 
 @Component({
   selector: 'app-joined-session',
-  standalone: true,
   imports: [
     FaIconComponent,
     CdkDropList,

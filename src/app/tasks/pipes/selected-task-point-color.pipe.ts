@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'selectedTaskPointColor',
+  standalone: false,
 })
 export class SelectedTaskPointColorPipe implements PipeTransform {
   transform(currentTaskPoint: number | undefined, taskPoint: number): string {

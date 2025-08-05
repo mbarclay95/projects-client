@@ -7,6 +7,7 @@ interface NgLetContext {
 
 @Directive({
   selector: '[ngLet]',
+  standalone: false,
 })
 export class NgLetDirective {
   @Input()

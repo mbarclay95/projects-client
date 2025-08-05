@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
   selector: 'app-mobile-footer',
   templateUrl: './mobile-footer.component.html',
   styleUrls: ['./mobile-footer.component.scss'],
+  standalone: false,
 })
 export class MobileFooterComponent implements OnInit {
   currentRoute$?: Observable<string>;

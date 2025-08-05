@@ -3,6 +3,7 @@ import { TaskPointColorsService } from '../services/task-point-colors.service';
 
 @Pipe({
   name: 'taskPointColor',
+  standalone: false,
 })
 export class TaskPointColorPipe implements PipeTransform {
   constructor(private taskPointColorsService: TaskPointColorsService) {}

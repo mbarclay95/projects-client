@@ -14,6 +14,7 @@ import { faEye } from '@fortawesome/free-regular-svg-icons';
   selector: 'app-task-row',
   templateUrl: './task-row.component.html',
   styleUrls: ['./task-row.component.scss'],
+  standalone: false,
 })
 export class TaskRowComponent implements OnInit {
   @Input() task!: Task;

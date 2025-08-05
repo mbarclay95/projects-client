@@ -13,6 +13,7 @@ import { isMobile } from '../../../app.component';
   selector: 'app-events-page',
   templateUrl: './events-page.component.html',
   styleUrls: ['./events-page.component.scss'],
+  standalone: false,
 })
 export class EventsPageComponent implements OnInit {
   openEventModal: Subject<Event> = new Subject<Event>();

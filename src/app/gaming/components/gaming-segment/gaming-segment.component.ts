@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NzSegmentedComponent, NzSegmentedOption, NzSegmentedOptions } from 'ng-zorro-antd/segmented';
+import { NzSegmentedComponent, NzSegmentedItemComponent, NzSegmentedOption, NzSegmentedOptions } from 'ng-zorro-antd/segmented';
 import { FormsModule } from '@angular/forms';
 import { faChessBoard, faMicrochip } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-gaming-segment',
-  standalone: true,
-  imports: [FaIconComponent, NzSegmentedComponent, FormsModule],
+  imports: [FaIconComponent, NzSegmentedComponent, FormsModule, NzSegmentedItemComponent],
   templateUrl: './gaming-segment.component.html',
   styleUrl: './gaming-segment.component.scss',
 })
@@ -25,19 +24,6 @@ export class GamingSegmentComponent {
     index: number;
   }>;
   activeTab = 0;
-  pages: NzSegmentedOptions = [
-    {
-      label: 'Sessions',
-      value: 0,
-      useTemplate: true,
-      className: 'testing-class',
-    },
-    {
-      label: 'Devices',
-      value: 1,
-      useTemplate: true,
-    },
-  ];
   sessions = faChessBoard;
   devices = faMicrochip;
 

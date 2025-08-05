@@ -4,6 +4,7 @@ import { TaskUserConfig } from '../models/task-user-config.model';
 
 @Pipe({
   name: 'weeklyProgressPercent',
+  standalone: false,
 })
 export class WeeklyProgressPercentPipe implements PipeTransform {
   constructor(private familiesQuery: FamiliesQuery) {}

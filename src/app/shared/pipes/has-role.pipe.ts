@@ -3,6 +3,7 @@ import { User } from '../../users/models/user.model';
 
 @Pipe({
   name: 'hasRole',
+  standalone: false,
 })
 export class HasRolePipe implements PipeTransform {
   transform(user: User, roleId: number): unknown {

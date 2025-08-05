@@ -9,6 +9,7 @@ import { TasksService } from '../../services/tasks/state/tasks.service';
   selector: 'app-skip-task-modal',
   templateUrl: './skip-task-modal.component.html',
   styleUrls: ['./skip-task-modal.component.scss'],
+  standalone: false,
 })
 export class SkipTaskModalComponent extends DefaultModalComponent<Task> {
   newDate: Date | null = null;

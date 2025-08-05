@@ -23,6 +23,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   selector: 'app-task-table-mobile',
   templateUrl: './task-table-mobile.component.html',
   styleUrls: ['./task-table-mobile.component.scss'],
+  standalone: false,
 })
 export class TaskTableMobileComponent implements OnInit {
   @Input() set tasks(tasks: Task[]) {

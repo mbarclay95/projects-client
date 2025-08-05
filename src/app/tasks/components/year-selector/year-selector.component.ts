@@ -6,6 +6,7 @@ import { FamilyStatsService } from '../../services/family-stats.service';
   selector: 'app-year-selector',
   templateUrl: './year-selector.component.html',
   styleUrls: ['./year-selector.component.scss'],
+  standalone: false,
 })
 export class YearSelectorComponent implements OnInit {
   left = faCaretLeft;

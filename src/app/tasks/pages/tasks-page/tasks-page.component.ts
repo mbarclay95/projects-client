@@ -13,6 +13,7 @@ import { TaskUserConfigsService } from '../../services/task-user-configs/state/t
   selector: 'app-tasks-page',
   templateUrl: './tasks-page.component.html',
   styleUrls: ['./tasks-page.component.scss'],
+  standalone: false,
 })
 export class TasksPageComponent implements OnInit {
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();

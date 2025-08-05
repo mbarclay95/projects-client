@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 
 @Pipe({
   name: 'sortedSites',
+  standalone: false,
 })
 export class SortedSitesPipe implements PipeTransform {
   constructor(private foldersQuery: FoldersQuery) {}

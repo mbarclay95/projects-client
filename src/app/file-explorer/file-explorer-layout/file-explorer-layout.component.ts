@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-file-explorer-layout',
   templateUrl: './file-explorer-layout.component.html',
   styleUrls: ['./file-explorer-layout.component.scss'],
+  standalone: false,
 })
 export class FileExplorerLayoutComponent implements OnInit {
   constructor() {}

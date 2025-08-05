@@ -12,7 +12,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-create-edit-session-device-modal',
-  standalone: true,
   imports: [
     NgIf,
     NzInputDirective,

@@ -12,6 +12,7 @@ import { MobileHeaderService } from '../../../shared/services/mobile-header.serv
   selector: 'app-users-page',
   templateUrl: './users-page.component.html',
   styleUrls: ['./users-page.component.scss'],
+  standalone: false,
 })
 export class UsersPageComponent implements OnInit {
   openUserModal: Subject<User> = new Subject<User>();

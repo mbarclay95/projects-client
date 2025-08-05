@@ -6,6 +6,7 @@ import { isMobile } from '../../../app.component';
   selector: 'app-family-member-stats',
   templateUrl: './family-member-stats.component.html',
   styleUrls: ['./family-member-stats.component.scss'],
+  standalone: false,
 })
 export class FamilyMemberStatsComponent implements OnInit {
   @Input() stats!: FamilyMemberStats;

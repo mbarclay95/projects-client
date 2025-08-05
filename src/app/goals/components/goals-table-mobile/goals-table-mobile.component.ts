@@ -6,6 +6,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
   selector: 'app-goals-table-mobile',
   templateUrl: './goals-table-mobile.component.html',
   styleUrls: ['./goals-table-mobile.component.scss'],
+  standalone: false,
 })
 export class GoalsTableMobileComponent implements OnInit {
   @Input() set goals(goals: Goal[] | null) {

@@ -12,7 +12,6 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 
 @Component({
   selector: 'app-create-edit-session-modal',
-  standalone: true,
   imports: [
     NgIf,
     NzInputDirective,

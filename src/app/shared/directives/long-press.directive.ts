@@ -4,6 +4,7 @@ import { debounceTime, map } from 'rxjs/operators';
 
 @Directive({
   selector: '[longPress]',
+  standalone: false,
 })
 export class LongPressDirective {
   private readonly eventSubscribe: Subscription;

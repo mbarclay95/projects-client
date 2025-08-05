@@ -11,6 +11,7 @@ import { ScheduledBackupsService } from '../../services/scheduled-backups/state/
   selector: 'app-create-edit-scheduled-backup-drawer',
   templateUrl: './create-edit-scheduled-backup-drawer.component.html',
   styleUrls: ['./create-edit-scheduled-backup-drawer.component.scss'],
+  standalone: false,
 })
 export class CreateEditScheduledBackupDrawerComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Schedule>;

@@ -12,6 +12,7 @@ import { isMobile } from '../../../app.component';
   selector: 'app-event-participant-modal',
   templateUrl: './event-participant-modal.component.html',
   styleUrls: ['./event-participant-modal.component.scss'],
+  standalone: false,
 })
 export class EventParticipantModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<void>;

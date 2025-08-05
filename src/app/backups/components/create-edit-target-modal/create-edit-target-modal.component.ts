@@ -8,6 +8,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'app-create-edit-target-modal',
   templateUrl: './create-edit-target-modal.component.html',
   styleUrls: ['./create-edit-target-modal.component.scss'],
+  standalone: false,
 })
 export class CreateEditTargetModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<{ target: Target; backupStepId?: number }>;

@@ -8,6 +8,7 @@ import { createTarget, Target } from '../../models/target.model';
   selector: 'app-backup-tabs',
   templateUrl: './backup-tabs.component.html',
   styleUrls: ['./backup-tabs.component.scss'],
+  standalone: false,
 })
 export class BackupTabsComponent implements OnInit, OnDestroy {
   selectedTab: 'Backup Job' | 'Target' = 'Backup Job';

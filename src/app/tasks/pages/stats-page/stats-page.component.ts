@@ -5,6 +5,7 @@ import { FamilyStatsService } from '../../services/family-stats.service';
   selector: 'app-stats-page',
   templateUrl: './stats-page.component.html',
   styleUrls: ['./stats-page.component.scss'],
+  standalone: false,
 })
 export class StatsPageComponent implements OnInit {
   constructor(public familyStatsService: FamilyStatsService) {}

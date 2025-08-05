@@ -6,6 +6,7 @@ import { isMobile } from '../../../app.component';
   selector: 'app-default-modal',
   templateUrl: './default-modal.component.html',
   styleUrls: ['./default-modal.component.scss'],
+  standalone: false,
 })
 export class DefaultModalComponent<T> implements OnInit, OnDestroy {
   @Input() openModal!: Observable<T>;

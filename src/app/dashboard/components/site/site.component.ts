@@ -8,6 +8,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'app-site',
   templateUrl: './site.component.html',
   styleUrls: ['./site.component.scss'],
+  standalone: false,
 })
 export class SiteComponent implements OnInit {
   @Input() site!: Site;

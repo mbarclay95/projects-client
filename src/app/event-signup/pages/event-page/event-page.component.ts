@@ -7,6 +7,7 @@ import { EventCacheService } from '../../services/event-cache.service';
   selector: 'app-event-page',
   templateUrl: './event-page.component.html',
   styleUrls: ['./event-page.component.scss'],
+  standalone: false,
 })
 export class EventPageComponent implements OnInit {
   openSignupModal: Subject<void> = new Subject<void>();

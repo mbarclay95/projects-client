@@ -10,6 +10,7 @@ import { GoalDay } from '../../models/goal-day.model';
   selector: 'app-goal-day-button',
   templateUrl: './goal-day-button.component.html',
   styleUrls: ['./goal-day-button.component.scss'],
+  standalone: false,
 })
 export class GoalDayButtonComponent implements OnInit {
   @Input() goal!: Goal;

@@ -5,6 +5,7 @@ import { Entry } from '../../models/entry.model';
   selector: 'app-entry-row-item',
   templateUrl: './entry-row-item.component.html',
   styleUrls: ['./entry-row-item.component.scss'],
+  standalone: false,
 })
 export class EntryRowItemComponent implements OnInit {
   @Input() entry!: Entry;

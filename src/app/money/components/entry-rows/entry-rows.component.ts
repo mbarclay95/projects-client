@@ -5,6 +5,7 @@ import { Entry } from '../../models/entry.model';
   selector: 'app-entry-rows',
   templateUrl: './entry-rows.component.html',
   styleUrls: ['./entry-rows.component.scss'],
+  standalone: false,
 })
 export class EntryRowsComponent implements OnInit {
   @Input() entries: Entry[] = [];

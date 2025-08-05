@@ -21,6 +21,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'app-mobile-events-table',
   templateUrl: './mobile-events-table.component.html',
   styleUrls: ['./mobile-events-table.component.scss'],
+  standalone: false,
 })
 export class MobileEventsTableComponent implements OnInit {
   @Input() set events(events: Event[] | null) {

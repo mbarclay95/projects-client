@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
   selector: 'app-my-family-edit-family',
   templateUrl: './my-family-edit-family.component.html',
   styleUrls: ['./my-family-edit-family.component.scss'],
+  standalone: false,
 })
 export class MyFamilyEditFamilyComponent implements OnInit {
   @Input() myFamily!: Family;

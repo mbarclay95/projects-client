@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import Color from 'colorjs.io';
 import { FamiliesQuery } from './families/state/families.query';
+import Color from 'colorjs.io';
 
 @Injectable({
   providedIn: 'root',

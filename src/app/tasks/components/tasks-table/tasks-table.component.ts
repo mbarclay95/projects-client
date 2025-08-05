@@ -14,6 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
   selector: 'app-tasks-table',
   templateUrl: './tasks-table.component.html',
   styleUrls: ['./tasks-table.component.scss'],
+  standalone: false,
 })
 export class TasksTableComponent implements OnInit, OnDestroy {
   @ViewChild('tasksTableTag', { static: true }) tasksTable: NzTableComponent<Task> | undefined;

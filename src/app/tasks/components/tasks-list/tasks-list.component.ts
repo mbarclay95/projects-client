@@ -6,6 +6,7 @@ import { TasksService } from '../../services/tasks/state/tasks.service';
   selector: 'app-tasks-list',
   templateUrl: './tasks-list.component.html',
   styleUrls: ['./tasks-list.component.scss'],
+  standalone: false,
 })
 export class TasksListComponent implements OnInit {
   @Input() tasks: Task[] = [];

@@ -4,6 +4,7 @@ import { TaskUserConfig } from '../../tasks/models/task-user-config.model';
 
 @Pipe({
   name: 'firstName',
+  standalone: false,
 })
 export class FirstNamePipe implements PipeTransform {
   transform(user: User | TaskUserConfig): string {

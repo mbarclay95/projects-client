@@ -7,6 +7,7 @@ import { Schedule } from '../../models/scheduled.model';
   selector: 'app-scheduled-backups-table',
   templateUrl: './scheduled-backups-table.component.html',
   styleUrls: ['./scheduled-backups-table.component.scss'],
+  standalone: false,
 })
 export class ScheduledBackupsTableComponent implements OnInit {
   @ViewChild('scheduledBackupsTableTag', { static: true }) scheduledBackupsTable: NzTableComponent<Schedule> | undefined;

@@ -12,6 +12,7 @@ import { MonitorItem } from '../../models/monitor-item.model';
   selector: 'app-folder-grid',
   templateUrl: './folder-grid.component.html',
   styleUrls: ['./folder-grid.component.scss'],
+  standalone: false,
 })
 export class FolderGridComponent implements OnInit {
   @Input() showUptimeKuma = false;

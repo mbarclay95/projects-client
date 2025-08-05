@@ -5,6 +5,7 @@ import { ScheduledBackupsQuery } from '../../services/scheduled-backups/state/sc
   selector: 'app-scheduled-backups-page',
   templateUrl: './scheduled-backups-page.component.html',
   styleUrls: ['./scheduled-backups-page.component.scss'],
+  standalone: false,
 })
 export class ScheduledBackupsPageComponent implements OnInit {
   constructor(public scheduledBackupsQuery: ScheduledBackupsQuery) {}

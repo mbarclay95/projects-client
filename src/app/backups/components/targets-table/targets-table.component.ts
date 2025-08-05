@@ -7,6 +7,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
   selector: 'app-targets-table',
   templateUrl: './targets-table.component.html',
   styleUrls: ['./targets-table.component.scss'],
+  standalone: false,
 })
 export class TargetsTableComponent implements OnInit {
   @ViewChild('targetsTableTag', { static: true }) targetsTable: NzTableComponent<Target> | undefined;

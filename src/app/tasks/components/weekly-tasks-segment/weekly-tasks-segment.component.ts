@@ -8,26 +8,13 @@ import { faPeopleRoof, faUser } from '@fortawesome/free-solid-svg-icons';
   selector: 'app-weekly-tasks-segment',
   templateUrl: './weekly-tasks-segment.component.html',
   styleUrls: ['./weekly-tasks-segment.component.scss'],
+  standalone: false,
 })
 export class WeeklyTasksSegmentComponent implements OnInit {
   @ViewChild('customSegment', { static: true, read: TemplateRef }) templateRef!: TemplateRef<{
     $implicit: NzSegmentedOption;
     index: number;
   }>;
-  pages: NzSegmentedOptions = [
-    {
-      label: 'Family',
-      value: 0,
-      useTemplate: true,
-      className: 'testing-class',
-    },
-    {
-      label: 'Personal',
-      value: 1,
-      useTemplate: true,
-    },
-  ];
-  badgeStyle = { background: '#1f1f1f', 'box-shadow': 'none' };
   family = faPeopleRoof;
   personal = faUser;
 

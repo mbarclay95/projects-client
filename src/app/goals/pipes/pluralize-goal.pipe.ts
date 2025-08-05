@@ -3,6 +3,7 @@ import { Goal } from '../models/goal.model';
 
 @Pipe({
   name: 'pluralizeGoal',
+  standalone: false,
 })
 export class PluralizeGoalPipe implements PipeTransform {
   transform(amount: number | null, goal: Goal): string {

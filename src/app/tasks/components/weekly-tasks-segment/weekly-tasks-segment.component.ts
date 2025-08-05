@@ -15,20 +15,6 @@ export class WeeklyTasksSegmentComponent implements OnInit {
     $implicit: NzSegmentedOption;
     index: number;
   }>;
-  // pages: NzSegmentedOptions = [
-  //   {
-  //     label: 'Family',
-  //     value: 0,
-  //     useTemplate: true,
-  //     className: 'testing-class',
-  //   },
-  //   {
-  //     label: 'Personal',
-  //     value: 1,
-  //     useTemplate: true,
-  //   },
-  // ];
-  badgeStyle = { background: '#1f1f1f', 'box-shadow': 'none' };
   family = faPeopleRoof;
   personal = faUser;
 

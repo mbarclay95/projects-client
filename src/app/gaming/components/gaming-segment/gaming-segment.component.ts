@@ -24,19 +24,6 @@ export class GamingSegmentComponent {
     index: number;
   }>;
   activeTab = 0;
-  // pages: NzSegmentedOptions = [
-  //   {
-  //     label: 'Sessions',
-  //     value: 0,
-  //     useTemplate: true,
-  //     className: 'testing-class',
-  //   },
-  //   {
-  //     label: 'Devices',
-  //     value: 1,
-  //     useTemplate: true,
-  //   },
-  // ];
   sessions = faChessBoard;
   devices = faMicrochip;
 

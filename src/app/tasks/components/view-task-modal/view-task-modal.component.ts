@@ -1,16 +1,16 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {Task} from '../../models/task.model';
-import {DefaultModalComponent} from '../../../shared/components/default-modal/default-modal.component';
-import {FamiliesQuery} from '../../services/families/state/families.query';
-import {faChevronDown, faChevronUp, faFlag, faPeopleRoof, faUser} from '@fortawesome/free-solid-svg-icons';
-import {TasksService} from '../../services/tasks/state/tasks.service';
-import {TasksQuery} from '../../services/tasks/state/tasks.query';
-import {NzMessageService} from 'ng-zorro-antd/message';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Task } from '../../models/task.model';
+import { DefaultModalComponent } from '../../../shared/components/default-modal/default-modal.component';
+import { FamiliesQuery } from '../../services/families/state/families.query';
+import { faChevronDown, faChevronUp, faFlag, faPeopleRoof, faUser } from '@fortawesome/free-solid-svg-icons';
+import { TasksService } from '../../services/tasks/state/tasks.service';
+import { TasksQuery } from '../../services/tasks/state/tasks.query';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-view-task-modal',
   templateUrl: './view-task-modal.component.html',
-  styleUrls: ['./view-task-modal.component.scss']
+  styleUrls: ['./view-task-modal.component.scss'],
 })
 export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
@@ -28,7 +28,7 @@ export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
     public familiesQuery: FamiliesQuery,
     private tasksService: TasksService,
     private tasksQuery: TasksQuery,
-    private nzMessageService: NzMessageService
+    private nzMessageService: NzMessageService,
   ) {
     super();
   }

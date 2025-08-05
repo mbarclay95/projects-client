@@ -8,10 +8,9 @@ describe('JoinedSessionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [JoinedSessionComponent]
-    })
-    .compileComponents();
-    
+      imports: [JoinedSessionComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(JoinedSessionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

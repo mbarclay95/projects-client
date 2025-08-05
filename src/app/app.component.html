@@ -1,68 +1,74 @@
 <nz-layout *ngLet="authQuery.isLoggedIn$ | async as isLoggedIn">
-
-
   <nz-header *ngIf="isMobile" style="height: 40px; padding: 0 16px">
-
     <div class="w-100 h-100 d-flex justify-content-between align-items-center">
-
       <div style="flex: 1">
         <fa-icon *ngIf="isLoggedIn" [icon]="menu" (click)="sideMenuClosed = !sideMenuClosed"></fa-icon>
       </div>
 
-      <div style="font-size: 18px">{{mobileHeaderService.title$ | async}}</div>
+      <div style="font-size: 18px">{{ mobileHeaderService.title$ | async }}</div>
 
       <div style="flex: 1" class="d-flex w-100 justify-content-end">
-        <fa-icon *ngIf="mobileHeaderService.showCreateButton$ | async" [icon]="plus"
-                 (click)="mobileHeaderService.clickedButton()"></fa-icon>
+        <fa-icon
+          *ngIf="mobileHeaderService.showCreateButton$ | async"
+          [icon]="plus"
+          (click)="mobileHeaderService.clickedButton()"
+        ></fa-icon>
       </div>
-
     </div>
-
   </nz-header>
 
   <ng-container *ngIf="!isMobile && isLoggedIn">
-
-    <nz-sider *ngIf="sideMenuClosed !== undefined" nzCollapsible [(nzCollapsed)]="sideMenuClosed"
-              (nzCollapsedChange)="authService.updateUserConfig({sideMenuOpen: !$event})" nzWidth="200px"
-              [nzCollapsedWidth]="collapsedWidth">
-      <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed"
-                     (closeSideMenu)="closeSideMenu()" [isMobile]="isMobile"></app-side-menu>
+    <nz-sider
+      *ngIf="sideMenuClosed !== undefined"
+      nzCollapsible
+      [(nzCollapsed)]="sideMenuClosed"
+      (nzCollapsedChange)="authService.updateUserConfig({ sideMenuOpen: !$event })"
+      nzWidth="200px"
+      [nzCollapsedWidth]="collapsedWidth"
+    >
+      <app-side-menu
+        [routes]="(permissionsService.usersRoutes$ | async) ?? []"
+        [sideMenuClosed]="sideMenuClosed"
+        (closeSideMenu)="closeSideMenu()"
+        [isMobile]="isMobile"
+      ></app-side-menu>
     </nz-sider>
-
   </ng-container>
 
   <nz-layout>
-
     <ng-container *ngIf="isMobile">
-
-      <nz-sider *ngIf="sideMenuClosed !== undefined" nzCollapsible [(nzCollapsed)]="sideMenuClosed" [nzTrigger]="null"
-                (nzCollapsedChange)="authService.updateUserConfig({sideMenuOpen: !$event}, false)"
-                nzWidth="200px" [nzCollapsedWidth]="collapsedWidth">
-        <app-side-menu [routes]="(permissionsService.usersRoutes$ | async) ?? []" [sideMenuClosed]="sideMenuClosed"
-                       (closeSideMenu)="closeSideMenu(false)" [isMobile]="isMobile"></app-side-menu>
+      <nz-sider
+        *ngIf="sideMenuClosed !== undefined"
+        nzCollapsible
+        [(nzCollapsed)]="sideMenuClosed"
+        [nzTrigger]="null"
+        (nzCollapsedChange)="authService.updateUserConfig({ sideMenuOpen: !$event }, false)"
+        nzWidth="200px"
+        [nzCollapsedWidth]="collapsedWidth"
+      >
+        <app-side-menu
+          [routes]="(permissionsService.usersRoutes$ | async) ?? []"
+          [sideMenuClosed]="sideMenuClosed"
+          (closeSideMenu)="closeSideMenu(false)"
+          [isMobile]="isMobile"
+        ></app-side-menu>
       </nz-sider>
-
     </ng-container>
 
-    <nz-content style="{{isMobile ? 'margin-bottom: 69px' : ''}}" (click)="closeSideIfMobile()">
-
-      <div style="min-height: calc(100vh - {{isMobile ? '109px' : '69px'}})">
-
-        <div *ngIf="loading" class="w-100 d-flex justify-content-center align-items-center"
-             style="height: calc(100vh - {{isMobile ? '109px' : '69px'}})">
-
+    <nz-content style="{{ isMobile ? 'margin-bottom: 69px' : '' }}" (click)="closeSideIfMobile()">
+      <div style="min-height: calc(100vh - {{ isMobile ? '109px' : '69px' }})">
+        <div
+          *ngIf="loading"
+          class="w-100 d-flex justify-content-center align-items-center"
+          style="height: calc(100vh - {{ isMobile ? '109px' : '69px' }})"
+        >
           <nz-spin></nz-spin>
-
         </div>
 
         <ng-container *ngIf="!loading">
-
           <router-outlet></router-outlet>
-
         </ng-container>
-
       </div>
-
     </nz-content>
 
     <nz-footer *ngIf="!isMobile" class="footer-shadow">Big Mike ©2024</nz-footer>
@@ -70,7 +76,5 @@
     <nz-footer *ngIf="isMobile" class="footer-shadow mobile-footer" style="z-index: 1000">
       <app-mobile-footer></app-mobile-footer>
     </nz-footer>
-
   </nz-layout>
-
 </nz-layout>

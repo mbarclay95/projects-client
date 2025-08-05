@@ -1,24 +1,30 @@
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Skip Task" [nzWidth]="modalWidth" [nzStyle]="modalStyle"
-          (nzOnCancel)="isVisible = false" [nzOkDisabled]="newDate === null || saving" [nzOkLoading]="saving"
-          [nzCancelDisabled]="saving" (nzOnOk)="saveDate()">
-
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Skip Task"
+  [nzWidth]="modalWidth"
+  [nzStyle]="modalStyle"
+  (nzOnCancel)="isVisible = false"
+  [nzOkDisabled]="newDate === null || saving"
+  [nzOkLoading]="saving"
+  [nzCancelDisabled]="saving"
+  (nzOnOk)="saveDate()"
+>
   <ng-container *nzModalContent>
-
     <div *ngIf="model" class="w-100 d-flex flex-column align-items-center">
-
       <div class="mb-2" style="font-size: 16px">
-        The new due date in <strong>{{model | frequencyToString}}</strong> is:
+        The new due date in <strong>{{ model | frequencyToString }}</strong> is:
       </div>
 
       <div class="mb-2">
-        <nz-date-picker [(ngModel)]="newDate" class="" [nzDisabledDate]="disabledDate" nzSize="large"
-                        nzFormat="MM/dd/yyyy" [nzInputReadOnly]="true"></nz-date-picker>
+        <nz-date-picker
+          [(ngModel)]="newDate"
+          class=""
+          [nzDisabledDate]="disabledDate"
+          nzSize="large"
+          nzFormat="MM/dd/yyyy"
+          [nzInputReadOnly]="true"
+        ></nz-date-picker>
       </div>
-
     </div>
-
   </ng-container>
-
 </nz-modal>
-
-

@@ -1,11 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {differenceInDays, differenceInMonths, differenceInWeeks, differenceInYears, startOfToday} from "date-fns";
+import { differenceInDays, differenceInMonths, differenceInWeeks, differenceInYears, startOfToday } from 'date-fns';
 
 @Pipe({
-  name: 'dueDateHumanReadable'
+  name: 'dueDateHumanReadable',
 })
 export class DueDateHumanReadablePipe implements PipeTransform {
-
   transform(dueDate?: Date, ...args: unknown[]): string {
     if (!dueDate) {
       return '';
@@ -29,7 +28,7 @@ export class DueDateHumanReadablePipe implements PipeTransform {
       unit = 'year';
       dateDiff = differenceInYears(dueDate, today);
     } else if (absoluteDays > 30) {
-      unit = 'month'
+      unit = 'month';
       dateDiff = differenceInMonths(dueDate, today);
     } else if (absoluteDays > 7) {
       unit = 'week';
@@ -43,7 +42,6 @@ export class DueDateHumanReadablePipe implements PipeTransform {
 
     return `in ${dateDiff} ${unit}${dateDiff === 1 ? '' : 's'}`;
 
-
     // if (diffInDays > 1) {
     //   return `in ${diffInDays} days`;
     // }
@@ -55,5 +53,4 @@ export class DueDateHumanReadablePipe implements PipeTransform {
     //
     // return `${numOfWeeks} week${numOfWeeks === 1 ? '' : 's'} ago`;
   }
-
 }

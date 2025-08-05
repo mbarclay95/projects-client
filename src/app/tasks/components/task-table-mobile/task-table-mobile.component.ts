@@ -1,26 +1,28 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Task} from "../../models/task.model";
-import {TaskUiState} from "../../services/tasks/state/tasks.store";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Task } from '../../models/task.model';
+import { TaskUiState } from '../../services/tasks/state/tasks.store';
 import {
   fa1,
   faChevronDown,
   faChevronUp,
-  faEdit, faFlag,
+  faEdit,
+  faFlag,
   faPeopleRoof,
   faRepeat,
-  faTrash, faUser
-} from "@fortawesome/free-solid-svg-icons";
-import {TasksService} from "../../services/tasks/state/tasks.service";
-import {NzMessageService} from "ng-zorro-antd/message";
-import {AuthQuery} from "../../../auth/services/state/auth.query";
-import {FamiliesQuery} from "../../services/families/state/families.query";
-import {Subject, takeUntil} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
+  faTrash,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
+import { TasksService } from '../../services/tasks/state/tasks.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { AuthQuery } from '../../../auth/services/state/auth.query';
+import { FamiliesQuery } from '../../services/families/state/families.query';
+import { Subject, takeUntil } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-table-mobile',
   templateUrl: './task-table-mobile.component.html',
-  styleUrls: ['./task-table-mobile.component.scss']
+  styleUrls: ['./task-table-mobile.component.scss'],
 })
 export class TaskTableMobileComponent implements OnInit {
   @Input() set tasks(tasks: Task[]) {
@@ -54,26 +56,23 @@ export class TaskTableMobileComponent implements OnInit {
     private nzMessageService: NzMessageService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.queryParamMap.pipe(
-      takeUntil(this.subscriptionDestroyer)
-    ).subscribe(queryParams => {
+    this.activatedRoute.queryParamMap.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((queryParams) => {
       if (queryParams.has('taskId')) {
         const taskId = parseInt(queryParams.get('taskId') ?? '');
         this.highlightedTaskId = taskId;
         this.expandSet.add(taskId);
-        const scrollToPosition = 130 + (this._tasks.findIndex(task => task.id === taskId) * 71);
-        setTimeout(() => window.scrollBy({top: scrollToPosition, behavior: 'smooth'}), 0);
+        const scrollToPosition = 130 + this._tasks.findIndex((task) => task.id === taskId) * 71;
+        setTimeout(() => window.scrollBy({ top: scrollToPosition, behavior: 'smooth' }), 0);
         setTimeout(() => {
           this.highlightedTaskId = undefined;
           this.router.navigate([], {
             queryParams: {
-              taskId: null
+              taskId: null,
             },
-            queryParamsHandling: 'merge'
+            queryParamsHandling: 'merge',
           });
         }, this.timeToShowHighlightedTask);
       }
@@ -84,5 +83,4 @@ export class TaskTableMobileComponent implements OnInit {
     await this.tasksService.deleteTask(task);
     this.nzMessageService.success('Task deleted');
   }
-
 }

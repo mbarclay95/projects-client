@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
-import {AuthStorageService} from "./auth-storage.service";
-import {Router} from "@angular/router";
-import {environment} from '../../../environments/environment';
-import {AuthQuery} from './state/auth.query';
+import { catchError, Observable, throwError } from 'rxjs';
+import { AuthStorageService } from './auth-storage.service';
+import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
+import { AuthQuery } from './state/auth.query';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-
   constructor(
     private authStorageService: AuthStorageService,
     private router: Router,
@@ -27,20 +26,20 @@ export class AuthInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${authToken}`,
-          Accept: 'application/json'
-        }
+          Accept: 'application/json',
+        },
       });
     }
 
     const res = next.handle(request);
     return res.pipe(
-      catchError(error => {
+      catchError((error) => {
         if (error.status === 403) {
           this.router.navigateByUrl('login');
         }
 
         return throwError(error);
-      })
+      }),
     );
   }
 }

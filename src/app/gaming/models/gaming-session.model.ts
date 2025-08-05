@@ -1,4 +1,4 @@
-import {createGamingSessionDevice, GamingSessionDevice} from './gaming-session-device.model';
+import { createGamingSessionDevice, GamingSessionDevice } from './gaming-session-device.model';
 
 export interface GamingSession {
   id: number;
@@ -30,8 +30,8 @@ export function createGamingSession(params: Partial<GamingSession>) {
     pauseAtBeginningOfRound: params.pauseAtBeginningOfRound ?? true,
     isPaused: params.isPaused ?? false,
     turnLimitSeconds: params.turnLimitSeconds ?? 120,
-    gamingSessionDevices: (params.gamingSessionDevices ?? []).map(s => createGamingSessionDevice(s)).sort((a, b) => a.currentTurnOrder - b.currentTurnOrder),
+    gamingSessionDevices: (params.gamingSessionDevices ?? [])
+      .map((s) => createGamingSessionDevice(s))
+      .sort((a, b) => a.currentTurnOrder - b.currentTurnOrder),
   } as GamingSession;
 }
-
-

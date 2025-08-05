@@ -1,20 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthQuery} from "../../services/state/auth.query";
-import {Subject} from 'rxjs';
-import {AuthService} from '../../services/state/auth.service';
-import {User} from '../../../users/models/user.model';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {Router} from '@angular/router';
-import {Permissions, Roles} from '../../permissions';
-import {PermissionsService} from '../../services/permissions.service';
-import {UserConfig} from '../../../users/models/user-config.model';
-import {RolesQuery} from '../../../users/services/roles/state/roles.query';
-import {Role} from '../../../users/models/role.model';
+import { Component, OnInit } from '@angular/core';
+import { AuthQuery } from '../../services/state/auth.query';
+import { Subject } from 'rxjs';
+import { AuthService } from '../../services/state/auth.service';
+import { User } from '../../../users/models/user.model';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Router } from '@angular/router';
+import { Permissions, Roles } from '../../permissions';
+import { PermissionsService } from '../../services/permissions.service';
+import { UserConfig } from '../../../users/models/user-config.model';
+import { RolesQuery } from '../../../users/services/roles/state/roles.query';
+import { Role } from '../../../users/models/role.model';
 
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
-  styleUrls: ['./my-profile.component.scss']
+  styleUrls: ['./my-profile.component.scss'],
 })
 export class MyProfileComponent implements OnInit {
   loggingOut = false;
@@ -28,12 +28,10 @@ export class MyProfileComponent implements OnInit {
     private nzMessageService: NzMessageService,
     private router: Router,
     public permissionsService: PermissionsService,
-    public rolesQuery: RolesQuery
-  ) {
-  }
+    public rolesQuery: RolesQuery,
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   async updateMe(changes: Partial<User>): Promise<void> {
     try {
@@ -72,14 +70,14 @@ export class MyProfileComponent implements OnInit {
     if (checked) {
       newRoles.push(role);
     } else {
-      newRoles = newRoles.filter(r => r.id !== role.id);
+      newRoles = newRoles.filter((r) => r.id !== role.id);
     }
-    await this.updateMe({roles: newRoles})
+    await this.updateMe({ roles: newRoles });
 
     let userHomePageRole = user.userConfig.homePageRole;
-    if (!newRoles.find(r => r.name === userHomePageRole)) {
-      userHomePageRole = newRoles.length === 0 ? null : newRoles[0].name as Roles;
-      await this.updateUserConfig({homePageRole: userHomePageRole});
+    if (!newRoles.find((r) => r.name === userHomePageRole)) {
+      userHomePageRole = newRoles.length === 0 ? null : (newRoles[0].name as Roles);
+      await this.updateUserConfig({ homePageRole: userHomePageRole });
     }
   }
 }

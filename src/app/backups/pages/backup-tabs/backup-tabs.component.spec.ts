@@ -8,9 +8,8 @@ describe('BackupTabsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BackupTabsComponent ]
-    })
-    .compileComponents();
+      declarations: [BackupTabsComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

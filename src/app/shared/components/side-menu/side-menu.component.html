@@ -1,20 +1,22 @@
 <div *ngIf="isMobile || !sideMenuClosed" class="py-2 menu-title">Home App</div>
 
 <ng-container *ngFor="let route of routes">
+  <ul nz-menu nzMode="inline" nzTheme="dark" [ngClass]="{ 'ant-menu-vertical ant-menu-inline-collapsed': sideMenuClosed }">
+    <li
+      nz-menu-item
+      [routerLink]="route.url"
+      [nzMatchRouter]="true"
+      [queryParams]="route.queryParams"
+      (click)="closeIfMobile()"
+      [ngClass]="{ 'list-item-open': !sideMenuClosed, 'list-item-closed': sideMenuClosed }"
+    >
+      <fa-icon
+        class="anticon"
+        [ngClass]="{ 'list-icon-open': !sideMenuClosed, 'list-icon-closed': sideMenuClosed }"
+        [icon]="route.icon"
+      ></fa-icon>
 
-  <ul nz-menu nzMode="inline" nzTheme="dark"
-      [ngClass]="{'ant-menu-vertical ant-menu-inline-collapsed': sideMenuClosed}">
-
-    <li nz-menu-item [routerLink]="route.url" [nzMatchRouter]="true" [queryParams]="route.queryParams"
-        (click)="closeIfMobile()" [ngClass]="{'list-item-open': !sideMenuClosed, 'list-item-closed': sideMenuClosed}">
-
-      <fa-icon class="anticon" [ngClass]="{'list-icon-open': !sideMenuClosed, 'list-icon-closed': sideMenuClosed}"
-               [icon]="route.icon"></fa-icon>
-
-      <span>{{route.title}}</span>
-
+      <span>{{ route.title }}</span>
     </li>
-
   </ul>
-
 </ng-container>

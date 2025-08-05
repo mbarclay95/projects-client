@@ -1,4 +1,4 @@
-import {createGamingDevice, GamingDevice} from './gaming-device.model';
+import { createGamingDevice, GamingDevice } from './gaming-device.model';
 
 export interface GamingSessionDevice {
   id: number;
@@ -25,5 +25,3 @@ export function createGamingSessionDevice(params: Partial<GamingSessionDevice>) 
     hasPassed: params.hasPassed ?? false,
   } as GamingSessionDevice;
 }
-
-

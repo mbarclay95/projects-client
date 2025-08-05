@@ -1,18 +1,13 @@
 <div class="d-flex flex-column w-100">
-
-  <app-folder-grid [showUptimeKuma]="(showUptimeKuma$ | async) ?? false"
-                   [downItems]="(uptimeKumaService.downItems$ | async) ?? []"
-                   [uptimeKumaIsConnected]="(uptimeKumaService.isConnected$ | async) ?? false"></app-folder-grid>
-
+  <app-folder-grid
+    [showUptimeKuma]="(showUptimeKuma$ | async) ?? false"
+    [downItems]="(uptimeKumaService.downItems$ | async) ?? []"
+    [uptimeKumaIsConnected]="(uptimeKumaService.isConnected$ | async) ?? false"
+  ></app-folder-grid>
 </div>
 
 <div style="position: fixed; right: 24px; bottom: 88px">
-
-  <button nz-button nzShape="circle" nzSize="large" nzType="primary"
-          (click)="foldersService.toggleEditMode()">
-
+  <button nz-button nzShape="circle" nzSize="large" nzType="primary" (click)="foldersService.toggleEditMode()">
     <fa-icon [icon]="edit"></fa-icon>
-
   </button>
-
 </div>

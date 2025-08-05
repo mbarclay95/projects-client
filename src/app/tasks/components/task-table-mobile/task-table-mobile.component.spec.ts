@@ -8,9 +8,8 @@ describe('TaskTableMobileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TaskTableMobileComponent ]
-    })
-    .compileComponents();
+      declarations: [TaskTableMobileComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TaskTableMobileComponent);
     component = fixture.componentInstance;

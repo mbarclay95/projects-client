@@ -9,9 +9,7 @@ export interface FolderState extends EntityState<Folder> {
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'folder' })
 export class FoldersStore extends EntityStore<FolderState> {
-
   constructor() {
-    super({editMode: false});
+    super({ editMode: false });
   }
-
 }

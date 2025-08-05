@@ -1,4 +1,4 @@
-import {createTask, Task} from './task.model';
+import { createTask, Task } from './task.model';
 
 export interface TaskUserConfig {
   id: number;
@@ -20,7 +20,6 @@ export function createTaskUserConfig(params: Partial<TaskUserConfig>) {
     defaultTasksPerWeek: params.defaultTasksPerWeek ?? 0,
     familyId: params.familyId ?? 0,
     color: params.color ?? '',
-    completedFamilyTasks: params.completedFamilyTasks ? params.completedFamilyTasks.map(t => createTask(t)) : [],
+    completedFamilyTasks: params.completedFamilyTasks ? params.completedFamilyTasks.map((t) => createTask(t)) : [],
   } as TaskUserConfig;
 }
-

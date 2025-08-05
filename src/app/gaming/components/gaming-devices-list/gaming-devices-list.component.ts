@@ -1,21 +1,16 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {GamingDevice} from '../../models/gaming-device.model';
-import {DatePipe, NgIf} from '@angular/common';
-import {FaIconComponent} from '@fortawesome/angular-fontawesome';
-import {faCircle, faCircleCheck, faCircleXmark} from '@fortawesome/free-solid-svg-icons';
-import {DeviceOnlinePipe} from '../../pipes/device-online.pipe';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { GamingDevice } from '../../models/gaming-device.model';
+import { DatePipe } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faCircle, faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { DeviceOnlinePipe } from '../../pipes/device-online.pipe';
 
 @Component({
   selector: 'app-gaming-devices-list',
   standalone: true,
-  imports: [
-    DatePipe,
-    FaIconComponent,
-    NgIf,
-    DeviceOnlinePipe
-  ],
+  imports: [DatePipe, FaIconComponent, DeviceOnlinePipe],
   templateUrl: './gaming-devices-list.component.html',
-  styleUrl: './gaming-devices-list.component.scss'
+  styleUrl: './gaming-devices-list.component.scss',
 })
 export class GamingDevicesListComponent {
   @Input() devices: GamingDevice[] = [];

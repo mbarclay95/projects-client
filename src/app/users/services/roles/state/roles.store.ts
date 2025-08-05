@@ -7,9 +7,7 @@ export interface RolesState extends EntityState<Role> {}
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'roles' })
 export class RolesStore extends EntityStore<RolesState> {
-
   constructor() {
     super();
   }
-
 }

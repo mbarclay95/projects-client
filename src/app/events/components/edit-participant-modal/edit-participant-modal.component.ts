@@ -1,16 +1,16 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Subject, takeUntil} from "rxjs";
-import {faThumbsDown, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
-import {RolesQuery} from "../../../users/services/roles/state/roles.query";
-import {NzMessageService} from "ng-zorro-antd/message";
-import {EventsService} from "../../services/events/state/events.service";
-import {EventParticipant} from "../../models/event-participant";
-import {isMobile} from '../../../app.component';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { RolesQuery } from '../../../users/services/roles/state/roles.query';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { EventsService } from '../../services/events/state/events.service';
+import { EventParticipant } from '../../models/event-participant';
+import { isMobile } from '../../../app.component';
 
 @Component({
   selector: 'app-edit-participant-modal',
   templateUrl: './edit-participant-modal.component.html',
-  styleUrls: ['./edit-participant-modal.component.scss']
+  styleUrls: ['./edit-participant-modal.component.scss'],
 })
 export class EditParticipantModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<EventParticipant>;
@@ -22,22 +22,19 @@ export class EditParticipantModalComponent implements OnInit, OnDestroy {
   thumbsUp = faThumbsUp;
   thumbsDown = faThumbsDown;
   modalWidth = isMobile ? '95%' : '500px';
-  modalStyle = isMobile ? {top: '20px'} : {};
+  modalStyle = isMobile ? { top: '20px' } : {};
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 
   constructor(
     private eventsService: EventsService,
     public rolesQuery: RolesQuery,
-    private nzMessageService: NzMessageService
-  ) {
-  }
+    private nzMessageService: NzMessageService,
+  ) {}
 
   ngOnInit(): void {
-    this.openModal.pipe(
-      takeUntil(this.subscriptionDestroyer)
-    ).subscribe((participant) => {
-      this.eventParticipant = {...participant};
+    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((participant) => {
+      this.eventParticipant = { ...participant };
       this.isVisible = true;
     });
   }

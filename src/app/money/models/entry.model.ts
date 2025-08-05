@@ -1,7 +1,7 @@
-import {Category, createCategory} from './category.model';
-import {Bank, createBank} from './bank.model';
-import {createSubCategory, SubCategory} from './sub-category.model';
-import {CategoryTag, createCategoryTag} from './category-tag.model';
+import { Category, createCategory } from './category.model';
+import { Bank, createBank } from './bank.model';
+import { createSubCategory, SubCategory } from './sub-category.model';
+import { CategoryTag, createCategoryTag } from './category-tag.model';
 
 export interface Entry {
   id: number;
@@ -26,7 +26,7 @@ export function createEntry(params: Partial<Entry>): Entry {
     subCategory: !!params.subCategory ? createSubCategory(params.subCategory) : null,
     fromSavingsSubCategory: params.fromSavingsSubCategory ? createSubCategory(params.fromSavingsSubCategory) : null,
     bank: !!params.bank ? createBank(params.bank) : null,
-    categoryTags: params.categoryTags ? params.categoryTags.map(c => createCategoryTag(c)) : [],
+    categoryTags: params.categoryTags ? params.categoryTags.map((c) => createCategoryTag(c)) : [],
     duplicate: params.duplicate ?? false,
   } as Entry;
 }

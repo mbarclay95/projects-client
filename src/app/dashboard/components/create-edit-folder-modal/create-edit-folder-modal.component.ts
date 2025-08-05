@@ -1,13 +1,13 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Subject, takeUntil} from "rxjs";
-import {createFolder, Folder} from "../../models/folder.model";
-import {FoldersService} from "../../services/folder/state/folders.service";
-import {isMobile} from '../../../app.component';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { createFolder, Folder } from '../../models/folder.model';
+import { FoldersService } from '../../services/folder/state/folders.service';
+import { isMobile } from '../../../app.component';
 
 @Component({
   selector: 'app-create-edit-folder-modal',
   templateUrl: './create-edit-folder-modal.component.html',
-  styleUrls: ['./create-edit-folder-modal.component.scss']
+  styleUrls: ['./create-edit-folder-modal.component.scss'],
 })
 export class CreateEditFolderModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Folder>;
@@ -15,18 +15,14 @@ export class CreateEditFolderModalComponent implements OnInit, OnDestroy {
   folder?: Folder;
   isVisible = false;
   modalWidth = isMobile ? '95%' : '500px';
-  modalStyle = isMobile ? {top: '20px'} : {};
+  modalStyle = isMobile ? { top: '20px' } : {};
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 
-  constructor(
-    public foldersService: FoldersService
-  ) { }
+  constructor(public foldersService: FoldersService) {}
 
   ngOnInit(): void {
-    this.openModal.pipe(
-      takeUntil(this.subscriptionDestroyer)
-    ).subscribe(folder => {
+    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((folder) => {
       this.folder = folder.id === 0 ? folder : createFolder(folder);
       this.isVisible = true;
     });

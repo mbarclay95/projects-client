@@ -1,21 +1,21 @@
-import {Component} from '@angular/core';
-import {DefaultModalComponent} from '../../../shared/components/default-modal/default-modal.component';
-import {Task} from '../../models/task.model';
-import {addDays, addMonths, addWeeks, addYears, differenceInCalendarDays, endOfDay, setDay} from 'date-fns';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {TasksService} from '../../services/tasks/state/tasks.service';
+import { Component } from '@angular/core';
+import { DefaultModalComponent } from '../../../shared/components/default-modal/default-modal.component';
+import { Task } from '../../models/task.model';
+import { addDays, addMonths, addWeeks, addYears, differenceInCalendarDays, endOfDay, setDay } from 'date-fns';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { TasksService } from '../../services/tasks/state/tasks.service';
 
 @Component({
   selector: 'app-skip-task-modal',
   templateUrl: './skip-task-modal.component.html',
-  styleUrls: ['./skip-task-modal.component.scss']
+  styleUrls: ['./skip-task-modal.component.scss'],
 })
 export class SkipTaskModalComponent extends DefaultModalComponent<Task> {
   newDate: Date | null = null;
 
   constructor(
     private nzMessageService: NzMessageService,
-    private tasksService: TasksService
+    private tasksService: TasksService,
   ) {
     super();
   }
@@ -45,10 +45,10 @@ export class SkipTaskModalComponent extends DefaultModalComponent<Task> {
   async saveDate(): Promise<void> {
     if (this.model && this.newDate) {
       this.saving = true;
-      const endOfWeek = setDay(endOfDay(new Date()), 0, {weekStartsOn: 1});
+      const endOfWeek = setDay(endOfDay(new Date()), 0, { weekStartsOn: 1 });
       const removeFromList = endOfWeek.getTime() < this.newDate.getTime();
       try {
-        await this.tasksService.updateTask(this.model.id, {dueDate: this.newDate}, false, removeFromList);
+        await this.tasksService.updateTask(this.model.id, { dueDate: this.newDate }, false, removeFromList);
       } catch (e) {
         this.nzMessageService.error('There was an error skipping the task');
         this.saving = false;

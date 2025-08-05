@@ -1,0 +1,9 @@
+# Ignore artifacts:
+build
+coverage
+.gitea
+.angular
+.idea
+docker
+node_modules
+e2e

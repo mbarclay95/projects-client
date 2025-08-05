@@ -3,7 +3,7 @@ export interface BackupStep {
   name: string;
   sort: number;
   backupStepType: 'tar_zip' | 's3_upload';
-  config: {}
+  config: {};
 }
 
 interface TarZipBackupStepType extends BackupStep {
@@ -12,7 +12,7 @@ interface TarZipBackupStepType extends BackupStep {
     sourceTargetId: number;
     destinationTargetId: number;
     fileName: string;
-  }
+  };
 }
 
 interface S3UploadBackupStepType extends BackupStep {
@@ -22,7 +22,7 @@ interface S3UploadBackupStepType extends BackupStep {
     destinationTargetId: number;
     fileName: string;
     s3Driver: 'minio-s3' | 'aws-s3';
-  }
+  };
 }
 
 export function isTarZip(backupStep: BackupStep): backupStep is TarZipBackupStepType {
@@ -39,6 +39,6 @@ export function createBackupStep(params: Partial<BackupStep>): BackupStep {
     name: params.name ?? '',
     sort: params.sort ?? 0,
     backupStepType: params.backupStepType ?? null,
-    config: {...params.config} ?? {}
+    config: { ...params.config } ?? {},
   } as BackupStep;
 }

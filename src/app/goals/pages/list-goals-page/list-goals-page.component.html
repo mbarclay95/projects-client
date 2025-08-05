@@ -1,27 +1,25 @@
-<app-page-header *ngIf="!isMobile" title="Goals" (createButtonClicked)="createNewGoal()"
-                 buttonText="Create Goal"></app-page-header>
+<app-page-header *ngIf="!isMobile" title="Goals" (createButtonClicked)="createNewGoal()" buttonText="Create Goal"></app-page-header>
 
-<div *ngIf="goalsQuery.selectLoading() | async else doneLoading" style="height: 50vh"
-     class="w-100 d-flex justify-content-center align-items-center">
-
+<div
+  *ngIf="goalsQuery.selectLoading() | async; else doneLoading"
+  style="height: 50vh"
+  class="w-100 d-flex justify-content-center align-items-center"
+>
   <nz-spin></nz-spin>
-
 </div>
 
 <ng-template #doneLoading>
-
   <div>
-
     <app-week-selector></app-week-selector>
 
-    <app-goals-table *ngIf="!isMobile" [goals]="goalsQuery.goals$ | async"
-                     (editGoal)="openGoalModal.next($event)"></app-goals-table>
+    <app-goals-table *ngIf="!isMobile" [goals]="goalsQuery.goals$ | async" (editGoal)="openGoalModal.next($event)"></app-goals-table>
 
-    <app-goals-table-mobile *ngIf="isMobile" [goals]="goalsQuery.goals$ | async"
-                            (editGoal)="openGoalModal.next($event)"></app-goals-table-mobile>
-
+    <app-goals-table-mobile
+      *ngIf="isMobile"
+      [goals]="goalsQuery.goals$ | async"
+      (editGoal)="openGoalModal.next($event)"
+    ></app-goals-table-mobile>
   </div>
-
 </ng-template>
 
 <app-create-edit-goal-modal [openModal]="openGoalModal$"></app-create-edit-goal-modal>

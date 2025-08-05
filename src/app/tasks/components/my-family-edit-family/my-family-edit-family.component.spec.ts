@@ -8,9 +8,8 @@ describe('MyFamilyEditFamilyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MyFamilyEditFamilyComponent ]
-    })
-    .compileComponents();
+      declarations: [MyFamilyEditFamilyComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import {environment} from "../../../environments/environment";
+import { environment } from '../../../environments/environment';
 
 export interface SiteImage {
   id: number;
@@ -16,6 +16,6 @@ export function createSiteImage(params: Partial<SiteImage>): SiteImage {
     updatedAt: params.updatedAt ? new Date(params.updatedAt) : null,
     s3Path: params.s3Path ?? null,
     originalFileName: params.originalFileName ?? null,
-    imagePath: `${environment.apiUrl}/site-images/${params.id}`
+    imagePath: `${environment.apiUrl}/site-images/${params.id}`,
   } as SiteImage;
 }

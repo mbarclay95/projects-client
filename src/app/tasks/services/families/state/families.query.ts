@@ -1,44 +1,33 @@
-import {Injectable} from '@angular/core';
-import {QueryEntity} from '@datorama/akita';
-import {FamiliesStore, FamiliesState} from './families.store';
-import {combineLatest, filter, Observable, OperatorFunction, pipe, UnaryFunction} from "rxjs";
-import {Family, TaskStrategy} from "../../../models/family.model";
-import {map} from "rxjs/operators";
-import {User} from "../../../../users/models/user.model";
-import {AuthQuery} from "../../../../auth/services/state/auth.query";
+import { Injectable } from '@angular/core';
+import { QueryEntity } from '@datorama/akita';
+import { FamiliesStore, FamiliesState } from './families.store';
+import { combineLatest, filter, Observable, OperatorFunction, pipe, UnaryFunction } from 'rxjs';
+import { Family, TaskStrategy } from '../../../models/family.model';
+import { map } from 'rxjs/operators';
+import { User } from '../../../../users/models/user.model';
+import { AuthQuery } from '../../../../auth/services/state/auth.query';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class FamiliesQuery extends QueryEntity<FamiliesState> {
   families$: Observable<Family[]> = this.selectAll();
 
-  myFamily$: Observable<Family> = this.selectActive().pipe(
-    filterNullish()
-  );
+  myFamily$: Observable<Family> = this.selectActive().pipe(filterNullish());
 
-  familyTaskStrategy$: Observable<TaskStrategy> = this.myFamily$.pipe(
-    map(myFamily => myFamily.taskStrategy)
-  );
+  familyTaskStrategy$: Observable<TaskStrategy> = this.myFamily$.pipe(map((myFamily) => myFamily.taskStrategy));
 
-  isPerTaskPoint$: Observable<boolean> = this.familyTaskStrategy$.pipe(
-    map(strategy => strategy === 'per task point')
-  );
+  isPerTaskPoint$: Observable<boolean> = this.familyTaskStrategy$.pipe(map((strategy) => strategy === 'per task point'));
 
-  taskPoints$: Observable<number[]> = this.myFamily$.pipe(
-    map(myFamily => [...myFamily.taskPoints].sort((a, b) => a > b ? 1 : -1))
-  );
+  taskPoints$: Observable<number[]> = this.myFamily$.pipe(map((myFamily) => [...myFamily.taskPoints].sort((a, b) => (a > b ? 1 : -1))));
 
-  authUser$: Observable<User> = combineLatest([
-    this.myFamily$,
-    this.authQuery.auth$,
-  ]).pipe(
+  authUser$: Observable<User> = combineLatest([this.myFamily$, this.authQuery.auth$]).pipe(
     map(([family, auth]) => {
-      return (family as Family).members.find(u => u.id === auth.id) as User;
-    })
+      return (family as Family).members.find((u) => u.id === auth.id) as User;
+    }),
   );
 
   constructor(
     protected override store: FamiliesStore,
-    private authQuery: AuthQuery
+    private authQuery: AuthQuery,
   ) {
     super(store);
   }
@@ -51,7 +40,7 @@ export class FamiliesQuery extends QueryEntity<FamiliesState> {
     const family = this.getActive() as Family;
     const auth = this.authQuery.getUser();
 
-    return family.members.find(u => u.id === auth.id) as User;
+    return family.members.find((u) => u.id === auth.id) as User;
   }
 
   getMinTaskPoint(): number | undefined {
@@ -74,7 +63,5 @@ export class FamiliesQuery extends QueryEntity<FamiliesState> {
 }
 
 export function filterNullish<T>(): UnaryFunction<Observable<T | null | undefined>, Observable<T>> {
-  return pipe(
-    filter(x => !!x) as OperatorFunction<T | null | undefined, T>
-  );
+  return pipe(filter((x) => !!x) as OperatorFunction<T | null | undefined, T>);
 }

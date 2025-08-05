@@ -2,14 +2,10 @@ import { Injectable } from '@angular/core';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class FileExplorerResolver  {
+export class FileExplorerResolver {
+  constructor() {}
 
-  constructor(
-  ) {
-  }
-
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
-  }
+  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {}
 }

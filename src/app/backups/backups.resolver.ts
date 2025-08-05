@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import {TargetsService} from "./services/targets/state/targets.service";
-import {BackupsService} from "./services/backups/state/backups.service";
+import { TargetsService } from './services/targets/state/targets.service';
+import { BackupsService } from './services/backups/state/backups.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class BackupsResolver  {
-
+export class BackupsResolver {
   constructor(
     private backupsService: BackupsService,
     private targetsService: TargetsService,
-  ) {
-  }
+  ) {}
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
     await this.backupsService.getBackups();

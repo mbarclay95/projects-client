@@ -8,9 +8,8 @@ describe('ListGoalsPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListGoalsPageComponent ]
-    })
-    .compileComponents();
+      declarations: [ListGoalsPageComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

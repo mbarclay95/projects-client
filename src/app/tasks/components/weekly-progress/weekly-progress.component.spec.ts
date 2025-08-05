@@ -8,9 +8,8 @@ describe('WeeklyProgressComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WeeklyProgressComponent ]
-    })
-    .compileComponents();
+      declarations: [WeeklyProgressComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

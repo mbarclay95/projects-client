@@ -1,43 +1,24 @@
 <div class="w-100 page-container p-2">
-
   <div class="title mb-4">Active Sessions</div>
 
   @if (gamingSessionsFacadeService.sessionsLoading()) {
-
     <div class="d-flex w-100 justify-content-center align-items-center" style="height: 25vh">
       <nz-spin></nz-spin>
     </div>
-
   } @else {
-
-    <ng-container *ngLet="(gamingSessionsFacadeService.gamingSessions$ | async) as sessions">
-
+    <ng-container *ngLet="gamingSessionsFacadeService.gamingSessions$ | async as sessions">
       @if (sessions.length === 0) {
-
         <div class="w-100 d-flex flex-column align-items-center mb-2">
           <div class="mb-1" style="font-style: italic">No sessions found</div>
           <button nz-button nzType="primary" (click)="createSession.next()">Create New Session</button>
         </div>
-
       } @else {
-
         <div class="w-100 table-border mb-2">
-          <app-gaming-sessions-list
-            [sessions]="sessions"
-            (editSession)="editSession.next($event)"
-          ></app-gaming-sessions-list>
+          <app-gaming-sessions-list [sessions]="sessions" (editSession)="editSession.next($event)"></app-gaming-sessions-list>
         </div>
-
       }
 
-      <app-create-edit-session-modal
-        [openModal]="openSessionModal$"
-      ></app-create-edit-session-modal>
-
+      <app-create-edit-session-modal [openModal]="openSessionModal$"></app-create-edit-session-modal>
     </ng-container>
-
   }
-
-
 </div>
-

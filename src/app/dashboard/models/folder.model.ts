@@ -1,4 +1,4 @@
-import {createSite, Site} from './site.model';
+import { createSite, Site } from './site.model';
 
 export interface Folder {
   id: number;
@@ -18,6 +18,6 @@ export function createFolder(params: Partial<Folder>): Folder {
     name: params.name ?? null,
     sort: Number.isNaN(params.sort) ? null : Number(params.sort),
     show: !!params.show,
-    sites: params.sites ? params.sites.map(s => createSite(s)) : []
+    sites: params.sites ? params.sites.map((s) => createSite(s)) : [],
   } as Folder;
 }

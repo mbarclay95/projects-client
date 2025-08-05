@@ -1,5 +1,5 @@
-import {createRole, Role} from "./role.model";
-import {createUserConfig, UserConfig} from "./user-config.model";
+import { createRole, Role } from './role.model';
+import { createUserConfig, UserConfig } from './user-config.model';
 
 export interface User {
   id: number;
@@ -20,7 +20,7 @@ export function createUser(params: Partial<User>) {
     name: params.name ?? '',
     createdAt: params.createdAt ? new Date(params.createdAt) : new Date(),
     lastLoggedInAt: params.lastLoggedInAt ? new Date(params.lastLoggedInAt) : new Date(),
-    roles: params.roles?.map(role => createRole(role)) ?? [],
+    roles: params.roles?.map((role) => createRole(role)) ?? [],
     clientPermissions: params.clientPermissions ?? [],
     userConfig: createUserConfig(params.userConfig ?? {}),
     familyId: params.familyId ?? null,

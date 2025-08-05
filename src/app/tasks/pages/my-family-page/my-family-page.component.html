@@ -1,11 +1,12 @@
 <app-week-selector></app-week-selector>
 
-<div class="my-family-page-container pt-2" *ngIf="(familiesQuery.selectActive() | async) as myFamily">
-
+<div class="my-family-page-container pt-2" *ngIf="familiesQuery.selectActive() | async as myFamily">
   <app-my-family-edit-family [myFamily]="myFamily"></app-my-family-edit-family>
 
-  <app-my-family-members [familyTaskStrategy]="myFamily.taskStrategy" [weekOffset]="taskUserConfigsQuery.weekOffset$ | async"
-                         [membersConfig]="taskUserConfigsQuery.userConfigs$ | async"
-                         [loading]="(taskUserConfigsQuery.selectLoading() | async) ?? false"></app-my-family-members>
-
+  <app-my-family-members
+    [familyTaskStrategy]="myFamily.taskStrategy"
+    [weekOffset]="taskUserConfigsQuery.weekOffset$ | async"
+    [membersConfig]="taskUserConfigsQuery.userConfigs$ | async"
+    [loading]="(taskUserConfigsQuery.selectLoading() | async) ?? false"
+  ></app-my-family-members>
 </div>

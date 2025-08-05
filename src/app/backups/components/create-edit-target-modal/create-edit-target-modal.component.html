@@ -1,38 +1,35 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(target?.id === 0 ? 'Create' : 'Edit') + ' Target'" nzWidth="800px"
-          (nzOnCancel)="isVisible = false" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveTarget()"
-          [nzCancelDisabled]="saving" [nzOkDisabled]="saving" [nzOkLoading]="saving" [nzMaskClosable]="false">
-
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="(target?.id === 0 ? 'Create' : 'Edit') + ' Target'"
+  nzWidth="800px"
+  (nzOnCancel)="isVisible = false"
+  nzOkText="Save"
+  nzCancelText="Close"
+  (nzOnOk)="saveTarget()"
+  [nzCancelDisabled]="saving"
+  [nzOkDisabled]="saving"
+  [nzOkLoading]="saving"
+  [nzMaskClosable]="false"
+>
   <ng-container *nzModalContent>
-
     <div *ngIf="target">
-
       <div class="w-100 mb-4">
-
         <div class="mb-2">Target Name: *</div>
 
-        <input nz-input [(ngModel)]="target.name" class="w-100">
-
+        <input nz-input [(ngModel)]="target.name" class="w-100" />
       </div>
 
       <div class="w-100 mb-4">
-
         <div class="mb-2">Target Path: *</div>
 
-        <input nz-input [(ngModel)]="target.targetUrl" class="w-100">
-
+        <input nz-input [(ngModel)]="target.targetUrl" class="w-100" />
       </div>
 
       <div class="w-100 mb-4">
-
         <div class="mb-2">Host Name:</div>
 
-        <input nz-input [(ngModel)]="target.hostName" class="w-100">
-
+        <input nz-input [(ngModel)]="target.hostName" class="w-100" />
       </div>
-
     </div>
-
   </ng-container>
-
-
 </nz-modal>

@@ -10,7 +10,7 @@ export const enum Permissions {
   MONEY_APP_PAGE = 'client_view_money_app_page',
   LOGGING_PAGE = 'client_view_logging_page',
   GAMING_SESSIONS_ADMIN_PAGE = 'client_view_gaming_session_admin_page',
-  LISTEN_TO_UPTIME_KUMA = 'client_listen_to_uptime_kuma_websocket'
+  LISTEN_TO_UPTIME_KUMA = 'client_listen_to_uptime_kuma_websocket',
 }
 
 export const enum Roles {
@@ -24,4 +24,3 @@ export const enum Roles {
   MONEY_APP_ROLE = 'money_app_role',
   GAMING_SESSION_ADMIN_ROLE = 'gaming_session_admin_role',
 }
-

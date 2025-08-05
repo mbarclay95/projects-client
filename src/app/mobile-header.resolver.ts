@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import {MobileHeaderService} from "./shared/services/mobile-header.service";
+import { MobileHeaderService } from './shared/services/mobile-header.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class MobileHeaderResolver  {
-
-  constructor(
-    private mobileHeaderService: MobileHeaderService
-  ) {
-  }
+export class MobileHeaderResolver {
+  constructor(private mobileHeaderService: MobileHeaderService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
     if (route.data['headerTitle']) {

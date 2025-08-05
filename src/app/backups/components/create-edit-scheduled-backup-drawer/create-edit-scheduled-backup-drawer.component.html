@@ -1,123 +1,113 @@
-<nz-drawer [nzClosable]="false" [nzVisible]="isVisible" nzPlacement="right" [nzTitle]="'Create Scheduled Backup Job'"
-           nzWidth="500px" [nzMaskClosable]="false" [nzFooter]="footer">
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="isVisible"
+  nzPlacement="right"
+  [nzTitle]="'Create Scheduled Backup Job'"
+  nzWidth="500px"
+  [nzMaskClosable]="false"
+  [nzFooter]="footer"
+>
   <ng-container *nzDrawerContent>
-
     <div class="drawer-container" *ngIf="scheduledBackup">
-
       <div class="w-100 mb-4">
-
         <div class="mb-1">Backup Name:</div>
 
-        <input nz-input [(ngModel)]="scheduledBackup.name" class="w-100">
-
+        <input nz-input [(ngModel)]="scheduledBackup.name" class="w-100" />
       </div>
 
       <div class="w-100 mb-4 d-flex justify-content-between align-items-center">
-
         <div class="">Schedule Type:</div>
 
-        <nz-radio-group [ngModel]="scheduledBackup.schedule.mode" nzButtonStyle="solid"
-                        (ngModelChange)="changeScheduleMode($event)">
+        <nz-radio-group [ngModel]="scheduledBackup.schedule.mode" nzButtonStyle="solid" (ngModelChange)="changeScheduleMode($event)">
           <label nz-radio-button nzValue="weekly">Weekly</label>
           <label nz-radio-button nzValue="monthly">Monthly</label>
         </nz-radio-group>
-
       </div>
 
       <div class="w-100 mb-4" *ngIf="scheduledBackup.schedule.mode === 'weekly'">
-
         <div class="mb-1">Schedule (Day of Week):</div>
 
         <nz-select [(ngModel)]="scheduledBackup.schedule.dayOfWeek" class="w-100" nzMode="multiple">
           <nz-option *ngFor="let day of daysOfWeek" [nzValue]="day" [nzLabel]="day"></nz-option>
         </nz-select>
-
       </div>
 
       <div class="w-100 mb-4" *ngIf="scheduledBackup.schedule.mode === 'monthly'">
-
         <div class="mb-1">Schedule (Day of Month):</div>
 
         <nz-select [(ngModel)]="scheduledBackup.schedule.dayOfMonth" class="w-100" nzMode="multiple">
           <nz-option *ngFor="let day of daysOfMonth" [nzValue]="day" [nzLabel]="day"></nz-option>
         </nz-select>
-
       </div>
 
-
       <div class="w-100 mb-4">
-
-        <div class="mb-1">Full Backup Every {{!!scheduledBackup.fullEveryNDays ? scheduledBackup.fullEveryNDays : '_'}}
-          Day{{scheduledBackup.fullEveryNDays === 1 ? '' : 's'}}:
+        <div class="mb-1">
+          Full Backup Every {{ !!scheduledBackup.fullEveryNDays ? scheduledBackup.fullEveryNDays : "_" }} Day{{
+            scheduledBackup.fullEveryNDays === 1 ? "" : "s"
+          }}:
         </div>
 
         <nz-input-number class="w-100" [(ngModel)]="scheduledBackup.fullEveryNDays"></nz-input-number>
-
       </div>
 
       <div class="p-3 border-radius" style="border: 1px solid #606060">
-
         <div class="mb-4" style="border-bottom: 1px solid #606060">Backup Steps:</div>
 
-<!--        <ng-container *ngFor="let step of scheduledBackup.scheduledBackupSteps">-->
+        <!--        <ng-container *ngFor="let step of scheduledBackup.scheduledBackupSteps">-->
 
-<!--          <div class="d-flex align-items-center ps-1 mb-4 pb-4" style="border-bottom: 1px solid #606060">-->
+        <!--          <div class="d-flex align-items-center ps-1 mb-4 pb-4" style="border-bottom: 1px solid #606060">-->
 
-<!--            <fa-icon [icon]="grip" class="me-4"></fa-icon>-->
+        <!--            <fa-icon [icon]="grip" class="me-4"></fa-icon>-->
 
-<!--            <div class="w-100">-->
+        <!--            <div class="w-100">-->
 
-<!--              <div class="w-100 mb-2">-->
+        <!--              <div class="w-100 mb-2">-->
 
-<!--                <div class="mb-1">Backup Step Name:</div>-->
+        <!--                <div class="mb-1">Backup Step Name:</div>-->
 
-<!--                <input nz-input [(ngModel)]="step.name" class="w-100">-->
+        <!--                <input nz-input [(ngModel)]="step.name" class="w-100">-->
 
-<!--              </div>-->
+        <!--              </div>-->
 
-<!--              <div class="w-100 mb-2">-->
+        <!--              <div class="w-100 mb-2">-->
 
-<!--                <div class="mb-1">Source Directory:</div>-->
+        <!--                <div class="mb-1">Source Directory:</div>-->
 
-<!--                <input nz-input [(ngModel)]="step.sourceDir" class="w-100">-->
+        <!--                <input nz-input [(ngModel)]="step.sourceDir" class="w-100">-->
 
-<!--              </div>-->
+        <!--              </div>-->
 
-<!--              <div class="w-100 mb-2">-->
+        <!--              <div class="w-100 mb-2">-->
 
-<!--                <div class="mb-1">Target Directory:</div>-->
+        <!--                <div class="mb-1">Target Directory:</div>-->
 
-<!--                <nz-select [(ngModel)]="step.target" class="w-100" [compareWith]="targetCompare"-->
-<!--                           [nzDropdownRender]="addTarget">-->
-<!--                  <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target"-->
-<!--                             [nzLabel]="target.name"></nz-option>-->
-<!--                </nz-select>-->
+        <!--                <nz-select [(ngModel)]="step.target" class="w-100" [compareWith]="targetCompare"-->
+        <!--                           [nzDropdownRender]="addTarget">-->
+        <!--                  <nz-option *ngFor="let target of targetsQuery.target$ | async" [nzValue]="target"-->
+        <!--                             [nzLabel]="target.name"></nz-option>-->
+        <!--                </nz-select>-->
 
-<!--                <ng-template #addTarget>-->
-<!--                  <nz-divider class="my-1"></nz-divider>-->
-<!--                  <div class="d-flex justify-content-center w-100 align-items-center">-->
-<!--                    <button nz-button nzType="primary" (click)="createNewTarget(step.id)">Create New Target</button>-->
-<!--                  </div>-->
-<!--                </ng-template>-->
+        <!--                <ng-template #addTarget>-->
+        <!--                  <nz-divider class="my-1"></nz-divider>-->
+        <!--                  <div class="d-flex justify-content-center w-100 align-items-center">-->
+        <!--                    <button nz-button nzType="primary" (click)="createNewTarget(step.id)">Create New Target</button>-->
+        <!--                  </div>-->
+        <!--                </ng-template>-->
 
-<!--              </div>-->
+        <!--              </div>-->
 
-<!--            </div>-->
+        <!--            </div>-->
 
-<!--          </div>-->
+        <!--          </div>-->
 
-<!--        </ng-container>-->
+        <!--        </ng-container>-->
 
         <button nz-button nzType="primary" (click)="addScheduledBackupStep()" class="">
           <fa-icon [icon]="plus" class="me-2"></fa-icon>
           Add Backup Step
         </button>
-
       </div>
-
-
     </div>
-
   </ng-container>
 
   <ng-template #footer>
@@ -128,6 +118,7 @@
   </ng-template>
 </nz-drawer>
 
-<app-create-edit-target-modal [openModal]="openTargetModal.asObservable()"
-                              (selectNewTarget)="selectNewTarget($event)"></app-create-edit-target-modal>
-
+<app-create-edit-target-modal
+  [openModal]="openTargetModal.asObservable()"
+  (selectNewTarget)="selectNewTarget($event)"
+></app-create-edit-target-modal>

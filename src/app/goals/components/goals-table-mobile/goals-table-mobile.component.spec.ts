@@ -8,9 +8,8 @@ describe('GoalsTableMobileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GoalsTableMobileComponent ]
-    })
-    .compileComponents();
+      declarations: [GoalsTableMobileComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GoalsTableMobileComponent);
     component = fixture.componentInstance;

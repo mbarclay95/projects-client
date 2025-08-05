@@ -7,15 +7,17 @@ import { BanksStore } from './banks.store';
 
 @Injectable({ providedIn: 'root' })
 export class BanksService {
-
-  constructor(private banksStore: BanksStore, private http: HttpClient) {
-  }
-
+  constructor(
+    private banksStore: BanksStore,
+    private http: HttpClient,
+  ) {}
 
   get() {
-    return this.http.get<Bank[]>('https://api.com').pipe(tap(entities => {
-      this.banksStore.set(entities);
-    }));
+    return this.http.get<Bank[]>('https://api.com').pipe(
+      tap((entities) => {
+        this.banksStore.set(entities);
+      }),
+    );
   }
 
   add(bank: Bank) {
@@ -29,5 +31,4 @@ export class BanksService {
   remove(id: ID) {
     this.banksStore.remove(id);
   }
-
 }

@@ -1,34 +1,31 @@
-import {Injectable} from '@angular/core';
-import {QueryEntity} from '@datorama/akita';
-import {TasksStore, TasksState, TaskUiState} from './tasks.store';
-import {combineLatest, Observable} from "rxjs";
-import {Task} from "../../../models/task.model";
-import {map} from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { QueryEntity } from '@datorama/akita';
+import { TasksStore, TasksState, TaskUiState } from './tasks.store';
+import { combineLatest, Observable } from 'rxjs';
+import { Task } from '../../../models/task.model';
+import { map } from 'rxjs/operators';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class TasksQuery extends QueryEntity<TasksState> {
   tasks$: Observable<Task[]> = this.selectAll();
-  ui$: Observable<TaskUiState> = this.select().pipe(
-    map(state => state.ui)
-  );
-  filteredTasks$: Observable<Task[]> = combineLatest([
-    this.tasks$,
-    this.ui$
-  ]).pipe(
+  ui$: Observable<TaskUiState> = this.select().pipe(map((state) => state.ui));
+  filteredTasks$: Observable<Task[]> = combineLatest([this.tasks$, this.ui$]).pipe(
     map(([tasks, ui]: [Task[], TaskUiState]) => {
       let filteredTasks: Task[] = [...tasks];
       if (ui.ownerType) {
-        filteredTasks = filteredTasks.filter(task => task.ownerType === ui.ownerType);
+        filteredTasks = filteredTasks.filter((task) => task.ownerType === ui.ownerType);
       }
 
       if (ui.search && ui.search !== '') {
-        filteredTasks = filteredTasks
-          .filter(task => task.name.toLowerCase().includes((ui.search as string).toLowerCase()) ||
-            task.description?.toLowerCase().includes((ui.search as string).toLowerCase()));
+        filteredTasks = filteredTasks.filter(
+          (task) =>
+            task.name.toLowerCase().includes((ui.search as string).toLowerCase()) ||
+            task.description?.toLowerCase().includes((ui.search as string).toLowerCase()),
+        );
       }
 
       if (ui.tags.length > 0) {
-        filteredTasks = filteredTasks.filter(task => task.tags.filter(tag => ui.tags.includes(tag)).length > 0);
+        filteredTasks = filteredTasks.filter((task) => task.tags.filter((tag) => ui.tags.includes(tag)).length > 0);
       }
 
       if (ui.highPriorityFirst) {
@@ -40,26 +37,17 @@ export class TasksQuery extends QueryEntity<TasksState> {
           return b.priority - a.priority;
         });
       } else {
-        filteredTasks = filteredTasks
-          .sort((a, b) => (a.dueDate?.getTime() ?? 0) - (b.dueDate?.getTime() ?? 0));
+        filteredTasks = filteredTasks.sort((a, b) => (a.dueDate?.getTime() ?? 0) - (b.dueDate?.getTime() ?? 0));
       }
 
       return filteredTasks;
-    })
+    }),
   );
-  familyCount$: Observable<number> = this.tasks$.pipe(
-    map(tasks => tasks.filter(task => task.ownerType === 'family').length)
-  );
-  userCount$: Observable<number> = this.tasks$.pipe(
-    map(tasks => tasks.filter(task => task.ownerType === 'user').length)
-  );
-  selectedWeeklyPageIndex$: Observable<number> = this.ui$.pipe(
-    map(ui => ui.ownerType === 'user' ? 1 : 0)
-  );
+  familyCount$: Observable<number> = this.tasks$.pipe(map((tasks) => tasks.filter((task) => task.ownerType === 'family').length));
+  userCount$: Observable<number> = this.tasks$.pipe(map((tasks) => tasks.filter((task) => task.ownerType === 'user').length));
+  selectedWeeklyPageIndex$: Observable<number> = this.ui$.pipe(map((ui) => (ui.ownerType === 'user' ? 1 : 0)));
 
-  constructor(
-    protected override store: TasksStore
-  ) {
+  constructor(protected override store: TasksStore) {
     super(store);
   }
 
@@ -92,5 +80,4 @@ export class TasksQuery extends QueryEntity<TasksState> {
 
     return queryString;
   }
-
 }

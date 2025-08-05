@@ -6,6 +6,6 @@ export interface Role {
 export function createRole(params: Partial<Role>) {
   return {
     id: params.id,
-    name: params.name ?? ''
+    name: params.name ?? '',
   } as Role;
 }

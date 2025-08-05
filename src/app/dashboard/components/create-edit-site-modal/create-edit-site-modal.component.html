@@ -1,81 +1,71 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(site?.id === 0 ? 'Create' : 'Edit') + ' Site'" [nzWidth]="modalWidth"
-          (nzOnCancel)="closeModal()" nzOkText="Save" nzCancelText="Close" (nzOnOk)="saveSite()" [nzStyle]="modalStyle">
-
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="(site?.id === 0 ? 'Create' : 'Edit') + ' Site'"
+  [nzWidth]="modalWidth"
+  (nzOnCancel)="closeModal()"
+  nzOkText="Save"
+  nzCancelText="Close"
+  (nzOnOk)="saveSite()"
+  [nzStyle]="modalStyle"
+>
   <ng-container *nzModalContent>
-
     <div *ngIf="site">
-
       <div class="w-100 mb-3">
-
         Name:
 
-        <input nz-input [(ngModel)]="site.name" class="w-100">
-
+        <input nz-input [(ngModel)]="site.name" class="w-100" />
       </div>
 
       <div class="w-100 mb-3">
-
         Description:
 
-        <input nz-input [(ngModel)]="site.description" class="w-100">
-
+        <input nz-input [(ngModel)]="site.description" class="w-100" />
       </div>
 
       <div class="w-100 mb-3">
-
         Url:
 
-        <input nz-input [(ngModel)]="site.url" class="w-100">
-
+        <input nz-input [(ngModel)]="site.url" class="w-100" />
       </div>
 
       <div *ngIf="site.id !== 0" class="w-100 mb-3 d-flex">
-
         <div class="w-50">
-
           <div>Folder:</div>
 
-          <nz-select [(ngModel)]="site.folderId" [nzOptions]="(foldersQuery.folderOptions$ | async) ?? []"
-                     style="min-width: 99%"></nz-select>
-
+          <nz-select
+            [(ngModel)]="site.folderId"
+            [nzOptions]="(foldersQuery.folderOptions$ | async) ?? []"
+            style="min-width: 99%"
+          ></nz-select>
         </div>
 
         <div class="w-50 d-flex justify-content-center align-items-end">
-
           Show:
 
           <label nz-checkbox [(ngModel)]="site.show" class="ms-2"></label>
-
         </div>
-
       </div>
 
       <div class="w-100">
-
         <div class="w-100 d-flex align-items-center mb-2">
-
           Upload Icon:
 
-          <img *ngIf="site.siteImage" [srcset]="site.siteImage.imagePath" class="ms-3" height="40">
-
+          <img *ngIf="site.siteImage" [srcset]="site.siteImage.imagePath" class="ms-3" height="40" />
         </div>
 
         <div class="w-100 d-flex align-items-end">
-
-          <nz-upload class="w-100" nzType="drag" [nzMultiple]="false" [nzAction]="getUploadPath()"
-                     (nzChange)="handleChange($event)" [(nzFileList)]="fileList">
-
+          <nz-upload
+            class="w-100"
+            nzType="drag"
+            [nzMultiple]="false"
+            [nzAction]="getUploadPath()"
+            (nzChange)="handleChange($event)"
+            [(nzFileList)]="fileList"
+          >
             <p class="ant-upload-text">Click or drag file to this area to upload (must be png or svg)</p>
-
           </nz-upload>
-
         </div>
-
       </div>
-
     </div>
-
   </ng-container>
-
 </nz-modal>
-

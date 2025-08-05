@@ -1,22 +1,26 @@
-import {IconDefinition} from '@fortawesome/free-brands-svg-icons';
-import {Permissions} from '../../auth/permissions';
+import { IconDefinition } from '@fortawesome/free-brands-svg-icons';
+import { Permissions } from '../../auth/permissions';
 import {
   faBullseye,
-  faCalendarDays, faChessKnight, faDatabase,
-  faFolderOpen, faGear,
-  faHome, faMoneyCheckDollar,
+  faCalendarDays,
+  faChessKnight,
+  faDatabase,
+  faFolderOpen,
+  faGear,
+  faHome,
+  faMoneyCheckDollar,
   faTasks,
   faUpload,
-  faUsers
+  faUsers,
 } from '@fortawesome/free-solid-svg-icons';
-import {isMobile} from '../../app.component';
+import { isMobile } from '../../app.component';
 
 export interface Route {
-  icon: IconDefinition,
-  url: string,
-  permission: Permissions | true,
-  title: string
-  queryParams: Record<string, string>
+  icon: IconDefinition;
+  url: string;
+  permission: Permissions | true;
+  title: string;
+  queryParams: Record<string, string>;
 }
 
 export const routes: Route[] = [
@@ -25,46 +29,46 @@ export const routes: Route[] = [
     url: 'app/dashboard',
     permission: Permissions.DASHBOARD_PAGE,
     title: 'Dashboard',
-    queryParams: {}
+    queryParams: {},
   },
-  {icon: faBullseye, url: 'app/goals', permission: Permissions.GOALS_PAGE, title: 'Goals', queryParams: {}},
+  { icon: faBullseye, url: 'app/goals', permission: Permissions.GOALS_PAGE, title: 'Goals', queryParams: {} },
   {
     icon: faUpload,
     url: 'app/backups',
     permission: Permissions.BACKUPS_PAGE,
     title: 'Backups',
-    queryParams: {tab: 'backups'}
+    queryParams: { tab: 'backups' },
   },
   {
     icon: faTasks,
     url: `app/tasks${isMobile ? '/weekly-tasks' : ''}`,
     permission: Permissions.TASKS_PAGE,
     title: 'Tasks',
-    queryParams: isMobile ? {} : {tab: 'weekly-tasks'}
+    queryParams: isMobile ? {} : { tab: 'weekly-tasks' },
   },
   {
     icon: faFolderOpen,
     url: 'app/file-explorer',
     permission: Permissions.FILE_EXPLORER_PAGE,
     title: 'File Explorer',
-    queryParams: {}
+    queryParams: {},
   },
   {
     icon: faChessKnight,
     url: 'games/admin',
     permission: Permissions.GAMING_SESSIONS_ADMIN_PAGE,
     title: 'Games Admin',
-    queryParams: {}
+    queryParams: {},
   },
   {
     icon: faMoneyCheckDollar,
     url: 'app/money',
     permission: Permissions.MONEY_APP_PAGE,
     title: 'Money',
-    queryParams: {}
+    queryParams: {},
   },
-  {icon: faCalendarDays, url: 'app/events', permission: Permissions.EVENTS_PAGE, title: 'Events', queryParams: {}},
-  {icon: faDatabase, url: 'app/logging', permission: Permissions.LOGGING_PAGE, title: 'Logging', queryParams: {}},
-  {icon: faUsers, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users', queryParams: {}},
-  {icon: faGear, url: 'my-profile', permission: true, title: 'My Profile', queryParams: {}},
+  { icon: faCalendarDays, url: 'app/events', permission: Permissions.EVENTS_PAGE, title: 'Events', queryParams: {} },
+  { icon: faDatabase, url: 'app/logging', permission: Permissions.LOGGING_PAGE, title: 'Logging', queryParams: {} },
+  { icon: faUsers, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users', queryParams: {} },
+  { icon: faGear, url: 'my-profile', permission: true, title: 'My Profile', queryParams: {} },
 ];

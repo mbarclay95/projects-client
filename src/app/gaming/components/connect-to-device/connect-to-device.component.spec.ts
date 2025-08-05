@@ -8,10 +8,9 @@ describe('ConnectToDeviceComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ConnectToDeviceComponent]
-    })
-    .compileComponents();
-    
+      imports: [ConnectToDeviceComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ConnectToDeviceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -8,10 +8,9 @@ describe('GamingSegmentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GamingSegmentComponent]
-    })
-    .compileComponents();
-    
+      imports: [GamingSegmentComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(GamingSegmentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

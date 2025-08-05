@@ -1,12 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {User} from "../../users/models/user.model";
-import {TaskUserConfig} from '../../tasks/models/task-user-config.model';
+import { User } from '../../users/models/user.model';
+import { TaskUserConfig } from '../../tasks/models/task-user-config.model';
 
 @Pipe({
-  name: 'firstName'
+  name: 'firstName',
 })
 export class FirstNamePipe implements PipeTransform {
-
   transform(user: User | TaskUserConfig): string {
     let splitNames;
     if ('userId' in user) {
@@ -20,5 +19,4 @@ export class FirstNamePipe implements PipeTransform {
 
     return '';
   }
-
 }

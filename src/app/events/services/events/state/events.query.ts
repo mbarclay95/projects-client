@@ -1,20 +1,16 @@
 import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
-import {EventsStore, EventsState, EventsUiState} from './events.store';
-import {Observable} from "rxjs";
-import {Event} from "../../../models/event.model";
-import {map} from "rxjs/operators";
+import { EventsStore, EventsState, EventsUiState } from './events.store';
+import { Observable } from 'rxjs';
+import { Event } from '../../../models/event.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class EventsQuery extends QueryEntity<EventsState> {
   events$: Observable<Event[]> = this.selectAll();
-  ui$: Observable<EventsUiState> = this.select().pipe(
-    map(state => state.ui)
-  );
+  ui$: Observable<EventsUiState> = this.select().pipe(map((state) => state.ui));
 
-  constructor(
-    protected override store: EventsStore
-  ) {
+  constructor(protected override store: EventsStore) {
     super(store);
   }
 
@@ -31,5 +27,4 @@ export class EventsQuery extends QueryEntity<EventsState> {
 
     return queryString;
   }
-
 }

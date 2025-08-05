@@ -8,9 +8,8 @@ describe('CreateEditUserModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateEditUserModalComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateEditUserModalComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

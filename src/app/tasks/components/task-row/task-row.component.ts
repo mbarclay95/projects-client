@@ -1,24 +1,19 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Task} from "../../models/task.model";
-import {
-  faArrowRightToBracket,
-  faEdit,
-  faEllipsisV,
-  faFlag
-} from "@fortawesome/free-solid-svg-icons";
-import {FamiliesQuery} from "../../services/families/state/families.query";
-import {AuthQuery} from "../../../auth/services/state/auth.query";
-import {TasksService} from "../../services/tasks/state/tasks.service";
-import {NzMessageService} from "ng-zorro-antd/message";
-import {Router} from '@angular/router';
-import {isMobile} from '../../../app.component';
-import {TaskUserConfigsService} from '../../services/task-user-configs/state/task-user-configs.service';
-import {faEye} from '@fortawesome/free-regular-svg-icons';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Task } from '../../models/task.model';
+import { faArrowRightToBracket, faEdit, faEllipsisV, faFlag } from '@fortawesome/free-solid-svg-icons';
+import { FamiliesQuery } from '../../services/families/state/families.query';
+import { AuthQuery } from '../../../auth/services/state/auth.query';
+import { TasksService } from '../../services/tasks/state/tasks.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Router } from '@angular/router';
+import { isMobile } from '../../../app.component';
+import { TaskUserConfigsService } from '../../services/task-user-configs/state/task-user-configs.service';
+import { faEye } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-task-row',
   templateUrl: './task-row.component.html',
-  styleUrls: ['./task-row.component.scss']
+  styleUrls: ['./task-row.component.scss'],
 })
 export class TaskRowComponent implements OnInit {
   @Input() task!: Task;
@@ -40,16 +35,14 @@ export class TaskRowComponent implements OnInit {
     private tasksService: TasksService,
     private nzMessageService: NzMessageService,
     private router: Router,
-    private taskUserConfigsService: TaskUserConfigsService
-  ) {
-  }
+    private taskUserConfigsService: TaskUserConfigsService,
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   async completedTask(taskId: number) {
     try {
-      const completedTask = await this.tasksService.updateTask(taskId, {completedAt: new Date()}, true, true);
+      const completedTask = await this.tasksService.updateTask(taskId, { completedAt: new Date() }, true, true);
       if (completedTask) {
         this.taskUserConfigsService.addCompletedTaskToActive(completedTask);
       }

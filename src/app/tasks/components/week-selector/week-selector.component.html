@@ -1,15 +1,21 @@
 <div class="d-flex justify-content-evenly align-items-center pb-2 container-width">
-
-  <button nz-button [disabled]="taskUserConfigsQuery.weekBehindDisabled$ | async" nzType="text"
-          (click)="taskUserConfigsService.updateWeekOffset(-1)">
+  <button
+    nz-button
+    [disabled]="taskUserConfigsQuery.weekBehindDisabled$ | async"
+    nzType="text"
+    (click)="taskUserConfigsService.updateWeekOffset(-1)"
+  >
     <fa-icon class="fa-xl" [icon]="left"></fa-icon>
   </button>
 
-  <div>{{taskUserConfigsQuery.weekString$ | async}}</div>
+  <div>{{ taskUserConfigsQuery.weekString$ | async }}</div>
 
-  <button nz-button [disabled]="taskUserConfigsQuery.weekForwardDisabled$ | async" nzType="text"
-          (click)="taskUserConfigsService.updateWeekOffset(1)">
+  <button
+    nz-button
+    [disabled]="taskUserConfigsQuery.weekForwardDisabled$ | async"
+    nzType="text"
+    (click)="taskUserConfigsService.updateWeekOffset(1)"
+  >
     <fa-icon class="fa-xl" [icon]="right"></fa-icon>
   </button>
-
 </div>

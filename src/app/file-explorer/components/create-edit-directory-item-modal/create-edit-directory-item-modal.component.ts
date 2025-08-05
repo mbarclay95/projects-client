@@ -1,25 +1,15 @@
-import {
-  AfterViewChecked,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {Observable, Subject, takeUntil} from 'rxjs';
-import {DirectoryItem} from '../../models/directory-item.model';
-import {DirectoryItemsService} from '../../services/state/directory-items.service';
-import {isMobile} from '../../../app.component';
-import {WorkingDirectoryItem, workingDirectoryToString} from '../../models/working-directory-item';
+import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { DirectoryItem } from '../../models/directory-item.model';
+import { DirectoryItemsService } from '../../services/state/directory-items.service';
+import { isMobile } from '../../../app.component';
+import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/working-directory-item';
 
 @Component({
   selector: 'app-create-edit-directory-item-modal',
   templateUrl: './create-edit-directory-item-modal.component.html',
-  styleUrls: ['./create-edit-directory-item-modal.component.scss']
+  styleUrls: ['./create-edit-directory-item-modal.component.scss'],
 })
 export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Input() openModal!: Observable<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }>;
@@ -29,7 +19,7 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy,
   @ViewChild('directoryName') directoryName!: ElementRef;
 
   modalWidth = isMobile ? '95%' : '650px';
-  modalStyle = isMobile ? {top: '20px'} : {};
+  modalStyle = isMobile ? { top: '20px' } : {};
   item?: DirectoryItem;
   createOrUpdate?: 'Create' | 'Update';
   isVisible: boolean = false;
@@ -44,14 +34,11 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy,
 
   constructor(
     private directoryItemsService: DirectoryItemsService,
-    private nzMessageService: NzMessageService
-  ) {
-  }
+    private nzMessageService: NzMessageService,
+  ) {}
 
   ngOnInit(): void {
-    this.openModal.pipe(
-      takeUntil(this.subscriptionDestroyer)
-    ).subscribe(item => {
+    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((item) => {
       this.item = {
         id: item.id,
         type: item.type,
@@ -62,9 +49,7 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy,
       this.isVisible = true;
     });
 
-    this.newLocationSelected.pipe(
-      takeUntil(this.subscriptionDestroyer)
-    ).subscribe(newWorkingDirectory => {
+    this.newLocationSelected.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((newWorkingDirectory) => {
       this.newWorkingDirectory = newWorkingDirectory;
       this.isVisible = true;
     });

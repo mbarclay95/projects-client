@@ -3,7 +3,5 @@ export interface LogEvent {
 }
 
 export function createLogEvent(params: Partial<LogEvent>) {
-  return {
-
-  } as LogEvent;
+  return {} as LogEvent;
 }

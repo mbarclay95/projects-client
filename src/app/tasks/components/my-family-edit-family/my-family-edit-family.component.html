@@ -1,26 +1,24 @@
 <div class="d-flex align-items-center justify-content-center w-100 mb-2">
-
-  <div style="font-size: 25px;">{{myFamily.name}} Family</div>
+  <div style="font-size: 25px">{{ myFamily.name }} Family</div>
 
   <fa-icon class="cursor-pointer ms-2" style="color: grey" [icon]="settings" (click)="openFamilyModal.next(myFamily)"></fa-icon>
-
 </div>
 
 <div class="d-flex w-100 flex-column align-items-center mb-2">
+  <div>
+    Total family tasks: <strong>{{ myFamily.totalFamilyTasks }}</strong>
+  </div>
 
-  <div>Total family tasks: <strong>{{myFamily.totalFamilyTasks}}</strong></div>
-
-  <div>Task{{myFamily.taskStrategy === 'per task' ? 's' : ' points'}} per week per person:
-    <strong>{{myFamily.tasksPerWeek | number : '1.2-2'}}</strong></div>
-
+  <div>
+    Task{{ myFamily.taskStrategy === "per task" ? "s" : " points" }} per week per person:
+    <strong>{{ myFamily.tasksPerWeek | number: "1.2-2" }}</strong>
+  </div>
 </div>
 
 <div class="d-flex justify-content-center w-100 mb-2">
-
   <div class="divider-width">
     <nz-divider></nz-divider>
   </div>
-
 </div>
 
 <app-create-edit-family-modal [openModal]="openFamilyModal.asObservable()"></app-create-edit-family-modal>

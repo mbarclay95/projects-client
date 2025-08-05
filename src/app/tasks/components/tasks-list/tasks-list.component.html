@@ -1,21 +1,16 @@
-
 <div class="w-100 mt-3 task-border">
-
   <ng-container *ngFor="let task of tasks">
-
-    <app-task-row [task]="task" (editTask)="editTask.emit($event)" (viewTask)="viewTask.emit($event)"
-                  (skipTask)="skipTask.emit($event)"></app-task-row>
-
+    <app-task-row
+      [task]="task"
+      (editTask)="editTask.emit($event)"
+      (viewTask)="viewTask.emit($event)"
+      (skipTask)="skipTask.emit($event)"
+    ></app-task-row>
   </ng-container>
 
   <div *ngIf="tasks.length > 0" class="load-more-container">
-
-    <button nz-button nzSize="large" nzType="primary" (click)="tasksService.loadNextWeekOfTasks()" nzBlock>
-      Load Next Week's Tasks
-    </button>
-
+    <button nz-button nzSize="large" nzType="primary" (click)="tasksService.loadNextWeekOfTasks()" nzBlock>Load Next Week's Tasks</button>
   </div>
 
   <nz-empty *ngIf="tasks.length === 0" class="my-4" nzNotFoundContent="No Tasks"></nz-empty>
-
 </div>

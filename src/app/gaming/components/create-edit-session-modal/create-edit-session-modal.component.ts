@@ -1,14 +1,14 @@
-import {Component} from '@angular/core';
-import {NgIf} from '@angular/common';
-import {NzInputDirective} from 'ng-zorro-antd/input';
-import {NzModalComponent, NzModalContentDirective, NzModalModule} from 'ng-zorro-antd/modal';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {DefaultModalComponent} from '../../../shared/components/default-modal/default-modal.component';
-import {GamingSession} from '../../models/gaming-session.model';
-import {GamingSessionsFacadeService} from '../../services/gaming-sessions-facade.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {NzSwitchComponent} from 'ng-zorro-antd/switch';
-import {NzInputNumberComponent} from 'ng-zorro-antd/input-number';
+import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { NzModalComponent, NzModalContentDirective, NzModalModule } from 'ng-zorro-antd/modal';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DefaultModalComponent } from '../../../shared/components/default-modal/default-modal.component';
+import { GamingSession } from '../../models/gaming-session.model';
+import { GamingSessionsFacadeService } from '../../services/gaming-sessions-facade.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzSwitchComponent } from 'ng-zorro-antd/switch';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 
 @Component({
   selector: 'app-create-edit-session-modal',
@@ -25,10 +25,9 @@ import {NzInputNumberComponent} from 'ng-zorro-antd/input-number';
     NzInputNumberComponent,
   ],
   templateUrl: './create-edit-session-modal.component.html',
-  styleUrl: './create-edit-session-modal.component.scss'
+  styleUrl: './create-edit-session-modal.component.scss',
 })
 export class CreateEditSessionModalComponent extends DefaultModalComponent<GamingSession> {
-
   constructor(
     private gamingSessionsFacadeService: GamingSessionsFacadeService,
     private nzMessageService: NzMessageService,
@@ -48,7 +47,6 @@ export class CreateEditSessionModalComponent extends DefaultModalComponent<Gamin
         await this.gamingSessionsFacadeService.updateSessionPromise(this.model);
       }
     } catch (err) {
-
       this.nzMessageService.error('There was an error saving the session');
       this.saving = false;
       return;

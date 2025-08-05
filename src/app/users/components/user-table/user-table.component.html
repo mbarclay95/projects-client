@@ -1,27 +1,24 @@
 <nz-table #usersTableTag [nzData]="_users">
   <thead>
-  <tr>
-    <th nzWidth="80px"></th>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Last Logged In At</th>
-    <th>Created At</th>
-  </tr>
+    <tr>
+      <th nzWidth="80px"></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Last Logged In At</th>
+      <th>Created At</th>
+    </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let user of usersTable?.data">
-    <td>
-      <button nz-button class="ant-btn-icon-only" nzType="text"
-              (click)="editUser.emit(user)">
-        <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
-      </button>
-    </td>
-    <td>{{user.id}}</td>
-    <td>{{user.name}}</td>
-    <td>{{user.lastLoggedInAt | date : 'short'}}</td>
-    <td>{{user.createdAt | date}}</td>
-  </tr>
+    <tr *ngFor="let user of usersTable?.data">
+      <td>
+        <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editUser.emit(user)">
+          <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
+        </button>
+      </td>
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.lastLoggedInAt | date: "short" }}</td>
+      <td>{{ user.createdAt | date }}</td>
+    </tr>
   </tbody>
-
 </nz-table>
-

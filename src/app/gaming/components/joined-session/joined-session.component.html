@@ -1,8 +1,6 @@
 <div>
   <div class="d-flex w-100 justify-content-between mb-3">
-
     <div>
-
       <div class="title">
         @if (!activeSession.startedAt) {
           Session Joined!
@@ -18,18 +16,14 @@
           <span class="text-warning" style="font-style: italic">Paused</span>
         }
       </div>
-
     </div>
 
     <div class="d-flex flex-column align-items-end">
       <button nz-button nzType="text" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
-
         <fa-icon class="fa-lg" [icon]="more"></fa-icon>
-
       </button>
 
       <nz-dropdown-menu #menu="nzDropdownMenu">
-
         <ul nz-menu class="quick-action-menu">
           @if (activeSession.startedAt && !activeSession.isPaused) {
             <li nz-menu-item (click)="togglePause()">
@@ -54,71 +48,59 @@
             </li>
           }
         </ul>
-
       </nz-dropdown-menu>
-
-
     </div>
-
   </div>
 
   <div class="w-100 d-flex justify-content-center mb-3">
     @if (!activeSession.startedAt) {
-      <button nz-button nzType="primary" nzSize="large" (click)="startSession()" [nzLoading]="updating"
-              [disabled]="updating">
+      <button nz-button nzType="primary" nzSize="large" (click)="startSession()" [nzLoading]="updating" [disabled]="updating">
         <fa-icon class="me-2" [icon]="play"></fa-icon>
         Start Session
       </button>
     } @else if (activeSession.isPaused) {
-      <button nz-button nzType="primary" nzSize="large" (click)="togglePause()" [nzLoading]="updating"
-              [disabled]="updating">
+      <button nz-button nzType="primary" nzSize="large" (click)="togglePause()" [nzLoading]="updating" [disabled]="updating">
         <fa-icon class="me-2" [class.ms-2]="updating" [icon]="play"></fa-icon>
         Resume
       </button>
     }
   </div>
 
-  <div cdkDropList (cdkDropListDropped)="dropSessionDevice({event : $event})" class="devices-container">
-
+  <div cdkDropList (cdkDropListDropped)="dropSessionDevice({ event: $event })" class="devices-container">
     @for (sessionDevice of activeSession.gamingSessionDevices; track sessionDevice.id) {
-
-      <div [class.active-player]="sessionDevice.currentTurnOrder === activeSession.currentTurn"
-           class="session-device-container" cdkDrag
-           [cdkDragDisabled]="activeSession.startedAt && !activeSession.isPaused">
-
+      <div
+        [class.active-player]="sessionDevice.currentTurnOrder === activeSession.currentTurn"
+        class="session-device-container"
+        cdkDrag
+        [cdkDragDisabled]="activeSession.startedAt && !activeSession.isPaused"
+      >
         <div>
-
           <div class="d-flex align-items-center">
-
             @if (!activeSession.startedAt || activeSession.isPaused) {
               <button nz-button nzType="text" class="me-1" style="cursor: move" cdkDragHandle>
-
                 <fa-icon [icon]="grip"></fa-icon>
-
               </button>
             }
 
             <fa-icon [icon]="button" [style.color]="sessionDevice.gamingDevice.buttonColor"></fa-icon>
 
             <div class="ms-2">{{ sessionDevice.name }}</div>
-
           </div>
-
         </div>
 
         <div>
           @if (activeSession.startedAt && activeSession.isPaused) {
             <button nz-button nzType="text" nz-dropdown nzTrigger="click" [nzDropdownMenu]="playerMenu">
-
               <fa-icon class="fa-lg" [icon]="more"></fa-icon>
-
             </button>
 
             <nz-dropdown-menu #playerMenu="nzDropdownMenu">
-
               <ul nz-menu class="quick-action-menu">
-                <li nz-menu-item (click)="setCurrentTurn(sessionDevice.currentTurnOrder)"
-                    [nzDisabled]="sessionDevice.currentTurnOrder === activeSession.currentTurn">
+                <li
+                  nz-menu-item
+                  (click)="setCurrentTurn(sessionDevice.currentTurnOrder)"
+                  [nzDisabled]="sessionDevice.currentTurnOrder === activeSession.currentTurn"
+                >
                   <fa-icon class="me-2" [icon]="play"></fa-icon>
                   Activate Turn
                 </li>
@@ -135,20 +117,14 @@
                   </li>
                 }
               </ul>
-
             </nz-dropdown-menu>
           } @else if (sessionDevice.id === userSessionDeviceId || permissionsService.hasPermissionTo(adminPermission)) {
             <fa-icon (click)="editClicked(sessionDevice)" [icon]="settings"></fa-icon>
           }
         </div>
-
       </div>
-
     }
   </div>
-
 </div>
 
-<app-create-edit-session-modal
-  [openModal]="openSessionModal.asObservable()"
-></app-create-edit-session-modal>
+<app-create-edit-session-modal [openModal]="openSessionModal.asObservable()"></app-create-edit-session-modal>

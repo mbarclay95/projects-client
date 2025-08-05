@@ -1,4 +1,4 @@
-import {createTaskHistory, TaskHistory} from './task-history.model';
+import { createTaskHistory, TaskHistory } from './task-history.model';
 
 export interface Task {
   id: number;
@@ -16,7 +16,7 @@ export interface Task {
   taskPoint?: number;
   isActive: boolean;
   priority: number;
-  taskHistory?: TaskHistory[]
+  taskHistory?: TaskHistory[];
 }
 
 export type TaskOwnerType = 'family' | 'user';
@@ -38,6 +38,6 @@ export function createTask(params: Partial<Task>) {
     taskPoint: params.taskPoint ?? undefined,
     isActive: params.isActive ?? true,
     priority: Number(params.priority ?? 0),
-    taskHistory: params.taskHistory ? params.taskHistory.map(t => createTaskHistory(t)) : undefined
+    taskHistory: params.taskHistory ? params.taskHistory.map((t) => createTaskHistory(t)) : undefined,
   } as Task;
 }

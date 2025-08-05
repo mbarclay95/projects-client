@@ -1,64 +1,48 @@
-<div class="d-flex justify-content-center align-items-center w-100" style="height: 75vh"
-     (keyup.enter)="loginService.login()">
-
+<div class="d-flex justify-content-center align-items-center w-100" style="height: 75vh" (keyup.enter)="loginService.login()">
   <div *ngIf="!loginService.loginForm">
-
     <nz-spin nzTip="Loading"></nz-spin>
-
   </div>
 
   <div *ngIf="loginService.loginForm" class="login-container" style="padding: 3rem 5rem">
-
     <ng-container *ngIf="!this.loginService.otherError">
-
       <h1 class="mb-4">Login</h1>
 
       <form [formGroup]="loginService.loginForm">
-
         <div class="mb-2">
-
           Username:
 
-          <input nz-input formControlName="email" class="input-borders">
-
+          <input nz-input formControlName="email" class="input-borders" />
         </div>
 
         <div class="mb-4">
-
           Password:
 
-          <input nz-input type="password" formControlName="password" class="input-borders">
-
+          <input nz-input type="password" formControlName="password" class="input-borders" />
         </div>
-
       </form>
-
     </ng-container>
 
-    <div *ngIf="loginService.expiredTokenError" class="text-danger mb-4">
-      Your session is expired. Please login again
-    </div>
+    <div *ngIf="loginService.expiredTokenError" class="text-danger mb-4">Your session is expired. Please login again</div>
 
-    <div *ngIf="loginService.badCredsError" class="text-danger mb-4">
-      Incorrect email or password
-    </div>
+    <div *ngIf="loginService.badCredsError" class="text-danger mb-4">Incorrect email or password</div>
 
     <div *ngIf="loginService.otherError" class="text-danger mb-4">
       <h2 class="mb-4">Something is wrong</h2>
 
-      Make sure you are on your home wifi and refresh this page. If it still doesn't work let Michael know there is
-      something wrong
+      Make sure you are on your home wifi and refresh this page. If it still doesn't work let Michael know there is something wrong
     </div>
 
     <div class="d-flex justify-content-end" *ngIf="!loginService.otherError">
-
-      <button nz-button nzType="primary" [nzLoading]="loginService.loading" (keydown.enter)="loginService.login()"
-              [disabled]="loginService.loading || loginService.loginForm.invalid" (click)="loginService.login()">Login
+      <button
+        nz-button
+        nzType="primary"
+        [nzLoading]="loginService.loading"
+        (keydown.enter)="loginService.login()"
+        [disabled]="loginService.loading || loginService.loginForm.invalid"
+        (click)="loginService.login()"
+      >
+        Login
       </button>
-
     </div>
-
   </div>
-
 </div>
-

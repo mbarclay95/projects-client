@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import {DefaultModalComponent} from '../../../shared/components/default-modal/default-modal.component';
-import {GamingDevice} from '../../models/gaming-device.model';
-import {NgIf} from '@angular/common';
-import {NzInputDirective} from 'ng-zorro-antd/input';
-import {NzModalComponent, NzModalContentDirective, NzModalModule} from 'ng-zorro-antd/modal';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {GamingSessionsFacadeService} from '../../services/gaming-sessions-facade.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {NzOptionComponent, NzSelectComponent} from 'ng-zorro-antd/select';
+import { DefaultModalComponent } from '../../../shared/components/default-modal/default-modal.component';
+import { GamingDevice } from '../../models/gaming-device.model';
+import { NgIf } from '@angular/common';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { NzModalComponent, NzModalContentDirective, NzModalModule } from 'ng-zorro-antd/modal';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GamingSessionsFacadeService } from '../../services/gaming-sessions-facade.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 
 @Component({
   selector: 'app-create-edit-device-modal',
@@ -24,13 +24,12 @@ import {NzOptionComponent, NzSelectComponent} from 'ng-zorro-antd/select';
     NzSelectComponent,
   ],
   templateUrl: './create-edit-device-modal.component.html',
-  styleUrl: './create-edit-device-modal.component.scss'
+  styleUrl: './create-edit-device-modal.component.scss',
 })
 export class CreateEditDeviceModalComponent extends DefaultModalComponent<GamingDevice> {
-
   constructor(
     private gamingSessionsFacadeService: GamingSessionsFacadeService,
-    private nzMessageService: NzMessageService
+    private nzMessageService: NzMessageService,
   ) {
     super();
   }

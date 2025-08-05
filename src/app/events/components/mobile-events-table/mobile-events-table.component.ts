@@ -1,21 +1,26 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Event} from "../../models/event.model";
-import {EventParticipant} from "../../models/event-participant";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Event } from '../../models/event.model';
+import { EventParticipant } from '../../models/event-participant';
 import {
   faBoxArchive,
-  faBoxOpen, faChevronDown, faChevronUp, faCircleMinus,
+  faBoxOpen,
+  faChevronDown,
+  faChevronUp,
+  faCircleMinus,
   faCopy,
-  faEdit, faThumbsDown,
+  faEdit,
+  faThumbsDown,
   faThumbsUp,
-  faUpRightFromSquare, faUserPen
-} from "@fortawesome/free-solid-svg-icons";
-import {Clipboard} from "@angular/cdk/clipboard";
-import {NzMessageService} from "ng-zorro-antd/message";
+  faUpRightFromSquare,
+  faUserPen,
+} from '@fortawesome/free-solid-svg-icons';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-mobile-events-table',
   templateUrl: './mobile-events-table.component.html',
-  styleUrls: ['./mobile-events-table.component.scss']
+  styleUrls: ['./mobile-events-table.component.scss'],
 })
 export class MobileEventsTableComponent implements OnInit {
   @Input() set events(events: Event[] | null) {
@@ -40,16 +45,14 @@ export class MobileEventsTableComponent implements OnInit {
   remove = faCircleMinus;
   arrowDown = faChevronDown;
   arrowUp = faChevronUp;
-  participantChange = faUserPen
+  participantChange = faUserPen;
 
   constructor(
     private clipboard: Clipboard,
-    private nzMessageService: NzMessageService
-  ) {
-  }
+    private nzMessageService: NzMessageService,
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   getPercent(participants: EventParticipant[], numOfPeople: number): number {
     return Math.ceil((participants.length / numOfPeople) * 100);

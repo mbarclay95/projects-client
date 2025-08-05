@@ -8,9 +8,8 @@ describe('UsersLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UsersLayoutComponent ]
-    })
-    .compileComponents();
+      declarations: [UsersLayoutComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

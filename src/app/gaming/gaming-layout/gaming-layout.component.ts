@@ -1,17 +1,12 @@
 import { Component } from '@angular/core';
-import {NzContentComponent} from 'ng-zorro-antd/layout';
-import {RouterOutlet} from '@angular/router';
+import { NzContentComponent } from 'ng-zorro-antd/layout';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-gaming-layout',
   standalone: true,
-    imports: [
-        NzContentComponent,
-        RouterOutlet
-    ],
+  imports: [NzContentComponent, RouterOutlet],
   templateUrl: './gaming-layout.component.html',
-  styleUrl: './gaming-layout.component.scss'
+  styleUrl: './gaming-layout.component.scss',
 })
-export class GamingLayoutComponent {
-
-}
+export class GamingLayoutComponent {}

@@ -8,9 +8,8 @@ describe('CreateEditTaskModalMobileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateEditTaskModalMobileComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateEditTaskModalMobileComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CreateEditTaskModalMobileComponent);
     component = fixture.componentInstance;

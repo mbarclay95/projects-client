@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
@@ -10,20 +10,19 @@ import { FolderComponent } from './components/folder/folder.component';
 import { FolderGridComponent } from './components/folder-grid/folder-grid.component';
 import { SiteComponent } from './components/site/site.component';
 import { SortedSitesPipe } from './pipes/sorted-sites.pipe';
-import {NzLayoutModule} from "ng-zorro-antd/layout";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {NzButtonModule} from "ng-zorro-antd/button";
-import {NzInputModule} from "ng-zorro-antd/input";
-import {FormsModule} from "@angular/forms";
-import {NzModalModule} from "ng-zorro-antd/modal";
-import {NzUploadModule} from "ng-zorro-antd/upload";
-import {NzSelectModule} from "ng-zorro-antd/select";
-import {DragDropModule} from "@angular/cdk/drag-drop";
-import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
-import {NzToolTipModule} from "ng-zorro-antd/tooltip";
-import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
-import {NzSwitchModule} from 'ng-zorro-antd/switch';
-
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { FormsModule } from '@angular/forms';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 @NgModule({
   declarations: [
@@ -34,25 +33,25 @@ import {NzSwitchModule} from 'ng-zorro-antd/switch';
     FolderComponent,
     FolderGridComponent,
     SiteComponent,
-    SortedSitesPipe
+    SortedSitesPipe,
   ],
-    imports: [
-        CommonModule,
-        DashboardRoutingModule,
-        NzLayoutModule,
-        FontAwesomeModule,
-        NzButtonModule,
-        NzInputModule,
-        FormsModule,
-        NzModalModule,
-        NzUploadModule,
-        NzSelectModule,
-        DragDropModule,
-        NzPopconfirmModule,
-        NzToolTipModule,
-        NzCheckboxModule,
-        NzSwitchModule,
-        NgOptimizedImage
-    ]
+  imports: [
+    CommonModule,
+    DashboardRoutingModule,
+    NzLayoutModule,
+    FontAwesomeModule,
+    NzButtonModule,
+    NzInputModule,
+    FormsModule,
+    NzModalModule,
+    NzUploadModule,
+    NzSelectModule,
+    DragDropModule,
+    NzPopconfirmModule,
+    NzToolTipModule,
+    NzCheckboxModule,
+    NzSwitchModule,
+    NgOptimizedImage,
+  ],
 })
-export class DashboardModule { }
+export class DashboardModule {}

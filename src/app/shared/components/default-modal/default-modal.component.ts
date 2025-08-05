@@ -1,11 +1,11 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Subject, takeUntil} from 'rxjs';
-import {isMobile} from '../../../app.component';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { isMobile } from '../../../app.component';
 
 @Component({
   selector: 'app-default-modal',
   templateUrl: './default-modal.component.html',
-  styleUrls: ['./default-modal.component.scss']
+  styleUrls: ['./default-modal.component.scss'],
 })
 export class DefaultModalComponent<T> implements OnInit, OnDestroy {
   @Input() openModal!: Observable<T>;
@@ -13,17 +13,15 @@ export class DefaultModalComponent<T> implements OnInit, OnDestroy {
   model?: T;
   isVisible: boolean = false;
   saving = false;
-  modalStyle = isMobile ? {top: '20px'} : {};
+  modalStyle = isMobile ? { top: '20px' } : {};
   modalWidth = isMobile ? '95%' : '500px';
 
   subscriptionDestroyer: Subject<void> = new Subject<void>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-    this.openModal.pipe(
-      takeUntil(this.subscriptionDestroyer)
-    ).subscribe(model => {
+    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((model) => {
       this.model = this.createModel(model);
       this.onOpenModal();
       this.isVisible = true;
@@ -38,7 +36,6 @@ export class DefaultModalComponent<T> implements OnInit, OnDestroy {
   onOpenModal(): void {}
 
   createModel(model: T): T {
-    return {...model};
+    return { ...model };
   }
-
 }

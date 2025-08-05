@@ -7,15 +7,17 @@ import { CategoryTagsStore } from './category-tags.store';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryTagsService {
-
-  constructor(private categoryTagsStore: CategoryTagsStore, private http: HttpClient) {
-  }
-
+  constructor(
+    private categoryTagsStore: CategoryTagsStore,
+    private http: HttpClient,
+  ) {}
 
   get() {
-    return this.http.get<CategoryTag[]>('https://api.com').pipe(tap(entities => {
-      this.categoryTagsStore.set(entities);
-    }));
+    return this.http.get<CategoryTag[]>('https://api.com').pipe(
+      tap((entities) => {
+        this.categoryTagsStore.set(entities);
+      }),
+    );
   }
 
   add(categoryTag: CategoryTag) {
@@ -29,5 +31,4 @@ export class CategoryTagsService {
   remove(id: ID) {
     this.categoryTagsStore.remove(id);
   }
-
 }

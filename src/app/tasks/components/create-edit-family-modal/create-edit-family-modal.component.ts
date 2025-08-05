@@ -1,17 +1,17 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Subject, takeUntil} from "rxjs";
-import {NzMessageService} from "ng-zorro-antd/message";
-import {createFamily, Family} from "../../models/family.model";
-import {FamiliesService} from "../../services/families/state/families.service";
-import {UsersQuery} from "../../../users/services/state/users.query";
-import {faEdit, faSave} from "@fortawesome/free-solid-svg-icons";
-import {FamiliesQuery} from "../../services/families/state/families.query";
-import {isMobile} from '../../../app.component';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { createFamily, Family } from '../../models/family.model';
+import { FamiliesService } from '../../services/families/state/families.service';
+import { UsersQuery } from '../../../users/services/state/users.query';
+import { faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
+import { FamiliesQuery } from '../../services/families/state/families.query';
+import { isMobile } from '../../../app.component';
 
 @Component({
   selector: 'app-create-edit-family-modal',
   templateUrl: './create-edit-family-modal.component.html',
-  styleUrls: ['./create-edit-family-modal.component.scss']
+  styleUrls: ['./create-edit-family-modal.component.scss'],
 })
 export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Family>;
@@ -22,7 +22,7 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   saving = false;
   save = faSave;
   edit = faEdit;
-  modalStyle = isMobile ? {top: '20px'} : {};
+  modalStyle = isMobile ? { top: '20px' } : {};
   modalWidth = isMobile ? '95%' : '500px';
   listOfPoints: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -32,14 +32,11 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
     private familiesService: FamiliesService,
     private familiesQuery: FamiliesQuery,
     public usersQuery: UsersQuery,
-    private nzMessageService: NzMessageService
-  ) {
-  }
+    private nzMessageService: NzMessageService,
+  ) {}
 
   ngOnInit(): void {
-    this.openModal.pipe(
-      takeUntil(this.subscriptionDestroyer)
-    ).subscribe(family => {
+    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((family) => {
       this.family = family.id === 0 ? family : createFamily(family);
       this.isVisible = true;
     });
@@ -56,12 +53,12 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
     }
     this.saving = true;
     try {
-      this.family.id === 0 ?
-        await this.familiesService.createNewFamily(this.family) :
-        await this.familiesService.updateFamily(this.family.id, this.family);
+      this.family.id === 0
+        ? await this.familiesService.createNewFamily(this.family)
+        : await this.familiesService.updateFamily(this.family.id, this.family);
     } catch (e) {
       this.saving = false;
-      this.nzMessageService.error("There was an error saving the family.");
+      this.nzMessageService.error('There was an error saving the family.');
       return;
     }
     this.nzMessageService.success('Family Saved!');

@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-goal-stats-page',
   templateUrl: './goal-stats-page.component.html',
-  styleUrls: ['./goal-stats-page.component.scss']
+  styleUrls: ['./goal-stats-page.component.scss'],
 })
 export class GoalStatsPageComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

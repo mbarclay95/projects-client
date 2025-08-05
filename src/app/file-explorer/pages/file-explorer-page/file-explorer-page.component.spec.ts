@@ -8,9 +8,8 @@ describe('FileExplorerPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FileExplorerPageComponent ]
-    })
-    .compileComponents();
+      declarations: [FileExplorerPageComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FileExplorerPageComponent);
     component = fixture.componentInstance;

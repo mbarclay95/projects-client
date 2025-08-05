@@ -1,17 +1,17 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Subject, takeUntil} from "rxjs";
-import {NzMessageService} from "ng-zorro-antd/message";
-import {createTask, Task} from "../../models/task.model";
-import {TasksService} from "../../services/tasks/state/tasks.service";
-import {AuthQuery} from "../../../auth/services/state/auth.query";
-import {FamiliesQuery} from "../../services/families/state/families.query";
-import {differenceInCalendarDays} from "date-fns";
-import {TagsService} from "../../services/tags.service";
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { createTask, Task } from '../../models/task.model';
+import { TasksService } from '../../services/tasks/state/tasks.service';
+import { AuthQuery } from '../../../auth/services/state/auth.query';
+import { FamiliesQuery } from '../../services/families/state/families.query';
+import { differenceInCalendarDays } from 'date-fns';
+import { TagsService } from '../../services/tags.service';
 
 @Component({
   selector: 'app-create-edit-task-modal',
   templateUrl: './create-edit-task-modal.component.html',
-  styleUrls: ['./create-edit-task-modal.component.scss']
+  styleUrls: ['./create-edit-task-modal.component.scss'],
 })
 export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Task>;
@@ -27,14 +27,11 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
     private nzMessageService: NzMessageService,
     private authQuery: AuthQuery,
     public familiesQuery: FamiliesQuery,
-    public tagsService: TagsService
-  ) {
-  }
+    public tagsService: TagsService,
+  ) {}
 
   ngOnInit(): void {
-    this.openModal.pipe(
-      takeUntil(this.subscriptionDestroyer)
-    ).subscribe(task => {
+    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((task) => {
       this.task = task.id === 0 ? task : createTask(task);
       this.isVisible = true;
     });
@@ -51,12 +48,10 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
     }
     this.saving = true;
     try {
-      this.task.id === 0 ?
-        await this.tasksService.createNewTask(this.task) :
-        await this.tasksService.updateTask(this.task.id, this.task);
+      this.task.id === 0 ? await this.tasksService.createNewTask(this.task) : await this.tasksService.updateTask(this.task.id, this.task);
     } catch (e) {
       this.saving = false;
-      this.nzMessageService.error("There was an error saving the task.");
+      this.nzMessageService.error('There was an error saving the task.');
       return;
     }
     this.nzMessageService.success('Task Saved!');
@@ -69,10 +64,10 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
       return;
     }
     switch (type) {
-      case "user":
+      case 'user':
         this.task.ownerId = this.authQuery.getUser().id;
         break;
-      case "family":
+      case 'family':
         this.task.ownerId = this.familiesQuery.activeId ?? 0;
     }
   }

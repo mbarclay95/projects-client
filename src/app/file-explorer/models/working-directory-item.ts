@@ -6,6 +6,6 @@ export interface WorkingDirectoryItem {
 export function workingDirectoryToString(workingDirectory: WorkingDirectoryItem[]): string {
   return [...workingDirectory]
     .sort((a, b) => a.sort - b.sort)
-    .map(part => part.path)
+    .map((part) => part.path)
     .join('/');
 }

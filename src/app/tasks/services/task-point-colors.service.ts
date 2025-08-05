@@ -20,7 +20,7 @@ export class TaskPointColorsService {
 
   getColor(max: number, min: number, point: number): string {
     if (min === max) {
-      return this.endColor.tco('srgb').toString();
+      return this.endColor.to('srgb').toString();
     }
     return this.range((point - min) / (max - min)).toString();
   }

@@ -1,23 +1,16 @@
 <div class="w-100 d-flex justify-content-center mb-3">
-  <nz-segmented
-    [nzOptions]="pages"
-    nzSize="default"
-    [ngModel]="(tasksQuery.selectedWeeklyPageIndex$ | async) ?? 0"
-    (ngModelChange)="changePage($event)"
-    [nzLabelTemplate]="templateRef"
-  ></nz-segmented>
-  <ng-template #customSegment let-index="index">
-    <ng-container *ngIf="index === 0">
+  <nz-segmented nzSize="default" [ngModel]="(tasksQuery.selectedWeeklyPageIndex$ | async) ?? 0" (ngModelChange)="changePage($event)">
+    <label nz-segmented-item [nzValue]="0">
       <div class="d-flex align-items-center px-2">
         <fa-icon [icon]="family" class="me-2"></fa-icon>
         Family ({{ tasksQuery.familyCount$ | async }})
       </div>
-    </ng-container>
-    <ng-container *ngIf="index === 1">
+    </label>
+    <label nz-segmented-item [nzValue]="1">
       <div class="d-flex align-items-center px-2">
         <fa-icon [icon]="personal" class="me-2"></fa-icon>
         Personal ({{ tasksQuery.userCount$ | async }})
       </div>
-    </ng-container>
-  </ng-template>
+    </label>
+  </nz-segmented>
 </div>

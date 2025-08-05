@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import Color from 'colorjs.io';
 import { FamiliesQuery } from './families/state/families.query';
+import Color from 'colorjs.io';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class TaskPointColorsService {
 
   getColor(max: number, min: number, point: number): string {
     if (min === max) {
-      return this.endColor.to('srgb').toString();
+      return this.endColor.tco('srgb').toString();
     }
     return this.range((point - min) / (max - min)).toString();
   }

@@ -18,4 +18,4 @@ RUN echo "gzip_min_length 1000;" >> /opt/docker/etc/nginx/conf.d/gzip.conf
 
 # Set workdir
 WORKDIR /var/www/html
-COPY --from=build-stage /app/dist/projects-client /var/www/html
+COPY --from=build-stage /app/dist/projects-client/browser /var/www/html

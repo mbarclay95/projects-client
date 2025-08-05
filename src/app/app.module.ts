@@ -7,7 +7,7 @@ import {en_US} from 'ng-zorro-antd/i18n';
 import {registerLocaleData} from '@angular/common';
 import en from '@angular/common/locales/en';
 import {FormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AkitaNgDevtools} from '@datorama/akita-ngdevtools';
 import {environment} from '../environments/environment';
@@ -23,38 +23,32 @@ import {NzSpinModule} from "ng-zorro-antd/spin";
 
 registerLocaleData(en);
 
-@NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    environment.production ? [] : AkitaNgDevtools.forRoot(),
-    FontAwesomeModule,
-    NzLayoutModule,
-    NzMenuModule,
-    NzIconModule,
-    NzMessageModule,
-    SharedModule,
-    NzButtonModule,
-    NzSpinModule,
-  ],
-  providers: [
-    {
-      provide: NZ_I18N,
-      useValue: en_US
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        environment.production ? [] : AkitaNgDevtools.forRoot(),
+        FontAwesomeModule,
+        NzLayoutModule,
+        NzMenuModule,
+        NzIconModule,
+        NzMessageModule,
+        SharedModule,
+        NzButtonModule,
+        NzSpinModule], providers: [
+        {
+            provide: NZ_I18N,
+            useValue: en_US
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }

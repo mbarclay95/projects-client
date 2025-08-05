@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 import {AuthQuery} from "./state/auth.query";
 import {Roles} from "../permissions";
 import {isMobile} from '../../app.component';
-import {HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'

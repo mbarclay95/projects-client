@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map, tap} from 'rxjs/operators';
 import {createEntry, Entry} from '../../../models/entry.model';

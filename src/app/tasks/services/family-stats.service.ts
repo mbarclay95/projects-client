@@ -3,7 +3,7 @@ import {BehaviorSubject, combineLatest, Observable, tap} from 'rxjs';
 import {getYear} from 'date-fns';
 import {FamiliesQuery} from './families/state/families.query';
 import {map} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {createFamilyMemberStats, FamilyMemberStats} from '../models/family-member-stats.model';
 

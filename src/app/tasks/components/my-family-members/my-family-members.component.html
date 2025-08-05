@@ -47,7 +47,7 @@
       <div class="w-100 d-flex justify-content-center align-items-center mb-2"
            *ngFor="let task of memberConfig.completedFamilyTasks">
 
-        <fa-icon *ngIf="loadingUndoId === task.id" [icon]="spinner" [spin]="true" class="me-2"></fa-icon>
+        <fa-icon *ngIf="loadingUndoId === task.id" [icon]="spinner" animation="spin" class="me-2"></fa-icon>
 
         <fa-icon *ngIf="weekOffset === 0 && loadingUndoId !== task.id" [icon]="undo" class="me-2"
                  style="color: grey; cursor: pointer" nz-popconfirm (nzOnConfirm)="undoTask(memberConfig.id, task)"

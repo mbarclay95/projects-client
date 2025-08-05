@@ -40,6 +40,9 @@ export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
   }
 
   async loadTaskHistory(): Promise<void> {
+    if (!this.model) {
+      return;
+    }
     if (this.model.taskHistory === undefined) {
       this.loadingHistory = true;
       try {

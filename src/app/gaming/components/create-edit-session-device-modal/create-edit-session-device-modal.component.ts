@@ -38,6 +38,9 @@ export class CreateEditSessionDeviceModalComponent extends DefaultModalComponent
   }
 
   async save(): Promise<void> {
+    if (!this.model) {
+      return;
+    }
     this.saving = true;
     const isNew = this.model.id === 0;
     try {

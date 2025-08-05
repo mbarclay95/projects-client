@@ -36,6 +36,9 @@ export class CreateEditDeviceModalComponent extends DefaultModalComponent<Gaming
   }
 
   async saveDevice(): Promise<void> {
+    if (!this.model) {
+      return;
+    }
     this.saving = true;
     try {
       if (this.model.id === 0) {

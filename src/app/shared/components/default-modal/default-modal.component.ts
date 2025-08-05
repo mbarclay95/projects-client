@@ -10,7 +10,7 @@ import {isMobile} from '../../../app.component';
 export class DefaultModalComponent<T> implements OnInit, OnDestroy {
   @Input() openModal!: Observable<T>;
 
-  model!: T;
+  model?: T;
   isVisible: boolean = false;
   saving = false;
   modalStyle = isMobile ? {top: '20px'} : {};

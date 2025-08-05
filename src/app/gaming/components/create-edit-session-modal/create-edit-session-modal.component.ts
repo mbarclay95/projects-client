@@ -5,7 +5,6 @@ import {NzModalComponent, NzModalContentDirective, NzModalModule} from 'ng-zorro
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DefaultModalComponent} from '../../../shared/components/default-modal/default-modal.component';
 import {GamingSession} from '../../models/gaming-session.model';
-import {NzOptionComponent, NzSelectComponent} from 'ng-zorro-antd/select';
 import {GamingSessionsFacadeService} from '../../services/gaming-sessions-facade.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzSwitchComponent} from 'ng-zorro-antd/switch';
@@ -22,8 +21,6 @@ import {NzInputNumberComponent} from 'ng-zorro-antd/input-number';
     NzModalContentDirective,
     FormsModule,
     NzModalModule,
-    NzSelectComponent,
-    NzOptionComponent,
     NzSwitchComponent,
     NzInputNumberComponent,
   ],
@@ -40,6 +37,9 @@ export class CreateEditSessionModalComponent extends DefaultModalComponent<Gamin
   }
 
   async saveSession(): Promise<void> {
+    if (!this.model) {
+      return;
+    }
     this.saving = true;
     try {
       if (this.model.id === 0) {

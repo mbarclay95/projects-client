@@ -1,7 +1,9 @@
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(model.id === 0 ? 'Create' : 'Edit') + ' Transaction'"
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Transaction'"
           [nzWidth]="modalWidth" [nzStyle]="modalStyle" [nzClosable]="false">
 
   <ng-container *nzModalContent>
+
+    @if (model) {
 
     <div class="d-flex">
 
@@ -54,6 +56,7 @@
       <nz-select></nz-select>
 
     </div>
+    }
 
   </ng-container>
 

@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, computed, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Folder } from '../../models/folder.model';
-import { createSite, Site } from '../../models/site.model';
+import { Site } from '../../models/site.model';
 import { faChevronLeft, faChevronRight, faEdit, faEllipsisV, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FoldersService } from '../../services/folder/state/folders.service';
+import { FolderSignalStore } from '../../services/folder-signal-store';
 
 @Component({
   selector: 'app-folder',
@@ -10,12 +10,12 @@ import { FoldersService } from '../../services/folder/state/folders.service';
   styleUrls: ['./folder.component.scss'],
   standalone: false,
 })
-export class FolderComponent implements OnInit {
+export class FolderComponent {
   @Input() folder!: Folder;
   @Input() editMode!: boolean;
 
-  @Output() openSiteModal: EventEmitter<Site> = new EventEmitter<Site>();
-  @Output() openFolderModal: EventEmitter<Folder> = new EventEmitter<Folder>();
+  @Output() openSiteModal: EventEmitter<number> = new EventEmitter<number>();
+  @Output() openFolderModal: EventEmitter<number> = new EventEmitter<number>();
 
   more = faEllipsisV;
   add = faPlus;
@@ -24,12 +24,20 @@ export class FolderComponent implements OnInit {
   left = faChevronLeft;
   right = faChevronRight;
 
-  constructor(public foldersService: FoldersService) {}
+  readonly folderStore = inject(FolderSignalStore);
 
-  ngOnInit(): void {}
+  sortedSites = computed(() => {
+    const editMode = this.folderStore.editMode();
+    return this.folder.sites.filter((s) => (editMode ? true : s.show)).sort((a, b) => (a.sort ?? 1000) - (b.sort ?? 1000));
+  });
 
   addNewSite(): void {
-    this.openSiteModal.emit(createSite({ id: 0, folderId: this.folder.id }));
+    this.folderStore.setFolderIdForNewSite(this.folder.id);
+  }
+
+  deleteFolder(): void {
+    this.folderStore.remove({ id: this.folder.id });
+    this.folderStore.loadAll(); // load again so that sorts will be in correct order
   }
 
   dropSite({ event }: { event: any }): void {
@@ -56,13 +64,16 @@ export class FolderComponent implements OnInit {
       .forEach((s) => {
         if (s.sort === oldPosition) {
           movedSites.push({ id: s.id, sort: newPosition });
-          this.foldersService.updateSiteCache(this.folder.id, s.id, { sort: newPosition });
+          this.folderStore.updateSiteCache(this.folder.id, s.id, { sort: newPosition });
         } else {
           movedSites.push({ id: s.id, sort: s.sort + (movedDown ? 1 : -1) });
-          this.foldersService.updateSiteCache(this.folder.id, s.id, { sort: s.sort + (movedDown ? 1 : -1) });
+          this.folderStore.updateSiteCache(this.folder.id, s.id, { sort: s.sort + (movedDown ? 1 : -1) });
         }
       });
 
-    void this.foldersService.updateSiteSort(this.folder.id, movedSites);
+    this.folderStore.updateSiteSortHttp({
+      folderId: this.folder.id,
+      movedSites,
+    });
   }
 }

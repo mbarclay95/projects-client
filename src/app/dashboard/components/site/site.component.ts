@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Site } from '../../models/site.model';
 import { faEdit, faGripVertical, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FoldersService } from '../../services/folder/state/folders.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { FolderSignalStore } from '../../services/folder-signal-store';
 
 @Component({
   selector: 'app-site',
@@ -10,27 +10,24 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   styleUrls: ['./site.component.scss'],
   standalone: false,
 })
-export class SiteComponent implements OnInit {
+export class SiteComponent {
   @Input() site!: Site;
   @Input() editMode!: boolean;
 
-  @Output() openSiteModal: EventEmitter<Site> = new EventEmitter<Site>();
+  @Output() openSiteModal: EventEmitter<number> = new EventEmitter<number>();
 
   trash = faTrash;
   edit = faEdit;
   grip = faGripVertical;
 
-  constructor(
-    public foldersService: FoldersService,
-    private nzMessageService: NzMessageService,
-  ) {}
+  readonly folderStore = inject(FolderSignalStore);
 
-  ngOnInit(): void {}
+  constructor(private nzMessageService: NzMessageService) {}
 
-  async updateSiteShow(show: boolean): Promise<void> {
+  updateSiteShow(show: boolean): void {
     const updatedSite = { ...this.site, ...{ show } };
     try {
-      await this.foldersService.updateSite(updatedSite, updatedSite.folderId);
+      this.folderStore.updateSiteHttp({ site: updatedSite, oldFolderId: updatedSite.folderId });
     } catch (e) {
       this.nzMessageService.error('There was an error updating the site');
     }

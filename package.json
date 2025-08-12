@@ -28,6 +28,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@ngrx/signals": "^19.2.1",
     "@swimlane/ngx-charts": "^22.0.0",
     "bluebird": "^3.7.2",
     "bootstrap": "^5.1.3",

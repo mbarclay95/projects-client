@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { gamingResolver } from './gaming.resolver';
 import { GamingSessionsPageComponent } from './pages/gaming-sessions-page/gaming-sessions-page.component';
 import { GamingSessionsAdminPageComponent } from './pages/gaming-sessions-admin-page/gaming-sessions-admin-page.component';
 import { Permissions } from '../auth/permissions';
@@ -13,7 +12,6 @@ import { authGuard } from '../auth/services/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    resolve: { gamingResolver },
     children: [
       {
         path: '',

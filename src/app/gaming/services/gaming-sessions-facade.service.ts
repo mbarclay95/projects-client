@@ -79,6 +79,7 @@ export class GamingSessionsFacadeService {
     private userGamingSessionsService: UserGamingSessionsService,
   ) {
     this.connectToWs();
+    this.loadDevices();
   }
 
   connectToWs(): void {

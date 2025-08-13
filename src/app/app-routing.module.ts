@@ -16,6 +16,7 @@ import { LoggingLayoutComponent } from './logging/logging-layout/logging-layout.
 import { GamingLayoutComponent } from './gaming/gaming-layout/gaming-layout.component';
 import { authGuard } from './auth/services/auth.guard';
 import { authChildGuard } from './auth/services/auth-child.guard';
+import { tryAuthGuard } from './auth/services/try-auth.guard';
 
 const routes: Routes = [
   {
@@ -32,6 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'games',
+    canActivate: [tryAuthGuard],
     component: GamingLayoutComponent,
     resolve: { AppResolver },
     data: { headerTitle: 'Games' },

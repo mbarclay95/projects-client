@@ -8,7 +8,9 @@ export class UserGamingSessionsService {
   private sessionUserState: BehaviorSubject<UserGamingSessions> = new BehaviorSubject<UserGamingSessions>({});
   sessionUserState$: Observable<UserGamingSessions> = this.sessionUserState.asObservable();
 
-  constructor() {}
+  constructor() {
+    this.initialize();
+  }
 
   initialize(): void {
     const state = localStorage.getItem(GAMING_STORAGE_KEY);

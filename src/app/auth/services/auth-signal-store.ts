@@ -1,4 +1,4 @@
-import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { createUser, User } from '../../users/models/user.model';
 import { computed, inject } from '@angular/core';
 import { catchError, firstValueFrom, of, pipe, switchMap } from 'rxjs';
@@ -167,13 +167,5 @@ export const AuthSignalStore = signalStore(
       clearLoginErrors,
       handleLoginErrors,
     };
-  }),
-  withHooks({
-    onInit(store) {
-      const authStorageService = inject(AuthStorageService);
-      if (authStorageService.isTokenSet()) {
-        store.getMe();
-      }
-    },
   }),
 );

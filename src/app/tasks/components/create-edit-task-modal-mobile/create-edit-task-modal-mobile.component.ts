@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthQuery } from '../../../auth/services/state/auth.query';
 import { TagsService } from '../../services/tags.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { TasksService } from '../../services/tasks/state/tasks.service';
@@ -26,14 +25,8 @@ export class CreateEditTaskModalMobileComponent extends CreateEditTaskModalCompo
   arrowDown = faChevronDown;
   arrowUp = faChevronUp;
 
-  constructor(
-    tasksService: TasksService,
-    nzMessageService: NzMessageService,
-    authQuery: AuthQuery,
-    familiesQuery: FamiliesQuery,
-    tagsService: TagsService,
-  ) {
-    super(tasksService, nzMessageService, authQuery, familiesQuery, tagsService);
+  constructor(tasksService: TasksService, nzMessageService: NzMessageService, familiesQuery: FamiliesQuery, tagsService: TagsService) {
+    super(tasksService, nzMessageService, familiesQuery, tagsService);
   }
 
   override ngOnInit() {

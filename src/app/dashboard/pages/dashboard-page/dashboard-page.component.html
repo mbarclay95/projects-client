@@ -3,7 +3,7 @@
     <nz-spin></nz-spin>
   } @else {
     <app-folder-grid
-      [showUptimeKuma]="(showUptimeKuma$ | async) ?? false"
+      [showUptimeKuma]="authStore.showUptimeKuma()"
       [downItems]="(uptimeKumaService.downItems$ | async) ?? []"
       [uptimeKumaIsConnected]="(uptimeKumaService.isConnected$ | async) ?? false"
     ></app-folder-grid>

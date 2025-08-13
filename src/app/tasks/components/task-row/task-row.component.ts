@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Task } from '../../models/task.model';
 import { faArrowRightToBracket, faEdit, faEllipsisV, faFlag } from '@fortawesome/free-solid-svg-icons';
 import { FamiliesQuery } from '../../services/families/state/families.query';
-import { AuthQuery } from '../../../auth/services/state/auth.query';
 import { TasksService } from '../../services/tasks/state/tasks.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
@@ -32,7 +31,6 @@ export class TaskRowComponent implements OnInit {
 
   constructor(
     public familiesQuery: FamiliesQuery,
-    public authQuery: AuthQuery,
     private tasksService: TasksService,
     private nzMessageService: NzMessageService,
     private router: Router,

@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { createFamily, Family } from '../../models/family.model';
 import { createTask, Task } from '../../models/task.model';
-import { AuthQuery } from '../../../auth/services/state/auth.query';
-import { PermissionsService } from '../../../auth/services/permissions.service';
 import { FamiliesQuery } from '../../services/families/state/families.query';
 import { TasksService } from '../../services/tasks/state/tasks.service';
 import { TaskUserConfigsService } from '../../services/task-user-configs/state/task-user-configs.service';
+import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
 
 @Component({
   selector: 'app-task-tabs',
@@ -21,9 +20,9 @@ export class TaskTabsComponent implements OnInit {
   openSkipTaskModal: Subject<Task> = new Subject<Task>();
   openViewTaskModal: Subject<Task> = new Subject<Task>();
 
+  readonly authStore = inject(AuthSignalStore);
+
   constructor(
-    private authQuery: AuthQuery,
-    public permissionsService: PermissionsService,
     public familiesQuery: FamiliesQuery,
     private tasksService: TasksService,
     private taskUserConfigsService: TaskUserConfigsService,

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UsersLayoutComponent } from './users/users-layout/users-layout.component';
 import { AuthLayoutComponent } from './auth/auth-layout/auth-layout.component';
-import { AuthGuard } from './auth/services/auth.guard';
 import { Permissions } from './auth/permissions';
 import { GoalsLayoutComponent } from './goals/goals-layout/goals-layout.component';
 import { BackupsLayoutComponent } from './backups/backups-layout/backups-layout.component';
@@ -15,7 +14,8 @@ import { AppResolver } from './app.resolver';
 import { MoneyLayoutComponent } from './money/money-layout/money-layout.component';
 import { LoggingLayoutComponent } from './logging/logging-layout/logging-layout.component';
 import { GamingLayoutComponent } from './gaming/gaming-layout/gaming-layout.component';
-import { tryAuthGuard } from './auth/services/try-auth.guard';
+import { authGuard } from './auth/services/auth.guard';
+import { authChildGuard } from './auth/services/auth-child.guard';
 
 const routes: Routes = [
   {
@@ -32,7 +32,6 @@ const routes: Routes = [
   },
   {
     path: 'games',
-    canActivate: [tryAuthGuard],
     component: GamingLayoutComponent,
     resolve: { AppResolver },
     data: { headerTitle: 'Games' },
@@ -40,8 +39,8 @@ const routes: Routes = [
   },
   {
     path: 'app',
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
+    canActivate: [authGuard],
+    canActivateChild: [authChildGuard],
     children: [
       {
         path: 'dashboard',

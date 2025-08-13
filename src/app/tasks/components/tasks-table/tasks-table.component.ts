@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } 
 import { Task } from '../../models/task.model';
 import { NzTableComponent } from 'ng-zorro-antd/table';
 import { fa1, faEdit, faPeopleRoof, faRepeat, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
-import { AuthQuery } from '../../../auth/services/state/auth.query';
 import { FamiliesQuery } from '../../services/families/state/families.query';
 import { TasksService } from '../../services/tasks/state/tasks.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -37,7 +36,6 @@ export class TasksTableComponent implements OnInit, OnDestroy {
   private readonly timeToShowHighlightedTask = 2000;
 
   constructor(
-    public authQuery: AuthQuery,
     public familiesQuery: FamiliesQuery,
     public tasksService: TasksService,
     private nzMessageService: NzMessageService,

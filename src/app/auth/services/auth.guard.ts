@@ -1,46 +1,20 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from './state/auth.service';
-import { AuthQuery } from './state/auth.query';
-import { PermissionsService } from './permissions.service';
+import { CanActivateFn, Router } from '@angular/router';
 import { Permissions } from '../permissions';
+import { inject } from '@angular/core';
+import { AuthSignalStore } from './auth-signal-store';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthGuard {
-  constructor(
-    private authService: AuthService,
-    private authQuery: AuthQuery,
-    private router: Router,
-    private permissionsService: PermissionsService,
-  ) {}
-
-  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    try {
-      await this.authService.getMe();
-    } catch (e) {
-      console.log(e);
-      await this.router.navigateByUrl('login');
-      return false;
-    }
-    const hasPermission = this.permissionsService.hasPermissionTo(route.data['permission'] as unknown as Permissions | undefined);
-    if (!hasPermission) {
-      console.log(`does not have ${route.data['permission']} permission`);
-      void this.router.navigateByUrl('my-profile');
-    }
-
-    return this.authQuery.isLoggedIn();
+export const authGuard: CanActivateFn = async (route, state) => {
+  const authStore = inject(AuthSignalStore);
+  const router = inject(Router);
+  if (!authStore.isLoggedIn()) {
+    await router.navigateByUrl('login');
+    return false;
+  }
+  const hasPermission = authStore.hasPermissionTo(route.data['permission'] as unknown as Permissions | undefined);
+  if (!hasPermission) {
+    console.log(`does not have ${route.data['permission']} permission`);
+    void router.navigateByUrl('my-profile');
   }
 
-  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const hasPermission = this.permissionsService.hasPermissionTo(childRoute.data['permission'] as unknown as Permissions | undefined);
-
-    if (!hasPermission) {
-      console.log(`does not have ${childRoute.data['permission']} permission`);
-      void this.router.navigateByUrl('my-profile');
-    }
-
-    return hasPermission;
-  }
-}
+  return authStore.isLoggedIn();
+};

@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class AuthStorageService {
   private authToken: string | undefined;
+  private moneyAppAuthToken: string | undefined;
 
   constructor() {
     this.loadAuthToken();
@@ -22,8 +23,16 @@ export class AuthStorageService {
     this.authToken = token;
   }
 
+  setMoneyAppAuthToken(token: string): void {
+    this.moneyAppAuthToken = token;
+  }
+
   getAuthToken(): string | undefined {
     return this.authToken;
+  }
+
+  getMoneyAppAuthToken(): string | undefined {
+    return this.moneyAppAuthToken;
   }
 
   isTokenSet(): boolean {

@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
-import { AuthGuard } from './services/auth.guard';
 import { MobileHeaderResolver } from '../mobile-header.resolver';
 import { AuthResolver } from './auth.resolver';
+import { authGuard } from './services/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'my-profile',
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
     component: MyProfileComponent,
     resolve: { MobileHeaderResolver, AuthResolver },
     data: { headerTitle: 'My Profile' },

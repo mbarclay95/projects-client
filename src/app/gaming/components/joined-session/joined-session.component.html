@@ -104,13 +104,13 @@
                   <fa-icon class="me-2" [icon]="play"></fa-icon>
                   Activate Turn
                 </li>
-                @if (sessionDevice.id === userSessionDeviceId || permissionsService.hasPermissionTo(adminPermission)) {
+                @if (sessionDevice.id === userSessionDeviceId || authStore.hasPermissionTo(adminPermission)) {
                   <li nz-menu-item (click)="editClicked(sessionDevice)">
                     <fa-icon class="me-2" [icon]="settings"></fa-icon>
                     Settings
                   </li>
                 }
-                @if (sessionDevice.id === userSessionDeviceId || permissionsService.hasPermissionTo(adminPermission)) {
+                @if (sessionDevice.id === userSessionDeviceId || authStore.hasPermissionTo(adminPermission)) {
                   <li nz-menu-item (click)="disconnectFromSession(sessionDevice)">
                     <fa-icon class="me-2" [icon]="leave"></fa-icon>
                     Leave Session
@@ -118,7 +118,7 @@
                 }
               </ul>
             </nz-dropdown-menu>
-          } @else if (sessionDevice.id === userSessionDeviceId || permissionsService.hasPermissionTo(adminPermission)) {
+          } @else if (sessionDevice.id === userSessionDeviceId || authStore.hasPermissionTo(adminPermission)) {
             <fa-icon (click)="editClicked(sessionDevice)" [icon]="settings"></fa-icon>
           }
         </div>

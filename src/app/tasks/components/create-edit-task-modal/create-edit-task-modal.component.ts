@@ -1,12 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { createTask, Task } from '../../models/task.model';
 import { TasksService } from '../../services/tasks/state/tasks.service';
-import { AuthQuery } from '../../../auth/services/state/auth.query';
 import { FamiliesQuery } from '../../services/families/state/families.query';
 import { differenceInCalendarDays } from 'date-fns';
 import { TagsService } from '../../services/tags.service';
+import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
 
 @Component({
   selector: 'app-create-edit-task-modal',
@@ -23,10 +23,11 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
 
   subscriptionDestroyer: Subject<void> = new Subject<void>();
 
+  readonly authStore = inject(AuthSignalStore);
+
   constructor(
     private tasksService: TasksService,
     private nzMessageService: NzMessageService,
-    private authQuery: AuthQuery,
     public familiesQuery: FamiliesQuery,
     public tagsService: TagsService,
   ) {}
@@ -66,7 +67,7 @@ export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
     }
     switch (type) {
       case 'user':
-        this.task.ownerId = this.authQuery.getUser().id;
+        this.task.ownerId = this.authStore.auth()!.id;
         break;
       case 'family':
         this.task.ownerId = this.familiesQuery.activeId ?? 0;

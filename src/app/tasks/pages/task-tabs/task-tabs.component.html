@@ -15,10 +15,12 @@
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'tasks' }" queryParamsHandling="merge"> Tasks </a>
     <app-tasks-page (editTask)="openTaskModal.next($event)"></app-tasks-page>
   </nz-tab>
-  <nz-tab *ngIf="permissionsService.viewFamiliesTab$ | async" (nzSelect)="selectedTab = 'Family'">
-    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'families' }" queryParamsHandling="merge"> Families </a>
-    <app-families-page (openFamilyModal)="openFamilyModal.next($event)"></app-families-page>
-  </nz-tab>
+  @if (authStore.viewFamiliesTab()) {
+    <nz-tab (nzSelect)="selectedTab = 'Family'">
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'families' }" queryParamsHandling="merge"> Families </a>
+      <app-families-page (openFamilyModal)="openFamilyModal.next($event)"></app-families-page>
+    </nz-tab>
+  }
 </nz-tabset>
 
 <ng-template #createButton>

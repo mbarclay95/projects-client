@@ -1,9 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { UptimeKumaService } from '../../services/uptime-kuma.service';
-import { AuthQuery } from '../../../auth/services/state/auth.query';
-import { tap } from 'rxjs';
 import { FolderSignalStore } from '../../services/folder-signal-store';
+import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -13,14 +12,15 @@ import { FolderSignalStore } from '../../services/folder-signal-store';
 })
 export class DashboardPageComponent {
   edit = faEdit;
-  showUptimeKuma$ = this.authQuery.showUptimeKuma$.pipe(tap((show) => this.initUptimeKuma(show)));
+
+  readonly authStore = inject(AuthSignalStore);
   readonly folderStore = inject(FolderSignalStore);
 
-  constructor(
-    // public foldersService: FoldersService,
-    public uptimeKumaService: UptimeKumaService,
-    private authQuery: AuthQuery,
-  ) {}
+  constructor(public uptimeKumaService: UptimeKumaService) {
+    effect(() => {
+      this.initUptimeKuma(this.authStore.showUptimeKuma());
+    });
+  }
 
   initUptimeKuma(show: boolean): void {
     show ? this.uptimeKumaService.initSocket() : this.uptimeKumaService.disconnectSocket();

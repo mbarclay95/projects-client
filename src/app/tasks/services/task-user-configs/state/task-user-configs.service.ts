@@ -1,22 +1,23 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { createTaskUserConfig, TaskUserConfig } from '../../../models/task-user-config.model';
 import { TaskUserConfigsStore, TaskUserConfigUiState } from './task-user-configs.store';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
-import { AuthQuery } from '../../../../auth/services/state/auth.query';
 import { TaskUserConfigsQuery } from './task-user-configs.query';
 import { Task } from '../../../models/task.model';
 import { arrayRemove, setLoading } from '@datorama/akita';
+import { AuthSignalStore } from '../../../../auth/services/auth-signal-store';
 
 @Injectable({ providedIn: 'root' })
 export class TaskUserConfigsService {
+  readonly authStore = inject(AuthSignalStore);
+
   constructor(
     private taskUserConfigsStore: TaskUserConfigsStore,
     private taskUserConfigsQuery: TaskUserConfigsQuery,
     private http: HttpClient,
-    private authQuery: AuthQuery,
   ) {}
 
   async get(familyId: number | undefined = undefined, setActive = true): Promise<void> {
@@ -28,7 +29,7 @@ export class TaskUserConfigsService {
         tap((configs) => {
           this.taskUserConfigsStore.set(configs);
           if (setActive) {
-            const myId = this.authQuery.getValue().id;
+            const myId = this.authStore.auth()!.id;
             const myConfig = configs.find((config) => config.userId === myId);
             if (myConfig) {
               this.taskUserConfigsStore.setActive(myConfig.id);

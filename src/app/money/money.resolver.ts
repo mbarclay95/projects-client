@@ -1,18 +1,16 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { AuthQuery } from '../auth/services/state/auth.query';
+import { AuthSignalStore } from '../auth/services/auth-signal-store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MoneyResolver {
-  constructor(
-    private authQuery: AuthQuery,
-    private router: Router,
-  ) {}
+  private authStore = inject(AuthSignalStore);
+  private router = inject(Router);
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (!this.authQuery.hasMoneyAppToken()) {
+    if (!this.authStore.hasMoneyAppToken()) {
       void this.router.navigateByUrl('/app/money/incorrect-config');
     }
 

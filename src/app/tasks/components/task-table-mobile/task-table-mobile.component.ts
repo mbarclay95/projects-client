@@ -14,7 +14,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { TasksService } from '../../services/tasks/state/tasks.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { AuthQuery } from '../../../auth/services/state/auth.query';
 import { FamiliesQuery } from '../../services/families/state/families.query';
 import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,7 +50,6 @@ export class TaskTableMobileComponent implements OnInit {
   private readonly timeToShowHighlightedTask = 2000;
 
   constructor(
-    public authQuery: AuthQuery,
     public familiesQuery: FamiliesQuery,
     public tasksService: TasksService,
     private nzMessageService: NzMessageService,

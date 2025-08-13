@@ -1,12 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { AuthService } from './state/auth.service';
-import { AuthStorageService } from './auth-storage.service';
 import { Router } from '@angular/router';
-import { AuthQuery } from './state/auth.query';
 import { Roles } from '../permissions';
 import { isMobile } from '../../app.component';
-import { HttpErrorResponse } from '@angular/common/http';
+import { AuthSignalStore } from './auth-signal-store';
 
 @Injectable({
   providedIn: 'root',
@@ -15,16 +12,9 @@ export class LoginService {
   loginForm?: UntypedFormGroup;
   loading = false;
 
-  badCredsError = false;
-  expiredTokenError = false;
-  otherError = false;
+  readonly authStore = inject(AuthSignalStore);
 
-  constructor(
-    private authService: AuthService,
-    private authQuery: AuthQuery,
-    private authStorageService: AuthStorageService,
-    private router: Router,
-  ) {}
+  constructor(private router: Router) {}
 
   initializeForm(): void {
     this.loginForm = new UntypedFormGroup({
@@ -38,77 +28,52 @@ export class LoginService {
       return;
     }
     this.loading = true;
-    this.badCredsError = false;
-    this.expiredTokenError = false;
 
-    try {
-      await this.authService.login(this.loginForm.get('email')?.value ?? '', this.loginForm.get('password')?.value ?? '');
-    } catch (e: unknown) {
-      this.handleUnAuthorizedErrors(e as HttpErrorResponse);
+    const loginSuccess = await this.authStore.login(this.loginForm.get('email')?.value ?? '', this.loginForm.get('password')?.value ?? '');
+    if (!loginSuccess) {
       this.loading = false;
       return;
     }
 
-    try {
-      await this.authService.getMe();
-    } catch (e: unknown) {
-      this.handleUnAuthorizedErrors(e as HttpErrorResponse);
-      this.loading = false;
-      return;
-    }
+    await this.authStore.getMe();
 
     this.loading = false;
-    await this.router.navigateByUrl(this.getRedirectUrl());
+    await this.redirectIfLoggedIn();
   }
 
-  async isLoggedIn(): Promise<boolean> {
-    if (!this.authStorageService.isTokenSet()) {
-      return false;
+  async redirectIfLoggedIn(): Promise<boolean> {
+    if (this.authStore.isLoggedIn()) {
+      // lazy loading was failing without waiting a second. AI recommended and it works...
+      await new Promise((res) => setTimeout(res, 50));
+      await this.router.navigate([this.getRedirectUrl()]);
+      return true;
     }
 
-    try {
-      await this.authService.getMe();
-    } catch (e: unknown) {
-      this.handleUnAuthorizedErrors(e as HttpErrorResponse);
-      return false;
-    }
-    await this.router.navigateByUrl(this.getRedirectUrl());
-
-    return true;
-  }
-
-  handleUnAuthorizedErrors(error: HttpErrorResponse): void {
-    switch (error.error.message) {
-      case 'Unauthenticated.':
-        this.expiredTokenError = true;
-        break;
-      case 'Bad credentials':
-        this.badCredsError = true;
-        break;
-      default:
-        this.otherError = true;
-    }
+    return false;
   }
 
   getRedirectUrl(): string {
-    const me = this.authQuery.getUser();
+    const me = this.authStore.auth();
+    if (!me) {
+      throw Error('Auth not initialized');
+    }
     switch (me.userConfig.homePageRole) {
       case null:
-        return 'my-profile';
+        return '/my-profile';
       case Roles.DASHBOARD_ROLE:
-        return 'app/dashboard';
+        return '/app/dashboard';
       case Roles.BACKUPS_ROLE:
-        return 'app/backups?tab=backups';
+        return '/app/backups?tab=backups';
       case Roles.EVENTS_ROLE:
-        return 'app/events';
+        return '/app/events';
       case Roles.GOALS_ROLE:
-        return 'app/goals';
+        return '/app/goals';
       case Roles.TASKS_ROLE:
-        return isMobile ? 'app/tasks/weekly-tasks' : 'app/tasks?tab=weekly-tasks';
+        return isMobile ? '/app/tasks/weekly-tasks' : '/app/tasks?tab=weekly-tasks';
       case Roles.FILE_EXPLORER_ROLE:
-        return 'app/file-explorer';
+        return '/app/file-explorer';
       case Roles.MONEY_APP_ROLE:
-        return 'app/money';
+        return '/app/money';
     }
     throw new Error('Un-configured role set to homepage');
   }

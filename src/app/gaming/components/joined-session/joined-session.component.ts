@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { createGamingSession, GamingSession } from '../../models/gaming-session.model';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
@@ -23,8 +23,8 @@ import { GamingSessionsFacadeService } from '../../services/gaming-sessions-faca
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { PermissionsService } from '../../../auth/services/permissions.service';
 import { Permissions } from '../../../auth/permissions';
+import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
 
 @Component({
   selector: 'app-joined-session',
@@ -62,12 +62,13 @@ export class JoinedSessionComponent {
   openSessionModal: Subject<GamingSession> = new Subject<GamingSession>();
   adminPermission = Permissions.GAMING_SESSIONS_ADMIN_PAGE;
 
+  readonly authStore = inject(AuthSignalStore);
+
   constructor(
     public gamingSessionsFacadeService: GamingSessionsFacadeService,
     private nzMessageService: NzMessageService,
     private router: Router,
     private nzModalService: NzModalService,
-    public permissionsService: PermissionsService,
   ) {}
 
   editClicked(sessionDevice: GamingSessionDevice): void {

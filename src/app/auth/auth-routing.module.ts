@@ -5,11 +5,13 @@ import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 import { MobileHeaderResolver } from '../mobile-header.resolver';
 import { AuthResolver } from './auth.resolver';
 import { authGuard } from './services/auth.guard';
+import { tryAuthGuard } from './services/try-auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
+    canActivate: [tryAuthGuard],
     component: LoginPageComponent,
     resolve: { MobileHeaderResolver },
     data: { headerTitle: 'Login' },

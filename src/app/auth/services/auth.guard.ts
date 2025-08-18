@@ -13,17 +13,14 @@ export const authGuard: CanActivateFn = async (route, state) => {
     await router.navigateByUrl('login');
     return false;
   }
-  console.log('token set');
 
   if (!authStore.isLoggedIn()) {
-    console.log('wasnt logged in');
     await authStore.getMe();
     if (!authStore.isLoggedIn()) {
       await router.navigateByUrl('login');
       return false;
     }
   }
-  console.log('is logged in');
 
   const hasPermission = authStore.hasPermissionTo(route.data['permission'] as unknown as Permissions | undefined);
   if (!hasPermission) {

@@ -38,9 +38,8 @@
   }
 
   <nz-layout>
-    @if (isMobile) {
+    @if (isMobile && sideMenuClosed !== undefined) {
       <nz-sider
-        *ngIf="sideMenuClosed !== undefined"
         nzCollapsible
         [(nzCollapsed)]="sideMenuClosed"
         [nzTrigger]="null"

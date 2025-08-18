@@ -26,8 +26,8 @@ export class AppComponent {
     private router: Router,
   ) {
     effect(() => {
-      if (this.isMobile) {
-        stop();
+      if (this.isMobile || this.sideMenuClosed !== undefined) {
+        return;
       }
       const user = this.authStore.auth();
       if (user) {
@@ -37,9 +37,9 @@ export class AppComponent {
             this.sideMenuClosed = true;
           }, 0);
         }
-        stop();
       }
     });
+
     if (this.isMobile) {
       this.sideMenuClosed = true;
     }
@@ -79,4 +79,4 @@ export class AppComponent {
   }
 }
 
-export const isMobile = screen.width < 900;
+export const isMobile = window.matchMedia('(max-width: 900px)').matches;

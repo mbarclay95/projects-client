@@ -1,7 +1,7 @@
 <nz-tabset [nzTabBarExtraContent]="createButton" nzSize="large" nzLinkRouter>
-  <nz-tab (nzClick)="selectedTab = 'Backup Job'" (nzSelect)="selectBackupTab()" (nzDeselect)="backupsPollingService.stopPolling()">
+  <nz-tab (nzClick)="selectedTab = 'Backup Job'" (nzSelect)="selectBackupTab()" (nzDeselect)="backupStore.stopPolling()">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'backups' }" queryParamsHandling="merge"> Backup Jobs </a>
-    <app-backups-page (editBackup)="openBackupsDrawer.next($event)"></app-backups-page>
+    <app-backups-page (editBackup)="backupStore.setSelectedEntity($event)"></app-backups-page>
   </nz-tab>
   <!--  <nz-tab (nzSelect)="selectedTab = 'Scheduled Backup Job'">-->
   <!--    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{tab: 'scheduled'}" queryParamsHandling="merge">-->
@@ -11,7 +11,7 @@
   <!--  </nz-tab>-->
   <nz-tab (nzSelect)="selectedTab = 'Target'">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'targets' }" queryParamsHandling="merge"> Targets </a>
-    <app-targets-page (editTarget)="openTargetModal.next($event)"></app-targets-page>
+    <app-targets-page (editTarget)="targetStore.setSelectedEntity($event)"></app-targets-page>
   </nz-tab>
 </nz-tabset>
 
@@ -19,8 +19,8 @@
   <button nz-button nzType="primary" (click)="createEntity()">Create {{ selectedTab }}</button>
 </ng-template>
 
-<app-create-edit-backups-drawer [openModal]="openBackupsDrawer.asObservable()"></app-create-edit-backups-drawer>
+<app-create-edit-backups-drawer [openDrawer]="backupStore.selectedEntity"></app-create-edit-backups-drawer>
 <!--<app-create-edit-scheduled-backup-drawer-->
 <!--  [openModal]="openScheduledBackupsDrawer.asObservable()"-->
 <!--&gt;</app-create-edit-scheduled-backup-drawer>-->
-<app-create-edit-target-modal [openModal]="openTargetModal.asObservable()"></app-create-edit-target-modal>
+<app-create-edit-target-modal [openModal]="targetStore.selectedEntity"></app-create-edit-target-modal>

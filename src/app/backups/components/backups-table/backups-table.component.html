@@ -26,7 +26,7 @@
             >
               <fa-icon [icon]="play" size="1x" class="text-success"></fa-icon>
             </button>
-            <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editBackup.emit(backup)">
+            <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editBackup.emit(backup.id)">
               <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
             </button>
             <button
@@ -35,7 +35,7 @@
               nzType="text"
               nz-popconfirm
               nzPopconfirmTitle="Are you sure you want to archive this backup?"
-              (nzOnConfirm)="backupsService.deleteBackups(backup)"
+              (nzOnConfirm)="backupStore.remove({ id: backup.id })"
             >
               <fa-icon [icon]="archive" size="1x" class="text-warning"></fa-icon>
             </button>

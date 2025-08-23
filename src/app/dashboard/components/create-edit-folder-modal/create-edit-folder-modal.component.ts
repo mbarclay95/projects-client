@@ -24,6 +24,6 @@ export class CreateEditFolderModalComponent extends DefaultModalSignalComponent<
   }
 
   closeModal(): void {
-    this.folderStore.setSelectedFolder();
+    this.folderStore.clearSelectedEntity();
   }
 }

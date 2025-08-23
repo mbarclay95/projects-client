@@ -25,6 +25,6 @@ export class FolderGridComponent {
   readonly folderStore = inject(FolderSignalStore);
 
   createFolder(): void {
-    this.folderStore.setSelectedFolder(0);
+    this.folderStore.setSelectedEntity(0);
   }
 }

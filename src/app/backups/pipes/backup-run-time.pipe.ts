@@ -13,12 +13,12 @@ export class BackupRunTimePipe implements PipeTransform {
       return '';
     }
     if (backup.completedAt) {
-      return formatDistanceStrict(backup.completedAt, backup.startedAt);
+      return formatDistanceStrict(backup.completedAt, backup.startedAt, { roundingMethod: 'ceil' });
     }
     if (backup.erroredAt) {
-      return formatDistanceStrict(backup.erroredAt, backup.startedAt);
+      return formatDistanceStrict(backup.erroredAt, backup.startedAt, { roundingMethod: 'ceil' });
     }
 
-    return formatDistanceStrict(new Date(), backup.startedAt);
+    return formatDistanceStrict(new Date(), backup.startedAt, { roundingMethod: 'ceil' });
   }
 }

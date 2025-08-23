@@ -37,7 +37,7 @@ export class FolderComponent {
 
   deleteFolder(): void {
     this.folderStore.remove({ id: this.folder.id });
-    this.folderStore.loadAll(); // load again so that sorts will be in correct order
+    this.folderStore.loadAll({}); // load again so that sorts will be in correct order
   }
 
   dropSite({ event }: { event: any }): void {

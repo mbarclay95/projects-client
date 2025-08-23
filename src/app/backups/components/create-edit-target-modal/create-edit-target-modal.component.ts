@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { createTarget, Target } from '../../models/target.model';
-import { TargetsService } from '../../services/targets/state/targets.service';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Target } from '../../models/target.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
+import { TargetSignalStore } from '../../services/target-signal-store';
 
 @Component({
   selector: 'app-create-edit-target-modal',
@@ -10,56 +10,30 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   styleUrls: ['./create-edit-target-modal.component.scss'],
   standalone: false,
 })
-export class CreateEditTargetModalComponent implements OnInit, OnDestroy {
-  @Input() openModal!: Observable<{ target: Target; backupStepId?: number }>;
+export class CreateEditTargetModalComponent extends DefaultModalSignalComponent<Target> {
+  @Input() backupStepId?: number;
   @Output() selectNewTarget: EventEmitter<{ target: Target; backupStepId: number }> = new EventEmitter<{
     target: Target;
     backupStepId: number;
   }>();
 
-  target?: Target;
-  backupStepId?: number;
-  isVisible: boolean = false;
-  saving = false;
+  readonly targetStore = inject(TargetSignalStore);
+  readonly nzMessageService = inject(NzMessageService);
 
-  private subscriptionDestroyer: Subject<void> = new Subject<void>();
-
-  constructor(
-    private targetsService: TargetsService,
-    private nzMessageService: NzMessageService,
-  ) {}
-
-  ngOnInit(): void {
-    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe(({ target, backupStepId }) => {
-      this.target = target.id === 0 ? target : createTarget(target);
-      this.backupStepId = backupStepId;
-      this.isVisible = true;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptionDestroyer.next();
-    this.subscriptionDestroyer.complete();
-  }
-
-  async saveTarget() {
-    this.saving = true;
-    if (!this.target) {
+  saveTarget() {
+    if (!this.model) {
       return;
     }
-    try {
-      const newTarget =
-        this.target.id === 0 ? await this.targetsService.createNewTarget(this.target) : await this.targetsService.updateTarget(this.target);
-      if (this.backupStepId !== undefined) {
-        this.selectNewTarget.emit({ target: newTarget, backupStepId: this.backupStepId });
-      }
-    } catch (e) {
-      this.saving = false;
-      this.nzMessageService.error('There was an error saving the target.');
-      return;
-    }
+    this.model.id === 0
+      ? this.targetStore.create({ entity: this.model, onSuccess: this.targetSaved })
+      : this.targetStore.update({ entity: this.model, onSuccess: this.targetSaved });
+  }
+
+  private targetSaved(newTarget: Target): void {
     this.nzMessageService.success('Target Saved!');
-    this.saving = false;
-    this.isVisible = false;
+    this.targetStore.clearSelectedEntity();
+    if (this.backupStepId !== undefined) {
+      this.selectNewTarget.emit({ target: newTarget, backupStepId: this.backupStepId });
+    }
   }
 }

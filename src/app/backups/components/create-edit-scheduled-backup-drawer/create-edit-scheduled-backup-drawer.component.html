@@ -119,6 +119,6 @@
 </nz-drawer>
 
 <app-create-edit-target-modal
-  [openModal]="openTargetModal.asObservable()"
+  [openModal]="targetStore.selectedEntity"
   (selectNewTarget)="selectNewTarget($event)"
 ></app-create-edit-target-modal>

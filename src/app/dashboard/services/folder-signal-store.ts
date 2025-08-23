@@ -12,7 +12,6 @@ import { updateEntity } from '@ngrx/signals/entities';
 
 type FolderStoreState = {
   editMode: boolean;
-  selectedFolderId: number | undefined;
   selectedSiteId: number | undefined;
   newSiteFolderId: number;
   loadingOneSite: boolean;
@@ -20,7 +19,6 @@ type FolderStoreState = {
 
 const initialState: FolderStoreState = {
   editMode: false,
-  selectedFolderId: undefined,
   selectedSiteId: undefined,
   newSiteFolderId: 0,
   loadingOneSite: false,
@@ -33,18 +31,7 @@ export const FolderSignalStore = signalStore(
     createEntity: createFolder,
   }),
   withState(initialState),
-  withComputed(({ entities, selectedFolderId, selectedSiteId, newSiteFolderId }) => ({
-    selectedFolder: computed(() => {
-      const folderId = selectedFolderId();
-      if (folderId === undefined) {
-        return undefined;
-      }
-      if (folderId === 0) {
-        return createFolder({ id: 0 });
-      }
-
-      return createFolder(entities().find((folder) => folder.id === selectedFolderId())!);
-    }),
+  withComputed(({ entities, selectedSiteId, newSiteFolderId }) => ({
     selectedSite: computed(() => {
       const siteId = selectedSiteId();
       if (siteId === undefined) {
@@ -104,7 +91,6 @@ export const FolderSignalStore = signalStore(
   withMethods((store) => {
     const httpClient = inject(HttpClient);
     const toggleEditMode = () => patchState(store, { editMode: !store.editMode() });
-    const setSelectedFolder = (folderId?: number) => patchState(store, { selectedFolderId: folderId });
     const setSelectedSite = (siteId?: number) => patchState(store, { selectedSiteId: siteId });
     const setFolderIdForNewSite = (folderId: number) => patchState(store, { selectedSiteId: 0, newSiteFolderId: folderId });
     const findFolderBySort = (sort: number): Folder | undefined => store.entities().find((f) => f.sort === sort);
@@ -269,7 +255,7 @@ export const FolderSignalStore = signalStore(
           setSiteLoading(true);
           return httpClient.delete(`${environment.apiUrl}/sites/${id}`).pipe(
             tap(() => {
-              store.loadAll();
+              store.loadAll({});
               setSiteLoading(false);
               if (onSuccess) {
                 onSuccess();
@@ -282,7 +268,6 @@ export const FolderSignalStore = signalStore(
 
     return {
       toggleEditMode,
-      setSelectedFolder,
       setSelectedSite,
       setFolderIdForNewSite,
       moveFolder,
@@ -295,7 +280,7 @@ export const FolderSignalStore = signalStore(
   }),
   withHooks({
     onInit(store) {
-      store.loadAll();
+      store.loadAll({});
     },
   }),
 );

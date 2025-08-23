@@ -1,6 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { BackupsQuery } from '../../services/backups/state/backups.query';
-import { Backup } from '../../models/backup.model';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { BackupsSignalStore } from '../../services/backups-signal-store';
 
 @Component({
   selector: 'app-backups-page',
@@ -8,10 +7,7 @@ import { Backup } from '../../models/backup.model';
   styleUrls: ['./backups-page.component.scss'],
   standalone: false,
 })
-export class BackupsPageComponent implements OnInit {
-  @Output() editBackup: EventEmitter<Backup> = new EventEmitter<Backup>();
-
-  constructor(public backupsQuery: BackupsQuery) {}
-
-  ngOnInit(): void {}
+export class BackupsPageComponent {
+  @Output() editBackup: EventEmitter<number> = new EventEmitter<number>();
+  readonly backupStore = inject(BackupsSignalStore);
 }

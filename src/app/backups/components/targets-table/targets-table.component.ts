@@ -16,7 +16,7 @@ export class TargetsTableComponent implements OnInit {
       this._targets = targets;
     }
   }
-  @Output() editTarget: EventEmitter<{ target: Target }> = new EventEmitter<{ target: Target }>();
+  @Output() editTarget: EventEmitter<number> = new EventEmitter<number>();
 
   _targets: Target[] = [];
   edit = faEdit;

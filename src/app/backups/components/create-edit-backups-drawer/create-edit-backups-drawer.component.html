@@ -44,11 +44,7 @@
                     <div class="mb-1">Source Target:</div>
 
                     <nz-select [(ngModel)]="backupStep.config.sourceTargetId" class="w-100" [nzDropdownRender]="addTarget">
-                      <nz-option
-                        *ngFor="let target of targetsQuery.target$ | async"
-                        [nzValue]="target.id"
-                        [nzLabel]="target.name"
-                      ></nz-option>
+                      <nz-option *ngFor="let target of targetStore.entities()" [nzValue]="target.id" [nzLabel]="target.name"></nz-option>
                     </nz-select>
                   </div>
 
@@ -56,11 +52,7 @@
                     <div class="mb-1">Destination Target:</div>
 
                     <nz-select [(ngModel)]="backupStep.config.destinationTargetId" class="w-100" [nzDropdownRender]="addTarget">
-                      <nz-option
-                        *ngFor="let target of targetsQuery.target$ | async"
-                        [nzValue]="target.id"
-                        [nzLabel]="target.name"
-                      ></nz-option>
+                      <nz-option *ngFor="let target of targetStore.entities()" [nzValue]="target.id" [nzLabel]="target.name"></nz-option>
                     </nz-select>
                   </div>
 
@@ -85,11 +77,7 @@
                     <div class="mb-1">Source Target:</div>
 
                     <nz-select [(ngModel)]="backupStep.config.sourceTargetId" class="w-100" [nzDropdownRender]="addTarget">
-                      <nz-option
-                        *ngFor="let target of targetsQuery.target$ | async"
-                        [nzValue]="target.id"
-                        [nzLabel]="target.name"
-                      ></nz-option>
+                      <nz-option *ngFor="let target of targetStore.entities()" [nzValue]="target.id" [nzLabel]="target.name"></nz-option>
                     </nz-select>
                   </div>
 
@@ -103,11 +91,7 @@
                     <div class="mb-1">Destination Target:</div>
 
                     <nz-select [(ngModel)]="backupStep.config.destinationTargetId" class="w-100" [nzDropdownRender]="addTarget">
-                      <nz-option
-                        *ngFor="let target of targetsQuery.target$ | async"
-                        [nzValue]="target.id"
-                        [nzLabel]="target.name"
-                      ></nz-option>
+                      <nz-option *ngFor="let target of targetStore.entities()" [nzValue]="target.id" [nzLabel]="target.name"></nz-option>
                     </nz-select>
                   </div>
                 </ng-container>
@@ -138,7 +122,7 @@
   <ng-template #footer>
     <div>
       <button nz-button nzType="primary" class="me-2" (click)="saveBackup()">Save</button>
-      <button nz-button nzType="default" (click)="isVisible = false">Cancel</button>
+      <button nz-button nzType="default" (click)="backupStore.clearSelectedEntity()">Cancel</button>
     </div>
   </ng-template>
 </nz-drawer>

@@ -1,10 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { UsersQuery } from '../../../users/services/state/users.query';
+import { Component, inject } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { createEvent, Event } from '../../models/event.model';
-import { EventsService } from '../../services/events/state/events.service';
-import { isMobile } from '../../../app.component';
+import { Event } from '../../models/event.model';
+import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
+import { EventsSignalStore } from '../../services/events-signal-store';
 
 @Component({
   selector: 'app-create-edit-event',
@@ -12,62 +10,32 @@ import { isMobile } from '../../../app.component';
   styleUrls: ['./create-edit-event.component.scss'],
   standalone: false,
 })
-export class CreateEditEventComponent implements OnInit, OnDestroy {
-  @Input() openModal!: Observable<Event>;
+export class CreateEditEventComponent extends DefaultModalSignalComponent<Event> {
+  readonly eventsStore = inject(EventsSignalStore);
+  readonly nzMessageService = inject(NzMessageService);
 
-  event?: Event;
-  isVisible: boolean = false;
-  saving = false;
-  modalWidth = isMobile ? '95%' : '700px';
-  modalStyle = isMobile ? { top: '20px' } : {};
-
-  private subscriptionDestroyer: Subject<void> = new Subject<void>();
-
-  constructor(
-    private eventsService: EventsService,
-    public usersQuery: UsersQuery,
-    private nzMessageService: NzMessageService,
-  ) {}
-
-  ngOnInit(): void {
-    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((event) => {
-      this.event = event.id === 0 ? event : createEvent(event);
-      this.isVisible = true;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptionDestroyer.next();
-    this.subscriptionDestroyer.complete();
-  }
-
-  async saveEvent() {
-    if (!this.event) {
+  saveEvent(): void {
+    if (!this.model) {
       return;
     }
-    this.saving = true;
-    try {
-      this.event.id === 0
-        ? await this.eventsService.createEvent(this.event)
-        : await this.eventsService.updateEvent(this.event.id, this.event);
-    } catch (e) {
-      this.saving = false;
-      this.nzMessageService.error('There was an error saving the event.');
-      return;
-    }
+    this.model.id === 0
+      ? this.eventsStore.create({ entity: this.model, onSuccess: () => this.eventSaved() })
+      : this.eventsStore.update({ entity: this.model, onSuccess: () => this.eventSaved() });
+  }
+
+  eventSaved(): void {
     this.nzMessageService.success('Event Saved!');
-    this.saving = false;
-    this.isVisible = false;
+    this.eventsStore.clearSelectedEntity();
   }
 
-  updateNotifySwitch(checked: boolean) {
-    if (!this.event) {
+  updateNotifySwitch(checked: boolean): void {
+    if (!this.model) {
       return;
     }
     if (checked) {
-      this.event.notificationEmail = '';
+      this.model.notificationEmail = '';
     } else {
-      this.event.notificationEmail = undefined;
+      this.model.notificationEmail = undefined;
     }
   }
 }

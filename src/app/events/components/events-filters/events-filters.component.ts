@@ -1,8 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { EventsUiState } from '../../services/events/state/events.store';
-import { EventsService } from '../../services/events/state/events.service';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { EventsSignalStore, EventsUiState } from '../../services/events-signal-store';
 
 @Component({
   selector: 'app-events-filters',
@@ -15,8 +14,7 @@ export class EventsFiltersComponent implements OnInit, OnDestroy {
   search$: Subject<string> = new Subject<string>();
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
-
-  constructor(public eventsService: EventsService) {}
+  readonly eventsStore = inject(EventsSignalStore);
 
   ngOnInit(): void {
     this.subscribeToSearch();
@@ -30,7 +28,7 @@ export class EventsFiltersComponent implements OnInit, OnDestroy {
   subscribeToSearch() {
     this.search$
       .pipe(debounceTime(200), takeUntil(this.subscriptionDestroyer))
-      .subscribe((search) => this.eventsService.updateUi({ search }));
+      .subscribe((search) => this.eventsStore.updateUiState({ search }));
   }
 
   updateSearch(search: string) {

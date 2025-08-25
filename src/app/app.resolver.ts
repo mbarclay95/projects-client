@@ -1,19 +1,14 @@
 import { Injectable } from '@angular/core';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { MobileFooterService } from './shared/services/mobile-footer.service';
-import { MobileHeaderResolver } from './mobile-header.resolver';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppResolver {
-  constructor(
-    private mobileFooterService: MobileFooterService,
-    private mobileHeaderResolver: MobileHeaderResolver,
-  ) {}
+  constructor(private mobileFooterService: MobileFooterService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
     this.mobileFooterService.clearFooterButtons();
-    this.mobileHeaderResolver.resolve(route, state);
   }
 }

@@ -9,10 +9,10 @@
           }
         </div>
 
-        <div style="font-size: 18px">{{ mobileHeaderService.title$ | async }}</div>
+        <div style="font-size: 18px">{{ mobileHeaderService.title() }}</div>
 
         <div style="flex: 1" class="d-flex w-100 justify-content-end">
-          @if (mobileHeaderService.showCreateButton$ | async) {
+          @if (mobileHeaderService.showCreateButton()) {
             <fa-icon [icon]="plus" (click)="mobileHeaderService.clickedButton()"></fa-icon>
           }
         </div>

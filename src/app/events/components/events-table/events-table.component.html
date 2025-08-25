@@ -1,4 +1,4 @@
-<nz-table #eventsTableTag [nzData]="_events" nzSize="default" [nzFrontPagination]="false">
+<nz-table #eventsTableTag [nzData]="events" nzSize="default" [nzFrontPagination]="false" [nzLoading]="loading">
   <thead>
     <tr>
       <th nzWidth="60px"></th>
@@ -57,7 +57,7 @@
                     Open
                   </a>
 
-                  <div class="d-flex flex-column align-items-center" (click)="editEvent.emit(event)">
+                  <div class="d-flex flex-column align-items-center" (click)="editEvent.emit(event.id)">
                     <fa-icon class="text-primary" [icon]="edit"></fa-icon>
                     Edit
                   </div>
@@ -66,7 +66,7 @@
                     class="d-flex flex-column align-items-center"
                     nz-popconfirm
                     nzPopconfirmTitle="Are you sure?"
-                    (nzOnConfirm)="archiveEvent.emit(event)"
+                    (nzOnConfirm)="archiveEvent.emit(event.id)"
                   >
                     <fa-icon class="text-danger" [icon]="archive"></fa-icon>
                     Archive
@@ -82,7 +82,7 @@
                   <fa-icon *ngIf="!participant.isGoing" [icon]="participantNotGoing" class="text-danger me-2"></fa-icon>
                   {{ participant.name }}
                 </div>
-                <fa-icon [icon]="participantChange" (click)="editParticipant.emit(participant)"></fa-icon>
+                <fa-icon [icon]="participantChange" (click)="editParticipant.emit(participant.id)"></fa-icon>
               </nz-list-item>
             </nz-list>
           </div>

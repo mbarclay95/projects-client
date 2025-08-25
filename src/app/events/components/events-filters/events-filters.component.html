@@ -4,7 +4,7 @@
 
     <div class="d-flex align-items-center">
       <div style="white-space: nowrap; color: rgba(255, 255, 255, 0.5)" class="me-2">Show Archived:</div>
-      <nz-switch [ngModel]="ui.showArchived" (ngModelChange)="eventsService.updateUi({ showArchived: $event })"></nz-switch>
+      <nz-switch [ngModel]="ui.showArchived" (ngModelChange)="eventsStore.updateUiState({ showArchived: $event })"></nz-switch>
     </div>
   </div>
 </div>

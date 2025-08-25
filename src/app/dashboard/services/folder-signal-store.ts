@@ -90,6 +90,7 @@ export const FolderSignalStore = signalStore(
   })),
   withMethods((store) => {
     const httpClient = inject(HttpClient);
+
     const toggleEditMode = () => patchState(store, { editMode: !store.editMode() });
     const setSelectedSite = (siteId?: number) => patchState(store, { selectedSiteId: siteId });
     const setFolderIdForNewSite = (folderId: number) => patchState(store, { selectedSiteId: 0, newSiteFolderId: folderId });
@@ -110,10 +111,8 @@ export const FolderSignalStore = signalStore(
     const moveFolder = rxMethod<{ folder: Folder; direction: number }>(
       pipe(
         switchMap(({ folder, direction }) => {
-          console.log(folder, direction);
           const oldSort = folder.sort;
           const newSort = normalizeSort(folder.sort + direction);
-          console.log(newSort);
 
           const otherFolder = findFolderBySort(newSort);
           if (otherFolder) {

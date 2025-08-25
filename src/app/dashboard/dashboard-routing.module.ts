@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
+import { TypedRoute } from '../app-routing.module';
 
-const routes: Routes = [
+const routes: TypedRoute[] = [
   {
     path: '',
     children: [{ path: '', component: DashboardPageComponent }],

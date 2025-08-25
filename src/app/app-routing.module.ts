@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Data, Route, RouterModule } from '@angular/router';
 import { UsersLayoutComponent } from './users/users-layout/users-layout.component';
 import { AuthLayoutComponent } from './auth/auth-layout/auth-layout.component';
 import { Permissions } from './auth/permissions';
@@ -17,8 +17,20 @@ import { GamingLayoutComponent } from './gaming/gaming-layout/gaming-layout.comp
 import { authGuard } from './auth/services/auth.guard';
 import { authChildGuard } from './auth/services/auth-child.guard';
 import { tryAuthGuard } from './auth/services/try-auth.guard';
+import { CreateButtonAction } from './shared/services/mobile-header.service';
 
-const routes: Routes = [
+export interface TypedData extends Data {
+  headerTitle?: string;
+  permission?: Permissions;
+  createButtonAction?: CreateButtonAction;
+}
+
+export interface TypedRoute extends Route {
+  data?: TypedData;
+  children?: TypedRoute[];
+}
+
+const routes: TypedRoute[] = [
   {
     path: '',
     component: AuthLayoutComponent,
@@ -62,7 +74,7 @@ const routes: Routes = [
         path: 'goals',
         component: GoalsLayoutComponent,
         resolve: { AppResolver },
-        data: { permission: Permissions.GOALS_PAGE, headerTitle: 'Goals', showCreateButton: true },
+        data: { permission: Permissions.GOALS_PAGE, headerTitle: 'Goals', createButtonAction: 'goals' },
         loadChildren: () => import('./goals/goals.module').then((m) => m.GoalsModule),
       },
       {
@@ -83,14 +95,14 @@ const routes: Routes = [
         path: 'events',
         component: EventsLayoutComponent,
         resolve: { AppResolver },
-        data: { permission: Permissions.EVENTS_PAGE, headerTitle: 'Events', showCreateButton: true },
+        data: { permission: Permissions.EVENTS_PAGE, headerTitle: 'Events', createButtonAction: 'events' },
         loadChildren: () => import('./events/events.module').then((m) => m.EventsModule),
       },
       {
         path: 'file-explorer',
         component: FileExplorerLayoutComponent,
         resolve: { AppResolver },
-        data: { permission: Permissions.FILE_EXPLORER_PAGE, headerTitle: 'File Explorer', showCreateButton: true },
+        data: { permission: Permissions.FILE_EXPLORER_PAGE, headerTitle: 'File Explorer', createButtonAction: 'file-explorer' },
         loadChildren: () => import('./file-explorer/file-explorer.module').then((m) => m.FileExplorerModule),
       },
       {

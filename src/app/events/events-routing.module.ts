@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { EventsResolver } from './events.resolver';
+import { RouterModule } from '@angular/router';
 import { EventsPageComponent } from './pages/events-page/events-page.component';
+import { TypedRoute } from '../app-routing.module';
 
-const routes: Routes = [
+const routes: TypedRoute[] = [
   {
     path: '',
-    resolve: { EventsResolver },
     children: [{ path: '', component: EventsPageComponent }],
   },
 ];

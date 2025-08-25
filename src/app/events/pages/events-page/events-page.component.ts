@@ -1,13 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { EventsQuery } from '../../services/events/state/events.query';
-import { Observable, Subject, merge } from 'rxjs';
-import { createEvent, Event } from '../../models/event.model';
-import { EventsService } from '../../services/events/state/events.service';
-import { EventParticipant } from '../../models/event-participant';
+import { Component, inject } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { MobileHeaderService } from '../../../shared/services/mobile-header.service';
-import { map } from 'rxjs/operators';
 import { isMobile } from '../../../app.component';
+import { EventsSignalStore } from '../../services/events-signal-store';
 
 @Component({
   selector: 'app-events-page',
@@ -15,36 +9,13 @@ import { isMobile } from '../../../app.component';
   styleUrls: ['./events-page.component.scss'],
   standalone: false,
 })
-export class EventsPageComponent implements OnInit {
-  openEventModal: Subject<Event> = new Subject<Event>();
+export class EventsPageComponent {
   isMobile = isMobile;
-  openEventModal$: Observable<Event> = merge(
-    this.mobileHeaderService.clickedButton$.pipe(map(() => createEvent({}))),
-    this.openEventModal.asObservable(),
-  );
-  openParticipantModal: Subject<EventParticipant> = new Subject<EventParticipant>();
 
-  constructor(
-    public eventsQuery: EventsQuery,
-    public eventsService: EventsService,
-    private nzMessageService: NzMessageService,
-    private mobileHeaderService: MobileHeaderService,
-  ) {}
+  readonly eventsStore = inject(EventsSignalStore);
+  readonly nzMessageService = inject(NzMessageService);
 
-  ngOnInit(): void {}
-
-  createNewEvent() {
-    this.openEventModal.next(createEvent({ id: 0 }));
-  }
-
-  async archiveEvent(event: Event) {
-    try {
-      await this.eventsService.archiveEvent(event);
-    } catch (e) {
-      this.nzMessageService.error('There was an error archiving the event.');
-      return;
-    }
-
-    this.nzMessageService.success('Event archived!');
+  async archiveEvent(eventId: number) {
+    this.eventsStore.remove({ id: eventId, onSuccess: () => this.nzMessageService.success('Event archived!') });
   }
 }

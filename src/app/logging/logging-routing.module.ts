@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { LoggingPageComponent } from './pages/logging-page/logging-page.component';
 import { LoggingResolver } from './logging.resolver';
+import { TypedRoute } from '../app-routing.module';
 
-const routes: Routes = [
+const routes: TypedRoute[] = [
   {
     path: '',
     resolve: { LoggingResolver },

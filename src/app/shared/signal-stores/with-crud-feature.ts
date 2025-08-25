@@ -1,7 +1,7 @@
 import { computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { patchState, signalStoreFeature, withComputed, withMethods, withState } from '@ngrx/signals';
-import { addEntity, removeEntity, setEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
+import { addEntity, removeEntity, setAllEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
@@ -21,41 +21,51 @@ type CrudEntitiesState = {
   loadingAll: boolean;
   loadingOne: number | undefined;
   selectedEntityId: number | undefined;
+  queryString: string | undefined;
 };
+
+const initialState: CrudEntitiesState = { loadingAll: false, loadingOne: undefined, selectedEntityId: undefined, queryString: undefined };
 
 export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptions<T>) {
   return signalStoreFeature(
-    withState<CrudEntitiesState>({ loadingAll: false, loadingOne: undefined, selectedEntityId: undefined }),
+    withState(initialState),
     withEntities<T>(),
-    withComputed(({ entities, selectedEntityId }) => ({
-      selectedEntity: computed(() => {
-        const entityId = selectedEntityId();
-        if (entityId === undefined) {
-          return undefined;
-        }
-        if (entityId === 0) {
-          return options.createEntity({ id: 0 } as Partial<T>);
-        }
+    withComputed((store) => {
+      return {
+        selectedEntity: computed(() => {
+          const entityId = store.selectedEntityId();
+          if (entityId === undefined) {
+            return undefined;
+          }
+          if (entityId === 0) {
+            return options.createEntity({ id: 0 } as Partial<T>);
+          }
 
-        return options.createEntity(entities().find((entity) => entity.id === selectedEntityId())!);
-      }),
-    })),
+          return options.createEntity(store.entities().find((entity) => entity.id === store.selectedEntityId())!);
+        }),
+      };
+    }),
     withMethods((store) => {
       const httpClient = inject(HttpClient);
       const nzMessageService = inject(NzMessageService);
+
       const setLoadingAll = (loadingAll: boolean) => patchState(store, { loadingAll });
       const setLoadingOne = (loadingOne?: number) => patchState(store, { loadingOne });
       const setSelectedEntity = (entityId: number) => patchState(store, { selectedEntityId: entityId });
       const clearSelectedEntity = () => patchState(store, { selectedEntityId: undefined });
 
-      const loadAll = rxMethod<{ queryString?: string }>(
+      const loadAll = rxMethod<{ addQueryString?: boolean }>(
         pipe(
-          switchMap(({ queryString }) => {
+          switchMap(({ addQueryString }) => {
             setLoadingAll(true);
-            return httpClient.get<T[]>(`${environment.apiUrl}/${options.pluralEntityName}?${queryString ?? ''}`).pipe(
+            let queryString = '';
+            if ((addQueryString ?? true) && store.queryString()) {
+              queryString = store.queryString()!;
+            }
+            return httpClient.get<T[]>(`${environment.apiUrl}/${options.pluralEntityName}?${queryString}`).pipe(
               map((entities) => entities.map((entity) => options.createEntity(entity))),
               tap((entities) => {
-                patchState(store, setEntities(entities));
+                patchState(store, setAllEntities(entities));
                 setLoadingAll(false);
               }),
               catchError((error) => {
@@ -89,6 +99,7 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
                 nzMessageService.error('There was an error creating the entity.');
               }
 
+              setLoadingOne();
               return of(undefined);
             }),
           );

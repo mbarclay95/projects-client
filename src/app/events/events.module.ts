@@ -31,6 +31,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { ParticipantsGoingPipe } from './pipes/participants-going.pipe';
 import { SharedModule } from '../shared/shared.module';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
     NzRadioModule,
     SharedModule,
     NzEmptyModule,
+    NzSpinComponent,
   ],
 })
 export class EventsModule {}

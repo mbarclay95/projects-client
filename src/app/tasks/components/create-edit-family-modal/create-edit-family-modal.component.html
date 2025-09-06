@@ -29,44 +29,50 @@
         </nz-radio-group>
       </div>
 
-      <div class="w-100 mb-4" *ngIf="family.taskStrategy === 'per task point'">
-        <div>Task Points <span style="font-style: italic">(up to 5):</span></div>
+      @if (family.taskStrategy === "per task point") {
+        <div class="w-100 mb-4">
+          <div>Task Points <span style="font-style: italic">(up to 5):</span></div>
 
-        <div class="d-flex justify-content-evenly">
-          <span
-            *ngFor="let taskPoint of family.taskPoints"
-            class="me-2 task-points"
-            style="color: {{ family.taskPoints | updatingTaskPointColors: taskPoint }}"
+          <div class="d-flex justify-content-evenly">
+            @for (taskPoint of family.taskPoints; track $index) {
+              <span class="me-2 task-points" style="color: {{ family.taskPoints | updatingTaskPointColors: taskPoint }}">
+                {{ taskPoint }}
+              </span>
+            }
+          </div>
+
+          <nz-select
+            [ngModel]="family.taskPoints"
+            class="w-100"
+            nzMode="multiple"
+            nzSize="large"
+            (ngModelChange)="updateFamilyTaskPoints($event)"
+            [nzMaxMultipleCount]="5"
           >
-            {{ taskPoint }}
-          </span>
+            @for (point of listOfPoints; track $index) {
+              <nz-option [nzValue]="point" [nzLabel]="point"></nz-option>
+            }
+          </nz-select>
         </div>
+      }
 
-        <nz-select
-          [ngModel]="family.taskPoints"
-          class="w-100"
-          nzMode="multiple"
-          nzSize="large"
-          (ngModelChange)="updateFamilyTaskPoints($event)"
-          [nzMaxMultipleCount]="5"
-        >
-          <nz-option *ngFor="let point of listOfPoints" [nzValue]="point" [nzLabel]="point"></nz-option>
-        </nz-select>
-      </div>
+      @if (showFamilyMembers) {
+        <div class="w-100 mb-4">
+          <div class="mb-2">Family Members:</div>
 
-      <div class="w-100 mb-4" *ngIf="showFamilyMembers">
-        <div class="mb-2">Family Members:</div>
-
-        <nz-select
-          [ngModel]="family.members | usersToIds"
-          class="w-100"
-          nzMode="multiple"
-          nzSize="large"
-          (ngModelChange)="updateFamilyMembers($event)"
-        >
-          <nz-option *ngFor="let user of usersQuery.users$ | async" [nzValue]="user.id" [nzLabel]="user.name"></nz-option>
-        </nz-select>
-      </div>
+          <nz-select
+            [ngModel]="family.members | usersToIds"
+            class="w-100"
+            nzMode="multiple"
+            nzSize="large"
+            (ngModelChange)="updateFamilyMembers($event)"
+          >
+            @for (user of users; track user.id) {
+              <nz-option [nzValue]="user.id" [nzLabel]="user.name"></nz-option>
+            }
+          </nz-select>
+        </div>
+      }
     </div>
   </ng-container>
 </nz-modal>

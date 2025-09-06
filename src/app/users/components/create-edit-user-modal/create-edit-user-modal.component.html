@@ -1,45 +1,45 @@
 <nz-modal
   [(nzVisible)]="isVisible"
-  [nzTitle]="(user?.id === 0 ? 'Create' : 'Edit') + ' User'"
+  [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' User'"
   [nzWidth]="modalWidth"
-  (nzOnCancel)="isVisible = false"
+  (nzOnCancel)="usersStore.clearSelectedEntity()"
   nzOkText="Save"
   nzCancelText="Close"
   (nzOnOk)="saveUser()"
   [nzStyle]="modalStyle"
-  [nzCancelDisabled]="saving"
-  [nzOkDisabled]="saving"
-  [nzOkLoading]="saving"
+  [nzCancelDisabled]="usersStore.loadingOne()"
+  [nzOkDisabled]="usersStore.loadingOne()"
+  [nzOkLoading]="usersStore.loadingOne()"
   [nzMaskClosable]="false"
 >
   <ng-container *nzModalContent>
-    <div *ngIf="user">
+    <div *ngIf="model">
       <div class="w-100 mb-4">
         <div class="mb-2">Name:</div>
 
-        <input nz-input [(ngModel)]="user.name" class="w-100" />
+        <input nz-input [(ngModel)]="model.name" class="w-100" />
       </div>
 
-      <div class="w-100 mb-4" *ngIf="user.id === 0">
+      <div class="w-100 mb-4" *ngIf="model.id === 0">
         <div class="mb-2">Username:</div>
 
-        <input nz-input [(ngModel)]="user.username" class="w-100" />
+        <input nz-input [(ngModel)]="model.username" class="w-100" />
       </div>
 
-      <div class="w-100 mb-4" *ngIf="user.id === 0">
+      <div class="w-100 mb-4" *ngIf="model.id === 0">
         <div class="mb-2">Password:</div>
 
-        <input nz-input [(ngModel)]="user.password" class="w-100" />
+        <input nz-input [(ngModel)]="model.password" class="w-100" />
       </div>
 
       <div class="w-50 mb-4">
         <div class="mb-2">Features:</div>
 
-        <ng-container *ngFor="let role of rolesQuery.roles$ | async">
+        <ng-container *ngFor="let role of rolesStore.entities()">
           <div class="d-flex justify-content-between w-100 mb-2">
             {{ role | displayRoleName }}
 
-            <nz-switch [ngModel]="user | hasRole: role.id" (ngModelChange)="updateUsersRoles($event, role)"></nz-switch>
+            <nz-switch [ngModel]="model | hasRole: role.id" (ngModelChange)="updateUsersRoles($event, role)"></nz-switch>
           </div>
         </ng-container>
       </div>
@@ -47,8 +47,8 @@
       <div class="w-100 mb-4">
         <div class="mb-2">Home Page:</div>
 
-        <nz-select [ngModel]="user.userConfig.homePageRole" (ngModelChange)="updateUserHomePage($event)" style="width: 300px">
-          <nz-option *ngFor="let role of user.roles" [nzLabel]="role | displayRoleName" [nzValue]="role.name"></nz-option>
+        <nz-select [ngModel]="model.userConfig.homePageRole" (ngModelChange)="updateUserHomePage($event)" style="width: 300px">
+          <nz-option *ngFor="let role of model.roles" [nzLabel]="role | displayRoleName" [nzValue]="role.name"></nz-option>
         </nz-select>
       </div>
     </div>

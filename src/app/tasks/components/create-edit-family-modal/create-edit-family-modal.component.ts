@@ -3,10 +3,10 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { createFamily, Family } from '../../models/family.model';
 import { FamiliesService } from '../../services/families/state/families.service';
-import { UsersQuery } from '../../../users/services/state/users.query';
 import { faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
 import { FamiliesQuery } from '../../services/families/state/families.query';
 import { isMobile } from '../../../app.component';
+import { User } from '../../../users/models/user.model';
 
 @Component({
   selector: 'app-create-edit-family-modal',
@@ -17,6 +17,7 @@ import { isMobile } from '../../../app.component';
 export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Family>;
   @Input() showFamilyMembers = false;
+  @Input() users: User[] = [];
 
   family?: Family;
   isVisible: boolean = false;
@@ -32,7 +33,6 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
   constructor(
     private familiesService: FamiliesService,
     private familiesQuery: FamiliesQuery,
-    public usersQuery: UsersQuery,
     private nzMessageService: NzMessageService,
   ) {}
 
@@ -71,7 +71,7 @@ export class CreateEditFamilyModalComponent implements OnInit, OnDestroy {
     if (!this.family) {
       return;
     }
-    this.family.members = this.usersQuery.getUsersByIds(userIds);
+    this.family.members = this.users.filter((user) => userIds.includes(user.id));
   }
 
   updateFamilyTaskPoints(taskPoints: number[]) {

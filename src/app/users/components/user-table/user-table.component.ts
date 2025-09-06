@@ -16,7 +16,7 @@ export class UserTableComponent implements OnInit {
       this._users = users;
     }
   }
-  @Output() editUser: EventEmitter<User> = new EventEmitter<User>();
+  @Output() editUser: EventEmitter<number> = new EventEmitter<number>();
 
   _users: User[] = [];
   edit = faEdit;

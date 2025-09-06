@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { RolesQuery } from '../../../users/services/roles/state/roles.query';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { EventService } from '../../services/event.service';
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
@@ -33,7 +32,6 @@ export class EventParticipantModalComponent implements OnInit, OnDestroy {
   constructor(
     private eventService: EventService,
     private eventCacheService: EventCacheService,
-    public rolesQuery: RolesQuery,
     private nzMessageService: NzMessageService,
   ) {}
 

@@ -1,10 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { FamiliesQuery } from '../../services/families/state/families.query';
 import { createFamily, Family } from '../../models/family.model';
 import { merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MobileHeaderService } from '../../../shared/services/mobile-header.service';
 import { isMobile } from '../../../app.component';
+import { UsersSignalStore } from '../../../users/services/users-signal-store';
 
 @Component({
   selector: 'app-families-page',
@@ -20,6 +21,7 @@ export class FamiliesPageComponent implements OnInit {
     this.mobileHeaderService.clickedButton$.pipe(map(() => createFamily({}))),
     this.openFamilyModal.asObservable(),
   );
+  readonly usersStore = inject(UsersSignalStore);
 
   constructor(
     public familiesQuery: FamiliesQuery,

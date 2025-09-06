@@ -5,9 +5,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
 import { Permissions, Roles } from '../../permissions';
 import { UserConfig } from '../../../users/models/user-config.model';
-import { RolesQuery } from '../../../users/services/roles/state/roles.query';
 import { Role } from '../../../users/models/role.model';
 import { AuthSignalStore } from '../../services/auth-signal-store';
+import { RolesSignalStore } from '../../../users/services/roles-signal-store';
 
 @Component({
   selector: 'app-my-profile',
@@ -22,11 +22,11 @@ export class MyProfileComponent {
   moneyPermission = Permissions.MONEY_APP_PAGE;
 
   readonly authStore = inject(AuthSignalStore);
+  readonly rolesStore = inject(RolesSignalStore);
 
   constructor(
     private nzMessageService: NzMessageService,
     private router: Router,
-    public rolesQuery: RolesQuery,
   ) {}
 
   updateMe(changes: Partial<User>): void {

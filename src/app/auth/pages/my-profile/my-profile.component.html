@@ -38,7 +38,7 @@
     <div class="responsive-width mb-4">
       <div class="mb-2">Features:</div>
 
-      <ng-container *ngFor="let role of rolesQuery.roles$ | async">
+      <ng-container *ngFor="let role of rolesStore.entities()">
         <div class="d-flex justify-content-between w-100 mb-2" style="font-size: 14px">
           {{ role | displayRoleName }}
 

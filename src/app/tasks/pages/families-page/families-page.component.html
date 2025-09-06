@@ -2,4 +2,10 @@
   <app-families-table [families]="familiesQuery.families$ | async" (openFamilyModal)="openFamilyModal.emit($event)"></app-families-table>
 </div>
 
-<app-create-edit-family-modal *ngIf="isMobile" [showFamilyMembers]="true" [openModal]="createEditFamily"></app-create-edit-family-modal>
+@if (isMobile) {
+  <app-create-edit-family-modal
+    [showFamilyMembers]="true"
+    [openModal]="createEditFamily"
+    [users]="usersStore.entities()"
+  ></app-create-edit-family-modal>
+}

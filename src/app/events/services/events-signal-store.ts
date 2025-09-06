@@ -10,6 +10,8 @@ import { map, tap } from 'rxjs/operators';
 import { createEventParticipant, EventParticipant } from '../models/event-participant';
 import { HttpClient } from '@angular/common/http';
 import { updateEntity } from '@ngrx/signals/entities';
+import { AuthSignalStore } from '../../auth/services/auth-signal-store';
+import { Permissions } from '../../auth/permissions';
 
 export type EventsUiState = {
   showArchived: boolean;
@@ -117,9 +119,12 @@ export const EventsSignalStore = signalStore(
   }),
   withHooks({
     onInit(store) {
+      const authStore = inject(AuthSignalStore);
       effect(() => {
-        patchState(store, { queryString: store.buildQueryString() });
-        store.loadAll({});
+        if (authStore.hasPermissionTo(Permissions.EVENTS_PAGE)) {
+          patchState(store, { queryString: store.buildQueryString() });
+          store.loadAll({});
+        }
       });
     },
   }),

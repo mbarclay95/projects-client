@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { FamiliesService } from './services/families/state/families.service';
-import { UsersService } from '../users/services/state/users.service';
 import { Permissions } from '../auth/permissions';
 import { TagsService } from './services/tags.service';
 import { MobileFooterService } from '../shared/services/mobile-footer.service';
@@ -16,7 +15,6 @@ export class TasksResolver {
 
   constructor(
     private familiesService: FamiliesService,
-    private usersService: UsersService,
     private tagsService: TagsService,
     private mobileFooterService: MobileFooterService,
     private taskUserConfigsService: TaskUserConfigsService,
@@ -34,7 +32,7 @@ export class TasksResolver {
 
   private async handleFamilies(familyId: number | null): Promise<void> {
     if (this.authStore.hasPermissionTo(Permissions.FAMILIES_TAB)) {
-      await Promise.all([this.familiesService.getFamilies(), this.usersService.getUsers()]);
+      await Promise.all([this.familiesService.getFamilies()]);
     } else if (familyId) {
       await this.familiesService.getFamily(familyId);
     }

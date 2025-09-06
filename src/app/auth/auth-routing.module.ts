@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
-import { AuthResolver } from './auth.resolver';
 import { authGuard } from './services/auth.guard';
 import { tryAuthGuard } from './services/try-auth.guard';
 import { TypedRoute } from '../app-routing.module';
@@ -19,7 +18,6 @@ const routes: TypedRoute[] = [
     path: 'my-profile',
     canActivate: [authGuard],
     component: MyProfileComponent,
-    resolve: { AuthResolver },
     data: { headerTitle: 'My Profile' },
   },
 ];

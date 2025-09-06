@@ -17,6 +17,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { RolesToIdsPipe } from './pipes/roles-to-ids.pipe';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { SharedModule } from '../shared/shared.module';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @NgModule({
   declarations: [UsersPageComponent, UsersLayoutComponent, UserTableComponent, CreateEditUserModalComponent, RolesToIdsPipe],
@@ -34,6 +35,7 @@ import { SharedModule } from '../shared/shared.module';
     NzSelectModule,
     NzSwitchModule,
     SharedModule,
+    NzSpinComponent,
   ],
 })
 export class UsersModule {}

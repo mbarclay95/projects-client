@@ -11,7 +11,7 @@
   <tbody>
     <tr *ngFor="let user of usersTable?.data">
       <td>
-        <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editUser.emit(user)">
+        <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editUser.emit(user.id)">
           <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
         </button>
       </td>

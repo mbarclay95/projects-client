@@ -45,35 +45,47 @@ export class LoginService {
     if (this.authStore.isLoggedIn()) {
       // lazy loading was failing without waiting a second. AI recommended and it works...
       await new Promise((res) => setTimeout(res, 50));
-      await this.router.navigate([this.getRedirectUrl()]);
+      await this.redirectToHomePage();
       return true;
     }
 
     return false;
   }
 
-  getRedirectUrl(): string {
+  private async redirectToHomePage(): Promise<void> {
     const me = this.authStore.auth();
     if (!me) {
       throw Error('Auth not initialized');
     }
     switch (me.userConfig.homePageRole) {
       case null:
-        return '/my-profile';
+        await this.router.navigate(['/my-profile']);
+        return;
       case Roles.DASHBOARD_ROLE:
-        return '/app/dashboard';
+        await this.router.navigate(['/app/dashboard']);
+        return;
       case Roles.BACKUPS_ROLE:
-        return '/app/backups?tab=backups';
+        await this.router.navigate(['/app/backups'], { queryParams: { tab: 'backups' } });
+        return;
       case Roles.EVENTS_ROLE:
-        return '/app/events';
+        await this.router.navigate(['/app/events']);
+        return;
       case Roles.GOALS_ROLE:
-        return '/app/goals';
+        await this.router.navigate(['/app/goals']);
+        return;
       case Roles.TASKS_ROLE:
-        return isMobile ? '/app/tasks/weekly-tasks' : '/app/tasks?tab=weekly-tasks';
+        if (isMobile) {
+          await this.router.navigate(['/app/tasks/weekly-tasks']);
+        } else {
+          await this.router.navigate(['/app/tasks'], { queryParams: { tab: 'weekly-tasks' } });
+        }
+        return;
       case Roles.FILE_EXPLORER_ROLE:
-        return '/app/file-explorer';
+        await this.router.navigate(['/app/file-explorer']);
+        return;
       case Roles.MONEY_APP_ROLE:
-        return '/app/money';
+        await this.router.navigate(['/app/money']);
+        return;
     }
     throw new Error('Un-configured role set to homepage');
   }

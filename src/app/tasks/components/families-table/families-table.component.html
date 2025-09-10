@@ -11,7 +11,7 @@
     <ng-container *ngFor="let family of familiesTable?.data">
       <tr>
         <td>
-          <button nz-button class="ant-btn-icon-only" nzType="text" (click)="openFamilyModal.emit(family)">
+          <button nz-button class="ant-btn-icon-only" nzType="text" (click)="openFamilyModal.emit(family.id)">
             <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
           </button>
         </td>

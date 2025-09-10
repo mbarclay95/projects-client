@@ -30,13 +30,13 @@ export class BackupTabsComponent implements OnInit, OnDestroy {
   createEntity(): void {
     switch (this.selectedTab) {
       case 'Backup Job':
-        this.backupStore.setSelectedEntity(0);
+        this.backupStore.createEntity();
         break;
       // case "Scheduled Backup Job":
       //   this.openScheduledBackupsDrawer.next(createScheduledBackup({id: 0}));
       //   break;
       case 'Target':
-        this.targetStore.setSelectedEntity(0);
+        this.targetStore.createEntity();
         break;
     }
   }

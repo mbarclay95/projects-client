@@ -8,7 +8,7 @@ import { GamingSessionsFacadeService } from '../../services/gaming-sessions-faca
 import { merge, Observable, Subject } from 'rxjs';
 import { createGamingSession, GamingSession } from '../../models/gaming-session.model';
 import { map } from 'rxjs/operators';
-import { MobileHeaderService } from '../../../shared/services/mobile-header.service';
+import { MobileDisplayService } from '../../../shared/services/mobile-display.service';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 
 @Component({
@@ -28,6 +28,6 @@ export class GamingSessionsPageComponent {
 
   constructor(
     public gamingSessionsFacadeService: GamingSessionsFacadeService,
-    private mobileHeaderService: MobileHeaderService,
+    private mobileHeaderService: MobileDisplayService,
   ) {}
 }

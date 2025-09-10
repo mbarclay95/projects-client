@@ -2,7 +2,7 @@
   [(nzVisible)]="isVisible"
   [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' User'"
   [nzWidth]="modalWidth"
-  (nzOnCancel)="usersStore.clearSelectedEntity()"
+  (nzOnCancel)="usersStore.clearCreateEditEntity()"
   nzOkText="Save"
   nzCancelText="Close"
   (nzOnOk)="saveUser()"

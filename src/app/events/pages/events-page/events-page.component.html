@@ -1,5 +1,5 @@
 @if (!isMobile) {
-  <app-page-header buttonText="Create Event" title="Events" (createButtonClicked)="eventsStore.setSelectedEntity(0)"></app-page-header>
+  <app-page-header buttonText="Create Event" title="Events" (createButtonClicked)="eventsStore.createEntity()"></app-page-header>
 }
 
 <div class="w-100 events-page-container p-2">
@@ -9,7 +9,7 @@
     <app-mobile-events-table
       [events]="eventsStore.entities()"
       [loading]="eventsStore.loadingAll()"
-      (editEvent)="eventsStore.setSelectedEntity($event)"
+      (editEvent)="eventsStore.editEntity($event)"
       (archiveEvent)="archiveEvent($event)"
       (editParticipant)="eventsStore.setSelectedParticipant($event)"
     ></app-mobile-events-table>
@@ -17,13 +17,13 @@
     <app-events-table
       [events]="eventsStore.entities()"
       [loading]="eventsStore.loadingAll()"
-      (editEvent)="eventsStore.setSelectedEntity($event)"
+      (editEvent)="eventsStore.editEntity($event)"
       (archiveEvent)="archiveEvent($event)"
       (editParticipant)="eventsStore.setSelectedParticipant($event)"
     ></app-events-table>
   }
 </div>
 
-<app-create-edit-event [openModal]="eventsStore.selectedEntity"></app-create-edit-event>
+<app-create-edit-event [openModal]="eventsStore.createEditEntity"></app-create-edit-event>
 
 <app-edit-participant-modal [openModal]="eventsStore.selectedParticipant"></app-edit-participant-modal>

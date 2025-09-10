@@ -1,10 +1,12 @@
 <div class="task-box" (click)="menuVisible = true">
   <div class="d-flex align-items-center">
-    <label nz-checkbox [ngModel]="!!task.completedAt" (ngModelChange)="completedTask(task.id)" class="me-2"></label>
+    <label nz-checkbox [ngModel]="!!task.completedAt" (ngModelChange)="completedTask()" class="me-2"></label>
 
-    <span *ngIf="familiesQuery.isPerTaskPoint$ | async" class="me-2 task-points" style="color: {{ task.taskPoint ?? 0 | taskPointColor }}">
-      {{ task.taskPoint }}
-    </span>
+    @if (familiesStore.isPerTaskPointStrategy()) {
+      <span class="me-2 task-points" style="color: {{ task.taskPoint ?? 0 | taskPointColor }}">
+        {{ task.taskPoint }}
+      </span>
+    }
 
     <div>
       <div class="title">{{ task.name }}</div>
@@ -27,8 +29,10 @@
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu class="quick-action-menu">
         <li nz-menu-item (click)="viewTask.emit(task)"><fa-icon class="me-2" [icon]="eye"></fa-icon>View</li>
-        <li nz-menu-item *ngIf="task.recurring" (click)="skipTask.emit(task)"><fa-icon class="me-2" [icon]="skip"></fa-icon>Skip</li>
-        <li nz-menu-item (click)="editTask.emit(task)"><fa-icon class="me-2" [icon]="edit"></fa-icon>Edit</li>
+        @if (task.recurring) {
+          <li nz-menu-item (click)="skipTask.emit(task)"><fa-icon class="me-2" [icon]="skip"></fa-icon>Skip</li>
+        }
+        <li nz-menu-item (click)="tasksStore.editEntity(task.id)"><fa-icon class="me-2" [icon]="edit"></fa-icon>Edit</li>
       </ul>
     </nz-dropdown-menu>
   </div>

@@ -1,6 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
 import { faBars, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { MobileHeaderService } from './shared/services/mobile-header.service';
+import { MobileDisplayService } from './shared/services/mobile-display.service';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AuthSignalStore } from './auth/services/auth-signal-store';
 
@@ -22,7 +22,7 @@ export class AppComponent {
   readonly authStore = inject(AuthSignalStore);
 
   constructor(
-    public mobileHeaderService: MobileHeaderService,
+    public mobileHeaderService: MobileDisplayService,
     private router: Router,
   ) {
     effect(() => {

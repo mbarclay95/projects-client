@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import { FamilyStatsService } from '../../services/family-stats.service';
+import { FamilyStatsSignalStore } from '../../services/family-stats-signal-store';
 
 @Component({
   selector: 'app-year-selector',
@@ -8,11 +8,9 @@ import { FamilyStatsService } from '../../services/family-stats.service';
   styleUrls: ['./year-selector.component.scss'],
   standalone: false,
 })
-export class YearSelectorComponent implements OnInit {
+export class YearSelectorComponent {
   left = faCaretLeft;
   right = faCaretRight;
 
-  constructor(public familyStatsService: FamilyStatsService) {}
-
-  ngOnInit(): void {}
+  readonly familyStatsStore = inject(FamilyStatsSignalStore);
 }

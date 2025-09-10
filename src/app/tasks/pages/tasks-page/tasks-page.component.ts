@@ -1,13 +1,12 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { TasksQuery } from '../../services/tasks/state/tasks.query';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { createTask, Task } from '../../models/task.model';
-import { TasksService } from '../../services/tasks/state/tasks.service';
 import { merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MobileHeaderService } from '../../../shared/services/mobile-header.service';
-import { FamiliesQuery } from '../../services/families/state/families.query';
+import { MobileDisplayService } from '../../../shared/services/mobile-display.service';
 import { isMobile } from '../../../app.component';
-import { TaskUserConfigsService } from '../../services/task-user-configs/state/task-user-configs.service';
+import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
+import { TasksSignalStore } from '../../services/tasks-signal-store';
 
 @Component({
   selector: 'app-tasks-page',
@@ -16,29 +15,25 @@ import { TaskUserConfigsService } from '../../services/task-user-configs/state/t
   standalone: false,
 })
 export class TasksPageComponent implements OnInit {
-  @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
   @Output() viewTask: EventEmitter<Task> = new EventEmitter<Task>();
 
   isMobile = isMobile;
   createEditTask: Observable<Task> = merge(
     this.mobileHeaderService.clickedButton$.pipe(
-      map(() => createTask({ ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getMinTaskPoint() })),
+      map(() => createTask({ ownerId: this.familiesStore.activeFamilyId(), taskPoint: this.familiesStore.minTaskPoint() })),
     ),
-    this.editTask.asObservable(),
   );
 
-  constructor(
-    public tasksQuery: TasksQuery,
-    public tasksService: TasksService,
-    private mobileHeaderService: MobileHeaderService,
-    private familiesQuery: FamiliesQuery,
-    private taskUserConfigsService: TaskUserConfigsService,
-  ) {}
+  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly taskUserConfigsStore = inject(TaskUserConfigsSignalStore);
+  readonly tasksStore = inject(TasksSignalStore);
+
+  constructor(private mobileHeaderService: MobileDisplayService) {}
 
   ngOnInit(): void {
     if (this.isMobile) {
-      this.tasksService.loadTasksPage();
-      this.taskUserConfigsService.resetWeekOffset();
+      this.tasksStore.loadTasksPage();
+      this.taskUserConfigsStore.resetWeekOffset();
     }
   }
 }

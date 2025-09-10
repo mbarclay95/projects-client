@@ -1,8 +1,6 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { TasksQuery } from '../../services/tasks/state/tasks.query';
-import { TasksService } from '../../services/tasks/state/tasks.service';
-import { NzSegmentedOption, NzSegmentedOptions } from 'ng-zorro-antd/segmented';
+import { Component, inject } from '@angular/core';
 import { faPeopleRoof, faUser } from '@fortawesome/free-solid-svg-icons';
+import { TasksSignalStore } from '../../services/tasks-signal-store';
 
 @Component({
   selector: 'app-weekly-tasks-segment',
@@ -10,22 +8,13 @@ import { faPeopleRoof, faUser } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./weekly-tasks-segment.component.scss'],
   standalone: false,
 })
-export class WeeklyTasksSegmentComponent implements OnInit {
-  @ViewChild('customSegment', { static: true, read: TemplateRef }) templateRef!: TemplateRef<{
-    $implicit: NzSegmentedOption;
-    index: number;
-  }>;
+export class WeeklyTasksSegmentComponent {
   family = faPeopleRoof;
   personal = faUser;
 
-  constructor(
-    public tasksQuery: TasksQuery,
-    private tasksService: TasksService,
-  ) {}
-
-  ngOnInit(): void {}
+  readonly tasksStore = inject(TasksSignalStore);
 
   changePage(page: number) {
-    this.tasksService.updateUi({ ownerType: page === 0 ? 'family' : 'user' }, false);
+    this.tasksStore.updateUiState({ ownerType: page === 0 ? 'family' : 'user' }, false);
   }
 }

@@ -25,7 +25,7 @@ export class CreateEditEventComponent extends DefaultModalSignalComponent<Event>
 
   eventSaved(): void {
     this.nzMessageService.success('Event Saved!');
-    this.eventsStore.clearSelectedEntity();
+    this.eventsStore.clearCreateEditEntity();
   }
 
   updateNotifySwitch(checked: boolean): void {

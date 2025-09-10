@@ -31,7 +31,7 @@ export class CreateEditTargetModalComponent extends DefaultModalSignalComponent<
 
   private targetSaved(newTarget: Target): void {
     this.nzMessageService.success('Target Saved!');
-    this.targetStore.clearSelectedEntity();
+    this.targetStore.clearCreateEditEntity();
     if (this.backupStepId !== undefined) {
       this.selectNewTarget.emit({ target: newTarget, backupStepId: this.backupStepId });
     }

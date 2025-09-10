@@ -1,14 +1,12 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FamiliesQuery } from '../../services/families/state/families.query';
-import { TasksQuery } from '../../services/tasks/state/tasks.query';
-import { TasksService } from '../../services/tasks/state/tasks.service';
-import { MobileHeaderService } from '../../../shared/services/mobile-header.service';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { MobileDisplayService } from '../../../shared/services/mobile-display.service';
 import { merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { createTask, Task } from '../../models/task.model';
 import { isMobile } from '../../../app.component';
-import { TaskUserConfigsQuery } from '../../services/task-user-configs/state/task-user-configs.query';
-import { TaskUserConfigsService } from '../../services/task-user-configs/state/task-user-configs.service';
+import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
+import { TasksSignalStore } from '../../services/tasks-signal-store';
 
 @Component({
   selector: 'app-weekly-tasks-page',
@@ -17,31 +15,26 @@ import { TaskUserConfigsService } from '../../services/task-user-configs/state/t
   standalone: false,
 })
 export class WeeklyTasksPageComponent implements OnInit {
-  @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
   @Output() viewTask: EventEmitter<Task> = new EventEmitter<Task>();
   @Output() skipTask: EventEmitter<Task> = new EventEmitter<Task>();
   isMobile = isMobile;
 
   createEditTask: Observable<Task> = merge(
     this.mobileHeaderService.clickedButton$.pipe(
-      map(() => createTask({ ownerId: this.familiesQuery.activeId, taskPoint: this.familiesQuery.getMinTaskPoint() })),
+      map(() => createTask({ ownerId: this.familiesStore.activeFamilyId(), taskPoint: this.familiesStore.minTaskPoint() })),
     ),
-    this.editTask.asObservable(),
   );
 
-  constructor(
-    public familiesQuery: FamiliesQuery,
-    public taskUserConfigsQuery: TaskUserConfigsQuery,
-    public taskUserConfigsService: TaskUserConfigsService,
-    public tasksQuery: TasksQuery,
-    private tasksService: TasksService,
-    private mobileHeaderService: MobileHeaderService,
-  ) {}
+  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly taskUserConfigsStore = inject(TaskUserConfigsSignalStore);
+  readonly tasksStore = inject(TasksSignalStore);
+
+  constructor(private mobileHeaderService: MobileDisplayService) {}
 
   ngOnInit(): void {
     if (this.isMobile) {
-      this.tasksService.loadWeeklyTasksPage();
-      this.taskUserConfigsService.resetWeekOffset();
+      this.tasksStore.loadWeeklyPage();
+      this.taskUserConfigsStore.resetWeekOffset();
     }
   }
 }

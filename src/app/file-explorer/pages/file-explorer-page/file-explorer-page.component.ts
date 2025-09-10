@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { filter, merge, Observable, shareReplay, Subject, tap } from 'rxjs';
 import { DirectoryItem } from '../../models/directory-item.model';
 import { map } from 'rxjs/operators';
-import { MobileHeaderService } from '../../../shared/services/mobile-header.service';
+import { MobileDisplayService } from '../../../shared/services/mobile-display.service';
 import { isMobile } from '../../../app.component';
 import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/working-directory-item';
 import { DirectoryItemsQuery } from '../../services/state/directory-items.query';
@@ -44,7 +44,7 @@ export class FileExplorerPageComponent implements OnInit {
   newLocationBeingSelected?: WorkingDirectoryItem[];
 
   constructor(
-    private mobileHeaderService: MobileHeaderService,
+    private mobileHeaderService: MobileDisplayService,
     private directoryItemsQuery: DirectoryItemsQuery,
     private directoryItemsService: DirectoryItemsService,
   ) {}

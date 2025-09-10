@@ -2,7 +2,7 @@
   [(nzVisible)]="isVisible"
   [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Event'"
   [nzWidth]="modalWidth"
-  (nzOnCancel)="eventsStore.clearSelectedEntity()"
+  (nzOnCancel)="eventsStore.clearCreateEditEntity()"
   nzOkText="Save"
   nzCancelText="Close"
   (nzOnOk)="saveEvent()"

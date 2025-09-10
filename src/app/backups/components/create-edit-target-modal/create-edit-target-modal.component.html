@@ -2,7 +2,7 @@
   [(nzVisible)]="isVisible"
   [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Target'"
   nzWidth="800px"
-  (nzOnCancel)="targetStore.clearSelectedEntity()"
+  (nzOnCancel)="targetStore.clearCreateEditEntity()"
   nzOkText="Save"
   nzCancelText="Close"
   (nzOnOk)="saveTarget()"

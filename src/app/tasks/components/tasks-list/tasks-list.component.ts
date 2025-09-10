@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Task } from '../../models/task.model';
-import { TasksService } from '../../services/tasks/state/tasks.service';
+import { TasksSignalStore } from '../../services/tasks-signal-store';
 
 @Component({
   selector: 'app-tasks-list',
@@ -8,13 +8,10 @@ import { TasksService } from '../../services/tasks/state/tasks.service';
   styleUrls: ['./tasks-list.component.scss'],
   standalone: false,
 })
-export class TasksListComponent implements OnInit {
+export class TasksListComponent {
   @Input() tasks: Task[] = [];
-  @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
   @Output() viewTask: EventEmitter<Task> = new EventEmitter<Task>();
   @Output() skipTask: EventEmitter<Task> = new EventEmitter<Task>();
 
-  constructor(public tasksService: TasksService) {}
-
-  ngOnInit(): void {}
+  readonly tasksStore = inject(TasksSignalStore);
 }

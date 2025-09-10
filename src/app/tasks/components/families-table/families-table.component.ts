@@ -16,7 +16,7 @@ export class FamiliesTableComponent implements OnInit {
       this._families = families;
     }
   }
-  @Output() openFamilyModal: EventEmitter<Family> = new EventEmitter<Family>();
+  @Output() openFamilyModal: EventEmitter<number> = new EventEmitter<number>();
 
   _families: Family[] = [];
   edit = faEdit;

@@ -6,8 +6,8 @@
       <nz-spin></nz-spin>
     </div>
   } @else {
-    <app-user-table [users]="usersStore.entities()" (editUser)="usersStore.setSelectedEntity($event)"></app-user-table>
+    <app-user-table [users]="usersStore.entities()" (editUser)="usersStore.editEntity($event)"></app-user-table>
   }
 </div>
 
-<app-create-edit-user-modal [openModal]="usersStore.selectedEntity"></app-create-edit-user-modal>
+<app-create-edit-user-modal [openModal]="usersStore.createEditEntity"></app-create-edit-user-modal>

@@ -1,4 +1,5 @@
 export interface FamilyMemberStats {
+  id: number; // literally only for signalStore
   name: string;
   totalTasks: number;
   totalEarnedPoints: number;
@@ -13,6 +14,7 @@ export interface TopTask {
 
 export function createFamilyMemberStats(params: Partial<FamilyMemberStats>) {
   return {
+    id: params.id ?? 0,
     name: params.name ?? '',
     totalTasks: params.totalTasks ?? 0,
     totalEarnedPoints: params.totalEarnedPoints ?? 0,

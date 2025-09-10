@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import { TaskUserConfigsService } from '../../services/task-user-configs/state/task-user-configs.service';
-import { TaskUserConfigsQuery } from '../../services/task-user-configs/state/task-user-configs.query';
+import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
 
 @Component({
   selector: 'app-week-selector',
@@ -9,14 +8,9 @@ import { TaskUserConfigsQuery } from '../../services/task-user-configs/state/tas
   styleUrls: ['./week-selector.component.scss'],
   standalone: false,
 })
-export class WeekSelectorComponent implements OnInit {
+export class WeekSelectorComponent {
   left = faCaretLeft;
   right = faCaretRight;
 
-  constructor(
-    public taskUserConfigsService: TaskUserConfigsService,
-    public taskUserConfigsQuery: TaskUserConfigsQuery,
-  ) {}
-
-  ngOnInit(): void {}
+  readonly taskUserConfigsStore = inject(TaskUserConfigsSignalStore);
 }

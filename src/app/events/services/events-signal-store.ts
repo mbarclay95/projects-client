@@ -122,7 +122,7 @@ export const EventsSignalStore = signalStore(
       const authStore = inject(AuthSignalStore);
       effect(() => {
         if (authStore.hasPermissionTo(Permissions.EVENTS_PAGE)) {
-          patchState(store, { queryString: store.buildQueryString() });
+          store.setQueryString(store.buildQueryString());
           store.loadAll({});
         }
       });

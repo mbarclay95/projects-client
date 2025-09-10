@@ -58,7 +58,7 @@
         <ng-template #taskProgress>
           <span style="font-size: 19px; line-height: 1.3">
             {{ memberConfig | totalCompletedTasks }}/{{ memberConfig.tasksPerWeek }}<br />
-            {{ (familiesQuery.familyTaskStrategy$ | async) === "per task" ? "tasks" : "points" }}
+            {{ familiesStore.isPerTaskStrategy() ? "tasks" : "points" }}
           </span>
         </ng-template>
 

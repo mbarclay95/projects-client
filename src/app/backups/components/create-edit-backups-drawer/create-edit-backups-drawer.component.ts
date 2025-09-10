@@ -54,7 +54,7 @@ export class CreateEditBackupsDrawerComponent {
   }
 
   createNewTarget(backupStepId: number) {
-    this.targetStore.setSelectedEntity(0);
+    this.targetStore.createEntity();
   }
 
   async saveBackup() {
@@ -69,7 +69,7 @@ export class CreateEditBackupsDrawerComponent {
   backupSaved(): void {
     this.backupStore.startPolling();
     this.nzMessageService.success('Backup Saved!');
-    this.backupStore.clearSelectedEntity();
+    this.backupStore.clearCreateEditEntity();
   }
 
   removeBackupStep(backupStep: BackupStep): void {

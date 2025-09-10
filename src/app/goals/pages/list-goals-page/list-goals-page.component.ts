@@ -3,7 +3,7 @@ import { GoalsQuery } from '../../services/state/goals.query';
 import { createGoal, Goal } from '../../models/goal.model';
 import { merge, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MobileHeaderService } from '../../../shared/services/mobile-header.service';
+import { MobileDisplayService } from '../../../shared/services/mobile-display.service';
 import { GoalsService } from '../../services/state/goals.service';
 import { isMobile } from '../../../app.component';
 
@@ -25,7 +25,7 @@ export class ListGoalsPageComponent implements OnInit {
   constructor(
     public goalsQuery: GoalsQuery,
     private goalsService: GoalsService,
-    private mobileHeaderService: MobileHeaderService,
+    private mobileHeaderService: MobileDisplayService,
   ) {}
 
   ngOnInit(): void {

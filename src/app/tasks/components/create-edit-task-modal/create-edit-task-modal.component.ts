@@ -1,12 +1,12 @@
-import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Component, inject } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { createTask, Task } from '../../models/task.model';
-import { TasksService } from '../../services/tasks/state/tasks.service';
-import { FamiliesQuery } from '../../services/families/state/families.query';
+import { Task } from '../../models/task.model';
 import { differenceInCalendarDays } from 'date-fns';
-import { TagsService } from '../../services/tags.service';
 import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
+import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { TasksSignalStore } from '../../services/tasks-signal-store';
+import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
+import { TagsSignalStore } from '../../services/tags-signal-store';
 
 @Component({
   selector: 'app-create-edit-task-modal',
@@ -14,87 +14,62 @@ import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
   styleUrls: ['./create-edit-task-modal.component.scss'],
   standalone: false,
 })
-export class CreateEditTaskModalComponent implements OnInit, OnDestroy {
-  @Input() openModal!: Observable<Task>;
-
-  task?: Task;
-  isVisible: boolean = false;
-  saving = false;
-
-  subscriptionDestroyer: Subject<void> = new Subject<void>();
-
+export class CreateEditTaskModalComponent extends DefaultModalSignalComponent<Task> {
   readonly authStore = inject(AuthSignalStore);
+  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly tasksStore = inject(TasksSignalStore);
+  readonly nzMessageService = inject(NzMessageService);
+  readonly tagsStore = inject(TagsSignalStore);
 
-  constructor(
-    private tasksService: TasksService,
-    private nzMessageService: NzMessageService,
-    public familiesQuery: FamiliesQuery,
-    public tagsService: TagsService,
-  ) {}
-
-  ngOnInit(): void {
-    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((task) => {
-      this.task = task.id === 0 ? task : createTask(task);
-      this.isVisible = true;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptionDestroyer.next();
-    this.subscriptionDestroyer.complete();
-  }
-
-  async saveTask() {
-    if (!this.task) {
+  saveTask() {
+    if (!this.model) {
       return;
     }
-    this.saving = true;
-    try {
-      this.task.id === 0 ? await this.tasksService.createNewTask(this.task) : await this.tasksService.updateTask(this.task.id, this.task);
-    } catch (e) {
-      this.saving = false;
-      this.nzMessageService.error('There was an error saving the task.');
-      return;
-    }
+    this.model.id === 0
+      ? this.tasksStore.create({ entity: this.model, onSuccess: () => this.taskSaved() })
+      : this.tasksStore.update({ entity: this.model, onSuccess: () => this.taskSaved() });
+  }
+
+  taskSaved(): void {
+    this.tagsStore.loadAll();
     this.nzMessageService.success('Task Saved!');
-    this.saving = false;
-    this.isVisible = false;
+    this.tasksStore.clearCreateEditEntity();
   }
 
   changeOwner(type: 'user' | 'family') {
-    if (!this.task) {
+    if (!this.model) {
       return;
     }
     switch (type) {
       case 'user':
-        this.task.ownerId = this.authStore.auth()!.id;
+        this.model.ownerId = this.authStore.auth()!.id;
         break;
       case 'family':
-        this.task.ownerId = this.familiesQuery.activeId ?? 0;
+        this.model.ownerId = this.familiesStore.activeFamilyId() ?? 0;
     }
   }
 
   disabledDate = (current: Date): boolean => differenceInCalendarDays(current, new Date()) < 0;
 
   updateRecurring(recurring: boolean) {
-    if (!this.task) {
+    if (!this.model) {
       return;
     }
     if (recurring) {
-      this.task.dueDate = undefined;
-      this.task.frequencyAmount = 1;
-      this.task.frequencyUnit = 'day';
+      this.model.dueDate = undefined;
+      this.model.frequencyAmount = 1;
+      this.model.frequencyUnit = 'day';
     } else {
-      this.task.frequencyAmount = undefined;
-      this.task.frequencyUnit = undefined;
-      this.task.dueDate = undefined;
+      this.model.frequencyAmount = undefined;
+      this.model.frequencyUnit = undefined;
+      this.model.dueDate = undefined;
     }
   }
 
   updateTaskPoint(taskPoint: number) {
-    if (!this.task || this.task.taskPoint === taskPoint) {
+    if (!this.model || this.model.taskPoint === taskPoint) {
       return;
     }
-    this.task.taskPoint = taskPoint;
+    this.model.taskPoint = taskPoint;
   }
 }

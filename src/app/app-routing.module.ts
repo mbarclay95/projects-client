@@ -10,19 +10,19 @@ import { TasksLayoutComponent } from './tasks/tasks-layout/tasks-layout.componen
 import { EventsLayoutComponent } from './events/events-layout/events-layout.component';
 import { EventSignupLayoutComponent } from './event-signup/event-signup-layout/event-signup-layout.component';
 import { FileExplorerLayoutComponent } from './file-explorer/file-explorer-layout/file-explorer-layout.component';
-import { AppResolver } from './app.resolver';
 import { MoneyLayoutComponent } from './money/money-layout/money-layout.component';
 import { LoggingLayoutComponent } from './logging/logging-layout/logging-layout.component';
 import { GamingLayoutComponent } from './gaming/gaming-layout/gaming-layout.component';
 import { authGuard } from './auth/services/auth.guard';
 import { authChildGuard } from './auth/services/auth-child.guard';
 import { tryAuthGuard } from './auth/services/try-auth.guard';
-import { CreateButtonAction } from './shared/services/mobile-header.service';
+import { CreateButtonAction, MobileFooterButtons } from './shared/services/mobile-display.service';
 
 export interface TypedData extends Data {
   headerTitle?: string;
   permission?: Permissions;
   createButtonAction?: CreateButtonAction;
+  footerButtons?: MobileFooterButtons;
 }
 
 export interface TypedRoute extends Route {
@@ -39,7 +39,6 @@ const routes: TypedRoute[] = [
   {
     path: 'events',
     component: EventSignupLayoutComponent,
-    resolve: { AppResolver },
     data: { headerTitle: 'Signup' },
     loadChildren: () => import('./event-signup/event-signup.module').then((m) => m.EventSignupModule),
   },
@@ -47,7 +46,6 @@ const routes: TypedRoute[] = [
     path: 'games',
     canActivate: [tryAuthGuard],
     component: GamingLayoutComponent,
-    resolve: { AppResolver },
     data: { headerTitle: 'Games' },
     loadChildren: () => import('./gaming/gaming.module').then((m) => m.GamingModule),
   },
@@ -59,63 +57,54 @@ const routes: TypedRoute[] = [
       {
         path: 'dashboard',
         component: DashboardLayoutComponent,
-        resolve: { AppResolver },
         data: { permission: Permissions.DASHBOARD_PAGE, headerTitle: 'Dashboard' },
         loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
       {
         path: 'users',
         component: UsersLayoutComponent,
-        resolve: { AppResolver },
         data: { permission: Permissions.USERS_PAGE, headerTitle: 'Users' },
         loadChildren: () => import('./users/users.module').then((m) => m.UsersModule),
       },
       {
         path: 'goals',
         component: GoalsLayoutComponent,
-        resolve: { AppResolver },
         data: { permission: Permissions.GOALS_PAGE, headerTitle: 'Goals', createButtonAction: 'goals' },
         loadChildren: () => import('./goals/goals.module').then((m) => m.GoalsModule),
       },
       {
         path: 'backups',
         component: BackupsLayoutComponent,
-        resolve: { AppResolver },
         data: { permission: Permissions.BACKUPS_PAGE, headerTitle: 'Backups' },
         loadChildren: () => import('./backups/backups.module').then((m) => m.BackupsModule),
       },
       {
         path: 'tasks',
         component: TasksLayoutComponent,
-        resolve: { AppResolver },
         data: { permission: Permissions.TASKS_PAGE, headerTitle: 'Tasks' },
         loadChildren: () => import('./tasks/tasks.module').then((m) => m.TasksModule),
       },
       {
         path: 'events',
         component: EventsLayoutComponent,
-        resolve: { AppResolver },
         data: { permission: Permissions.EVENTS_PAGE, headerTitle: 'Events', createButtonAction: 'events' },
         loadChildren: () => import('./events/events.module').then((m) => m.EventsModule),
       },
       {
         path: 'file-explorer',
         component: FileExplorerLayoutComponent,
-        resolve: { AppResolver },
         data: { permission: Permissions.FILE_EXPLORER_PAGE, headerTitle: 'File Explorer', createButtonAction: 'file-explorer' },
         loadChildren: () => import('./file-explorer/file-explorer.module').then((m) => m.FileExplorerModule),
       },
       {
         path: 'money',
         component: MoneyLayoutComponent,
-        resolve: { AppResolver },
         data: { permission: Permissions.MONEY_APP_PAGE, headerTitle: 'Money' },
         loadChildren: () => import('./money/money.module').then((m) => m.MoneyModule),
       },
       {
         path: 'logging',
         component: LoggingLayoutComponent,
-        resolve: { AppResolver },
         data: { permission: Permissions.LOGGING_PAGE, headerTitle: 'Logging' },
         loadChildren: () => import('./logging/logging.module').then((m) => m.LoggingModule),
       },

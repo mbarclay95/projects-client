@@ -46,7 +46,7 @@ export class CreateEditUserModalComponent extends DefaultModalSignalComponent<Us
   }
 
   private userSaved() {
-    this.usersStore.clearSelectedEntity();
+    this.usersStore.clearCreateEditEntity();
     this.nzMessageService.success('User saved successfully.');
   }
 

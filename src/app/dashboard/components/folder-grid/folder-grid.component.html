@@ -47,7 +47,7 @@
     @for (folder of folderStore.sortedAndFiltered(); track folder.id) {
       <div class="w-100">
         <app-folder
-          (openFolderModal)="folderStore.setSelectedEntity($event)"
+          (openFolderModal)="folderStore.editEntity($event)"
           (openSiteModal)="folderStore.setSelectedSite($event)"
           [folder]="folder"
           [editMode]="folderStore.editMode()"
@@ -60,7 +60,7 @@
         @for (folder of folderColumn; track folder.id) {
           <div class="w-100">
             <app-folder
-              (openFolderModal)="folderStore.setSelectedEntity($event)"
+              (openFolderModal)="folderStore.editEntity($event)"
               (openSiteModal)="folderStore.setSelectedSite($event)"
               [folder]="folder"
               [editMode]="folderStore.editMode()"
@@ -72,6 +72,6 @@
   }
 </div>
 
-<app-create-edit-folder-modal [openModal]="folderStore.selectedEntity"></app-create-edit-folder-modal>
+<app-create-edit-folder-modal [openModal]="folderStore.createEditEntity"></app-create-edit-folder-modal>
 
 <app-create-edit-site-modal [openModal]="folderStore.selectedSite"></app-create-edit-site-modal>

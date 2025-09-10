@@ -4,7 +4,7 @@ import { createUser, User } from '../../models/user.model';
 import { Roles } from '../../../auth/permissions';
 import { isMobile } from '../../../app.component';
 import { map } from 'rxjs/operators';
-import { MobileHeaderService } from '../../../shared/services/mobile-header.service';
+import { MobileDisplayService } from '../../../shared/services/mobile-display.service';
 import { UsersSignalStore } from '../../services/users-signal-store';
 import { RolesSignalStore } from '../../services/roles-signal-store';
 
@@ -24,7 +24,7 @@ export class UsersPageComponent implements OnInit {
   readonly usersStore = inject(UsersSignalStore);
   readonly rolesStore = inject(RolesSignalStore);
 
-  constructor(private mobileHeaderService: MobileHeaderService) {}
+  constructor(private mobileHeaderService: MobileDisplayService) {}
 
   ngOnInit(): void {}
 

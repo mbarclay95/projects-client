@@ -1,7 +1,7 @@
-import { computed, inject } from '@angular/core';
+import { computed, inject, untracked } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { patchState, signalStoreFeature, withComputed, withMethods, withState } from '@ngrx/signals';
-import { addEntity, removeEntity, setAllEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
+import { addEntity, removeEntity, setAllEntities, updateEntity, upsertEntity, withEntities } from '@ngrx/signals/entities';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
@@ -17,31 +17,39 @@ export interface CrudEntitiesHttpOptions<T extends HasId> {
   createEntity: (data: Partial<T>) => T;
 }
 
-type CrudEntitiesState = {
+type CrudEntitiesState<T extends HasId> = {
   loadingAll: boolean;
   loadingOne: number | undefined;
-  selectedEntityId: number | undefined;
+  createEditEntityId: number | undefined; // use 0 to create
+  initialCreateEntityState: Partial<T> | undefined;
   queryString: string | undefined;
 };
 
-const initialState: CrudEntitiesState = { loadingAll: false, loadingOne: undefined, selectedEntityId: undefined, queryString: undefined };
+const initialState: CrudEntitiesState<any> = {
+  loadingAll: false,
+  loadingOne: undefined,
+  createEditEntityId: undefined,
+  initialCreateEntityState: undefined,
+  queryString: undefined,
+};
 
 export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptions<T>) {
   return signalStoreFeature(
-    withState(initialState),
+    withState<CrudEntitiesState<T>>(initialState),
     withEntities<T>(),
     withComputed((store) => {
       return {
-        selectedEntity: computed(() => {
-          const entityId = store.selectedEntityId();
+        createEditEntity: computed(() => {
+          const entityId = store.createEditEntityId();
           if (entityId === undefined) {
             return undefined;
           }
           if (entityId === 0) {
-            return options.createEntity({ id: 0 } as Partial<T>);
+            const initialState = { ...untracked(store.initialCreateEntityState), ...{ id: 0 } } as Partial<T>;
+            return options.createEntity(initialState);
           }
 
-          return options.createEntity(store.entities().find((entity) => entity.id === store.selectedEntityId())!);
+          return options.createEntity(store.entities().find((entity) => entity.id === entityId)!);
         }),
       };
     }),
@@ -51,8 +59,11 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
 
       const setLoadingAll = (loadingAll: boolean) => patchState(store, { loadingAll });
       const setLoadingOne = (loadingOne?: number) => patchState(store, { loadingOne });
-      const setSelectedEntity = (entityId: number) => patchState(store, { selectedEntityId: entityId });
-      const clearSelectedEntity = () => patchState(store, { selectedEntityId: undefined });
+      const editEntity = (entityId: number) => patchState(store, { createEditEntityId: entityId });
+      const createEntity = (initialState?: Partial<T>) =>
+        patchState(store, { createEditEntityId: 0, initialCreateEntityState: initialState });
+      const clearCreateEditEntity = () => patchState(store, { createEditEntityId: undefined });
+      const setQueryString = (queryString: string) => patchState(store, { queryString });
 
       const loadAll = rxMethod<{ addQueryString?: boolean }>(
         pipe(
@@ -67,6 +78,26 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
               tap((entities) => {
                 patchState(store, setAllEntities(entities));
                 setLoadingAll(false);
+              }),
+              catchError((error) => {
+                console.log(error);
+
+                return of(undefined);
+              }),
+            );
+          }),
+        ),
+      );
+
+      const loadOne = rxMethod<{ entityId: number }>(
+        pipe(
+          switchMap(({ entityId }) => {
+            setLoadingOne(entityId);
+            return httpClient.get<T>(`${environment.apiUrl}/${options.pluralEntityName}/${entityId}`).pipe(
+              map((entity) => options.createEntity(entity)),
+              tap((entity) => {
+                patchState(store, upsertEntity(entity));
+                setLoadingOne();
               }),
               catchError((error) => {
                 console.log(error);
@@ -106,13 +137,17 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
         }),
       );
 
-      const update = rxMethod<{ entity: T; onSuccess?: (updated: T) => void }>(
+      const update = rxMethod<{ entity: T; removeFromStore?: boolean; onSuccess?: (updated: T) => void }>(
         switchMap((data) => {
           setLoadingOne(data.entity.id);
           return httpClient.put<T>(`${environment.apiUrl}/${options.pluralEntityName}/${data.entity.id}`, data.entity).pipe(
             map((entity) => options.createEntity(entity)),
             tap((entity) => {
-              patchState(store, updateEntity({ id: entity.id, changes: entity }));
+              if (data.removeFromStore) {
+                patchState(store, removeEntity(entity.id));
+              } else {
+                patchState(store, updateEntity({ id: entity.id, changes: entity }));
+              }
               setLoadingOne();
               if (data.onSuccess) {
                 data.onSuccess(entity);
@@ -149,11 +184,14 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
 
       return {
         loadAll,
+        loadOne,
         create,
         update,
         remove,
-        setSelectedEntity,
-        clearSelectedEntity,
+        setQueryString,
+        editEntity,
+        createEntity,
+        clearCreateEditEntity,
       };
     }),
   );

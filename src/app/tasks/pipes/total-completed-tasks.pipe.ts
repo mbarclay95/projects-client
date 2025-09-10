@@ -1,16 +1,16 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { FamiliesQuery } from '../services/families/state/families.query';
+import { inject, Pipe, PipeTransform } from '@angular/core';
 import { TaskUserConfig } from '../models/task-user-config.model';
+import { FamiliesSignalStore } from '../services/families-signal-store';
 
 @Pipe({
   name: 'totalCompletedTasks',
   standalone: false,
 })
 export class TotalCompletedTasksPipe implements PipeTransform {
-  constructor(private familiesQuery: FamiliesQuery) {}
+  private readonly familiesStore = inject(FamiliesSignalStore);
 
   transform(config: TaskUserConfig): number {
-    const activeFamily = this.familiesQuery.getActive();
+    const activeFamily = this.familiesStore.activeFamily();
     if (!activeFamily) {
       return 0;
     }

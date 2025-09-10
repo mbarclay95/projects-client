@@ -4,7 +4,7 @@
     placeholder="Search"
     [ngModel]="ui.search"
     class="filter-boxes"
-    (ngModelChange)="tasksService.updateUi({ search: $event }, false)"
+    (ngModelChange)="tasksStore.updateUiState({ search: $event }, false)"
   />
 
   <nz-select
@@ -12,8 +12,10 @@
     [ngModel]="ui.tags"
     nzPlaceHolder="Tags"
     class="filter-boxes"
-    (ngModelChange)="tasksService.updateUi({ tags: $event }, false)"
+    (ngModelChange)="tasksStore.updateUiState({ tags: $event }, false)"
   >
-    <nz-option *ngFor="let tag of tagsService.tags$ | async" [nzLabel]="tag" [nzValue]="tag"></nz-option>
+    @for (tag of tagsStore.entities(); track $index) {
+      <nz-option [nzLabel]="tag" [nzValue]="tag"></nz-option>
+    }
   </nz-select>
 </div>

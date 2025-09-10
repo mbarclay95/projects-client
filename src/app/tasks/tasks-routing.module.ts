@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TaskTabsComponent } from './pages/task-tabs/task-tabs.component';
-import { TasksResolver } from './tasks.resolver';
 import { WeeklyTasksPageComponent } from './pages/weekly-tasks-page/weekly-tasks-page.component';
 import { MyFamilyPageComponent } from './pages/my-family-page/my-family-page.component';
 import { TasksPageComponent } from './pages/tasks-page/tasks-page.component';
@@ -12,7 +11,7 @@ import { TypedRoute } from '../app-routing.module';
 const routes: TypedRoute[] = [
   {
     path: '',
-    resolve: { TasksResolver },
+    data: { footerButtons: 'tasks' },
     children: [
       { path: '', component: TaskTabsComponent },
       {

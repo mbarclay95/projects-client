@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { TaskStrategy } from '../../models/family.model';
 import { faArrowRotateLeft, faCog, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Task } from '../../models/task.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { TasksService } from '../../services/tasks/state/tasks.service';
-import { FamiliesQuery } from '../../services/families/state/families.query';
 import { isMobile } from '../../../app.component';
 import { TaskUserConfig } from '../../models/task-user-config.model';
-import { TaskUserConfigsService } from '../../services/task-user-configs/state/task-user-configs.service';
+import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
+import { TasksSignalStore } from '../../services/tasks-signal-store';
 
 @Component({
   selector: 'app-my-family-members',
@@ -15,9 +15,9 @@ import { TaskUserConfigsService } from '../../services/task-user-configs/state/t
   styleUrls: ['./my-family-members.component.scss'],
   standalone: false,
 })
-export class MyFamilyMembersComponent implements OnInit {
+export class MyFamilyMembersComponent {
   @Input() familyTaskStrategy!: TaskStrategy;
-  @Input() membersConfig: TaskUserConfig[] | null = [];
+  @Input() membersConfig: TaskUserConfig[] = [];
   @Input() weekOffset!: number | null;
   @Input() loading = false;
 
@@ -29,14 +29,11 @@ export class MyFamilyMembersComponent implements OnInit {
   spinner = faSpinner;
   loadingUndoId: number | null = null;
 
-  constructor(
-    public familiesQuery: FamiliesQuery,
-    private nzMessageService: NzMessageService,
-    private tasksService: TasksService,
-    private taskUserConfigsService: TaskUserConfigsService,
-  ) {}
+  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly taskUserConfigsStore = inject(TaskUserConfigsSignalStore);
+  readonly tasksStore = inject(TasksSignalStore);
 
-  ngOnInit(): void {}
+  constructor(private nzMessageService: NzMessageService) {}
 
   saveSettings(memberConfig: TaskUserConfig, popoverOpened: boolean) {
     if (!popoverOpened) {
@@ -53,7 +50,7 @@ export class MyFamilyMembersComponent implements OnInit {
         memberConfig.tasksPerWeek !== newTaskConfig.tasksPerWeek ||
         memberConfig.defaultTasksPerWeek !== newTaskConfig.defaultTasksPerWeek
       ) {
-        void this.taskUserConfigsService.updateTaskUserConfig(newTaskConfig);
+        this.taskUserConfigsStore.update({ entity: newTaskConfig });
       }
     }
   }
@@ -68,9 +65,13 @@ export class MyFamilyMembersComponent implements OnInit {
 
   async undoTask(memberConfigId: number, task: Task) {
     this.loadingUndoId = task.id;
-    await this.tasksService.updateTask(task.id, { ...task, ...{ completedAt: undefined } }, false);
-    this.taskUserConfigsService.removeTaskFromConfig(memberConfigId, task.id);
-    this.loadingUndoId = null;
-    this.nzMessageService.success('Chore has been removed!');
+    this.tasksStore.update({
+      entity: { ...task, ...{ completedAt: undefined } },
+      onSuccess: () => {
+        this.loadingUndoId = null;
+        this.nzMessageService.success('Chore has been removed!');
+      },
+    });
+    this.taskUserConfigsStore.removeTaskFromConfig(memberConfigId, task.id);
   }
 }

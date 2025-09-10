@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FamiliesQuery } from '../../services/families/state/families.query';
-import { TaskUserConfigsQuery } from '../../services/task-user-configs/state/task-user-configs.query';
+import { Component, inject } from '@angular/core';
+import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
+import { FamiliesSignalStore } from '../../services/families-signal-store';
 
 @Component({
   selector: 'app-my-family-page',
@@ -8,11 +8,7 @@ import { TaskUserConfigsQuery } from '../../services/task-user-configs/state/tas
   styleUrls: ['./my-family-page.component.scss'],
   standalone: false,
 })
-export class MyFamilyPageComponent implements OnInit {
-  constructor(
-    public familiesQuery: FamiliesQuery,
-    public taskUserConfigsQuery: TaskUserConfigsQuery,
-  ) {}
-
-  ngOnInit(): void {}
+export class MyFamilyPageComponent {
+  readonly taskUserConfigsSignalStore = inject(TaskUserConfigsSignalStore);
+  readonly familiesSignalStore = inject(FamiliesSignalStore);
 }

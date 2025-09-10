@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FamilyMemberStats } from '../../models/family-member-stats.model';
 import { isMobile } from '../../../app.component';
 
@@ -8,12 +8,8 @@ import { isMobile } from '../../../app.component';
   styleUrls: ['./family-member-stats.component.scss'],
   standalone: false,
 })
-export class FamilyMemberStatsComponent implements OnInit {
+export class FamilyMemberStatsComponent {
   @Input() stats!: FamilyMemberStats;
 
   isMobile = isMobile;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

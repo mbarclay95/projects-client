@@ -1,5 +1,13 @@
 <app-year-selector></app-year-selector>
 
-<div class="stats-page-container pt-2" *ngIf="familyStatsService.stats$ | async as familyMemberStats">
-  <app-family-member-stats *ngFor="let stats of familyMemberStats" [stats]="stats"></app-family-member-stats>
+<div class="stats-page-container pt-2">
+  @if (familyStatsStore.loadingAll()) {
+    <div class="loading-container">
+      <nz-spin></nz-spin>
+    </div>
+  } @else {
+    @for (stats of familyStatsStore.entities(); track stats.id) {
+      <app-family-member-stats [stats]="stats"></app-family-member-stats>
+    }
+  }
 </div>

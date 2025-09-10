@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FamilyStatsService } from '../../services/family-stats.service';
+import { Component, inject } from '@angular/core';
+import { FamilyStatsSignalStore } from '../../services/family-stats-signal-store';
 
 @Component({
   selector: 'app-stats-page',
@@ -7,8 +7,6 @@ import { FamilyStatsService } from '../../services/family-stats.service';
   styleUrls: ['./stats-page.component.scss'],
   standalone: false,
 })
-export class StatsPageComponent implements OnInit {
-  constructor(public familyStatsService: FamilyStatsService) {}
-
-  ngOnInit(): void {}
+export class StatsPageComponent {
+  readonly familyStatsStore = inject(FamilyStatsSignalStore);
 }

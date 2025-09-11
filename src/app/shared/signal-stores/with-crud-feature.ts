@@ -15,6 +15,7 @@ export interface HasId {
 export interface CrudEntitiesHttpOptions<T extends HasId> {
   pluralEntityName: string;
   createEntity: (data: Partial<T>) => T;
+  apiUrl?: string;
 }
 
 type CrudEntitiesState<T extends HasId> = {
@@ -34,6 +35,7 @@ const initialState: CrudEntitiesState<any> = {
 };
 
 export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptions<T>) {
+  const apiUrl = options.apiUrl ?? environment.apiUrl;
   return signalStoreFeature(
     withState<CrudEntitiesState<T>>(initialState),
     withEntities<T>(),
@@ -73,7 +75,7 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
             if ((addQueryString ?? true) && store.queryString()) {
               queryString = store.queryString()!;
             }
-            return httpClient.get<T[]>(`${environment.apiUrl}/${options.pluralEntityName}?${queryString}`).pipe(
+            return httpClient.get<T[]>(`${apiUrl}/${options.pluralEntityName}?${queryString}`).pipe(
               map((entities) => entities.map((entity) => options.createEntity(entity))),
               tap((entities) => {
                 patchState(store, setAllEntities(entities));
@@ -93,7 +95,7 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
         pipe(
           switchMap(({ entityId }) => {
             setLoadingOne(entityId);
-            return httpClient.get<T>(`${environment.apiUrl}/${options.pluralEntityName}/${entityId}`).pipe(
+            return httpClient.get<T>(`${apiUrl}/${options.pluralEntityName}/${entityId}`).pipe(
               map((entity) => options.createEntity(entity)),
               tap((entity) => {
                 patchState(store, upsertEntity(entity));
@@ -112,7 +114,7 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
       const create = rxMethod<{ entity: T; onSuccess?: (created: T) => void }>(
         switchMap((data) => {
           setLoadingOne(data.entity.id);
-          return httpClient.post<T>(`${environment.apiUrl}/${options.pluralEntityName}`, data.entity).pipe(
+          return httpClient.post<T>(`${apiUrl}/${options.pluralEntityName}`, data.entity).pipe(
             map((entity) => options.createEntity(entity)),
             tap((entity) => {
               patchState(store, addEntity(entity));
@@ -140,7 +142,7 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
       const update = rxMethod<{ entity: T; removeFromStore?: boolean; onSuccess?: (updated: T) => void }>(
         switchMap((data) => {
           setLoadingOne(data.entity.id);
-          return httpClient.put<T>(`${environment.apiUrl}/${options.pluralEntityName}/${data.entity.id}`, data.entity).pipe(
+          return httpClient.put<T>(`${apiUrl}/${options.pluralEntityName}/${data.entity.id}`, data.entity).pipe(
             map((entity) => options.createEntity(entity)),
             tap((entity) => {
               if (data.removeFromStore) {
@@ -165,7 +167,7 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
       const remove = rxMethod<{ id: number; onSuccess?: () => void }>(
         switchMap((data) => {
           setLoadingOne(data.id);
-          return httpClient.delete<void>(`${environment.apiUrl}/${options.pluralEntityName}/${data.id}`).pipe(
+          return httpClient.delete<void>(`${apiUrl}/${options.pluralEntityName}/${data.id}`).pipe(
             tap(() => {
               patchState(store, removeEntity(data.id));
               setLoadingOne();

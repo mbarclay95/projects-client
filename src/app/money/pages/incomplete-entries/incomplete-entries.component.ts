@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { EntriesService } from '../../services/entries/state/entries.service';
-import { EntriesQuery } from '../../services/entries/state/entries.query';
-import { Subject } from 'rxjs';
-import { Entry } from '../../models/entry.model';
+import { Component, effect, inject } from '@angular/core';
+import { EntriesSignalStore } from '../../services/entries-signal-store';
 
 @Component({
   selector: 'app-incomplete-entries',
@@ -10,15 +7,13 @@ import { Entry } from '../../models/entry.model';
   styleUrls: ['./incomplete-entries.component.scss'],
   standalone: false,
 })
-export class IncompleteEntriesComponent implements OnInit {
-  createEditEntry: Subject<Entry> = new Subject<Entry>();
+export class IncompleteEntriesComponent {
+  readonly entriesStore = inject(EntriesSignalStore);
 
-  constructor(
-    public entriesService: EntriesService,
-    public entriesQuery: EntriesQuery,
-  ) {}
-
-  ngOnInit(): void {
-    void this.entriesService.get('incomplete=1');
+  constructor() {
+    effect(() => {
+      this.entriesStore.setQueryString(this.entriesStore.buildQueryString());
+      this.entriesStore.loadAll({});
+    });
   }
 }

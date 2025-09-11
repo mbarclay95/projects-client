@@ -10,7 +10,7 @@
       <div class="d-flex">
         <!--      <button nz-button nz-popconfirm nzPopconfirmTitle="Your changes will not be saved"-->
         <!--              (nzOnConfirm)="isVisible = false">-->
-        <button nz-button (click)="isVisible = false">
+        <button nz-button (click)="entriesStore.clearCreateEditEntity()">
           <fa-icon [icon]="close"></fa-icon>
         </button>
 
@@ -61,16 +61,16 @@
         (nzOnConfirm)="deleteEntry()"
         nzPopconfirmTitle="Are you sure?"
         [nzLoading]="deleting"
-        [disabled]="deleting || saving"
+        [disabled]="deleting || entriesStore.loadingOne()"
       >
         Delete
       </button>
     </div>
 
     <div>
-      <button nz-button nzType="default" (click)="saveEntry()" [disabled]="deleting || saving">Save</button>
+      <button nz-button nzType="default" (click)="saveEntry()" [disabled]="deleting || entriesStore.loadingOne()">Save</button>
 
-      <button nz-button nzType="primary" (click)="saveEntryAndNext()" [disabled]="deleting || saving">Save &</button>
+      <button nz-button nzType="primary" (click)="saveEntryAndNext()" [disabled]="deleting || entriesStore.loadingOne()">Save &</button>
     </div>
   </div>
 </nz-modal>

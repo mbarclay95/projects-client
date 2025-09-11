@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Entry } from '../../models/entry.model';
+import { EntriesSignalStore } from '../../services/entries-signal-store';
 
 @Component({
   selector: 'app-entry-row-item',
@@ -7,11 +8,8 @@ import { Entry } from '../../models/entry.model';
   styleUrls: ['./entry-row-item.component.scss'],
   standalone: false,
 })
-export class EntryRowItemComponent implements OnInit {
+export class EntryRowItemComponent {
   @Input() entry!: Entry;
-  @Output() editEntry: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  readonly entriesStore = inject(EntriesSignalStore);
 }

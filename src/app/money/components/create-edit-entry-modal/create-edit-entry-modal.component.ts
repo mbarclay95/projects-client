@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { DefaultModalComponent } from '../../../shared/components/default-modal/default-modal.component';
+import { Component, inject } from '@angular/core';
 import { Entry } from '../../models/entry.model';
 import { faChevronLeft, faChevronRight, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
+import { EntriesSignalStore } from '../../services/entries-signal-store';
 
 @Component({
   selector: 'app-create-edit-entry-modal',
@@ -9,15 +10,13 @@ import { faChevronLeft, faChevronRight, faXmark } from '@fortawesome/free-solid-
   styleUrls: ['./create-edit-entry-modal.component.scss'],
   standalone: false,
 })
-export class CreateEditEntryModalComponent extends DefaultModalComponent<Entry> {
+export class CreateEditEntryModalComponent extends DefaultModalSignalComponent<Entry> {
   deleting = false;
   close = faXmark;
   next = faChevronRight;
   previous = faChevronLeft;
 
-  constructor() {
-    super();
-  }
+  readonly entriesStore = inject(EntriesSignalStore);
 
   async deleteEntry(): Promise<void> {}
 

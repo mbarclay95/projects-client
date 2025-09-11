@@ -21,6 +21,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     NzUploadModule,
     NzPopconfirmModule,
     NzDatePickerModule,
+    NzSpinComponent,
   ],
 })
 export class MoneyModule {}

@@ -1,4 +1,4 @@
-<div class="entry-box" (click)="editEntry.emit()">
+<div class="entry-box" (click)="entriesStore.editEntity(entry.id)">
   <div class="inner-padding">
     <div class="category-text">
       <div *ngIf="entry.subCategory">{{ entry.category.name }}: {{ entry.subCategory.name }}</div>

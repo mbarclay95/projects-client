@@ -1,77 +1,88 @@
 <nz-modal
   [(nzVisible)]="isVisible"
-  [nzTitle]="(goal?.id === 0 ? 'Create' : 'Edit') + ' Goal'"
+  [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Goal'"
   nzWidth="800px"
-  (nzOnCancel)="isVisible = false"
+  (nzOnCancel)="goalsStore.clearCreateEditEntity()"
 >
   <ng-container *nzModalContent>
-    <div *ngIf="goal">
-      <div class="w-100 mb-4">
-        <div class="mb-2">Title:</div>
+    @if (model) {
+      <div>
+        <div class="w-100 mb-4">
+          <div class="mb-2">Title:</div>
 
-        <input nz-input [(ngModel)]="goal.title" class="w-100" />
-      </div>
+          <input nz-input [(ngModel)]="model.title" class="w-100" />
+        </div>
 
-      <div class="w-100 mb-4">
-        <div class="mb-2 w-100">Describe your goal:</div>
+        <div class="w-100 mb-4">
+          <div class="mb-2 w-100">Describe your goal:</div>
 
-        <div class="d-flex align-items-center description-container">
-          <span>
-            <span class="me-2" style="font-style: italic">I want to</span>
+          <div class="d-flex align-items-center description-container">
+            <span>
+              <span class="me-2" style="font-style: italic">I want to</span>
 
-            <input nz-input class="me-2" style="width: 125px" placeholder="verb" [(ngModel)]="goal.verb" />
-          </span>
+              <input nz-input class="me-2" style="width: 125px" placeholder="verb" [(ngModel)]="model.verb" />
+            </span>
 
-          <span>
-            <nz-select class="me-2" style="width: 100px" [(ngModel)]="goal.equality" [nzOptions]="equalityDrownDown"></nz-select>
+            <span>
+              <nz-select class="me-2" style="width: 100px" [(ngModel)]="model.equality" [nzOptions]="equalityDrownDown"></nz-select>
 
-            <nz-input-number
-              class="me-2"
-              style="width: 75px"
-              nzPlaceHolder="amount"
-              [(ngModel)]="goal.expectedAmount"
-              [nzMin]="1"
-            ></nz-input-number>
+              <nz-input-number
+                class="me-2"
+                style="width: 75px"
+                nzPlaceHolder="amount"
+                [(ngModel)]="model.expectedAmount"
+                [nzMin]="1"
+              ></nz-input-number>
 
-            <input nz-input class="me-2" style="width: 125px" placeholder="singular unit" [(ngModel)]="goal.unit" />
-          </span>
+              <input nz-input class="me-2" style="width: 125px" placeholder="singular unit" [(ngModel)]="model.unit" />
+            </span>
 
-          <span>
-            <span class="me-2" style="font-style: italic">per</span>
+            <span>
+              <span class="me-2" style="font-style: italic">per</span>
 
-            <nz-select
-              style="width: 100px"
-              nzPlaceHolder="length of time"
-              [(ngModel)]="goal.lengthOfTime"
-              [nzOptions]="lengthOfTimeDrownDown"
-            ></nz-select>
-          </span>
+              <nz-select
+                style="width: 100px"
+                nzPlaceHolder="length of time"
+                [(ngModel)]="model.lengthOfTime"
+                [nzOptions]="lengthOfTimeDrownDown"
+              ></nz-select>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    }
   </ng-container>
 
   <div *nzModalFooter class="d-flex justify-content-between">
     <div>
-      <button
-        nz-button
-        nzType="primary"
-        nzDanger
-        *ngIf="goal?.id !== 0"
-        nz-popconfirm
-        (nzOnConfirm)="deleteGoal()"
-        nzPopconfirmTitle="Are you sure?"
-        [nzLoading]="deleting"
-        [disabled]="deleting || saving"
-      >
-        Delete
-      </button>
+      @if (model?.id !== 0) {
+        <button
+          nz-button
+          nzType="primary"
+          nzDanger
+          nz-popconfirm
+          (nzOnConfirm)="deleteGoal()"
+          nzPopconfirmTitle="Are you sure?"
+          [nzLoading]="deleting"
+          [disabled]="deleting || goalsStore.loadingOne()"
+        >
+          Delete
+        </button>
+      }
     </div>
 
     <div>
-      <button nz-button nzType="default" (click)="isVisible = false" [disabled]="saving || deleting">Cancel</button>
+      <button nz-button nzType="default" (click)="isVisible = false" [disabled]="goalsStore.loadingOne() || deleting">Cancel</button>
 
-      <button nz-button nzType="primary" (click)="saveGoal()" [nzLoading]="saving" [disabled]="saving || deleting">Save</button>
+      <button
+        nz-button
+        nzType="primary"
+        (click)="saveGoal()"
+        [nzLoading]="goalsStore.loadingOne()"
+        [disabled]="goalsStore.loadingOne() || deleting"
+      >
+        Save
+      </button>
     </div>
   </div>
 </nz-modal>

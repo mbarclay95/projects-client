@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
+import { GoalsSignalStore } from '../services/goals-signal-store';
 
 @Component({
   selector: 'app-goals-layout',
@@ -6,8 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./goals-layout.component.scss'],
   standalone: false,
 })
-export class GoalsLayoutComponent implements OnInit {
-  constructor() {}
+export class GoalsLayoutComponent {
+  readonly goalsStore = inject(GoalsSignalStore);
 
-  ngOnInit(): void {}
+  constructor() {
+    effect(() => {
+      this.goalsStore.setQueryString(this.goalsStore.buildQueryString());
+      this.goalsStore.loadAll({});
+    });
+  }
 }

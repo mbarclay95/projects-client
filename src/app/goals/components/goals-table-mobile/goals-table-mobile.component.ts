@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Goal } from '../../models/goal.model';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
@@ -8,18 +8,14 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./goals-table-mobile.component.scss'],
   standalone: false,
 })
-export class GoalsTableMobileComponent implements OnInit {
+export class GoalsTableMobileComponent {
   @Input() set goals(goals: Goal[] | null) {
     if (goals) {
       this._goals = goals;
     }
   }
-  @Output() editGoal: EventEmitter<Goal> = new EventEmitter<Goal>();
+  @Output() editGoal: EventEmitter<number> = new EventEmitter<number>();
 
   _goals: Goal[] = [];
   edit = faEdit;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

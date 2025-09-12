@@ -1,7 +1,9 @@
 <div class="page-header">
   <div class="page-title">{{ title }}</div>
 
-  <button *ngIf="buttonText" nz-button nzType="primary" (click)="createButtonClicked.emit()">
-    {{ buttonText }}
-  </button>
+  @if (buttonText) {
+    <button nz-button nzType="primary" (click)="createButtonClicked.emit()">
+      {{ buttonText }}
+    </button>
+  }
 </div>

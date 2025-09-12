@@ -1,8 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { createGoal, EqualityDropDown, Goal, LengthOfTimeDropDown } from '../../models/goal.model';
-import { GoalsService } from '../../services/state/goals.service';
+import { Component, inject } from '@angular/core';
+import { EqualityDropDown, Goal, LengthOfTimeDropDown } from '../../models/goal.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
+import { GoalsSignalStore } from '../../services/goals-signal-store';
 
 @Component({
   selector: 'app-create-edit-goal-modal',
@@ -10,72 +10,42 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   styleUrls: ['./create-edit-goal-modal.component.scss'],
   standalone: false,
 })
-export class CreateEditGoalModalComponent implements OnInit, OnDestroy {
-  @Input() openModal!: Observable<Goal>;
-
-  goal?: Goal;
-  isVisible: boolean = false;
+export class CreateEditGoalModalComponent extends DefaultModalSignalComponent<Goal> {
   equalityDrownDown = EqualityDropDown;
   lengthOfTimeDrownDown = LengthOfTimeDropDown;
-  saving = false;
   deleting = false;
 
-  private subscriptionDestroyer: Subject<void> = new Subject<void>();
+  readonly goalsStore = inject(GoalsSignalStore);
+  readonly nzMessageService = inject(NzMessageService);
 
-  constructor(
-    private goalsService: GoalsService,
-    private nzMessageService: NzMessageService,
-  ) {}
-
-  ngOnInit(): void {
-    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((goal) => {
-      this.goal = goal.id === 0 ? goal : createGoal(goal);
-      this.isVisible = true;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptionDestroyer.next();
-    this.subscriptionDestroyer.complete();
-  }
-
-  async saveGoal() {
-    if (!this.goal) {
+  saveGoal() {
+    if (!this.model) {
       return;
     }
-    this.saving = true;
-    try {
-      if (this.goal.id === 0) {
-        await this.goalsService.createNewGoal(this.goal);
-      } else {
-        await this.goalsService.updateGoal(this.goal);
-      }
-    } catch (e) {
-      console.log(e);
-      this.nzMessageService.error('There was an error');
-      this.saving = false;
-      return;
+    if (this.model.id === 0) {
+      this.goalsStore.create({ entity: this.model, onSuccess: () => this.goalSaved() });
+    } else {
+      this.goalsStore.update({ entity: this.model, onSuccess: () => this.goalSaved() });
     }
+  }
+
+  goalSaved(): void {
     this.nzMessageService.success('Goal saved!');
-    this.saving = false;
-    this.isVisible = false;
+    this.goalsStore.clearCreateEditEntity();
   }
 
   async deleteGoal(): Promise<void> {
-    if (!this.goal) {
+    if (!this.model) {
       return;
     }
     this.deleting = true;
-    try {
-      await this.goalsService.deleteGoal(this.goal);
-    } catch (e) {
-      console.log(e);
-      this.nzMessageService.error('There was an error');
-      return;
-    }
-
-    this.nzMessageService.success('Goal deleted!');
-    this.isVisible = false;
-    this.deleting = false;
+    this.goalsStore.remove({
+      id: this.model.id,
+      onSuccess: () => {
+        this.nzMessageService.success('Goal deleted!');
+        this.deleting = false;
+        this.goalsStore.clearCreateEditEntity();
+      },
+    });
   }
 }

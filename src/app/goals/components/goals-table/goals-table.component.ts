@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NzTableComponent } from 'ng-zorro-antd/table';
 import { Goal } from '../../models/goal.model';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -9,22 +9,18 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./goals-table.component.scss'],
   standalone: false,
 })
-export class GoalsTableComponent implements OnInit {
+export class GoalsTableComponent {
   @ViewChild('goalsTableTag', { static: true }) goalsTable: NzTableComponent<Goal> | undefined;
   @Input() set goals(goals: Goal[] | null) {
     if (goals) {
       this._goals = goals;
     }
   }
-  @Output() editGoal: EventEmitter<Goal> = new EventEmitter<Goal>();
+  @Output() editGoal: EventEmitter<number> = new EventEmitter<number>();
 
   _goals: Goal[] = [];
   edit = faEdit;
   delete = faTrash;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   deleteGoal(goal: Goal) {}
 }

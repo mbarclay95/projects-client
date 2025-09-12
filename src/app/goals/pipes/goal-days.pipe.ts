@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { GoalsQuery } from '../services/state/goals.query';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { GoalDayButton } from '../models/goal-day.model';
 
 @Pipe({
@@ -8,9 +7,8 @@ import { GoalDayButton } from '../models/goal-day.model';
   standalone: false,
 })
 export class GoalDaysPipe implements PipeTransform {
-  constructor(private goalsQuery: GoalsQuery) {}
-
   transform(goalId: number): Observable<GoalDayButton[]> {
-    return this.goalsQuery.getGoalDays(goalId);
+    // return this.goalsQuery.getGoalDays(goalId);
+    return of([]);
   }
 }

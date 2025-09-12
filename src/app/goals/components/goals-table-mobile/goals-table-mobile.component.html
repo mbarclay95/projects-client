@@ -2,7 +2,7 @@
   <div *ngFor="let goal of _goals" class="goal-container w-100 mb-3">
     <div class="d-flex justify-content-between align-items-center mb-3 w-100">
       <div class="goal-title">
-        <fa-icon class="me-2" [icon]="edit" (click)="editGoal.emit(goal)"></fa-icon>
+        <fa-icon class="me-2" [icon]="edit" (click)="editGoal.emit(goal.id)"></fa-icon>
 
         <div style="font-size: 18px">{{ goal.title }}</div>
       </div>

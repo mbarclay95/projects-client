@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DirectoryItemsQuery } from '../../services/state/directory-items.query';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { faArrowsRotate, faChevronLeft, faEdit, faFile, faFolder, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { DirectoryItemsService } from '../../services/state/directory-items.service';
 import { DirectoryItem } from '../../models/directory-item.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/working-directory-item';
+import { DirectoryItemsSignalStore } from '../../services/directory-items-signal-store';
 
 @Component({
   selector: 'app-directories-files-list',
@@ -12,7 +11,7 @@ import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/wor
   styleUrls: ['./directories-files-list.component.scss'],
   standalone: false,
 })
-export class DirectoriesFilesListComponent implements OnInit {
+export class DirectoriesFilesListComponent {
   @Input() workingDirectory: WorkingDirectoryItem[] = [];
   @Input() newLocationBeingSelected = false;
   @Output() openCreateEditModal: EventEmitter<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }> = new EventEmitter<
@@ -27,30 +26,22 @@ export class DirectoriesFilesListComponent implements OnInit {
   refresh = faArrowsRotate;
   back = faChevronLeft;
 
-  constructor(
-    public directoryItemsService: DirectoryItemsService,
-    public directoryItemsQuery: DirectoryItemsQuery,
-    private nzMessageService: NzMessageService,
-  ) {}
+  readonly directoryItemsStore = inject(DirectoryItemsSignalStore);
 
-  ngOnInit(): void {}
-
-  clickedDirectory(item: DirectoryItem): void {
-    this.directoryItemsService.appendPath(item.id, this.workingDirectory);
-  }
+  constructor(private nzMessageService: NzMessageService) {}
 
   clickedWorkingDirectory(dir: { sort: number; path: string }, last: boolean): void {
     if (last) {
       return;
     }
-    this.directoryItemsService.clickedWorkingDirectory(dir, this.workingDirectory);
+    this.directoryItemsStore.clickedWorkingDirectory(dir);
   }
 
   clickedRoot(noWorkingDir: boolean) {
     if (noWorkingDir) {
       return;
     }
-    this.directoryItemsService.clickedRoot();
+    this.directoryItemsStore.clickedRoot();
   }
 
   goBack(): void {
@@ -58,12 +49,12 @@ export class DirectoriesFilesListComponent implements OnInit {
       return;
     }
     if (this.workingDirectory.length === 1) {
-      this.directoryItemsService.clickedRoot();
+      this.directoryItemsStore.clickedRoot();
       return;
     }
 
     const index = this.workingDirectory.length - 2;
-    this.directoryItemsService.clickedWorkingDirectory(this.workingDirectory[index], this.workingDirectory);
+    this.directoryItemsStore.clickedWorkingDirectory(this.workingDirectory[index]);
   }
 
   updateItem(item: DirectoryItem): void {
@@ -75,15 +66,14 @@ export class DirectoriesFilesListComponent implements OnInit {
   }
 
   async deleteItem(item: DirectoryItem): Promise<void> {
-    try {
-      await this.directoryItemsService.deleteItem(item, this.workingDirectory);
-    } catch (e) {
-      this.nzMessageService.error('There was an error');
-    }
-    this.nzMessageService.success(`${item.type === 'dir' ? 'Directory' : 'File'} deleted`);
-  }
-
-  refreshDir(): void {
-    void this.directoryItemsService.getItems(workingDirectoryToString(this.workingDirectory));
+    this.directoryItemsStore.removeCustom({
+      entity: {
+        ...item,
+        workingDirectory: workingDirectoryToString(this.workingDirectory),
+      },
+      onSuccess: () => {
+        this.nzMessageService.success(`${item.type === 'dir' ? 'Directory' : 'File'} deleted`);
+      },
+    });
   }
 }

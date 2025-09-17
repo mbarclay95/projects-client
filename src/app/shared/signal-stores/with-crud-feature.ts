@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 export interface HasId {
-  id: number;
+  id: number | string;
 }
 
 export interface CrudEntitiesHttpOptions<T extends HasId> {
@@ -20,8 +20,8 @@ export interface CrudEntitiesHttpOptions<T extends HasId> {
 
 type CrudEntitiesState<T extends HasId> = {
   loadingAll: boolean;
-  loadingOne: number | undefined;
-  createEditEntityId: number | undefined; // use 0 to create
+  loadingOne: number | string | undefined;
+  createEditEntityId: number | string | undefined; // use 0 to create
   initialCreateEntityState: Partial<T> | undefined;
   queryString: string | undefined;
 };
@@ -60,7 +60,7 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
       const nzMessageService = inject(NzMessageService);
 
       const setLoadingAll = (loadingAll: boolean) => patchState(store, { loadingAll });
-      const setLoadingOne = (loadingOne?: number) => patchState(store, { loadingOne });
+      const setLoadingOne = (loadingOne?: number | string) => patchState(store, { loadingOne });
       const editEntity = (entityId: number) => patchState(store, { createEditEntityId: entityId });
       const createEntity = (initialState?: Partial<T>) =>
         patchState(store, { createEditEntityId: 0, initialCreateEntityState: initialState });

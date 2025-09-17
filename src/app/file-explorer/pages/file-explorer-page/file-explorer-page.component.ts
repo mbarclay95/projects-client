@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { filter, merge, Observable, shareReplay, Subject, tap } from 'rxjs';
+import { Component, effect, inject } from '@angular/core';
+import { filter, merge, Observable, Subject } from 'rxjs';
 import { DirectoryItem } from '../../models/directory-item.model';
 import { map } from 'rxjs/operators';
 import { MobileDisplayService } from '../../../shared/services/mobile-display.service';
 import { isMobile } from '../../../app.component';
-import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/working-directory-item';
-import { DirectoryItemsQuery } from '../../services/state/directory-items.query';
-import { DirectoryItemsService } from '../../services/state/directory-items.service';
+import { WorkingDirectoryItem } from '../../models/working-directory-item';
+import { DirectoryItemsSignalStore } from '../../services/directory-items-signal-store';
 
 @Component({
   selector: 'app-file-explorer-page',
@@ -14,7 +13,7 @@ import { DirectoryItemsService } from '../../services/state/directory-items.serv
   styleUrls: ['./file-explorer-page.component.scss'],
   standalone: false,
 })
-export class FileExplorerPageComponent implements OnInit {
+export class FileExplorerPageComponent {
   isMobile = isMobile;
 
   openCreateEditModal: Subject<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }> = new Subject<
@@ -36,23 +35,18 @@ export class FileExplorerPageComponent implements OnInit {
   ).pipe(filter(() => !this.newLocationBeingSelected));
   newLocationSelected: Subject<WorkingDirectoryItem[] | undefined> = new Subject<WorkingDirectoryItem[] | undefined>();
 
-  workingDirectory$: Observable<WorkingDirectoryItem[]> = this.directoryItemsQuery.workingDirectory$.pipe(
-    tap((workingDirectory) => this.directoryItemsService.getItems(workingDirectoryToString(workingDirectory))),
-    shareReplay(),
-  );
-
   newLocationBeingSelected?: WorkingDirectoryItem[];
+  readonly directoryItemsStore = inject(DirectoryItemsSignalStore);
 
-  constructor(
-    private mobileHeaderService: MobileDisplayService,
-    private directoryItemsQuery: DirectoryItemsQuery,
-    private directoryItemsService: DirectoryItemsService,
-  ) {}
+  constructor(private mobileHeaderService: MobileDisplayService) {
+    effect(() => {
+      this.directoryItemsStore.setQueryString(this.directoryItemsStore.buildQueryString());
+      this.directoryItemsStore.loadAll({});
+    });
+  }
 
-  ngOnInit(): void {}
-
-  newLocationSelectedOrCanceled(newLocation?: WorkingDirectoryItem[]): void {
-    this.directoryItemsService.setPath(this.newLocationBeingSelected!);
+  newLocationSelectedOrCanceled(newLocation: WorkingDirectoryItem[]): void {
+    this.directoryItemsStore.updateUiState({ workingDirectory: newLocation });
     this.newLocationBeingSelected = undefined;
     setTimeout(() => this.newLocationSelected.next(newLocation), 100);
   }

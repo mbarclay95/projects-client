@@ -9,8 +9,6 @@ import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
-import { environment } from '../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -31,7 +29,6 @@ registerLocaleData(en);
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
-    environment.production ? [] : AkitaNgDevtools.forRoot(),
     FontAwesomeModule,
     NzLayoutModule,
     NzMenuModule,

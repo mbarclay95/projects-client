@@ -8,16 +8,15 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { AuthInterceptor } from './auth/services/auth.interceptor';
-import { NzMessageModule } from 'ng-zorro-antd/message';
 import { SharedModule } from './shared/shared.module';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 registerLocaleData(en);
 
@@ -28,17 +27,16 @@ registerLocaleData(en);
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    BrowserAnimationsModule,
     FontAwesomeModule,
     NzLayoutModule,
     NzMenuModule,
     NzIconModule,
-    NzMessageModule,
     SharedModule,
     NzButtonModule,
     NzSpinModule,
   ],
   providers: [
+    provideAnimations(),
     {
       provide: NZ_I18N,
       useValue: en_US,

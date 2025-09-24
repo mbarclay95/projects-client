@@ -12,7 +12,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
 import { SharedModule } from '../shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
@@ -50,7 +50,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     NzInputModule,
     FormsModule,
     NzSelectModule,
-    NzInputNumberModule,
+    NzInputNumberLegacyModule,
     SharedModule,
     FontAwesomeModule,
     NzPopconfirmModule,

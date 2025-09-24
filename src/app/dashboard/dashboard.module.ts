@@ -18,7 +18,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
@@ -46,7 +46,7 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
     NzSelectModule,
     DragDropModule,
     NzPopconfirmModule,
-    NzToolTipModule,
+    NzTooltipModule,
     NzCheckboxModule,
     NzSwitchModule,
     NgOptimizedImage,

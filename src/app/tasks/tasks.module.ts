@@ -21,7 +21,7 @@ import { CreateEditTaskModalComponent } from './components/create-edit-task-moda
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
 import { PluralFrequencyPipe } from './pipes/plural-frequency.pipe';
 import { WeeklyProgressComponent } from './components/weekly-progress/weekly-progress.component';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
@@ -117,7 +117,7 @@ import { FamilyMemberStatsComponent } from './components/family-member-stats/fam
     NzDatePickerModule,
     NzSwitchModule,
     NzRadioModule,
-    NzInputNumberModule,
+    NzInputNumberLegacyModule,
     NzProgressModule,
     NzDividerModule,
     NzCheckboxModule,

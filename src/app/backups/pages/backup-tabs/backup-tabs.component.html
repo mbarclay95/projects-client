@@ -1,4 +1,4 @@
-<nz-tabset [nzTabBarExtraContent]="createButton" nzSize="large" nzLinkRouter>
+<nz-tabs [nzTabBarExtraContent]="createButton" nzSize="large" nzLinkRouter>
   <nz-tab (nzClick)="selectedTab = 'Backup Job'" (nzSelect)="selectBackupTab()" (nzDeselect)="backupStore.stopPolling()">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'backups' }" queryParamsHandling="merge"> Backup Jobs </a>
     <app-backups-page (editBackup)="backupStore.editEntity($event)"></app-backups-page>
@@ -13,7 +13,7 @@
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'targets' }" queryParamsHandling="merge"> Targets </a>
     <app-targets-page (editTarget)="targetStore.editEntity($event)"></app-targets-page>
   </nz-tab>
-</nz-tabset>
+</nz-tabs>
 
 <ng-template #createButton>
   <button nz-button nzType="primary" (click)="createEntity()">Create {{ selectedTab }}</button>

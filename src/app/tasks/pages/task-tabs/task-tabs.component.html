@@ -1,4 +1,4 @@
-<nz-tabset [nzTabBarExtraContent]="createButton" nzSize="large" nzLinkRouter>
+<nz-tabs [nzTabBarExtraContent]="createButton" nzSize="large" nzLinkRouter>
   <nz-tab (nzSelect)="loadWeeklyTasks()">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'weekly-tasks' }" queryParamsHandling="merge"> Weekly Tasks </a>
     <app-weekly-tasks-page (skipTask)="openSkipTaskModal.next($event)" (viewTask)="openViewTaskModal.next($event)"></app-weekly-tasks-page>
@@ -19,7 +19,7 @@
       <app-families-page></app-families-page>
     </nz-tab>
   }
-</nz-tabset>
+</nz-tabs>
 
 <ng-template #createButton>
   @if (selectedTab !== "My Family") {

@@ -17,8 +17,8 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { CreateEditEventComponent } from './components/create-edit-event/create-edit-event.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -57,8 +57,8 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
     NzCollapseModule,
     NzModalModule,
     NzDatePickerModule,
-    NzInputNumberModule,
-    NzToolTipModule,
+    NzInputNumberLegacyModule,
+    NzTooltipModule,
     NzProgressModule,
     NzPopconfirmModule,
     NzCheckboxModule,

@@ -1,9 +1,11 @@
 <div class="w-100 money-page-container p-2">
-  <ng-container *ngIf="!(entriesQuery.selectLoading() | async)">
-    <ng-container *ngIf="entriesQuery.entries$ | async as entries">
-      <app-entry-rows [entries]="entries" (editEntry)="createEditEntry.next($event)"></app-entry-rows>
-    </ng-container>
-  </ng-container>
+  @if (entriesStore.loadingAll()) {
+    <div class="loading-container">
+      <nz-spin></nz-spin>
+    </div>
+  } @else {
+    <app-entry-rows [entries]="entriesStore.entities()"></app-entry-rows>
+  }
 </div>
 
-<app-create-edit-entry-modal [openModal]="createEditEntry.asObservable()"></app-create-edit-entry-modal>
+<app-create-edit-entry-modal [openModal]="entriesStore.createEditEntity()"></app-create-edit-entry-modal>

@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { TaskUiState } from '../../services/tasks/state/tasks.store';
-import { TasksService } from '../../services/tasks/state/tasks.service';
-import { TagsService } from '../../services/tags.service';
+import { Component, inject, Input } from '@angular/core';
+import { TasksSignalStore, TasksUiState } from '../../services/tasks-signal-store';
+import { TagsSignalStore } from '../../services/tags-signal-store';
 
 @Component({
   selector: 'app-tasks-filters',
@@ -9,13 +8,9 @@ import { TagsService } from '../../services/tags.service';
   styleUrls: ['./tasks-filters.component.scss'],
   standalone: false,
 })
-export class TasksFiltersComponent implements OnInit {
-  @Input() ui!: TaskUiState;
+export class TasksFiltersComponent {
+  @Input() ui!: TasksUiState;
 
-  constructor(
-    public tasksService: TasksService,
-    public tagsService: TagsService,
-  ) {}
-
-  ngOnInit(): void {}
+  readonly tasksStore = inject(TasksSignalStore);
+  readonly tagsStore = inject(TagsSignalStore);
 }

@@ -1,5 +1,9 @@
 <div class="w-100 entry-border">
-  <app-entry-row-item *ngFor="let entry of entries" [entry]="entry" (editEntry)="editEntry.emit(entry)"></app-entry-row-item>
+  @for (entry of entries; track entry.id) {
+    <app-entry-row-item [entry]="entry"></app-entry-row-item>
+  }
 
-  <nz-empty *ngIf="entries.length === 0" class="my-4" nzNotFoundContent="No Transactions"></nz-empty>
+  @if (entries.length === 0) {
+    <nz-empty class="my-4" nzNotFoundContent="No Transactions"></nz-empty>
+  }
 </div>

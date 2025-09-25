@@ -1,21 +1,21 @@
-<div class="w-100 task-page-container p-2" *ngIf="tasksQuery.ui$ | async as ui">
+<div class="w-100 task-page-container p-2">
+  @let ui = tasksStore.ui();
   <app-tasks-filters [ui]="ui"></app-tasks-filters>
 
-  <ng-container *ngIf="!(tasksQuery.selectLoading() | async)">
-    <ng-container *ngIf="tasksQuery.filteredTasks$ | async as tasks">
-      <app-tasks-table *ngIf="!isMobile" [tasks]="tasks" (editTask)="editTask.emit($event)" [ui]="ui"></app-tasks-table>
+  @if (tasksStore.loadingAll()) {
+  } @else {
+    @let tasks = tasksStore.filteredTasks();
 
-      <app-task-table-mobile
-        *ngIf="isMobile"
-        [tasks]="tasks"
-        (editTask)="editTask.emit($event)"
-        [ui]="ui"
-        (viewTask)="viewTask.emit($event)"
-      ></app-task-table-mobile>
-    </ng-container>
-  </ng-container>
+    @if (isMobile) {
+      <app-task-table-mobile [tasks]="tasks" [ui]="ui" (viewTask)="viewTask.emit($event)"></app-task-table-mobile>
+    } @else {
+      <app-tasks-table [tasks]="tasks" [ui]="ui"></app-tasks-table>
+    }
+  }
 </div>
 
-<app-create-edit-task-modal-mobile *ngIf="isMobile" [openModal]="createEditTask"></app-create-edit-task-modal-mobile>
+@if (isMobile) {
+  <app-create-edit-task-modal-mobile [openModal]="tasksStore.createEditEntity()"></app-create-edit-task-modal-mobile>
+}
 
-<app-view-task-modal [openModal]="viewTask.asObservable()" (editTask)="editTask.emit($event)"></app-view-task-modal>
+<app-view-task-modal [openModal]="viewTask.asObservable()"></app-view-task-modal>

@@ -1,9 +1,9 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { isMobile } from '../../../app.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { AuthService } from '../../services/state/auth.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { AuthSignalStore } from '../../services/auth-signal-store';
 
 @Component({
   selector: 'app-change-password-modal',
@@ -22,10 +22,9 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 
-  constructor(
-    private authService: AuthService,
-    private nzMessageService: NzMessageService,
-  ) {}
+  readonly authStore = inject(AuthSignalStore);
+
+  constructor(private nzMessageService: NzMessageService) {}
 
   ngOnInit(): void {
     this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe(() => {
@@ -54,7 +53,7 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
     const newPassword = (this.form.get('newPassword')?.value as string | null) ?? '';
     this.saving = true;
     try {
-      await this.authService.changePassword(currentPassword, newPassword);
+      await this.authStore.changePassword(currentPassword, newPassword);
     } catch (e) {
       console.log(e);
       this.nzMessageService.error('There was an error');

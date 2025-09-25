@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Task } from '../../models/task.model';
 import { faArrowRightToBracket, faEdit, faEllipsisV, faFlag } from '@fortawesome/free-solid-svg-icons';
-import { FamiliesQuery } from '../../services/families/state/families.query';
-import { AuthQuery } from '../../../auth/services/state/auth.query';
-import { TasksService } from '../../services/tasks/state/tasks.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Router } from '@angular/router';
 import { isMobile } from '../../../app.component';
-import { TaskUserConfigsService } from '../../services/task-user-configs/state/task-user-configs.service';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
+import { TasksSignalStore } from '../../services/tasks-signal-store';
+import { TagsSignalStore } from '../../services/tags-signal-store';
 
 @Component({
   selector: 'app-task-row',
@@ -16,9 +15,8 @@ import { faEye } from '@fortawesome/free-regular-svg-icons';
   styleUrls: ['./task-row.component.scss'],
   standalone: false,
 })
-export class TaskRowComponent implements OnInit {
+export class TaskRowComponent {
   @Input() task!: Task;
-  @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
   @Output() viewTask: EventEmitter<Task> = new EventEmitter<Task>();
   @Output() skipTask: EventEmitter<Task> = new EventEmitter<Task>();
 
@@ -30,35 +28,21 @@ export class TaskRowComponent implements OnInit {
   edit = faEdit;
   skip = faArrowRightToBracket;
 
-  constructor(
-    public familiesQuery: FamiliesQuery,
-    public authQuery: AuthQuery,
-    private tasksService: TasksService,
-    private nzMessageService: NzMessageService,
-    private router: Router,
-    private taskUserConfigsService: TaskUserConfigsService,
-  ) {}
+  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly taskUserConfigsStore = inject(TaskUserConfigsSignalStore);
+  readonly tasksStore = inject(TasksSignalStore);
+  readonly nzMessageService = inject(NzMessageService);
+  readonly tagsStore = inject(TagsSignalStore);
 
-  ngOnInit(): void {}
-
-  async completedTask(taskId: number) {
-    try {
-      const completedTask = await this.tasksService.updateTask(taskId, { completedAt: new Date() }, true, true);
-      if (completedTask) {
-        this.taskUserConfigsService.addCompletedTaskToActive(completedTask);
-      }
-    } catch (e) {
-      console.log(e);
-      this.nzMessageService.error('There was an error');
-      return;
-    }
-
-    this.nzMessageService.success('Task Completed!');
-  }
-
-  goToTask() {
-    window.navigator.vibrate(300);
-    const route = this.isMobile ? `app/tasks/tasks?taskId=${this.task.id}` : `app/tasks?tab=tasks&taskId=${this.task.id}`;
-    this.router.navigateByUrl(route);
+  completedTask() {
+    this.tasksStore.update({
+      entity: { ...this.task, ...{ completedAt: new Date() } },
+      removeFromStore: true,
+      onSuccess: (task) => {
+        this.tagsStore.loadAll();
+        this.taskUserConfigsStore.addCompletedTaskToActive(task);
+        this.nzMessageService.success('Task Completed!');
+      },
+    });
   }
 }

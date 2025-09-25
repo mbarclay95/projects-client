@@ -1,13 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { createSite, Site } from '../../models/site.model';
+import { Component, inject } from '@angular/core';
+import { Site } from '../../models/site.model';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { FoldersService } from '../../services/folder/state/folders.service';
-import { FoldersQuery } from '../../services/folder/state/folders.query';
 import { environment } from '../../../../environments/environment';
 import { createSiteImage } from '../../models/site-image.model';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
-import { isMobile } from '../../../app.component';
+import { FolderSignalStore } from '../../services/folder-signal-store';
+import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 
 @Component({
   selector: 'app-create-edit-site-modal',
@@ -15,53 +13,34 @@ import { isMobile } from '../../../app.component';
   styleUrls: ['./create-edit-site-modal.component.scss'],
   standalone: false,
 })
-export class CreateEditSiteModalComponent implements OnInit, OnDestroy {
-  @Input() openModal!: Observable<Site>;
-
+export class CreateEditSiteModalComponent extends DefaultModalSignalComponent<Site> {
   fileList: NzUploadFile[] = [];
-  site?: Site;
-  isVisible = false;
   check = faCheckCircle;
   folderId: number = 0;
-  modalWidth = isMobile ? '95%' : '500px';
-  modalStyle = isMobile ? { top: '20px' } : {};
 
-  private subscriptionDestroyer: Subject<void> = new Subject<void>();
+  readonly folderStore = inject(FolderSignalStore);
 
-  constructor(
-    private foldersService: FoldersService,
-    public foldersQuery: FoldersQuery,
-  ) {}
-
-  ngOnInit(): void {
-    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((site) => {
-      this.site = site.id === 0 ? site : createSite(site);
-      this.folderId = site.folderId;
-      this.isVisible = true;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptionDestroyer.next();
-    this.subscriptionDestroyer.complete();
-  }
-
-  async saveSite(): Promise<void> {
-    if (!this.site) {
+  override onOpenModal(): void {
+    if (!this.model) {
       return;
     }
-    if (this.site.id === 0) {
-      await this.foldersService.createSite(this.site);
-    } else {
-      await this.foldersService.updateSite(this.site, this.folderId);
-    }
+    this.folderId = this.model.folderId;
+  }
 
-    this.closeModal();
+  saveSite(): void {
+    if (!this.model) {
+      return;
+    }
+    if (this.model.id === 0) {
+      this.folderStore.createSiteHttp({ site: this.model, onSuccess: () => this.closeModal() });
+    } else {
+      this.folderStore.updateSiteHttp({ site: this.model, oldFolderId: this.folderId, onSuccess: () => this.closeModal() });
+    }
   }
 
   closeModal(): void {
     this.fileList = [];
-    this.isVisible = false;
+    this.folderStore.setSelectedSite();
   }
 
   getUploadPath(): string {
@@ -69,13 +48,13 @@ export class CreateEditSiteModalComponent implements OnInit, OnDestroy {
   }
 
   handleChange({ file }: NzUploadChangeParam): void {
-    if (!this.site) {
+    if (!this.model) {
       return;
     }
     const status = file.status;
 
     if (status === 'done') {
-      this.site.siteImage = createSiteImage(file.response);
+      this.model.siteImage = createSiteImage(file.response);
     }
   }
 }

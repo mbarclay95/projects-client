@@ -6,7 +6,7 @@ import { GamingSessionsService } from './gaming-sessions.service';
 import { GamingDevicesService } from './gaming-devices.service';
 import { map } from 'rxjs/operators';
 import { differenceInSeconds } from 'date-fns';
-import { MobileHeaderService } from '../../shared/services/mobile-header.service';
+import { MobileDisplayService } from '../../shared/services/mobile-display.service';
 import { UserGamingSessionsService } from './user-gaming-sessions.service';
 import { createGamingSessionDevice, GamingSessionDevice } from '../models/gaming-session-device.model';
 import { GamingSessionDevicesService } from './gaming-session-devices.service';
@@ -75,10 +75,11 @@ export class GamingSessionsFacadeService {
     private gamingSessionsService: GamingSessionsService,
     private gamingDevicesService: GamingDevicesService,
     private gamingSessionDevicesService: GamingSessionDevicesService,
-    private mobileHeaderService: MobileHeaderService,
+    private mobileHeaderService: MobileDisplayService,
     private userGamingSessionsService: UserGamingSessionsService,
   ) {
     this.connectToWs();
+    this.loadDevices();
   }
 
   connectToWs(): void {

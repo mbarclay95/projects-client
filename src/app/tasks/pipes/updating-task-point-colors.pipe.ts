@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { inject, Pipe, PipeTransform } from '@angular/core';
 import { TaskPointColorsService } from '../services/task-point-colors.service';
 
 @Pipe({
@@ -6,7 +6,7 @@ import { TaskPointColorsService } from '../services/task-point-colors.service';
   standalone: false,
 })
 export class UpdatingTaskPointColorsPipe implements PipeTransform {
-  constructor(private taskPointColorsService: TaskPointColorsService) {}
+  private taskPointColorsService = inject(TaskPointColorsService);
 
   transform(taskPoints: number[], taskPoint: number): string {
     const max = Math.max(...taskPoints);

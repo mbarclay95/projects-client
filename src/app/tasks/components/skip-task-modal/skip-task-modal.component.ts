@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DefaultModalComponent } from '../../../shared/components/default-modal/default-modal.component';
 import { Task } from '../../models/task.model';
 import { addDays, addMonths, addWeeks, addYears, differenceInCalendarDays, endOfDay, setDay } from 'date-fns';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { TasksService } from '../../services/tasks/state/tasks.service';
+import { TasksSignalStore } from '../../services/tasks-signal-store';
 
 @Component({
   selector: 'app-skip-task-modal',
@@ -14,12 +14,8 @@ import { TasksService } from '../../services/tasks/state/tasks.service';
 export class SkipTaskModalComponent extends DefaultModalComponent<Task> {
   newDate: Date | null = null;
 
-  constructor(
-    private nzMessageService: NzMessageService,
-    private tasksService: TasksService,
-  ) {
-    super();
-  }
+  readonly tasksStore = inject(TasksSignalStore);
+  readonly nzMessageService = inject(NzMessageService);
 
   override onOpenModal() {
     this.newDate = new Date();
@@ -48,17 +44,15 @@ export class SkipTaskModalComponent extends DefaultModalComponent<Task> {
       this.saving = true;
       const endOfWeek = setDay(endOfDay(new Date()), 0, { weekStartsOn: 1 });
       const removeFromList = endOfWeek.getTime() < this.newDate.getTime();
-      try {
-        await this.tasksService.updateTask(this.model.id, { dueDate: this.newDate }, false, removeFromList);
-      } catch (e) {
-        this.nzMessageService.error('There was an error skipping the task');
-        this.saving = false;
-        return;
-      }
-
-      this.nzMessageService.success('Task date updated');
-      this.saving = false;
-      this.isVisible = false;
+      this.tasksStore.update({
+        entity: { ...this.model, ...{ dueDate: this.newDate } },
+        removeFromStore: removeFromList,
+        onSuccess: () => {
+          this.nzMessageService.success('Task date updated');
+          this.saving = false;
+          this.isVisible = false;
+        },
+      });
     }
   }
 }

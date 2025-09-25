@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { EventPageComponent } from './pages/event-page/event-page.component';
 import { EventSignupResolver } from './event-signup.resolver';
+import { TypedRoute } from '../app-routing.module';
 
-const routes: Routes = [
+const routes: TypedRoute[] = [
   { path: '', component: NotFoundPageComponent },
   { path: 'signup/:eventId', component: EventPageComponent, resolve: { EventSignupResolver } },
 ];

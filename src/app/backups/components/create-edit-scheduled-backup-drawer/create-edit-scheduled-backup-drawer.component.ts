@@ -1,11 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { faGripVertical, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { createTarget, Target } from '../../models/target.model';
-import { daysOfMonth, daysOfWeek, Schedule } from '../../models/scheduled.model';
-import { TargetsQuery } from '../../services/targets/state/targets.query';
+import { daysOfMonth, daysOfWeek, Schedule } from '../../models/schedule.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { ScheduledBackupsService } from '../../services/scheduled-backups/state/scheduled-backups.service';
+import { TargetSignalStore } from '../../services/target-signal-store';
+import { SchedulesSignalStore } from '../../services/schedules-signal-store';
 
 @Component({
   selector: 'app-create-edit-scheduled-backup-drawer',
@@ -27,11 +27,10 @@ export class CreateEditScheduledBackupDrawerComponent implements OnInit, OnDestr
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 
-  constructor(
-    public targetsQuery: TargetsQuery,
-    private scheduledBackupsService: ScheduledBackupsService,
-    private nzMessageService: NzMessageService,
-  ) {}
+  readonly targetStore = inject(TargetSignalStore);
+  readonly schedulesStore = inject(SchedulesSignalStore);
+
+  constructor(private nzMessageService: NzMessageService) {}
 
   ngOnInit(): void {
     this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((scheduledBackup) => {
@@ -68,7 +67,7 @@ export class CreateEditScheduledBackupDrawerComponent implements OnInit, OnDestr
   async saveScheduledBackup() {
     this.saving = true;
     try {
-      await this.scheduledBackupsService.createNewBackups(this.scheduledBackup);
+      this.schedulesStore.create({ entity: this.scheduledBackup });
     } catch (e) {
       this.saving = false;
       this.nzMessageService.error('There was an error saving the backup.');

@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { differenceInDays, endOfWeek } from 'date-fns';
-import { FamiliesQuery } from '../../services/families/state/families.query';
 import { TaskUserConfig } from '../../models/task-user-config.model';
+import { FamiliesSignalStore } from '../../services/families-signal-store';
 
 @Component({
   selector: 'app-weekly-progress',
@@ -9,11 +9,9 @@ import { TaskUserConfig } from '../../models/task-user-config.model';
   styleUrls: ['./weekly-progress.component.scss'],
   standalone: false,
 })
-export class WeeklyProgressComponent implements OnInit {
-  @Input() userConfig!: TaskUserConfig | undefined | null;
+export class WeeklyProgressComponent {
+  @Input() userConfig?: TaskUserConfig | undefined;
   daysTillEndOfWeek = differenceInDays(endOfWeek(new Date(), { weekStartsOn: 1 }), new Date()) + 1;
 
-  constructor(public familiesQuery: FamiliesQuery) {}
-
-  ngOnInit(): void {}
+  readonly familiesStore = inject(FamiliesSignalStore);
 }

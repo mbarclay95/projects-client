@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LogEventsSignalStore } from '../../services/log-events-signal-store';
 
 @Component({
   selector: 'app-logging-page',
@@ -6,8 +7,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./logging-page.component.scss'],
   standalone: false,
 })
-export class LoggingPageComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class LoggingPageComponent {
+  readonly logEventsStore = inject(LogEventsSignalStore);
 }

@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Family } from '../../models/family.model';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { Subject } from 'rxjs';
+import { FamiliesSignalStore } from '../../services/families-signal-store';
 
 @Component({
   selector: 'app-my-family-edit-family',
@@ -9,13 +9,10 @@ import { Subject } from 'rxjs';
   styleUrls: ['./my-family-edit-family.component.scss'],
   standalone: false,
 })
-export class MyFamilyEditFamilyComponent implements OnInit {
+export class MyFamilyEditFamilyComponent {
   @Input() myFamily!: Family;
 
-  openFamilyModal: Subject<Family> = new Subject<Family>();
   settings = faCog;
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  readonly familiesStore = inject(FamiliesSignalStore);
 }

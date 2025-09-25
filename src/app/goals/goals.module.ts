@@ -12,7 +12,6 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { SharedModule } from '../shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
@@ -25,6 +24,7 @@ import { GoalDaysPipe } from './pipes/goal-days.pipe';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { WeekSelectorComponent } from './components/week-selector/week-selector.component';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 
 @NgModule({
   declarations: [
@@ -50,13 +50,13 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     NzInputModule,
     FormsModule,
     NzSelectModule,
-    NzInputNumberModule,
     SharedModule,
     FontAwesomeModule,
     NzPopconfirmModule,
     NzPopoverModule,
     NzSpaceModule,
     NzSpinModule,
+    NzInputNumberComponent,
   ],
 })
 export class GoalsModule {}

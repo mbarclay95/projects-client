@@ -1,25 +1,19 @@
-<app-page-header
-  *ngIf="!isMobile"
-  buttonText="Create Directory"
-  title="File Explorer"
-  (createButtonClicked)="createNewDirectory()"
-></app-page-header>
+@if (!isMobile) {
+  <app-page-header buttonText="Create Directory" title="File Explorer" (createButtonClicked)="createNewDirectory()"></app-page-header>
+}
 
-<ng-container *ngLet="workingDirectory$ | async as workingDirectory">
-  <div>
-    <app-directories-files-list
-      (openCreateEditModal)="openCreateEditModal.next($event)"
-      [workingDirectory]="workingDirectory"
-      [newLocationBeingSelected]="!!newLocationBeingSelected"
-      (cancelNewLocation)="newLocationSelectedOrCanceled()"
-      (selectNewLocation)="newLocationSelectedOrCanceled($event)"
-    ></app-directories-files-list>
-  </div>
-</ng-container>
+<div>
+  <app-directories-files-list
+    [workingDirectory]="directoryItemsStore.ui.workingDirectory()"
+    [newLocationBeingSelected]="!!newLocationBeingSelected"
+    (selectNewLocation)="newLocationSelectedOrCanceled($event)"
+    (openCreateEditModal)="openCreateEditModal.next($event)"
+  ></app-directories-files-list>
+</div>
 
 <app-create-edit-directory-item-modal
   [openModal]="openCreateEditModal$"
-  [workingDirectory]="(workingDirectory$ | async) ?? []"
+  [workingDirectory]="directoryItemsStore.ui.workingDirectory()"
   [newLocationSelected]="newLocationSelected.asObservable()"
   (selectNewLocation)="newLocationBeingSelected = $event"
 ></app-create-edit-directory-item-modal>

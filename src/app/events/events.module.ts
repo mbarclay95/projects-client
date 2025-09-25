@@ -17,8 +17,8 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { CreateEditEventComponent } from './components/create-edit-event/create-edit-event.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -31,6 +31,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { ParticipantsGoingPipe } from './pipes/participants-going.pipe';
 import { SharedModule } from '../shared/shared.module';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @NgModule({
   declarations: [
@@ -56,8 +57,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
     NzCollapseModule,
     NzModalModule,
     NzDatePickerModule,
-    NzInputNumberModule,
-    NzToolTipModule,
+    NzInputNumberLegacyModule,
+    NzTooltipModule,
     NzProgressModule,
     NzPopconfirmModule,
     NzCheckboxModule,
@@ -67,6 +68,7 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
     NzRadioModule,
     SharedModule,
     NzEmptyModule,
+    NzSpinComponent,
   ],
 })
 export class EventsModule {}

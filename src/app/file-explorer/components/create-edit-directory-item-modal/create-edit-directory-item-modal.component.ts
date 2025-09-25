@@ -1,10 +1,10 @@
-import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { DirectoryItem } from '../../models/directory-item.model';
-import { DirectoryItemsService } from '../../services/state/directory-items.service';
 import { isMobile } from '../../../app.component';
 import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/working-directory-item';
+import { DirectoryItemsSignalStore } from '../../services/directory-items-signal-store';
 
 @Component({
   selector: 'app-create-edit-directory-item-modal',
@@ -32,11 +32,9 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy,
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
   protected readonly workingDirectoryToString = workingDirectoryToString;
+  readonly directoryItemsStore = inject(DirectoryItemsSignalStore);
 
-  constructor(
-    private directoryItemsService: DirectoryItemsService,
-    private nzMessageService: NzMessageService,
-  ) {}
+  constructor(private nzMessageService: NzMessageService) {}
 
   ngOnInit(): void {
     this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((item) => {
@@ -63,7 +61,6 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy,
   }
 
   ngOnDestroy(): void {
-    console.log('here');
     this.subscriptionDestroyer.next();
     this.subscriptionDestroyer.complete();
   }
@@ -73,21 +70,31 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy,
       return;
     }
     this.saving = true;
-    try {
-      if (this.createOrUpdate === 'Create') {
-        await this.directoryItemsService.createDirectory(this.item, this.newName, this.workingDirectory);
-      } else {
-        const newPath = `${workingDirectoryToString(this.newWorkingDirectory ?? this.workingDirectory)}/${this.newName}`;
-        await this.directoryItemsService.updateItem(this.item, this.workingDirectory, newPath);
-      }
-    } catch (e) {
-      console.log(e);
-      this.nzMessageService.error('There was an error');
-      this.saving = false;
-      return;
+    if (this.createOrUpdate === 'Create') {
+      this.directoryItemsStore.createCustom({
+        entity: {
+          type: this.item.type,
+          newName: this.newName,
+          workingDirectory: workingDirectoryToString(this.workingDirectory),
+        },
+        onSuccess: () => this.itemSaved(),
+      });
+    } else {
+      const newPath = `${workingDirectoryToString(this.newWorkingDirectory ?? this.workingDirectory)}/${this.newName}`;
+      this.directoryItemsStore.updateCustom({
+        entity: {
+          ...this.item,
+          workingDirectory: workingDirectoryToString(this.workingDirectory),
+          newPath,
+          mode: 'mv',
+        },
+        onSuccess: () => this.itemSaved(),
+      });
     }
+  }
 
-    this.nzMessageService.success(`${this.item.type === 'dir' ? 'Directory' : 'File'} ${this.createOrUpdate}`);
+  itemSaved(): void {
+    this.nzMessageService.success(`${this.item!.type === 'dir' ? 'Directory' : 'File'} ${this.createOrUpdate}`);
     this.saving = false;
     this.isVisible = false;
   }

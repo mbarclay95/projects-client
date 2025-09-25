@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Entry } from '../../models/entry.model';
 
 @Component({
@@ -7,11 +7,6 @@ import { Entry } from '../../models/entry.model';
   styleUrls: ['./entry-rows.component.scss'],
   standalone: false,
 })
-export class EntryRowsComponent implements OnInit {
+export class EntryRowsComponent {
   @Input() entries: Entry[] = [];
-  @Output() editEntry: EventEmitter<Entry> = new EventEmitter<Entry>();
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

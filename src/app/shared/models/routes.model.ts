@@ -19,9 +19,22 @@ export interface Route {
   icon: IconDefinition;
   url: string;
   permission: Permissions | true;
-  title: string;
+  title: AppTitle;
   queryParams: Record<string, string>;
 }
+
+export type AppTitle =
+  | 'Dashboard'
+  | 'Backups'
+  | 'Tasks'
+  | 'File Explorer'
+  | 'Games Admin'
+  | 'Money'
+  | 'Events'
+  | 'Logging'
+  | 'Users'
+  | 'My Profile'
+  | 'Goals';
 
 export const routes: Route[] = [
   {

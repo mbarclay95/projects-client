@@ -11,7 +11,7 @@
     <ng-container *ngFor="let target of targetsTable?.data">
       <tr>
         <td>
-          <button nz-button class="ant-btn-icon-only" nzType="text" (click)="this.editTarget.emit({ target })">
+          <button nz-button class="ant-btn-icon-only" nzType="text" (click)="this.editTarget.emit(target.id)">
             <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
           </button>
         </td>

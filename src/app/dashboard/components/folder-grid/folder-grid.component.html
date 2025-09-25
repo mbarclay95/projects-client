@@ -1,62 +1,77 @@
-<div class="d-flex justify-content-end w-100 px-2" *ngIf="foldersQuery.editMode$ | async">
-  <button nz-button nzType="primary" (click)="createFolder()">
-    Create Folder
+@if (folderStore.editMode()) {
+  <div class="d-flex justify-content-end w-100 px-2">
+    <button nz-button nzType="primary" (click)="createFolder()">
+      Create Folder
 
-    <fa-icon class="ms-2" [icon]="add"></fa-icon>
-  </button>
-</div>
-
-<ng-container *ngIf="showUptimeKuma">
-  <div *ngIf="!uptimeKumaIsConnected" class="site-down p-4 m-2 d-flex align-items-center">
-    <fa-icon [icon]="down" class="text-danger fa-xl"></fa-icon>
-
-    <div class="ms-3">
-      <h4 class="m-0">Unable to connect to Uptime Kuma</h4>
-    </div>
+      <fa-icon class="ms-2" [icon]="add"></fa-icon>
+    </button>
   </div>
+}
 
-  <div *ngIf="downItems.length > 0" class="site-down p-4 m-2 d-flex align-items-center">
-    <fa-icon [icon]="down" class="text-danger fa-xl"></fa-icon>
+@if (showUptimeKuma) {
+  @if (!uptimeKumaIsConnected) {
+    <div class="site-down p-4 m-2 d-flex align-items-center">
+      <fa-icon [icon]="down" class="text-danger fa-xl"></fa-icon>
 
-    <div class="ms-3">
-      <h4 class="m-0" *ngFor="let item of downItems">
-        {{ item.name }} is<span
-          style="font-style: italic"
-          [ngClass]="{ 'text-warning': item.lastHeartBeat?.status === sitePending, 'text-danger': item.lastHeartBeat?.status === siteDown }"
-        >
-          {{ item.lastHeartBeat?.status === sitePending ? "pending" : "down" }}</span
-        >
-      </h4>
-    </div>
-  </div>
-</ng-container>
-
-<div class="w-100 d-flex responsive-layout">
-  <ng-container *ngIf="isMobile">
-    <div class="w-100" *ngFor="let folder of foldersQuery.sortedAndFilteredFolders$ | async">
-      <app-folder
-        (openFolderModal)="openFolderModal.next($event)"
-        (openSiteModal)="openSiteModal.next($event)"
-        [folder]="folder"
-        [editMode]="(foldersQuery.editMode$ | async) ?? false"
-      ></app-folder>
-    </div>
-  </ng-container>
-
-  <ng-container *ngIf="!isMobile">
-    <div *ngFor="let folderColumn of foldersQuery.gridFormattedFolders$ | async" class="d-flex flex-column responsive-width">
-      <div class="w-100" *ngFor="let folder of folderColumn">
-        <app-folder
-          (openFolderModal)="openFolderModal.next($event)"
-          (openSiteModal)="openSiteModal.next($event)"
-          [folder]="folder"
-          [editMode]="(foldersQuery.editMode$ | async) ?? false"
-        ></app-folder>
+      <div class="ms-3">
+        <h4 class="m-0">Unable to connect to Uptime Kuma</h4>
       </div>
     </div>
-  </ng-container>
+  }
+
+  @if (downItems.length > 0) {
+    <div class="site-down p-4 m-2 d-flex align-items-center">
+      <fa-icon [icon]="down" class="text-danger fa-xl"></fa-icon>
+
+      <div class="ms-3">
+        @for (item of downItems; track item.id) {
+          <h4 class="m-0">
+            {{ item.name }} is<span
+              style="font-style: italic"
+              [ngClass]="{
+                'text-warning': item.lastHeartBeat?.status === sitePending,
+                'text-danger': item.lastHeartBeat?.status === siteDown,
+              }"
+            >
+              {{ item.lastHeartBeat?.status === sitePending ? "pending" : "down" }}</span
+            >
+          </h4>
+        }
+      </div>
+    </div>
+  }
+}
+
+<div class="w-100 d-flex responsive-layout">
+  @if (isMobile) {
+    @for (folder of folderStore.sortedAndFiltered(); track folder.id) {
+      <div class="w-100">
+        <app-folder
+          (openFolderModal)="folderStore.editEntity($event)"
+          (openSiteModal)="folderStore.setSelectedSite($event)"
+          [folder]="folder"
+          [editMode]="folderStore.editMode()"
+        ></app-folder>
+      </div>
+    }
+  } @else {
+    @for (folderColumn of folderStore.gridFormattedFolders(); track $index) {
+      <div class="d-flex flex-column responsive-width">
+        @for (folder of folderColumn; track folder.id) {
+          <div class="w-100">
+            <app-folder
+              (openFolderModal)="folderStore.editEntity($event)"
+              (openSiteModal)="folderStore.setSelectedSite($event)"
+              [folder]="folder"
+              [editMode]="folderStore.editMode()"
+            ></app-folder>
+          </div>
+        }
+      </div>
+    }
+  }
 </div>
 
-<app-create-edit-folder-modal [openModal]="openFolderModal.asObservable()"></app-create-edit-folder-modal>
+<app-create-edit-folder-modal [openModal]="folderStore.createEditEntity()"></app-create-edit-folder-modal>
 
-<app-create-edit-site-modal [openModal]="openSiteModal.asObservable()"></app-create-edit-site-modal>
+<app-create-edit-site-modal [openModal]="folderStore.selectedSite()"></app-create-edit-site-modal>

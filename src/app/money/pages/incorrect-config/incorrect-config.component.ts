@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-incorrect-config',
@@ -6,8 +6,4 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./incorrect-config.component.scss'],
   standalone: false,
 })
-export class IncorrectConfigComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class IncorrectConfigComponent {}

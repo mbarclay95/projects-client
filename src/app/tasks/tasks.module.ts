@@ -21,7 +21,6 @@ import { CreateEditTaskModalComponent } from './components/create-edit-task-moda
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { PluralFrequencyPipe } from './pipes/plural-frequency.pipe';
 import { WeeklyProgressComponent } from './components/weekly-progress/weekly-progress.component';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
@@ -33,10 +32,6 @@ import { TaskRowComponent } from './components/task-row/task-row.component';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { DueDateHumanReadablePipe } from './pipes/due-date-human-readable.pipe';
 import { MyFamilyPageComponent } from './pages/my-family-page/my-family-page.component';
-import { ColorCompactModule } from 'ngx-color/compact';
-import { ColorAlphaModule } from 'ngx-color/alpha';
-import { AlphaModule } from 'ngx-color';
-import { ColorChromeModule } from 'ngx-color/chrome';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { MyFamilyEditFamilyComponent } from './components/my-family-edit-family/my-family-edit-family.component';
 import { MyFamilyMembersComponent } from './components/my-family-members/my-family-members.component';
@@ -66,6 +61,7 @@ import { SkipTaskModalComponent } from './components/skip-task-modal/skip-task-m
 import { FrequencyToStringPipe } from './pipes/frequency-to-string.pipe';
 import { YearSelectorComponent } from './components/year-selector/year-selector.component';
 import { FamilyMemberStatsComponent } from './components/family-member-stats/family-member-stats.component';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @NgModule({
   declarations: [
@@ -125,10 +121,6 @@ import { FamilyMemberStatsComponent } from './components/family-member-stats/fam
     NzProgressModule,
     NzDividerModule,
     NzCheckboxModule,
-    ColorCompactModule,
-    ColorAlphaModule,
-    AlphaModule,
-    ColorChromeModule,
     NzPopoverModule,
     NzPopconfirmModule,
     SharedModule,

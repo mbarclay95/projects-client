@@ -1,20 +1,25 @@
 <nz-modal
-  [(nzVisible)]="isVisible"
-  [nzTitle]="(folder?.id === 0 ? 'Create' : 'Edit') + ' Folder'"
+  [nzVisible]="isVisible()"
+  [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Folder'"
   [nzWidth]="modalWidth"
-  (nzOnCancel)="isVisible = false"
+  (nzOnCancel)="closeModal()"
   nzOkText="Save"
   nzCancelText="Close"
   (nzOnOk)="saveFolder()"
   [nzStyle]="modalStyle"
+  [nzOkLoading]="folderStore.loadingOne()"
+  [nzOkDisabled]="folderStore.loadingOne()"
+  [nzCancelDisabled]="folderStore.loadingOne()"
 >
   <ng-container *nzModalContent>
-    <div *ngIf="folder">
-      <div class="w-100">
-        Name:
+    @if (model) {
+      <div>
+        <div class="w-100">
+          Name:
 
-        <input nz-input [(ngModel)]="folder.name" class="w-100" />
+          <input nz-input [(ngModel)]="model.name" class="w-100" />
+        </div>
       </div>
-    </div>
+    }
   </ng-container>
 </nz-modal>

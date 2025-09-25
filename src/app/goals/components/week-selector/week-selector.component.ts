@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import { GoalsQuery } from '../../services/state/goals.query';
-import { GoalsService } from '../../services/state/goals.service';
+import { GoalsSignalStore } from '../../services/goals-signal-store';
 
 @Component({
   selector: 'app-week-selector',
@@ -9,14 +8,9 @@ import { GoalsService } from '../../services/state/goals.service';
   styleUrls: ['./week-selector.component.scss'],
   standalone: false,
 })
-export class WeekSelectorComponent implements OnInit {
+export class WeekSelectorComponent {
   left = faCaretLeft;
   right = faCaretRight;
 
-  constructor(
-    public goalsQuery: GoalsQuery,
-    public goalsService: GoalsService,
-  ) {}
-
-  ngOnInit(): void {}
+  readonly goalsStore = inject(GoalsSignalStore);
 }

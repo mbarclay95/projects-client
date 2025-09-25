@@ -1,8 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { createFolder, Folder } from '../../models/folder.model';
-import { FoldersService } from '../../services/folder/state/folders.service';
-import { isMobile } from '../../../app.component';
+import { Component, inject } from '@angular/core';
+import { Folder } from '../../models/folder.model';
+import { FolderSignalStore } from '../../services/folder-signal-store';
+import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 
 @Component({
   selector: 'app-create-edit-folder-modal',
@@ -10,40 +9,21 @@ import { isMobile } from '../../../app.component';
   styleUrls: ['./create-edit-folder-modal.component.scss'],
   standalone: false,
 })
-export class CreateEditFolderModalComponent implements OnInit, OnDestroy {
-  @Input() openModal!: Observable<Folder>;
+export class CreateEditFolderModalComponent extends DefaultModalSignalComponent<Folder> {
+  readonly folderStore = inject(FolderSignalStore);
 
-  folder?: Folder;
-  isVisible = false;
-  modalWidth = isMobile ? '95%' : '500px';
-  modalStyle = isMobile ? { top: '20px' } : {};
-
-  private subscriptionDestroyer: Subject<void> = new Subject<void>();
-
-  constructor(public foldersService: FoldersService) {}
-
-  ngOnInit(): void {
-    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((folder) => {
-      this.folder = folder.id === 0 ? folder : createFolder(folder);
-      this.isVisible = true;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptionDestroyer.next();
-    this.subscriptionDestroyer.complete();
-  }
-
-  async saveFolder(): Promise<void> {
-    if (!this.folder) {
+  saveFolder(): void {
+    if (!this.model) {
       return;
     }
-    if (this.folder.id === 0) {
-      await this.foldersService.createFolder(this.folder);
+    if (this.model.id === 0) {
+      this.folderStore.create({ entity: this.model, onSuccess: () => this.closeModal() });
     } else {
-      await this.foldersService.updateFolder(this.folder);
+      this.folderStore.update({ entity: this.model, onSuccess: () => this.closeModal() });
     }
+  }
 
-    this.isVisible = false;
+  closeModal(): void {
+    this.folderStore.clearCreateEditEntity();
   }
 }

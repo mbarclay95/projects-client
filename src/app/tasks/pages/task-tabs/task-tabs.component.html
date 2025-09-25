@@ -1,34 +1,32 @@
-<nz-tabset [nzTabBarExtraContent]="createButton" nzSize="large" nzLinkRouter>
+<nz-tabs [nzTabBarExtraContent]="createButton" nzSize="large" nzLinkRouter>
   <nz-tab (nzSelect)="loadWeeklyTasks()">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'weekly-tasks' }" queryParamsHandling="merge"> Weekly Tasks </a>
-    <app-weekly-tasks-page
-      (editTask)="openTaskModal.next($event)"
-      (skipTask)="openSkipTaskModal.next($event)"
-      (viewTask)="openViewTaskModal.next($event)"
-    ></app-weekly-tasks-page>
+    <app-weekly-tasks-page (skipTask)="openSkipTaskModal.next($event)" (viewTask)="openViewTaskModal.next($event)"></app-weekly-tasks-page>
   </nz-tab>
-  <nz-tab *ngIf="familiesQuery.selectActive() | async" (nzSelect)="selectedTab = 'My Family'">
-    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'my-family' }" queryParamsHandling="merge"> My Family </a>
-    <app-my-family-page></app-my-family-page>
-  </nz-tab>
+  @if (familiesStore.activeFamily()) {
+    <nz-tab (nzSelect)="selectedTab = 'My Family'">
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'my-family' }" queryParamsHandling="merge"> My Family </a>
+      <app-my-family-page></app-my-family-page>
+    </nz-tab>
+  }
   <nz-tab (nzSelect)="loadTasksTable()">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'tasks' }" queryParamsHandling="merge"> Tasks </a>
-    <app-tasks-page (editTask)="openTaskModal.next($event)"></app-tasks-page>
+    <app-tasks-page></app-tasks-page>
   </nz-tab>
-  <nz-tab *ngIf="permissionsService.viewFamiliesTab$ | async" (nzSelect)="selectedTab = 'Family'">
-    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'families' }" queryParamsHandling="merge"> Families </a>
-    <app-families-page (openFamilyModal)="openFamilyModal.next($event)"></app-families-page>
-  </nz-tab>
-</nz-tabset>
+  @if (authStore.viewFamiliesTab()) {
+    <nz-tab (nzSelect)="selectedTab = 'Family'">
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'families' }" queryParamsHandling="merge"> Families </a>
+      <app-families-page></app-families-page>
+    </nz-tab>
+  }
+</nz-tabs>
 
 <ng-template #createButton>
-  <button *ngIf="selectedTab !== 'My Family'" nz-button nzType="primary" (click)="createEntity()">Create {{ selectedTab }}</button>
+  @if (selectedTab !== "My Family") {
+    <button nz-button nzType="primary" (click)="createEntity()">Create {{ selectedTab }}</button>
+  }
 </ng-template>
 
-<app-create-edit-family-modal [showFamilyMembers]="true" [openModal]="openFamilyModal.asObservable()"></app-create-edit-family-modal>
-
-<app-create-edit-task-modal-mobile [openModal]="openTaskModal.asObservable()"></app-create-edit-task-modal-mobile>
-
-<app-view-task-modal [openModal]="openViewTaskModal.asObservable()" (editTask)="openTaskModal.next($event)"></app-view-task-modal>
-
+<app-create-edit-task-modal-mobile [openModal]="tasksStore.createEditEntity()"></app-create-edit-task-modal-mobile>
+<app-view-task-modal [openModal]="openViewTaskModal.asObservable()"></app-view-task-modal>
 <app-skip-task-modal [openModal]="openSkipTaskModal.asObservable()"></app-skip-task-modal>

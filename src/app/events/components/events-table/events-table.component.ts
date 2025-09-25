@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NzTableComponent } from 'ng-zorro-antd/table';
 import {
   faBoxArchive,
@@ -21,20 +21,16 @@ import { EventParticipant } from '../../models/event-participant';
   styleUrls: ['./events-table.component.scss'],
   standalone: false,
 })
-export class EventsTableComponent implements OnInit {
+export class EventsTableComponent {
   @ViewChild('eventsTableTag', { static: true }) eventsTable: NzTableComponent<Event> | undefined;
 
-  @Input() set events(events: Event[] | null) {
-    if (events) {
-      this._events = events;
-    }
-  }
+  @Input() events: Event[] = [];
+  @Input() loading!: boolean;
 
-  @Output() editEvent: EventEmitter<Event> = new EventEmitter<Event>();
-  @Output() archiveEvent: EventEmitter<Event> = new EventEmitter<Event>();
-  @Output() editParticipant: EventEmitter<EventParticipant> = new EventEmitter<EventParticipant>();
+  @Output() editEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output() archiveEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output() editParticipant: EventEmitter<number> = new EventEmitter<number>();
 
-  _events: Event[] = [];
   expandSet = new Set<number>();
   edit = faEdit;
   restore = faBoxOpen;
@@ -49,8 +45,6 @@ export class EventsTableComponent implements OnInit {
     private clipboard: Clipboard,
     private nzMessageService: NzMessageService,
   ) {}
-
-  ngOnInit(): void {}
 
   onExpandChange(id: number, checked: boolean) {
     if (checked) {

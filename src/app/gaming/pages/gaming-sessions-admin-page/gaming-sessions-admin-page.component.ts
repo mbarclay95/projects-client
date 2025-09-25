@@ -3,7 +3,7 @@ import { AsyncPipe } from '@angular/common';
 import { GamingSegmentComponent } from '../../components/gaming-segment/gaming-segment.component';
 import { GamingSessionsFacadeService } from '../../services/gaming-sessions-facade.service';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
-import { MobileHeaderService } from '../../../shared/services/mobile-header.service';
+import { MobileDisplayService } from '../../../shared/services/mobile-display.service';
 import { Observable, Subject, merge } from 'rxjs';
 import { createGamingDevice, GamingDevice } from '../../models/gaming-device.model';
 import { map } from 'rxjs/operators';
@@ -48,6 +48,6 @@ export class GamingSessionsAdminPageComponent {
 
   constructor(
     public gamingSessionsFacadeService: GamingSessionsFacadeService,
-    private mobileHeaderService: MobileHeaderService,
+    private mobileHeaderService: MobileDisplayService,
   ) {}
 }

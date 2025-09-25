@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ScheduledBackupsQuery } from '../../services/scheduled-backups/state/scheduled-backups.query';
+import { Component, inject } from '@angular/core';
+import { SchedulesSignalStore } from '../../services/schedules-signal-store';
 
 @Component({
   selector: 'app-scheduled-backups-page',
@@ -7,8 +7,6 @@ import { ScheduledBackupsQuery } from '../../services/scheduled-backups/state/sc
   styleUrls: ['./scheduled-backups-page.component.scss'],
   standalone: false,
 })
-export class ScheduledBackupsPageComponent implements OnInit {
-  constructor(public scheduledBackupsQuery: ScheduledBackupsQuery) {}
-
-  ngOnInit(): void {}
+export class ScheduledBackupsPageComponent {
+  readonly schedulesStore = inject(SchedulesSignalStore);
 }

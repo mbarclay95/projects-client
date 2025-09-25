@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Goal } from '../../models/goal.model';
-import { GoalsQuery } from '../../services/state/goals.query';
-import { GoalsService } from '../../services/state/goals.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import { GoalDay } from '../../models/goal-day.model';
@@ -28,11 +26,7 @@ export class GoalDayButtonComponent implements OnInit {
   initialAmount: number | null = null;
   clear = faX;
 
-  constructor(
-    private goalsQuery: GoalsQuery,
-    private goalsService: GoalsService,
-    private nzMessageService: NzMessageService,
-  ) {}
+  constructor(private nzMessageService: NzMessageService) {}
 
   ngOnInit(): void {}
 
@@ -47,14 +41,14 @@ export class GoalDayButtonComponent implements OnInit {
         if (this._goalDay.id === 0) {
           showSuccess = false;
         } else {
-          await this.goalsService.deleteGoalDay(this.goal.id, this._goalDay, this.initialAmount ?? 0);
+          // await this.goalsService.deleteGoalDay(this.goal.id, this._goalDay, this.initialAmount ?? 0);
         }
       } else {
-        if (this._goalDay.id === 0) {
-          await this.goalsService.createNewGoalDay(this.goal.id, this._goalDay);
-        } else {
-          await this.goalsService.updateGoalDay(this.goal.id, this._goalDay, this._goalDay.amount - (this.initialAmount ?? 0));
-        }
+        // if (this._goalDay.id === 0) {
+        //   await this.goalsService.createNewGoalDay(this.goal.id, this._goalDay);
+        // } else {
+        //   await this.goalsService.updateGoalDay(this.goal.id, this._goalDay, this._goalDay.amount - (this.initialAmount ?? 0));
+        // }
       }
     } catch (e) {
       this.nzMessageService.error('There was an error');

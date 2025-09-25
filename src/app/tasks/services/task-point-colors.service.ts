@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { FamiliesQuery } from './families/state/families.query';
+import { inject, Injectable } from '@angular/core';
 import Color from 'colorjs.io';
+import { FamiliesSignalStore } from './families-signal-store';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class TaskPointColorsService {
     outputSpace: 'srgb',
   });
 
-  constructor(private familiesQuery: FamiliesQuery) {}
+  readonly familiesStore = inject(FamiliesSignalStore);
 
   getColor(max: number, min: number, point: number): string {
     if (min === max) {
@@ -26,8 +26,8 @@ export class TaskPointColorsService {
   }
 
   getActiveFamilyColor(taskPoint: number): string {
-    const min = this.familiesQuery.getMinTaskPoint();
-    const max = this.familiesQuery.getMaxTaskPoint();
+    const min = this.familiesStore.minTaskPoint();
+    const max = this.familiesStore.maxTaskPoint();
 
     if (min === undefined || max === undefined) {
       return '';

@@ -8,7 +8,7 @@ import { GamingSession } from '../../models/gaming-session.model';
 import { GamingSessionsFacadeService } from '../../services/gaming-sessions-facade.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSwitchComponent } from 'ng-zorro-antd/switch';
-import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzInputNumberLegacyComponent } from 'ng-zorro-antd/input-number-legacy';
 
 @Component({
   selector: 'app-create-edit-session-modal',
@@ -21,7 +21,7 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
     FormsModule,
     NzModalModule,
     NzSwitchComponent,
-    NzInputNumberComponent,
+    NzInputNumberLegacyComponent,
   ],
   templateUrl: './create-edit-session-modal.component.html',
   styleUrl: './create-edit-session-modal.component.scss',

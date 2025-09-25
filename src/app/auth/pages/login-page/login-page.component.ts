@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
+import { AuthSignalStore } from '../../services/auth-signal-store';
 
 @Component({
   selector: 'app-login-page',
@@ -8,10 +9,12 @@ import { LoginService } from '../../services/login.service';
   standalone: false,
 })
 export class LoginPageComponent implements OnInit {
+  readonly authStore = inject(AuthSignalStore);
+
   constructor(public loginService: LoginService) {}
 
   async ngOnInit(): Promise<void> {
-    if (!(await this.loginService.isLoggedIn())) {
+    if (!(await this.loginService.redirectIfLoggedIn())) {
       this.loginService.initializeForm();
     }
   }

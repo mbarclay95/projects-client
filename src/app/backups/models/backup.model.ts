@@ -1,6 +1,6 @@
 import { BackupStep, createBackupStep } from './backup-step.model';
 import { BackupJob, createBackupJob } from './backup-job.model';
-import { createSchedule, Schedule } from './scheduled.model';
+import { createSchedule, Schedule } from './schedule.model';
 
 export interface Backup {
   id: number;

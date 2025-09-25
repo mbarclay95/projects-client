@@ -7,86 +7,92 @@
   (nzOnCancel)="isVisible = false"
 >
   <ng-container *nzModalContent>
-    <div *ngIf="model" style="font-size: 15px">
-      <div>
-        <div class="d-flex w-100 justify-content-between align-items-center">
-          <div class="title">{{ model.name }}</div>
-
-          <fa-icon style="color: grey" class="fa-lg" *ngIf="model.ownerType === 'family'" [icon]="household"></fa-icon>
-          <fa-icon style="color: grey" class="fa-lg" *ngIf="model.ownerType === 'user'" [icon]="personal"></fa-icon>
-        </div>
-
-        <div class="mt-3 ps-1" *ngIf="model.description">
-          {{ model.description }}
-        </div>
-
-        <nz-divider></nz-divider>
-
-        <div *ngIf="model.recurring" class="d-flex w-100 justify-content-between">
-          <div>Recurs:</div>
-          <div>Every {{ model | frequencyToString }}</div>
-        </div>
-
-        <div class="d-flex align-items-center justify-content-between w-100">
-          <div>{{ model.recurring ? "Next due date" : "Due date" }}:</div>
-
-          <div *ngIf="model.isActive">{{ model.dueDate | date }}, {{ model.dueDate | dueDateHumanReadable }}</div>
-
-          <div *ngIf="!model.isActive" class="text-warning">Paused</div>
-        </div>
-      </div>
-
-      <div *ngIf="(familiesQuery.isPerTaskPoint$ | async) && model.taskPoint !== undefined" class="d-flex w-100 justify-content-between">
-        <div>Worth:</div>
-
+    @if (model) {
+      <div style="font-size: 15px">
         <div>
-          <span style="color: {{ model.taskPoint | taskPointColor }}"> {{ model.taskPoint }}</span>
-          {{ "point" + (model.taskPoint !== 1 ? "s" : "") }}
-        </div>
-      </div>
+          <div class="d-flex w-100 justify-content-between align-items-center">
+            <div class="title">{{ model.name }}</div>
 
-      <div *ngIf="(familiesQuery.isPerTaskPoint$ | async) && model.taskPoint !== undefined" class="d-flex w-100 justify-content-between">
-        <div>Priority:</div>
-
-        <div class="d-flex">
-          <fa-icon class="me-2" style="color: {{ model.priority === 0 ? 'grey' : '#922724' }}" [icon]="flag"></fa-icon>
-          <div>{{ model.priority === 0 ? "Normal" : "High" }}</div>
-        </div>
-      </div>
-
-      <div *ngIf="model.recurring">
-        <nz-divider></nz-divider>
-
-        <div (click)="showHistory = !showHistory" class="d-flex justify-content-between align-items-center cursor-pointer">
-          <div class="">
-            Task History <span *ngIf="model.taskHistory">({{ model.taskHistory.length }})</span>
+            <fa-icon style="color: grey" class="fa-lg" *ngIf="model.ownerType === 'family'" [icon]="household"></fa-icon>
+            <fa-icon style="color: grey" class="fa-lg" *ngIf="model.ownerType === 'user'" [icon]="personal"></fa-icon>
           </div>
 
-          <fa-icon *ngIf="!showHistory" [icon]="arrowDown"></fa-icon>
-          <fa-icon *ngIf="showHistory" [icon]="arrowUp"></fa-icon>
+          <div class="mt-3 ps-1" *ngIf="model.description">
+            {{ model.description }}
+          </div>
+
+          <nz-divider></nz-divider>
+
+          <div *ngIf="model.recurring" class="d-flex w-100 justify-content-between">
+            <div>Recurs:</div>
+            <div>Every {{ model | frequencyToString }}</div>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div>{{ model.recurring ? "Next due date" : "Due date" }}:</div>
+
+            <div *ngIf="model.isActive">{{ model.dueDate | date }}, {{ model.dueDate | dueDateHumanReadable }}</div>
+
+            <div *ngIf="!model.isActive" class="text-warning">Paused</div>
+          </div>
         </div>
 
-        <div *ngIf="showHistory" class="ms-4">
-          <div class="py-1">
-            <div *ngIf="loadingHistory" style="height: 25px" class="d-flex w-100 justify-content-center align-items-center">
-              <nz-spin></nz-spin>
+        @if (familiesStore.isPerTaskPointStrategy() && model.taskPoint !== undefined) {
+          <div class="d-flex w-100 justify-content-between">
+            <div>Worth:</div>
+
+            <div>
+              <span style="color: {{ model.taskPoint | taskPointColor }}"> {{ model.taskPoint }}</span>
+              {{ "point" + (model.taskPoint !== 1 ? "s" : "") }}
+            </div>
+          </div>
+
+          <div class="d-flex w-100 justify-content-between">
+            <div>Priority:</div>
+
+            <div class="d-flex">
+              <fa-icon class="me-2" style="color: {{ model.priority === 0 ? 'grey' : '#922724' }}" [icon]="flag"></fa-icon>
+              <div>{{ model.priority === 0 ? "Normal" : "High" }}</div>
+            </div>
+          </div>
+        }
+
+        @if (model.recurring) {
+          <div>
+            <nz-divider></nz-divider>
+
+            <div (click)="showHistory = !showHistory" class="d-flex justify-content-between align-items-center cursor-pointer">
+              <div class="">
+                Task History <span *ngIf="model.taskHistory">({{ model.taskHistory.length }})</span>
+              </div>
+
+              <fa-icon *ngIf="!showHistory" [icon]="arrowDown"></fa-icon>
+              <fa-icon *ngIf="showHistory" [icon]="arrowUp"></fa-icon>
             </div>
 
-            <div *ngIf="!loadingHistory && model.taskHistory">
-              <div style="font-style: italic" *ngIf="model.taskHistory.length === 0">No History</div>
+            <div *ngIf="showHistory" class="ms-4">
+              <div class="py-1">
+                <div *ngIf="loadingHistory" style="height: 25px" class="d-flex w-100 justify-content-center align-items-center">
+                  <nz-spin></nz-spin>
+                </div>
 
-              <div *ngIf="model.taskHistory.length > 0">
-                <div *ngFor="let taskHistory of model.taskHistory" class="w-100 d-flex pt-2">
-                  <div style="width: 90px">{{ taskHistory.completedAt | date }}</div>
-                  <div class="mx-4">-</div>
-                  <div style="font-style: italic">{{ taskHistory.completedByName }}</div>
+                <div *ngIf="!loadingHistory && model.taskHistory">
+                  <div style="font-style: italic" *ngIf="model.taskHistory.length === 0">No History</div>
+
+                  <div *ngIf="model.taskHistory.length > 0">
+                    <div *ngFor="let taskHistory of model.taskHistory" class="w-100 d-flex pt-2">
+                      <div style="width: 90px">{{ taskHistory.completedAt | date }}</div>
+                      <div class="mx-4">-</div>
+                      <div style="font-style: italic">{{ taskHistory.completedByName }}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        }
       </div>
-    </div>
+    }
   </ng-container>
 
   <div *nzModalFooter class="d-flex justify-content-between">

@@ -9,7 +9,7 @@
   <tbody>
     <tr *ngFor="let goal of goalsTable?.data">
       <td class="d-flex">
-        <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editGoal.emit(goal)">
+        <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editGoal.emit(goal.id)">
           <fa-icon [icon]="edit" class="text-primary"></fa-icon>
         </button>
         <button

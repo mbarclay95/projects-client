@@ -1,51 +1,66 @@
-<nz-list nzBordered [nzLoading]="directoryItemsQuery.selectLoading() | async">
-  <nz-list-header class="d-flex flex-column" *ngLet="directoryItemsQuery.noWorkingDirectory$ | async as noWorkingDir">
-    <div class="mb-2" style="font-size: 24px" *ngIf="newLocationBeingSelected">Select New Location</div>
+<nz-list nzBordered [nzLoading]="directoryItemsStore.loadingAll()">
+  @let noWorkingDir = directoryItemsStore.noWorkingDir();
+  <nz-list-header class="d-flex flex-column">
+    @if (newLocationBeingSelected) {
+      <div class="mb-2" style="font-size: 24px">Select New Location</div>
+    }
     <div class="d-flex justify-content-between">
       <div class="hover-icons me-2" (click)="goBack()">
         <fa-icon [icon]="back"></fa-icon>
       </div>
       <div class="d-flex">
         <div class="px-2 cursor-pointer" [ngClass]="{ 'working-dir-button': !noWorkingDir }" (click)="clickedRoot(noWorkingDir)">/</div>
-        <div *ngFor="let dir of workingDirectory; let last = last; let first = first" (click)="clickedWorkingDirectory(dir, last)">
-          <span *ngIf="!first" class="mx-2">/</span
-          ><span class="cursor-pointer" [ngClass]="{ 'working-dir-button': !last }">{{ dir.path }}</span>
-        </div>
+        @for (dir of workingDirectory; track dir.sort; let last = $last; let first = $first) {
+          <div (click)="clickedWorkingDirectory(dir, last)">
+            @if (!first) {
+              <span class="mx-2">/</span>
+            }
+            <span class="cursor-pointer" [ngClass]="{ 'working-dir-button': !last }">{{ dir.path }}</span>
+          </div>
+        }
       </div>
       <div>
-        <div class="hover-icons" (click)="refreshDir()">
+        <div class="hover-icons" (click)="directoryItemsStore.loadAll({})">
           <fa-icon [icon]="refresh"></fa-icon>
         </div>
       </div>
     </div>
   </nz-list-header>
 
-  <nz-list-item *ngFor="let item of directoryItemsQuery.items$ | async" class="d-flex justify-content-start">
-    <div class="me-4" *ngIf="!newLocationBeingSelected">
-      <fa-icon class="me-2 hover-icons" [icon]="edit" (click)="updateItem(item)"></fa-icon>
-      <fa-icon
-        class="me-2 hover-icons"
-        [icon]="delete"
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure?"
-        (nzOnConfirm)="deleteItem(item)"
-      ></fa-icon>
-    </div>
+  @for (item of directoryItemsStore.entities(); track item.id) {
+    <nz-list-item class="d-flex justify-content-start">
+      @if (!newLocationBeingSelected) {
+        <div class="me-4">
+          <fa-icon class="me-2 hover-icons" [icon]="edit" (click)="updateItem(item)"></fa-icon>
+          <fa-icon
+            class="me-2 hover-icons"
+            [icon]="delete"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure?"
+            (nzOnConfirm)="deleteItem(item)"
+          ></fa-icon>
+        </div>
+      }
 
-    <div *ngIf="item.type === 'dir'" class="directory" (click)="clickedDirectory(item)">
-      <fa-icon class="me-1" [icon]="dir"></fa-icon>
-      {{ item.id }}
-    </div>
-
-    <div *ngIf="item.type === 'file'">
-      <fa-icon class="me-1" [icon]="file"></fa-icon>
-      {{ item.id }}
-    </div>
-  </nz-list-item>
+      @if (item.type === "dir") {
+        <div class="directory" (click)="directoryItemsStore.appendPath(item.id)">
+          <fa-icon class="me-1" [icon]="dir"></fa-icon>
+          {{ item.id }}
+        </div>
+      } @else if (item.type === "file") {
+        <div>
+          <fa-icon class="me-1" [icon]="file"></fa-icon>
+          {{ item.id }}
+        </div>
+      }
+    </nz-list-item>
+  }
 </nz-list>
 
-<div *ngIf="newLocationBeingSelected" class="mt-2 d-flex justify-content-end w-100">
-  <button nz-button class="me-2" nzType="default" (click)="cancelNewLocation.emit()">Cancel</button>
+@if (newLocationBeingSelected) {
+  <div class="mt-2 d-flex justify-content-end w-100">
+    <button nz-button class="me-2" nzType="default" (click)="cancelNewLocation.emit()">Cancel</button>
 
-  <button nz-button nzType="primary" (click)="selectNewLocation.emit(workingDirectory)">Select this Directory</button>
-</div>
+    <button nz-button nzType="primary" (click)="selectNewLocation.emit(workingDirectory)">Select this Directory</button>
+  </div>
+}

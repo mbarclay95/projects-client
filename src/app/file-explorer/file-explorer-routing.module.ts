@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { FileExplorerPageComponent } from './pages/file-explorer-page/file-explorer-page.component';
-import { FileExplorerResolver } from './file-explorer.resolver';
+import { TypedRoute } from '../app-routing.module';
 
-const routes: Routes = [
+const routes: TypedRoute[] = [
   {
     path: '',
-    resolve: { FileExplorerResolver },
     children: [{ path: '', component: FileExplorerPageComponent }],
   },
 ];

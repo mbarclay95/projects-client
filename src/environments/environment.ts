@@ -7,7 +7,8 @@ export const environment = {
   apiUrl: 'http://localhost:8000/api',
   // apiUrl: 'https://home-api.bigmike.dev/api',
   eventSignupApiUrl: 'http://localhost:8001/api',
-  moneyAppApiUrl: 'http://localhost:8001/api',
+  // moneyAppApiUrl: 'http://localhost:8001/api',
+  moneyAppApiUrl: 'https://money-api.bigmike.dev/api',
 };
 
 /*

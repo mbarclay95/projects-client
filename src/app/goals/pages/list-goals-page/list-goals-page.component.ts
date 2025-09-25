@@ -1,11 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { GoalsQuery } from '../../services/state/goals.query';
-import { createGoal, Goal } from '../../models/goal.model';
-import { merge, Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { MobileHeaderService } from '../../../shared/services/mobile-header.service';
-import { GoalsService } from '../../services/state/goals.service';
+import { Component, inject, OnInit } from '@angular/core';
 import { isMobile } from '../../../app.component';
+import { GoalsSignalStore } from '../../services/goals-signal-store';
 
 @Component({
   selector: 'app-list-goals-page',
@@ -15,27 +10,13 @@ import { isMobile } from '../../../app.component';
 })
 export class ListGoalsPageComponent implements OnInit {
   isMobile = isMobile;
-  openGoalModal: Subject<Goal> = new Subject<Goal>();
-
-  openGoalModal$: Observable<Goal> = merge(
-    this.mobileHeaderService.clickedButton$.pipe(map(() => createGoal({ equality: 'atLeast', lengthOfTime: 'week' }))),
-    this.openGoalModal.asObservable(),
-  );
-
-  constructor(
-    public goalsQuery: GoalsQuery,
-    private goalsService: GoalsService,
-    private mobileHeaderService: MobileHeaderService,
-  ) {}
+  readonly goalsStore = inject(GoalsSignalStore);
 
   ngOnInit(): void {
-    this.goalsService.updateUi({
-      weekOffset: 0,
-    });
+    this.goalsStore.updateUiState({ weekOffset: 0 });
   }
 
   createNewGoal() {
-    const newGoal = createGoal({ equality: 'atLeast', lengthOfTime: 'week' });
-    this.openGoalModal.next(newGoal);
+    this.goalsStore.createEntity({ equality: 'atLeast', lengthOfTime: 'week' });
   }
 }

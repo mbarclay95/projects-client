@@ -1,11 +1,8 @@
-import { Component } from '@angular/core';
-import { AuthQuery } from './auth/services/state/auth.query';
-import { PermissionsService } from './auth/services/permissions.service';
-import { AuthService } from './auth/services/state/auth.service';
-import { filter, take } from 'rxjs';
+import { Component, effect, inject } from '@angular/core';
 import { faBars, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { MobileHeaderService } from './shared/services/mobile-header.service';
+import { MobileDisplayService } from './shared/services/mobile-display.service';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
+import { AuthSignalStore } from './auth/services/auth-signal-store';
 
 @Component({
   selector: 'app-root',
@@ -20,19 +17,31 @@ export class AppComponent {
   collapsedWidth = isMobile ? 0 : 64;
   menu = faBars;
   plus = faPlus;
-  loading = true;
+  loading = false;
+
+  readonly authStore = inject(AuthSignalStore);
 
   constructor(
-    public authQuery: AuthQuery,
-    public authService: AuthService,
-    public permissionsService: PermissionsService,
-    public mobileHeaderService: MobileHeaderService,
+    public mobileHeaderService: MobileDisplayService,
     private router: Router,
   ) {
+    effect(() => {
+      if (this.isMobile || this.sideMenuClosed !== undefined) {
+        return;
+      }
+      const user = this.authStore.auth();
+      if (user) {
+        this.sideMenuClosed = false;
+        if (!user.userConfig.sideMenuOpen) {
+          setTimeout(() => {
+            this.sideMenuClosed = true;
+          }, 0);
+        }
+      }
+    });
+
     if (this.isMobile) {
       this.sideMenuClosed = true;
-    } else {
-      this.getStartSideMenu();
     }
     this.subscribeToRouter();
   }
@@ -58,25 +67,9 @@ export class AppComponent {
     });
   }
 
-  getStartSideMenu() {
-    this.authQuery.auth$
-      .pipe(
-        filter((user) => !!user.id),
-        take(1),
-      )
-      .subscribe((user) => {
-        this.sideMenuClosed = false;
-        if (!user.userConfig.sideMenuOpen) {
-          setTimeout(() => {
-            this.sideMenuClosed = true;
-          }, 0);
-        }
-      });
-  }
-
   closeSideMenu(saveToServer = true) {
     this.sideMenuClosed = true;
-    void this.authService.updateUserConfig({ sideMenuOpen: false }, saveToServer);
+    void this.authStore.updateUserConfig({ sideMenuOpen: false }, saveToServer);
   }
 
   closeSideIfMobile() {
@@ -86,4 +79,4 @@ export class AppComponent {
   }
 }
 
-export const isMobile = screen.width < 900;
+export const isMobile = window.matchMedia('(max-width: 900px)').matches;

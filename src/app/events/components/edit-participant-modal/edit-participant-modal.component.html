@@ -2,33 +2,35 @@
   [(nzVisible)]="isVisible"
   nzTitle="Participant"
   [nzWidth]="modalWidth"
-  (nzOnCancel)="isVisible = false"
+  (nzOnCancel)="eventsStore.clearSelectedParticipant()"
   nzOkText="Save"
   nzCancelText="Close"
   (nzOnOk)="signup()"
-  [nzCancelDisabled]="saving"
+  [nzCancelDisabled]="eventsStore.loadingParticipant()"
   [nzStyle]="modalStyle"
-  [nzOkDisabled]="saving"
-  [nzOkLoading]="saving"
+  [nzOkDisabled]="eventsStore.loadingParticipant()"
+  [nzOkLoading]="eventsStore.loadingParticipant()"
   [nzMaskClosable]="false"
 >
   <ng-container *nzModalContent>
-    <ng-container *ngIf="eventParticipant">
+    @if (model) {
       <div class="w-100 mb-4">
         <div class="mb-2"><span class="text-danger">*</span> Name:</div>
 
-        <input nz-input [(ngModel)]="eventParticipant.name" class="w-100" />
+        <input nz-input [(ngModel)]="model.name" class="w-100" />
       </div>
 
       <div class="w-100 mb-4 d-flex align-items-start">
         <span class="text-danger me-1">*</span>
-        <nz-radio-group [(ngModel)]="eventParticipant.isGoing" nzButtonStyle="solid">
+        <nz-radio-group [(ngModel)]="model.isGoing" nzButtonStyle="solid">
           <label nz-radio-button [nzValue]="true"> <fa-icon [icon]="thumbsUp" class="me-1"></fa-icon> Going </label>
           <label nz-radio-button [nzValue]="false"> <fa-icon [icon]="thumbsDown" class="me-1"></fa-icon> Not Going </label>
         </nz-radio-group>
       </div>
 
-      <div class="w-100 text-danger" style="font-style: italic" *ngIf="nameError">Please enter a name.</div>
-    </ng-container>
+      @if (nameError) {
+        <div class="w-100 text-danger" style="font-style: italic">Please enter a name.</div>
+      }
+    }
   </ng-container>
 </nz-modal>

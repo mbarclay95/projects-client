@@ -1,5 +1,5 @@
 # build stage
-FROM node:lts-alpine as build-stage
+FROM node:lts-alpine AS build-stage
 WORKDIR /app
 COPY . .
 RUN npm ci
@@ -7,10 +7,10 @@ RUN npm run build:prod
 COPY . .
 
 # production stage
-FROM webdevops/nginx:alpine as production-stage
-ENV WEB_DOCUMENT_ROOT /var/www/html
-ENV WEB_DOCUMENT_INDEX index.html
-ENV ACCEPT_EULA y
+FROM webdevops/nginx:alpine AS production-stage
+ENV WEB_DOCUMENT_ROOT=/var/www/html
+ENV WEB_DOCUMENT_INDEX=index.html
+ENV ACCEPT_EULA=y
 RUN echo "gzip on;" >> /opt/docker/etc/nginx/conf.d/gzip.conf
 RUN echo "gzip_types text/plain application/xm application/json application/javascript text/css;" >> /opt/docker/etc/nginx/conf.d/gzip.conf
 RUN echo "gzip_proxied no-cache no-store private expired auth;" >> /opt/docker/etc/nginx/conf.d/gzip.conf

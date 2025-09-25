@@ -30,10 +30,10 @@ import { TargetsPageComponent } from './pages/targets-page/targets-page.componen
 import { TargetsTableComponent } from './components/targets-table/targets-table.component';
 import { ScheduledBackupsTableComponent } from './components/scheduled-backups-table/scheduled-backups-table.component';
 import { CreateEditScheduledBackupDrawerComponent } from './components/create-edit-scheduled-backup-drawer/create-edit-scheduled-backup-drawer.component';
-import { NzInputNumberLegacyModule } from 'ng-zorro-antd/input-number-legacy';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { SortGenericPipe } from '../shared/pipes/sort-generic.pipe';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 
 @NgModule({
   declarations: [
@@ -69,10 +69,10 @@ import { SortGenericPipe } from '../shared/pipes/sort-generic.pipe';
     NzTableModule,
     NzStepsModule,
     NzCollapseModule,
-    NzInputNumberLegacyModule,
     NzRadioModule,
     NzPopconfirmDirective,
     SortGenericPipe,
+    NzInputNumberComponent,
   ],
 })
 export class BackupsModule {}

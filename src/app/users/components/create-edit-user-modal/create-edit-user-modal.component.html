@@ -1,5 +1,5 @@
 <nz-modal
-  [(nzVisible)]="isVisible"
+  [nzVisible]="isVisible()"
   [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' User'"
   [nzWidth]="modalWidth"
   (nzOnCancel)="usersStore.clearCreateEditEntity()"

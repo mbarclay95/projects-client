@@ -19,8 +19,8 @@
   <button nz-button nzType="primary" (click)="createEntity()">Create {{ selectedTab }}</button>
 </ng-template>
 
-<app-create-edit-backups-drawer [openDrawer]="backupStore.createEditEntity"></app-create-edit-backups-drawer>
+<app-create-edit-backups-drawer [openDrawer]="backupStore.createEditEntity()"></app-create-edit-backups-drawer>
 <!--<app-create-edit-scheduled-backup-drawer-->
 <!--  [openModal]="openScheduledBackupsDrawer.asObservable()"-->
 <!--&gt;</app-create-edit-scheduled-backup-drawer>-->
-<app-create-edit-target-modal [openModal]="targetStore.createEditEntity"></app-create-edit-target-modal>
+<app-create-edit-target-modal [openModal]="targetStore.createEditEntity()"></app-create-edit-target-modal>

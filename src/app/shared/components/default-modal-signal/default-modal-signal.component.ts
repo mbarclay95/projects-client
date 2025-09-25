@@ -1,4 +1,4 @@
-import { Component, effect, Input, Signal } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { isMobile } from '../../../app.component';
 
 @Component({
@@ -8,25 +8,20 @@ import { isMobile } from '../../../app.component';
   styleUrl: './default-modal-signal.component.scss',
 })
 export abstract class DefaultModalSignalComponent<T> {
-  @Input() openModal!: Signal<T | undefined>;
+  readonly openModal = input.required<T | undefined>();
+  readonly isVisible = computed(() => {
+    this.model = this.openModal();
+    if (this.model) {
+      this.onOpenModal();
+      return true;
+    }
+    this.onCloseModal();
+    return false;
+  });
 
   model?: T;
-  isVisible: boolean = false;
   modalStyle = isMobile ? { top: '20px' } : {};
   modalWidth = isMobile ? '95%' : '500px';
-
-  constructor() {
-    effect(() => {
-      this.model = this.openModal();
-      if (this.model) {
-        this.isVisible = true;
-        this.onOpenModal();
-      } else {
-        this.isVisible = false;
-        this.onCloseModal();
-      }
-    });
-  }
 
   // override if needed
   onOpenModal(): void {}

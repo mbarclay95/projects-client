@@ -27,6 +27,6 @@
   }
 </ng-template>
 
-<app-create-edit-task-modal-mobile [openModal]="tasksStore.createEditEntity"></app-create-edit-task-modal-mobile>
+<app-create-edit-task-modal-mobile [openModal]="tasksStore.createEditEntity()"></app-create-edit-task-modal-mobile>
 <app-view-task-modal [openModal]="openViewTaskModal.asObservable()"></app-view-task-modal>
 <app-skip-task-modal [openModal]="openSkipTaskModal.asObservable()"></app-skip-task-modal>

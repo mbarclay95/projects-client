@@ -1,4 +1,4 @@
-import { Component, effect, inject, Input, Signal } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { Backup } from '../../models/backup.model';
 import { BackupStep, createBackupStep, isS3Upload, isTarZip } from '../../models/backup-step.model';
 import { faGripVertical, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -14,9 +14,12 @@ import { TargetSignalStore } from '../../services/target-signal-store';
   standalone: false,
 })
 export class CreateEditBackupsDrawerComponent {
-  @Input() openDrawer!: Signal<Backup | undefined>;
+  readonly openDrawer = input.required<Backup | undefined>();
+  readonly isVisible = computed(() => {
+    this.backup = this.openDrawer();
+    return !!this.backup;
+  });
 
-  isVisible: boolean = false;
   backup?: Backup;
   plus = faPlus;
   grip = faGripVertical;
@@ -28,12 +31,7 @@ export class CreateEditBackupsDrawerComponent {
   readonly backupStore = inject(BackupsSignalStore);
   readonly targetStore = inject(TargetSignalStore);
 
-  constructor(private nzMessageService: NzMessageService) {
-    effect(() => {
-      this.backup = this.openDrawer();
-      this.isVisible = !!this.backup;
-    });
-  }
+  constructor(private nzMessageService: NzMessageService) {}
 
   selectNewTarget({ target, backupStepId }: { target: Target; backupStepId: number }): void {
     // const backupStep = this.backup.backupSteps.find(step => step.id === backupStepId);

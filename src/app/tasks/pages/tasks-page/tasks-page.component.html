@@ -14,6 +14,8 @@
   }
 </div>
 
-<app-create-edit-task-modal-mobile *ngIf="isMobile" [openModal]="tasksStore.createEditEntity"></app-create-edit-task-modal-mobile>
+@if (isMobile) {
+  <app-create-edit-task-modal-mobile [openModal]="tasksStore.createEditEntity()"></app-create-edit-task-modal-mobile>
+}
 
 <app-view-task-modal [openModal]="viewTask.asObservable()"></app-view-task-modal>

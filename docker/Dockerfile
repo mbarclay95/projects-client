@@ -2,7 +2,7 @@
 FROM node:lts-alpine as build-stage
 WORKDIR /app
 COPY . .
-RUN npm install --legacy-peer-deps
+RUN npm ci
 RUN npm run build:prod
 COPY . .
 

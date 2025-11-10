@@ -8,8 +8,7 @@ import { AuthStorageService } from './auth-storage.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private authStorageService = inject(AuthStorageService);
-
-  constructor(private router: Router) {}
+  private router = inject(Router);
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let authToken: string | undefined;

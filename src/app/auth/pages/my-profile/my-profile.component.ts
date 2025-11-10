@@ -58,7 +58,6 @@ export class MyProfileComponent {
 
     this.nzMessageService.success('You have been logged out');
     this.loggingOut = false;
-    console.log('doubt here');
     await this.router.navigateByUrl('/login');
   }
 

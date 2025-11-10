@@ -12,7 +12,7 @@ export class AuthStorageService {
   }
 
   private loadAuthToken(): void {
-    let token = localStorage.getItem('project-app-token');
+    const token = localStorage.getItem('project-app-token');
     if (token) {
       this.authToken = JSON.parse(token);
     }

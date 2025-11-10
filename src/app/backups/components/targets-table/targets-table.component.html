@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let target of targetsTable?.data">
+    @for (target of targetsTable?.data; track target.id) {
       <tr>
         <td>
           <button nz-button class="ant-btn-icon-only" nzType="text" (click)="this.editTarget.emit(target.id)">
@@ -18,7 +18,7 @@
         <td>{{ target.name }}</td>
         <td>{{ target.hostName }}</td>
         <td>{{ target.targetUrl }}</td>
-      </tr></ng-container
-    >
+      </tr>
+    }
   </tbody>
 </nz-table>

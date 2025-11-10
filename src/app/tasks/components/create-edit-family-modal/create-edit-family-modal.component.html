@@ -13,66 +13,60 @@
   [nzStyle]="modalStyle"
 >
   <ng-container *nzModalContent>
-    <div *ngIf="model">
-      <div class="w-100 mb-4">
-        <div class="mb-2">Family Name:</div>
-
-        <input nz-input [(ngModel)]="model.name" nzSize="large" class="w-100" />
-      </div>
-
-      <div class="w-100 mb-4 d-flex justify-content-between align-items-center">
-        <div class="">Task Type:</div>
-
-        <nz-radio-group [(ngModel)]="model.taskStrategy" nzButtonStyle="solid" nzSize="large">
-          <label nz-radio-button nzValue="per task">Per Task</label>
-          <label nz-radio-button nzValue="per task point">Per Task Point</label>
-        </nz-radio-group>
-      </div>
-
-      @if (model.taskStrategy === "per task point") {
+    @if (model) {
+      <div>
         <div class="w-100 mb-4">
-          <div>Task Points <span style="font-style: italic">(up to 5):</span></div>
-
-          <div class="d-flex justify-content-evenly">
-            @for (taskPoint of model.taskPoints; track $index) {
-              <span class="me-2 task-points" style="color: {{ model.taskPoints | updatingTaskPointColors: taskPoint }}">
-                {{ taskPoint }}
-              </span>
-            }
+          <div class="mb-2">Family Name:</div>
+          <input nz-input [(ngModel)]="model.name" nzSize="large" class="w-100" />
+        </div>
+        <div class="w-100 mb-4 d-flex justify-content-between align-items-center">
+          <div class="">Task Type:</div>
+          <nz-radio-group [(ngModel)]="model.taskStrategy" nzButtonStyle="solid" nzSize="large">
+            <label nz-radio-button nzValue="per task">Per Task</label>
+            <label nz-radio-button nzValue="per task point">Per Task Point</label>
+          </nz-radio-group>
+        </div>
+        @if (model.taskStrategy === "per task point") {
+          <div class="w-100 mb-4">
+            <div>Task Points <span style="font-style: italic">(up to 5):</span></div>
+            <div class="d-flex justify-content-evenly">
+              @for (taskPoint of model.taskPoints; track $index) {
+                <span class="me-2 task-points" style="color: {{ model.taskPoints | updatingTaskPointColors: taskPoint }}">
+                  {{ taskPoint }}
+                </span>
+              }
+            </div>
+            <nz-select
+              [ngModel]="model.taskPoints"
+              class="w-100"
+              nzMode="multiple"
+              nzSize="large"
+              (ngModelChange)="updateFamilyTaskPoints($event)"
+              [nzMaxMultipleCount]="5"
+            >
+              @for (point of listOfPoints; track $index) {
+                <nz-option [nzValue]="point" [nzLabel]="point"></nz-option>
+              }
+            </nz-select>
           </div>
-
-          <nz-select
-            [ngModel]="model.taskPoints"
-            class="w-100"
-            nzMode="multiple"
-            nzSize="large"
-            (ngModelChange)="updateFamilyTaskPoints($event)"
-            [nzMaxMultipleCount]="5"
-          >
-            @for (point of listOfPoints; track $index) {
-              <nz-option [nzValue]="point" [nzLabel]="point"></nz-option>
-            }
-          </nz-select>
-        </div>
-      }
-
-      @if (showFamilyMembers) {
-        <div class="w-100 mb-4">
-          <div class="mb-2">Family Members:</div>
-
-          <nz-select
-            [ngModel]="model.members | usersToIds"
-            class="w-100"
-            nzMode="multiple"
-            nzSize="large"
-            (ngModelChange)="updateFamilyMembers($event)"
-          >
-            @for (user of users; track user.id) {
-              <nz-option [nzValue]="user.id" [nzLabel]="user.name"></nz-option>
-            }
-          </nz-select>
-        </div>
-      }
-    </div>
+        }
+        @if (showFamilyMembers) {
+          <div class="w-100 mb-4">
+            <div class="mb-2">Family Members:</div>
+            <nz-select
+              [ngModel]="model.members | usersToIds"
+              class="w-100"
+              nzMode="multiple"
+              nzSize="large"
+              (ngModelChange)="updateFamilyMembers($event)"
+            >
+              @for (user of users; track user.id) {
+                <nz-option [nzValue]="user.id" [nzLabel]="user.name"></nz-option>
+              }
+            </nz-select>
+          </div>
+        }
+      </div>
+    }
   </ng-container>
 </nz-modal>

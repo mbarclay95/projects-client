@@ -39,62 +39,58 @@
                   <input nz-input [(ngModel)]="backupStep.name" class="w-100" />
                 </div>
 
-                <ng-container *ngIf="isTarZip(backupStep)">
+                @if (isTarZip(backupStep)) {
                   <div class="w-100 mb-2">
                     <div class="mb-1">Source Target:</div>
-
                     <nz-select [(ngModel)]="backupStep.config.sourceTargetId" class="w-100" [nzDropdownRender]="addTarget">
-                      <nz-option *ngFor="let target of targetStore.entities()" [nzValue]="target.id" [nzLabel]="target.name"></nz-option>
+                      @for (target of targetStore.entities(); track target.id) {
+                        <nz-option [nzValue]="target.id" [nzLabel]="target.name"></nz-option>
+                      }
                     </nz-select>
                   </div>
-
                   <div class="w-100 mb-2">
                     <div class="mb-1">Destination Target:</div>
-
                     <nz-select [(ngModel)]="backupStep.config.destinationTargetId" class="w-100" [nzDropdownRender]="addTarget">
-                      <nz-option *ngFor="let target of targetStore.entities()" [nzValue]="target.id" [nzLabel]="target.name"></nz-option>
+                      @for (target of targetStore.entities(); track target.id) {
+                        <nz-option [nzValue]="target.id" [nzLabel]="target.name"></nz-option>
+                      }
                     </nz-select>
                   </div>
-
                   <div class="w-100 mb-2">
                     <div class="mb-1">Destination File Name:</div>
-
                     <input nz-input [(ngModel)]="backupStep.config.fileName" class="w-100" />
                   </div>
-                </ng-container>
+                }
 
-                <ng-container *ngIf="isS3Upload(backupStep)">
+                @if (isS3Upload(backupStep)) {
                   <div class="w-100 mb-2">
                     <div class="mb-1">Driver:</div>
-
                     <nz-select [(ngModel)]="backupStep.config.s3Driver" class="w-100">
                       <nz-option nzValue="aws-s3" nzLabel="AWS"></nz-option>
                       <nz-option nzValue="minio-s3" nzLabel="Local Minio"></nz-option>
                     </nz-select>
                   </div>
-
                   <div class="w-100 mb-2">
                     <div class="mb-1">Source Target:</div>
-
                     <nz-select [(ngModel)]="backupStep.config.sourceTargetId" class="w-100" [nzDropdownRender]="addTarget">
-                      <nz-option *ngFor="let target of targetStore.entities()" [nzValue]="target.id" [nzLabel]="target.name"></nz-option>
+                      @for (target of targetStore.entities(); track target.id) {
+                        <nz-option [nzValue]="target.id" [nzLabel]="target.name"></nz-option>
+                      }
                     </nz-select>
                   </div>
-
                   <div class="w-100 mb-2">
                     <div class="mb-1">Source File Name:</div>
-
                     <input nz-input [(ngModel)]="backupStep.config.fileName" class="w-100" />
                   </div>
-
                   <div class="w-100 mb-2">
                     <div class="mb-1">Destination Target:</div>
-
                     <nz-select [(ngModel)]="backupStep.config.destinationTargetId" class="w-100" [nzDropdownRender]="addTarget">
-                      <nz-option *ngFor="let target of targetStore.entities()" [nzValue]="target.id" [nzLabel]="target.name"></nz-option>
+                      @for (target of targetStore.entities(); track target.id) {
+                        <nz-option [nzValue]="target.id" [nzLabel]="target.name"></nz-option>
+                      }
                     </nz-select>
                   </div>
-                </ng-container>
+                }
 
                 <ng-template #addTarget>
                   <nz-divider class="my-1"></nz-divider>

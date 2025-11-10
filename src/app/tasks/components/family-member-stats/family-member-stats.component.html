@@ -18,12 +18,16 @@
   <div class="w-100 d-flex flex-column px-2">
     <div class="align-self-center">Top Tasks</div>
 
-    <div *ngFor="let topTask of stats.topTasks" class="d-flex stat-values">
-      <div style="min-width: 150px; margin-left: 2rem">{{ topTask.taskName }}</div>
-      <div class="mx-4">-</div>
-      <div>{{ topTask.count }}</div>
-    </div>
+    @for (topTask of stats.topTasks; track topTask.taskName) {
+      <div class="d-flex stat-values">
+        <div style="min-width: 150px; margin-left: 2rem">{{ topTask.taskName }}</div>
+        <div class="mx-4">-</div>
+        <div>{{ topTask.count }}</div>
+      </div>
+    }
   </div>
 
-  <nz-divider *ngIf="isMobile"></nz-divider>
+  @if (isMobile) {
+    <nz-divider></nz-divider>
+  }
 </div>

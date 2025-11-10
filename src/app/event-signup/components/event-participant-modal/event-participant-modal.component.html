@@ -27,7 +27,11 @@
       </nz-radio-group>
     </div>
 
-    <div class="w-100 text-danger" style="font-style: italic" *ngIf="nameError">Please enter a name.</div>
-    <div class="w-100 text-danger" style="font-style: italic" *ngIf="goingError">Please select if you are going to the event.</div>
+    @if (nameError) {
+      <div class="w-100 text-danger" style="font-style: italic">Please enter a name.</div>
+    }
+    @if (goingError) {
+      <div class="w-100 text-danger" style="font-style: italic">Please select if you are going to the event.</div>
+    }
   </ng-container>
 </nz-modal>

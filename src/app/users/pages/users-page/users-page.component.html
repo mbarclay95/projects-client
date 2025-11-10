@@ -1,4 +1,6 @@
-<app-page-header *ngIf="!isMobile" buttonText="Create User" title="Users" (createButtonClicked)="createNewUser()"></app-page-header>
+@if (!isMobile) {
+  <app-page-header buttonText="Create User" title="Users" (createButtonClicked)="createNewUser()"></app-page-header>
+}
 
 <div>
   @if (usersStore.loadingAll()) {

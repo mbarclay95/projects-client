@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let scheduledBackup of scheduledBackupsTable?.data">
+    @for (scheduledBackup of scheduledBackupsTable?.data; track scheduledBackup.id) {
       <tr>
         <td>
           <button nz-button class="ant-btn-icon-only" nzType="text" (click)="this.editScheduledBackup.emit(scheduledBackup)">
@@ -18,7 +18,7 @@
         <td>{{ scheduledBackup.name }}</td>
         <td>{{ scheduledBackup.startTime }}</td>
         <td>{{ scheduledBackup.schedule.mode }}</td>
-      </tr></ng-container
-    >
+      </tr>
+    }
   </tbody>
 </nz-table>

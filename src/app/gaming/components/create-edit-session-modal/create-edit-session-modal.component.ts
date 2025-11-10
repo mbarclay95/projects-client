@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgIf } from '@angular/common';
+
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzModalComponent, NzModalContentDirective, NzModalModule } from 'ng-zorro-antd/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,7 +13,6 @@ import { NzInputNumberLegacyComponent } from 'ng-zorro-antd/input-number-legacy'
 @Component({
   selector: 'app-create-edit-session-modal',
   imports: [
-    NgIf,
     NzInputDirective,
     NzModalComponent,
     ReactiveFormsModule,

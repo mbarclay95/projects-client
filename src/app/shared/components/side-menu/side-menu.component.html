@@ -1,6 +1,8 @@
-<div *ngIf="isMobile || !sideMenuClosed" class="py-2 menu-title">Home App</div>
+@if (isMobile || !sideMenuClosed) {
+  <div class="py-2 menu-title">Home App</div>
+}
 
-<ng-container *ngFor="let route of routes">
+@for (route of routes; track $index) {
   <ul nz-menu nzMode="inline" nzTheme="dark" [ngClass]="{ 'ant-menu-vertical ant-menu-inline-collapsed': sideMenuClosed }">
     <li
       nz-menu-item
@@ -15,8 +17,7 @@
         [ngClass]="{ 'list-icon-open': !sideMenuClosed, 'list-icon-closed': sideMenuClosed }"
         [icon]="route.icon"
       ></fa-icon>
-
       <span>{{ route.title }}</span>
     </li>
   </ul>
-</ng-container>
+}

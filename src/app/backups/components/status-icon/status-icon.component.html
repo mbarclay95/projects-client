@@ -1,14 +1,14 @@
-<ng-container [ngSwitch]="status">
-  <ng-container *ngSwitchCase="'completed'">
+@switch (status) {
+  @case ("completed") {
     <fa-icon [icon]="completed" [size]="iconSize" class="text-success"></fa-icon>
-  </ng-container>
-  <ng-container *ngSwitchCase="'errored'">
+  }
+  @case ("errored") {
     <fa-icon [icon]="error" [size]="iconSize" class="text-danger"></fa-icon>
-  </ng-container>
-  <ng-container *ngSwitchCase="'inProgress'">
+  }
+  @case ("inProgress") {
     <fa-icon animation="spin" [size]="iconSize" [icon]="inProgress" class="text-primary"></fa-icon>
-  </ng-container>
-  <ng-container *ngSwitchCase="'queued'">
+  }
+  @case ("queued") {
     <fa-icon [icon]="queued" [size]="iconSize" class=""></fa-icon>
-  </ng-container>
-</ng-container>
+  }
+}

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DefaultModalComponent } from '../../../shared/components/default-modal/default-modal.component';
 import { GamingSessionDevice } from '../../models/gaming-session-device.model';
-import { NgIf } from '@angular/common';
+
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzModalComponent, NzModalContentDirective, NzModalModule } from 'ng-zorro-antd/modal';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
@@ -13,7 +13,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-create-edit-session-device-modal',
   imports: [
-    NgIf,
     NzInputDirective,
     NzModalComponent,
     NzOptionComponent,

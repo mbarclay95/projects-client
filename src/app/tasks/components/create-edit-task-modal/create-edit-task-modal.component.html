@@ -76,17 +76,18 @@
         <nz-switch [(ngModel)]="model.recurring" (ngModelChange)="updateRecurring($event)" [nzDisabled]="model.id !== 0"></nz-switch>
       </div>
 
-      <div class="w-100 mb-4" *ngIf="!model.recurring">
-        <div class="mb-2">Due Date: <span class="text-danger">*</span></div>
-
-        <nz-date-picker
-          [(ngModel)]="model.dueDate"
-          class="w-100"
-          [nzDisabledDate]="disabledDate"
-          nzFormat="MM/dd/yyyy"
-          [nzInputReadOnly]="true"
-        ></nz-date-picker>
-      </div>
+      @if (!model.recurring) {
+        <div class="w-100 mb-4">
+          <div class="mb-2">Due Date: <span class="text-danger">*</span></div>
+          <nz-date-picker
+            [(ngModel)]="model.dueDate"
+            class="w-100"
+            [nzDisabledDate]="disabledDate"
+            nzFormat="MM/dd/yyyy"
+            [nzInputReadOnly]="true"
+          ></nz-date-picker>
+        </div>
+      }
 
       @if (model.recurring) {
         <div class="w-100 mb-4">

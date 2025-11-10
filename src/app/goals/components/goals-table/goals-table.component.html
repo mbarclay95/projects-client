@@ -7,24 +7,26 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let goal of goalsTable?.data">
-      <td class="d-flex">
-        <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editGoal.emit(goal.id)">
-          <fa-icon [icon]="edit" class="text-primary"></fa-icon>
-        </button>
-        <button
-          nz-button
-          class="ant-btn-icon-only"
-          nzType="text"
-          nz-popconfirm
-          nzPopconfirmTitle="Are you sure?"
-          (nzOnConfirm)="deleteGoal(goal)"
-        >
-          <fa-icon [icon]="delete" class=""></fa-icon>
-        </button>
-      </td>
-      <td>{{ goal.title }}</td>
-      <td>{{ goal.createdAt | date }}</td>
-    </tr>
+    @for (goal of goalsTable?.data; track goal.id) {
+      <tr>
+        <td class="d-flex">
+          <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editGoal.emit(goal.id)">
+            <fa-icon [icon]="edit" class="text-primary"></fa-icon>
+          </button>
+          <button
+            nz-button
+            class="ant-btn-icon-only"
+            nzType="text"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure?"
+            (nzOnConfirm)="deleteGoal(goal)"
+          >
+            <fa-icon [icon]="delete" class=""></fa-icon>
+          </button>
+        </td>
+        <td>{{ goal.title }}</td>
+        <td>{{ goal.createdAt | date }}</td>
+      </tr>
+    }
   </tbody>
 </nz-table>

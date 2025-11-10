@@ -12,9 +12,11 @@
       <div class="title">{{ task.name }}</div>
 
       <div class="d-flex align-items-center due-text">
-        <div style="text-align: center" class="me-1" *ngIf="task.priority === 1">
-          <fa-icon style="color: #922724" [icon]="flag"></fa-icon>
-        </div>
+        @if (task.priority === 1) {
+          <div style="text-align: center" class="me-1">
+            <fa-icon style="color: #922724" [icon]="flag"></fa-icon>
+          </div>
+        }
 
         <div>Due {{ task.dueDate | dueDateHumanReadable }}</div>
       </div>

@@ -38,13 +38,12 @@
     <div class="responsive-width mb-4">
       <div class="mb-2">Features:</div>
 
-      <ng-container *ngFor="let role of rolesStore.entities()">
+      @for (role of rolesStore.entities(); track role.id) {
         <div class="d-flex justify-content-between w-100 mb-2" style="font-size: 14px">
           {{ role | displayRoleName }}
-
           <nz-switch [ngModel]="user | hasRole: role.id" (ngModelChange)="updateUsersRoles($event, role, user)"></nz-switch>
         </div>
-      </ng-container>
+      }
     </div>
 
     <div class="w-100 mb-4">
@@ -56,7 +55,9 @@
         style="width: 300px"
         [nzAllowClear]="true"
       >
-        <nz-option *ngFor="let role of user.roles" [nzLabel]="role | displayRoleName" [nzValue]="role.name"></nz-option>
+        @for (role of user.roles; track role.id) {
+          <nz-option [nzLabel]="role | displayRoleName" [nzValue]="role.name"></nz-option>
+        }
       </nz-select>
     </div>
 

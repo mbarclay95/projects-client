@@ -1,23 +1,19 @@
 <div class="d-flex justify-content-center align-items-center w-100" style="height: 75vh" (keyup.enter)="loginService.login()">
   @if (loginService.loginForm) {
     <div class="login-container" style="padding: 3rem 5rem">
-      <ng-container *ngIf="!authStore.otherError()">
+      @if (!authStore.otherError()) {
         <h1 class="mb-4">Login</h1>
-
         <form [formGroup]="loginService.loginForm">
           <div class="mb-2">
             Username:
-
             <input nz-input formControlName="email" class="input-borders" />
           </div>
-
           <div class="mb-4">
             Password:
-
             <input nz-input type="password" formControlName="password" class="input-borders" />
           </div>
         </form>
-      </ng-container>
+      }
 
       @if (authStore.expiredTokenError()) {
         <div class="text-danger mb-4">Your session is expired. Please login again</div>

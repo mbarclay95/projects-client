@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DefaultModalComponent } from '../../../shared/components/default-modal/default-modal.component';
 import { GamingDevice } from '../../models/gaming-device.model';
-import { NgIf } from '@angular/common';
+
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzModalComponent, NzModalContentDirective, NzModalModule } from 'ng-zorro-antd/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +12,6 @@ import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 @Component({
   selector: 'app-create-edit-device-modal',
   imports: [
-    NgIf,
     NzInputDirective,
     NzModalComponent,
     ReactiveFormsModule,

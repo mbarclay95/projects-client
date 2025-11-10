@@ -13,7 +13,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let task of tasksTable?.data">
+    @for (task of tasksTable?.data; track task.id) {
       <tr [ngClass]="{ 'highlighted-row': highlightedTaskId === task.id }">
         <td class="d-flex">
           <button nz-button class="ant-btn-icon-only" nzType="text" (click)="tasksStore.editEntity(task.id)">
@@ -31,11 +31,19 @@
           </button>
         </td>
         <td>{{ task.name }}</td>
-        <td *ngIf="task.isActive">{{ task.dueDate | date: "shortDate" }}</td>
-        <td *ngIf="!task.isActive" class="text-warning" style="font-style: italic">*Paused</td>
+        @if (task.isActive) {
+          <td>{{ task.dueDate | date: "shortDate" }}</td>
+        }
+        @if (!task.isActive) {
+          <td class="text-warning" style="font-style: italic">*Paused</td>
+        }
         <td style="width: 18px; text-align: center">
-          <fa-icon *ngIf="task.recurring" [icon]="repeat"></fa-icon>
-          <fa-icon *ngIf="!task.recurring" [icon]="single"></fa-icon>
+          @if (task.recurring) {
+            <fa-icon [icon]="repeat"></fa-icon>
+          }
+          @if (!task.recurring) {
+            <fa-icon [icon]="single"></fa-icon>
+          }
         </td>
         <td style="width: 18px; text-align: center">
           @if (task.ownerType === "family") {
@@ -50,6 +58,6 @@
           </td>
         }
       </tr>
-    </ng-container>
+    }
   </tbody>
 </nz-table>

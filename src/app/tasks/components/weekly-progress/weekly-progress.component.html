@@ -1,14 +1,12 @@
-<ng-container *ngIf="userConfig">
+@if (userConfig) {
   <div class="d-flex flex-column align-items-center w-100">
     <!--    <div class="mb-3" style="font-size: 22px">{{userConfig | weeklyProgressPercent : false | weeklyProgressMessage}}-->
     <!--      {{userConfig | firstName}}!-->
     <!--    </div>-->
-
     <div class="mb-1" style="font-size: 14px">
       {{ daysTillEndOfWeek }} days left ~ {{ userConfig | totalCompletedTasks }}/{{ userConfig.tasksPerWeek }}
       {{ familiesStore.isPerTaskStrategy() ? "completed" : "points gained" }}
     </div>
   </div>
-
   <nz-progress [nzPercent]="userConfig | weeklyProgressPercent: false"></nz-progress>
-</ng-container>
+}

@@ -77,8 +77,12 @@
             <div (click)="recurringExpanded = !recurringExpanded" class="d-flex justify-content-between align-items-center cursor-pointer">
               <div class="">Recurring Details</div>
 
-              <fa-icon *ngIf="!recurringExpanded" [icon]="arrowDown"></fa-icon>
-              <fa-icon *ngIf="recurringExpanded" [icon]="arrowUp"></fa-icon>
+              @if (!recurringExpanded) {
+                <fa-icon [icon]="arrowDown"></fa-icon>
+              }
+              @if (recurringExpanded) {
+                <fa-icon [icon]="arrowUp"></fa-icon>
+              }
             </div>
           }
 

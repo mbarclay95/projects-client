@@ -13,22 +13,21 @@
   [nzOkDisabled]="saving"
 >
   <ng-container *nzModalContent>
-    <div *ngIf="model">
-      <div class="w-100">
-        Enter your name:
-
-        <input nz-input [(ngModel)]="model.name" class="w-100" />
+    @if (model) {
+      <div>
+        <div class="w-100">
+          Enter your name:
+          <input nz-input [(ngModel)]="model.name" class="w-100" />
+        </div>
+        <div class="w-100 mt-3">
+          <div>Remaining turn time display mode:</div>
+          <nz-select class="w-100" [(ngModel)]="model.turnTimeDisplayMode">
+            <nz-option nzValue="none" nzLabel="Don't show anything"></nz-option>
+            <!--          <nz-option nzValue="graph" nzLabel="Show progress bar"></nz-option>-->
+            <nz-option nzValue="numeric" nzLabel="Show numeric countdown"></nz-option>
+          </nz-select>
+        </div>
       </div>
-
-      <div class="w-100 mt-3">
-        <div>Remaining turn time display mode:</div>
-
-        <nz-select class="w-100" [(ngModel)]="model.turnTimeDisplayMode">
-          <nz-option nzValue="none" nzLabel="Don't show anything"></nz-option>
-          <!--          <nz-option nzValue="graph" nzLabel="Show progress bar"></nz-option>-->
-          <nz-option nzValue="numeric" nzLabel="Show numeric countdown"></nz-option>
-        </nz-select>
-      </div>
-    </div>
+    }
   </ng-container>
 </nz-modal>

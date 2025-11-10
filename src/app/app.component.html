@@ -57,11 +57,11 @@
     }
 
     <nz-content style="{{ isMobile ? 'margin-bottom: 69px' : '' }}" (click)="closeSideIfMobile()">
-      <div style="min-height: calc(100vh - {{ isMobile ? '109px' : '69px' }})">
+      <div [style.min-height]="`calc(100vh - ${isMobile ? '109px' : '69px'})`">
         @if (loading) {
           <div
             class="w-100 d-flex justify-content-center align-items-center"
-            style="height: calc(100vh - {{ isMobile ? '109px' : '69px' }})"
+            [style.height]="`calc(100vh - ${isMobile ? '109px' : '69px'})`"
           >
             <nz-spin></nz-spin>
           </div>

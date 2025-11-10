@@ -3,7 +3,6 @@ import { AsyncPipe } from '@angular/common';
 import { CreateEditSessionModalComponent } from '../../components/create-edit-session-modal/create-edit-session-modal.component';
 import { GamingSessionsListComponent } from '../../components/gaming-sessions-list/gaming-sessions-list.component';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
-import { SharedModule } from '../../../shared/shared.module';
 import { GamingSessionsFacadeService } from '../../services/gaming-sessions-facade.service';
 import { merge, Observable, Subject } from 'rxjs';
 import { createGamingSession, GamingSession } from '../../models/gaming-session.model';
@@ -13,7 +12,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-gaming-sessions-page',
-  imports: [AsyncPipe, CreateEditSessionModalComponent, GamingSessionsListComponent, NzSpinComponent, SharedModule, NzButtonComponent],
+  imports: [AsyncPipe, CreateEditSessionModalComponent, GamingSessionsListComponent, NzSpinComponent, NzButtonComponent],
   templateUrl: './gaming-sessions-page.component.html',
   styleUrl: './gaming-sessions-page.component.scss',
 })

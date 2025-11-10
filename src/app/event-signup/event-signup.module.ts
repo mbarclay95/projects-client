@@ -15,7 +15,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -30,7 +29,6 @@ import { SharedModule } from '../shared/shared.module';
     NzDividerModule,
     NzRadioModule,
     FontAwesomeModule,
-    SharedModule,
     NotFoundPageComponent,
     EventPageComponent,
     EventSignupLayoutComponent,

@@ -12,7 +12,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { SharedModule } from '../shared/shared.module';
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { GoalStatsPageComponent } from './pages/goal-stats-page/goal-stats-page.component';
@@ -38,7 +38,6 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
     NzInputModule,
     FormsModule,
     NzSelectModule,
-    SharedModule,
     FontAwesomeModule,
     NzPopconfirmModule,
     NzPopoverModule,

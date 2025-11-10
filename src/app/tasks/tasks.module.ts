@@ -39,7 +39,7 @@ import { WeeklyTasksPageComponent } from './pages/weekly-tasks-page/weekly-tasks
 import { TasksTableComponent } from './components/tasks-table/tasks-table.component';
 import { TasksFiltersComponent } from './components/tasks-filters/tasks-filters.component';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { SharedModule } from '../shared/shared.module';
+
 import { TaskTableMobileComponent } from './components/task-table-mobile/task-table-mobile.component';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzListModule } from 'ng-zorro-antd/list';
@@ -85,7 +85,6 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
     NzCheckboxModule,
     NzPopoverModule,
     NzPopconfirmModule,
-    SharedModule,
     NzEmptyModule,
     NzListModule,
     NzSpaceModule,

@@ -3,7 +3,6 @@ import { EventService } from '../../services/event.service';
 import { Subject } from 'rxjs';
 import { EventCacheService } from '../../services/event-cache.service';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { NgLetDirective } from '../../../shared/directives/ng-let.directive';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { EventParticipantModalComponent } from '../../components/event-participant-modal/event-participant-modal.component';
 import { AsyncPipe, DatePipe } from '@angular/common';
@@ -12,7 +11,7 @@ import { AsyncPipe, DatePipe } from '@angular/common';
   selector: 'app-event-page',
   templateUrl: './event-page.component.html',
   styleUrls: ['./event-page.component.scss'],
-  imports: [NzDividerComponent, NgLetDirective, NzButtonComponent, EventParticipantModalComponent, AsyncPipe, DatePipe],
+  imports: [NzDividerComponent, NzButtonComponent, EventParticipantModalComponent, AsyncPipe, DatePipe],
 })
 export class EventPageComponent implements OnInit {
   openSignupModal: Subject<void> = new Subject<void>();

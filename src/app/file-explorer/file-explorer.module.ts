@@ -6,7 +6,7 @@ import { FileExplorerLayoutComponent } from './file-explorer-layout/file-explore
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { FileExplorerPageComponent } from './pages/file-explorer-page/file-explorer-page.component';
 import { DirectoriesFilesListComponent } from './components/directories-files-list/directories-files-list.component';
-import { SharedModule } from '../shared/shared.module';
+
 import { NzListModule } from 'ng-zorro-antd/list';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CreateEditDirectoryItemModalComponent } from './components/create-edit-directory-item-modal/create-edit-directory-item-modal.component';
@@ -22,7 +22,6 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     CommonModule,
     FileExplorerRoutingModule,
     NzLayoutModule,
-    SharedModule,
     NzListModule,
     FontAwesomeModule,
     NzModalModule,

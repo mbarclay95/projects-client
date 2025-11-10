@@ -13,10 +13,12 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { AuthInterceptor } from './auth/services/auth.interceptor';
-import { SharedModule } from './shared/shared.module';
+
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { MobileFooterComponent } from './shared/components/mobile-footer/mobile-footer.component';
+import { SideMenuComponent } from './shared/components/side-menu/side-menu.component';
 
 registerLocaleData(en);
 
@@ -31,9 +33,10 @@ registerLocaleData(en);
     NzLayoutModule,
     NzMenuModule,
     NzIconModule,
-    SharedModule,
     NzButtonModule,
     NzSpinModule,
+    MobileFooterComponent,
+    SideMenuComponent,
   ],
   providers: [
     provideAnimations(),

@@ -2,8 +2,8 @@
   <div class="d-flex w-100 justify-content-center align-items-center" style="height: 50vh">
     <nz-spin></nz-spin>
   </div>
-} @else {
-  <div class="page-container mt-2" *ngLet="gamingSessionsFacadeService.activeGamingSession$ | async as activeSession">
+} @else if (gamingSessionsFacadeService.activeGamingSession$ | async; as activeSession) {
+  <div class="page-container mt-2">
     @if (activeSession === undefined) {
       <div class="d-flex align-items-center justify-content-center w-100" style="height: 50vh">
         <nz-result nzStatus="404" nzTitle="Session not found" nzSubTitle="Sorry, this session does not exist">
@@ -13,7 +13,7 @@
         </nz-result>
       </div>
     } @else {
-      @if (activeSession.ended_at) {
+      @if (activeSession.endedAt) {
         <div>Session Ended</div>
 
         <button nz-button nzType="primary" routerLink="/games">Back to Active Sessions</button>

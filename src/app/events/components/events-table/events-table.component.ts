@@ -24,7 +24,6 @@ import { Event } from '../../models/event.model';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { EventParticipant } from '../../models/event-participant';
-import { NgLetDirective } from '../../../shared/directives/ng-let.directive';
 import { NzProgressComponent } from 'ng-zorro-antd/progress';
 import { NzCollapseComponent } from 'ng-zorro-antd/collapse';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -45,7 +44,6 @@ import { ParticipantsGoingPipe } from '../../pipes/participants-going.pipe';
     NzThMeasureDirective,
     NzTbodyComponent,
     NzTdAddOnComponent,
-    NgLetDirective,
     NzProgressComponent,
     NzTrExpandDirective,
     NzTableFixedRowComponent,

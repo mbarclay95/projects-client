@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { GamingSessionsFacadeService } from '../../services/gaming-sessions-facade.service';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
 import { AsyncPipe } from '@angular/common';
-import { SharedModule } from '../../../shared/shared.module';
 import { ConnectToDeviceComponent } from '../../components/connect-to-device/connect-to-device.component';
 import { Subject } from 'rxjs';
 import { GamingSessionDevice } from '../../models/gaming-session-device.model';
@@ -17,7 +16,6 @@ import { RouterLink } from '@angular/router';
   imports: [
     NzSpinComponent,
     AsyncPipe,
-    SharedModule,
     ConnectToDeviceComponent,
     CreateEditSessionDeviceModalComponent,
     JoinedSessionComponent,

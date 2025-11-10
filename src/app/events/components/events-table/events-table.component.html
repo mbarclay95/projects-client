@@ -18,7 +18,8 @@
           {{ event.name }}
         </td>
         <td>{{ event.eventDate | date: "short" }}</td>
-        <td *ngLet="event | participantsGoing as participantsGoing">
+        <td>
+          @let participantsGoing = event | participantsGoing;
           @switch (event.limitParticipants) {
             @case (true) {
               <div class="d-flex spot-progress">

@@ -18,12 +18,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 @NgModule({
-  declarations: [
-    FileExplorerLayoutComponent,
-    FileExplorerPageComponent,
-    DirectoriesFilesListComponent,
-    CreateEditDirectoryItemModalComponent,
-  ],
   imports: [
     CommonModule,
     FileExplorerRoutingModule,
@@ -37,6 +31,10 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     NzPopconfirmModule,
     NzButtonModule,
     NzRadioModule,
+    FileExplorerLayoutComponent,
+    FileExplorerPageComponent,
+    DirectoriesFilesListComponent,
+    CreateEditDirectoryItemModalComponent,
   ],
 })
 export class FileExplorerModule {}

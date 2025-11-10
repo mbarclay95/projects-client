@@ -4,12 +4,25 @@ import { DirectoryItem } from '../../models/directory-item.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/working-directory-item';
 import { DirectoryItemsSignalStore } from '../../services/directory-items-signal-store';
+import { NzListComponent, NzListHeaderComponent, NzListItemComponent } from 'ng-zorro-antd/list';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgClass } from '@angular/common';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-directories-files-list',
   templateUrl: './directories-files-list.component.html',
   styleUrls: ['./directories-files-list.component.scss'],
-  standalone: false,
+  imports: [
+    NzListComponent,
+    NzListHeaderComponent,
+    FaIconComponent,
+    NgClass,
+    NzListItemComponent,
+    NzPopconfirmDirective,
+    NzButtonComponent,
+  ],
 })
 export class DirectoriesFilesListComponent {
   @Input() workingDirectory: WorkingDirectoryItem[] = [];

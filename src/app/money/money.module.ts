@@ -24,14 +24,6 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @NgModule({
-  declarations: [
-    MoneyLayoutComponent,
-    IncompleteEntriesComponent,
-    IncorrectConfigComponent,
-    EntryRowsComponent,
-    EntryRowItemComponent,
-    CreateEditEntryModalComponent,
-  ],
   imports: [
     CommonModule,
     MoneyRoutingModule,
@@ -49,6 +41,12 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
     NzPopconfirmModule,
     NzDatePickerModule,
     NzSpinComponent,
+    MoneyLayoutComponent,
+    IncompleteEntriesComponent,
+    IncorrectConfigComponent,
+    EntryRowsComponent,
+    EntryRowItemComponent,
+    CreateEditEntryModalComponent,
   ],
 })
 export class MoneyModule {}

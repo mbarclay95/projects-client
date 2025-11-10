@@ -5,12 +5,31 @@ import { faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
 import { User } from '../../../users/models/user.model';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzRadioGroupComponent, NzRadioComponent } from 'ng-zorro-antd/radio';
+import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
+import { UsersToIdsPipe } from '../../pipes/users-to-ids.pipe';
+import { UpdatingTaskPointColorsPipe } from '../../pipes/updating-task-point-colors.pipe';
 
 @Component({
   selector: 'app-create-edit-family-modal',
   templateUrl: './create-edit-family-modal.component.html',
   styleUrls: ['./create-edit-family-modal.component.scss'],
-  standalone: false,
+  imports: [
+    NzModalComponent,
+    NzModalContentDirective,
+    NzInputDirective,
+    ReactiveFormsModule,
+    FormsModule,
+    NzRadioGroupComponent,
+    NzRadioComponent,
+    NzSelectComponent,
+    NzOptionComponent,
+    UsersToIdsPipe,
+    UpdatingTaskPointColorsPipe,
+  ],
 })
 export class CreateEditFamilyModalComponent extends DefaultModalSignalComponent<Family> {
   @Input() showFamilyMembers = false;

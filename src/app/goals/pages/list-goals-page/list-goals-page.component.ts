@@ -1,12 +1,25 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { isMobile } from '../../../app.component';
 import { GoalsSignalStore } from '../../services/goals-signal-store';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
+import { WeekSelectorComponent } from '../../components/week-selector/week-selector.component';
+import { GoalsTableMobileComponent } from '../../components/goals-table-mobile/goals-table-mobile.component';
+import { GoalsTableComponent } from '../../components/goals-table/goals-table.component';
+import { CreateEditGoalModalComponent } from '../../components/create-edit-goal-modal/create-edit-goal-modal.component';
 
 @Component({
   selector: 'app-list-goals-page',
   templateUrl: './list-goals-page.component.html',
   styleUrls: ['./list-goals-page.component.scss'],
-  standalone: false,
+  imports: [
+    PageHeaderComponent,
+    NzSpinComponent,
+    WeekSelectorComponent,
+    GoalsTableMobileComponent,
+    GoalsTableComponent,
+    CreateEditGoalModalComponent,
+  ],
 })
 export class ListGoalsPageComponent implements OnInit {
   isMobile = isMobile;

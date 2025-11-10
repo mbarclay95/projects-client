@@ -2,10 +2,7 @@ import { inject, Pipe, PipeTransform } from '@angular/core';
 import { TaskUserConfig } from '../models/task-user-config.model';
 import { FamiliesSignalStore } from '../services/families-signal-store';
 
-@Pipe({
-  name: 'totalCompletedTasks',
-  standalone: false,
-})
+@Pipe({ name: 'totalCompletedTasks' })
 export class TotalCompletedTasksPipe implements PipeTransform {
   private readonly familiesStore = inject(FamiliesSignalStore);
 

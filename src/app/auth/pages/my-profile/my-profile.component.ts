@@ -8,12 +8,35 @@ import { UserConfig } from '../../../users/models/user-config.model';
 import { Role } from '../../../users/models/role.model';
 import { AuthSignalStore } from '../../services/auth-signal-store';
 import { RolesSignalStore } from '../../../users/services/roles-signal-store';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzSwitchComponent } from 'ng-zorro-antd/switch';
+import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { ChangePasswordModalComponent } from '../../components/change-password-modal/change-password-modal.component';
+import { DisplayRoleNamePipe } from '../../../shared/pipes/display-role-name.pipe';
+import { HasRolePipe } from '../../../shared/pipes/has-role.pipe';
 
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.scss'],
-  standalone: false,
+  imports: [
+    NzDividerComponent,
+    NzInputDirective,
+    ReactiveFormsModule,
+    FormsModule,
+    NzButtonComponent,
+    NzSwitchComponent,
+    NzSelectComponent,
+    NzOptionComponent,
+    NzPopconfirmDirective,
+    ChangePasswordModalComponent,
+    DisplayRoleNamePipe,
+    HasRolePipe,
+  ],
 })
 export class MyProfileComponent {
   loggingOut = false;

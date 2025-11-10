@@ -1,14 +1,16 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MobileDisplayService } from '../../services/mobile-display.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-mobile-footer',
   templateUrl: './mobile-footer.component.html',
   styleUrls: ['./mobile-footer.component.scss'],
-  standalone: false,
+  imports: [RouterLink, FaIconComponent, AsyncPipe],
 })
 export class MobileFooterComponent implements OnInit {
   currentRoute$?: Observable<string>;

@@ -20,7 +20,6 @@ import { SharedModule } from '../shared/shared.module';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @NgModule({
-  declarations: [UsersPageComponent, UsersLayoutComponent, UserTableComponent, CreateEditUserModalComponent, RolesToIdsPipe],
   imports: [
     CommonModule,
     UsersRoutingModule,
@@ -36,6 +35,11 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
     NzSwitchModule,
     SharedModule,
     NzSpinComponent,
+    UsersPageComponent,
+    UsersLayoutComponent,
+    UserTableComponent,
+    CreateEditUserModalComponent,
+    RolesToIdsPipe,
   ],
 })
 export class UsersModule {}

@@ -8,7 +8,7 @@ describe('BackupsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BackupsTableComponent],
+      imports: [BackupsTableComponent],
     }).compileComponents();
   });
 

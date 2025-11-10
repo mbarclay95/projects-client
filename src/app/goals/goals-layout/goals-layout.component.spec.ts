@@ -8,7 +8,7 @@ describe('GoalsLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GoalsLayoutComponent],
+      imports: [GoalsLayoutComponent],
     }).compileComponents();
   });
 

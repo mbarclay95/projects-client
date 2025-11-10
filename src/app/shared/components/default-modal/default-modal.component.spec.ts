@@ -8,7 +8,7 @@ describe('DefaultModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DefaultModalComponent],
+      imports: [DefaultModalComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DefaultModalComponent);

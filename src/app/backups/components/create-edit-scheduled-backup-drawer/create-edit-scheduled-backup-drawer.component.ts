@@ -6,12 +6,35 @@ import { daysOfMonth, daysOfWeek, Schedule } from '../../models/schedule.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { TargetSignalStore } from '../../services/target-signal-store';
 import { SchedulesSignalStore } from '../../services/schedules-signal-store';
+import { NzDrawerComponent, NzDrawerContentDirective } from 'ng-zorro-antd/drawer';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzRadioGroupComponent, NzRadioComponent } from 'ng-zorro-antd/radio';
+import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { CreateEditTargetModalComponent } from '../create-edit-target-modal/create-edit-target-modal.component';
 
 @Component({
   selector: 'app-create-edit-scheduled-backup-drawer',
   templateUrl: './create-edit-scheduled-backup-drawer.component.html',
   styleUrls: ['./create-edit-scheduled-backup-drawer.component.scss'],
-  standalone: false,
+  imports: [
+    NzDrawerComponent,
+    NzDrawerContentDirective,
+    NzInputDirective,
+    ReactiveFormsModule,
+    FormsModule,
+    NzRadioGroupComponent,
+    NzRadioComponent,
+    NzSelectComponent,
+    NzOptionComponent,
+    NzInputNumberComponent,
+    NzButtonComponent,
+    FaIconComponent,
+    CreateEditTargetModalComponent,
+  ],
 })
 export class CreateEditScheduledBackupDrawerComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<Schedule>;

@@ -8,7 +8,7 @@ describe('FolderGridComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FolderGridComponent],
+      imports: [FolderGridComponent],
     }).compileComponents();
   });
 

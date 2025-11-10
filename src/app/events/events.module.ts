@@ -34,16 +34,6 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 
 @NgModule({
-  declarations: [
-    EventsLayoutComponent,
-    EventsPageComponent,
-    EventsTableComponent,
-    EventsFiltersComponent,
-    CreateEditEventComponent,
-    MobileEventsTableComponent,
-    EditParticipantModalComponent,
-    ParticipantsGoingPipe,
-  ],
   imports: [
     CommonModule,
     EventsRoutingModule,
@@ -69,6 +59,14 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
     NzEmptyModule,
     NzSpinComponent,
     NzInputNumberComponent,
+    EventsLayoutComponent,
+    EventsPageComponent,
+    EventsTableComponent,
+    EventsFiltersComponent,
+    CreateEditEventComponent,
+    MobileEventsTableComponent,
+    EditParticipantModalComponent,
+    ParticipantsGoingPipe,
   ],
 })
 export class EventsModule {}

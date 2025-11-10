@@ -2,10 +2,7 @@ import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/cor
 import { filter, fromEvent, merge, of, Subscription, switchMap } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 
-@Directive({
-  selector: '[longPress]',
-  standalone: false,
-})
+@Directive({ selector: '[longPress]' })
 export class LongPressDirective {
   private readonly eventSubscribe: Subscription;
   @Input() threshold = 500;

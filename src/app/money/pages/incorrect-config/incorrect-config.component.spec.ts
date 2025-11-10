@@ -8,7 +8,7 @@ describe('IncorrectConfigComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [IncorrectConfigComponent],
+      imports: [IncorrectConfigComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IncorrectConfigComponent);

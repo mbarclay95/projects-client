@@ -5,12 +5,26 @@ import { DirectoryItem } from '../../models/directory-item.model';
 import { isMobile } from '../../../app.component';
 import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/working-directory-item';
 import { DirectoryItemsSignalStore } from '../../services/directory-items-signal-store';
+import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzRadioGroupComponent, NzRadioComponent } from 'ng-zorro-antd/radio';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-create-edit-directory-item-modal',
   templateUrl: './create-edit-directory-item-modal.component.html',
   styleUrls: ['./create-edit-directory-item-modal.component.scss'],
-  standalone: false,
+  imports: [
+    NzModalComponent,
+    NzModalContentDirective,
+    NzInputDirective,
+    ReactiveFormsModule,
+    FormsModule,
+    NzRadioGroupComponent,
+    NzRadioComponent,
+    NzButtonComponent,
+  ],
 })
 export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Input() openModal!: Observable<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }>;

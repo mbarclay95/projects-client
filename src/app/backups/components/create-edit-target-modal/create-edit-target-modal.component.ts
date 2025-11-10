@@ -3,12 +3,15 @@ import { Target } from '../../models/target.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { TargetSignalStore } from '../../services/target-signal-store';
+import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-create-edit-target-modal',
   templateUrl: './create-edit-target-modal.component.html',
   styleUrls: ['./create-edit-target-modal.component.scss'],
-  standalone: false,
+  imports: [NzModalComponent, NzModalContentDirective, NzInputDirective, ReactiveFormsModule, FormsModule],
 })
 export class CreateEditTargetModalComponent extends DefaultModalSignalComponent<Target> {
   @Input() backupStepId?: number;

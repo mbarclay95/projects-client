@@ -1,9 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'weeklyProgressMessage',
-  standalone: false,
-})
+@Pipe({ name: 'weeklyProgressMessage' })
 export class WeeklyProgressMessagePipe implements PipeTransform {
   transform(percent: number): string {
     if (percent === 0) {

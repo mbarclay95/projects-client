@@ -19,7 +19,6 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
-  declarations: [AuthLayoutComponent, LoginPageComponent, MyProfileComponent, ChangePasswordModalComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
@@ -35,6 +34,10 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     SharedModule,
     NzPopconfirmModule,
     NzSelectModule,
+    AuthLayoutComponent,
+    LoginPageComponent,
+    MyProfileComponent,
+    ChangePasswordModalComponent,
   ],
 })
 export class AuthModule {}

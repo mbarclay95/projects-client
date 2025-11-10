@@ -8,12 +8,36 @@ import { TaskUserConfig } from '../../models/task-user-config.model';
 import { FamiliesSignalStore } from '../../services/families-signal-store';
 import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NzPopoverDirective } from 'ng-zorro-antd/popover';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzProgressComponent } from 'ng-zorro-antd/progress';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { FirstNamePipe } from '../../../shared/pipes/first-name.pipe';
+import { WeeklyProgressPercentPipe } from '../../pipes/weekly-progress-percent.pipe';
+import { TotalCompletedTasksPipe } from '../../pipes/total-completed-tasks.pipe';
 
 @Component({
   selector: 'app-my-family-members',
   templateUrl: './my-family-members.component.html',
   styleUrls: ['./my-family-members.component.scss'],
-  standalone: false,
+  imports: [
+    NzSpinComponent,
+    FaIconComponent,
+    NzPopoverDirective,
+    NzInputNumberComponent,
+    ReactiveFormsModule,
+    FormsModule,
+    NzProgressComponent,
+    NzPopconfirmDirective,
+    NzDividerComponent,
+    FirstNamePipe,
+    WeeklyProgressPercentPipe,
+    TotalCompletedTasksPipe,
+  ],
 })
 export class MyFamilyMembersComponent {
   @Input() familyTaskStrategy!: TaskStrategy;

@@ -8,7 +8,7 @@ describe('WeeklyProgressComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [WeeklyProgressComponent],
+      imports: [WeeklyProgressComponent],
     }).compileComponents();
   });
 

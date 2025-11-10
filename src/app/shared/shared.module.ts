@@ -15,17 +15,6 @@ import { DisplayRoleNamePipe } from './pipes/display-role-name.pipe';
 import { HasRolePipe } from './pipes/has-role.pipe';
 
 @NgModule({
-  declarations: [
-    NgLetDirective,
-    LongPressDirective,
-    FirstNamePipe,
-    MobileFooterComponent,
-    SideMenuComponent,
-    PageHeaderComponent,
-    DefaultModalComponent,
-    DisplayRoleNamePipe,
-    HasRolePipe,
-  ],
   exports: [
     NgLetDirective,
     LongPressDirective,
@@ -36,6 +25,21 @@ import { HasRolePipe } from './pipes/has-role.pipe';
     DisplayRoleNamePipe,
     HasRolePipe,
   ],
-  imports: [CommonModule, NzMenuModule, FontAwesomeModule, RouterModule, NzButtonModule],
+  imports: [
+    CommonModule,
+    NzMenuModule,
+    FontAwesomeModule,
+    RouterModule,
+    NzButtonModule,
+    NgLetDirective,
+    LongPressDirective,
+    FirstNamePipe,
+    MobileFooterComponent,
+    SideMenuComponent,
+    PageHeaderComponent,
+    DefaultModalComponent,
+    DisplayRoleNamePipe,
+    HasRolePipe,
+  ],
 })
 export class SharedModule {}

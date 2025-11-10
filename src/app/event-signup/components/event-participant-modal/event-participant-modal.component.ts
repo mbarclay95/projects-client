@@ -6,12 +6,26 @@ import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { EventCacheService } from '../../services/event-cache.service';
 import { EventParticipant } from '../../models/event-participant';
 import { isMobile } from '../../../app.component';
+import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzRadioGroupComponent, NzRadioComponent } from 'ng-zorro-antd/radio';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-event-participant-modal',
   templateUrl: './event-participant-modal.component.html',
   styleUrls: ['./event-participant-modal.component.scss'],
-  standalone: false,
+  imports: [
+    NzModalComponent,
+    NzModalContentDirective,
+    NzInputDirective,
+    ReactiveFormsModule,
+    FormsModule,
+    NzRadioGroupComponent,
+    NzRadioComponent,
+    FaIconComponent,
+  ],
 })
 export class EventParticipantModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<void>;

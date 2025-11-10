@@ -7,7 +7,6 @@ import { LoggingPageComponent } from './pages/logging-page/logging-page.componen
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 
 @NgModule({
-  declarations: [LoggingLayoutComponent, LoggingPageComponent],
-  imports: [CommonModule, LoggingRoutingModule, NzLayoutModule],
+  imports: [CommonModule, LoggingRoutingModule, NzLayoutModule, LoggingLayoutComponent, LoggingPageComponent],
 })
 export class LoggingModule {}

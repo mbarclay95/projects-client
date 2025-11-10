@@ -8,7 +8,7 @@ describe('CreateEditFolderModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateEditFolderModalComponent],
+      imports: [CreateEditFolderModalComponent],
     }).compileComponents();
   });
 

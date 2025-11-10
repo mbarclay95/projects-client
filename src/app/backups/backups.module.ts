@@ -36,22 +36,6 @@ import { SortGenericPipe } from '../shared/pipes/sort-generic.pipe';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 
 @NgModule({
-  declarations: [
-    BackupsLayoutComponent,
-    BackupsPageComponent,
-    ScheduledBackupsPageComponent,
-    BackupTabsComponent,
-    CreateEditBackupsDrawerComponent,
-    CreateEditTargetModalComponent,
-    BackupsTableComponent,
-    BackupStatusPipe,
-    BackupRunTimePipe,
-    StatusIconComponent,
-    TargetsPageComponent,
-    TargetsTableComponent,
-    ScheduledBackupsTableComponent,
-    CreateEditScheduledBackupDrawerComponent,
-  ],
   imports: [
     CommonModule,
     BackupsRoutingModule,
@@ -73,6 +57,20 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
     NzPopconfirmDirective,
     SortGenericPipe,
     NzInputNumberComponent,
+    BackupsLayoutComponent,
+    BackupsPageComponent,
+    ScheduledBackupsPageComponent,
+    BackupTabsComponent,
+    CreateEditBackupsDrawerComponent,
+    CreateEditTargetModalComponent,
+    BackupsTableComponent,
+    BackupStatusPipe,
+    BackupRunTimePipe,
+    StatusIconComponent,
+    TargetsPageComponent,
+    TargetsTableComponent,
+    ScheduledBackupsTableComponent,
+    CreateEditScheduledBackupDrawerComponent,
   ],
 })
 export class BackupsModule {}

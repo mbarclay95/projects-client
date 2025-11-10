@@ -8,7 +8,7 @@ describe('TaskTableMobileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TaskTableMobileComponent],
+      imports: [TaskTableMobileComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TaskTableMobileComponent);

@@ -8,7 +8,7 @@ describe('EntryRowsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EntryRowsComponent],
+      imports: [EntryRowsComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EntryRowsComponent);

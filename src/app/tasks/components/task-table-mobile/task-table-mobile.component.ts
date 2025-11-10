@@ -2,12 +2,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Task } from '../../models/task.model';
 import { faEdit, faFlag, faPeopleRoof, faRepeat, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { TasksUiState } from '../../services/tasks-signal-store';
+import { NgClass, DatePipe } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NzEmptyComponent } from 'ng-zorro-antd/empty';
 
 @Component({
   selector: 'app-task-table-mobile',
   templateUrl: './task-table-mobile.component.html',
   styleUrls: ['./task-table-mobile.component.scss'],
-  standalone: false,
+  imports: [NgClass, FaIconComponent, NzEmptyComponent, DatePipe],
 })
 export class TaskTableMobileComponent {
   @Input() set tasks(tasks: Task[]) {

@@ -8,7 +8,7 @@ describe('BackupsLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BackupsLayoutComponent],
+      imports: [BackupsLayoutComponent],
     }).compileComponents();
   });
 

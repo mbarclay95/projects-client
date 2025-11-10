@@ -7,12 +7,16 @@ import { map } from 'rxjs/operators';
 import { MobileDisplayService } from '../../../shared/services/mobile-display.service';
 import { UsersSignalStore } from '../../services/users-signal-store';
 import { RolesSignalStore } from '../../services/roles-signal-store';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
+import { UserTableComponent } from '../../components/user-table/user-table.component';
+import { CreateEditUserModalComponent } from '../../components/create-edit-user-modal/create-edit-user-modal.component';
 
 @Component({
   selector: 'app-users-page',
   templateUrl: './users-page.component.html',
   styleUrls: ['./users-page.component.scss'],
-  standalone: false,
+  imports: [PageHeaderComponent, NzSpinComponent, UserTableComponent, CreateEditUserModalComponent],
 })
 export class UsersPageComponent implements OnInit {
   openUserModal: Subject<User> = new Subject<User>();

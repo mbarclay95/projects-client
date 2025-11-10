@@ -3,12 +3,16 @@ import { Goal } from '../../models/goal.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import { GoalDay } from '../../models/goal-day.model';
+import { NzPopoverDirective } from 'ng-zorro-antd/popover';
+import { NzSpaceComponent } from 'ng-zorro-antd/space';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { PluralizeGoalPipe } from '../../pipes/pluralize-goal.pipe';
 
 @Component({
   selector: 'app-goal-day-button',
   templateUrl: './goal-day-button.component.html',
   styleUrls: ['./goal-day-button.component.scss'],
-  standalone: false,
+  imports: [NzPopoverDirective, NzSpaceComponent, FaIconComponent, PluralizeGoalPipe],
 })
 export class GoalDayButtonComponent implements OnInit {
   @Input() goal!: Goal;

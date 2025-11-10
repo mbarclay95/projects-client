@@ -8,7 +8,7 @@ describe('TasksFiltersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TasksFiltersComponent],
+      imports: [TasksFiltersComponent],
     }).compileComponents();
   });
 

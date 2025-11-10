@@ -18,7 +18,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [NotFoundPageComponent, EventPageComponent, EventSignupLayoutComponent, EventParticipantModalComponent],
   imports: [
     CommonModule,
     EventSignupRoutingModule,
@@ -32,6 +31,10 @@ import { SharedModule } from '../shared/shared.module';
     NzRadioModule,
     FontAwesomeModule,
     SharedModule,
+    NotFoundPageComponent,
+    EventPageComponent,
+    EventSignupLayoutComponent,
+    EventParticipantModalComponent,
   ],
 })
 export class EventSignupModule {}

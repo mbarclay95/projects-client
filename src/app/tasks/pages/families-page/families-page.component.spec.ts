@@ -8,7 +8,7 @@ describe('FamiliesPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FamiliesPageComponent],
+      imports: [FamiliesPageComponent],
     }).compileComponents();
   });
 

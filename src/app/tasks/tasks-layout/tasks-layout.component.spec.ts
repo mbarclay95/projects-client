@@ -8,7 +8,7 @@ describe('TasksLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TasksLayoutComponent],
+      imports: [TasksLayoutComponent],
     }).compileComponents();
   });
 

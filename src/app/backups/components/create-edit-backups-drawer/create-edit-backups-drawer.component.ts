@@ -6,12 +6,32 @@ import { Target } from '../../models/target.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { BackupsSignalStore } from '../../services/backups-signal-store';
 import { TargetSignalStore } from '../../services/target-signal-store';
+import { NzDrawerComponent, NzDrawerContentDirective } from 'ng-zorro-antd/drawer';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { SortGenericPipe } from '../../../shared/pipes/sort-generic.pipe';
 
 @Component({
   selector: 'app-create-edit-backups-drawer',
   templateUrl: './create-edit-backups-drawer.component.html',
   styleUrls: ['./create-edit-backups-drawer.component.scss'],
-  standalone: false,
+  imports: [
+    NzDrawerComponent,
+    NzDrawerContentDirective,
+    NzInputDirective,
+    ReactiveFormsModule,
+    FormsModule,
+    FaIconComponent,
+    NzSelectComponent,
+    NzOptionComponent,
+    NzDividerComponent,
+    NzButtonComponent,
+    SortGenericPipe,
+  ],
 })
 export class CreateEditBackupsDrawerComponent {
   readonly openDrawer = input.required<Backup | undefined>();

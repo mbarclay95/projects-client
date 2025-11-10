@@ -8,7 +8,7 @@ describe('FamiliesTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FamiliesTableComponent],
+      imports: [FamiliesTableComponent],
     }).compileComponents();
   });
 

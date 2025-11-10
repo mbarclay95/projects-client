@@ -1,10 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Role } from '../../users/models/role.model';
 
-@Pipe({
-  name: 'displayRoleName',
-  standalone: false,
-})
+@Pipe({ name: 'displayRoleName' })
 export class DisplayRoleNamePipe implements PipeTransform {
   transform(role: Role): string {
     const roleParts = role.name.split('_');

@@ -3,12 +3,17 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { UptimeKumaService } from '../../services/uptime-kuma.service';
 import { FolderSignalStore } from '../../services/folder-signal-store';
 import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
+import { FolderGridComponent } from '../../components/folder-grid/folder-grid.component';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-page',
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.scss'],
-  standalone: false,
+  imports: [NzSpinComponent, FolderGridComponent, NzButtonComponent, FaIconComponent, AsyncPipe],
 })
 export class DashboardPageComponent {
   edit = faEdit;

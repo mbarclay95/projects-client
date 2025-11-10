@@ -2,12 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BackupStatus } from '../../models/backup.model';
 import { faCheckCircle, faCircleXmark, faExclamationCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { SizeProp } from '@fortawesome/fontawesome-svg-core';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-status-icon',
   templateUrl: './status-icon.component.html',
   styleUrls: ['./status-icon.component.scss'],
-  standalone: false,
+  imports: [FaIconComponent],
 })
 export class StatusIconComponent implements OnInit {
   @Input() status!: BackupStatus;

@@ -27,18 +27,6 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 
 @NgModule({
-  declarations: [
-    ListGoalsPageComponent,
-    GoalsLayoutComponent,
-    GoalsTableComponent,
-    CreateEditGoalModalComponent,
-    GoalStatsPageComponent,
-    GoalsTableMobileComponent,
-    GoalDayButtonComponent,
-    PluralizeGoalPipe,
-    GoalDaysPipe,
-    WeekSelectorComponent,
-  ],
   exports: [WeekSelectorComponent],
   imports: [
     CommonModule,
@@ -57,6 +45,16 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
     NzSpaceModule,
     NzSpinModule,
     NzInputNumberComponent,
+    ListGoalsPageComponent,
+    GoalsLayoutComponent,
+    GoalsTableComponent,
+    CreateEditGoalModalComponent,
+    GoalStatsPageComponent,
+    GoalsTableMobileComponent,
+    GoalDayButtonComponent,
+    PluralizeGoalPipe,
+    GoalDaysPipe,
+    WeekSelectorComponent,
   ],
 })
 export class GoalsModule {}

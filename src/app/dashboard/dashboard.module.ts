@@ -24,15 +24,6 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @NgModule({
-  declarations: [
-    DashboardLayoutComponent,
-    DashboardPageComponent,
-    CreateEditFolderModalComponent,
-    CreateEditSiteModalComponent,
-    FolderComponent,
-    FolderGridComponent,
-    SiteComponent,
-  ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -51,6 +42,13 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
     NzSwitchModule,
     NgOptimizedImage,
     NzSpinComponent,
+    DashboardLayoutComponent,
+    DashboardPageComponent,
+    CreateEditFolderModalComponent,
+    CreateEditSiteModalComponent,
+    FolderComponent,
+    FolderGridComponent,
+    SiteComponent,
   ],
 })
 export class DashboardModule {}

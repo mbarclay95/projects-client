@@ -5,10 +5,7 @@ interface NgLetContext {
   ngLet: any;
 }
 
-@Directive({
-  selector: '[ngLet]',
-  standalone: false,
-})
+@Directive({ selector: '[ngLet]' })
 export class NgLetDirective {
   @Input()
   set ngLet(value: any) {

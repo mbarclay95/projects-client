@@ -1,12 +1,13 @@
-import { computed, inject, untracked } from '@angular/core';
+import { inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { patchState, signalStoreFeature, withComputed, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStoreFeature, withMethods, withState } from '@ngrx/signals';
 import { addEntity, removeEntity, setAllEntities, updateEntity, upsertEntity, withEntities } from '@ngrx/signals/entities';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { map } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { withCreateEditEntityState } from './with-create-edit-entity-feature';
 
 export interface HasId {
   id: number | string;
@@ -18,42 +19,33 @@ export interface CrudEntitiesHttpOptions<T extends HasId> {
   apiUrl?: string;
 }
 
-interface CrudEntitiesState<T extends HasId> {
+type CrudEntitiesState = {
   loadingAll: boolean;
   loadingOne: number | string | undefined;
-  createEditEntityId: number | string | undefined; // use 0 to create
-  initialCreateEntityState: Partial<T> | undefined;
   queryString: string | undefined;
-}
+  totalCount: number;
+};
 
-const initialState: CrudEntitiesState<never> = {
+const initialFeatureState: CrudEntitiesState = {
   loadingAll: false,
   loadingOne: undefined,
-  createEditEntityId: undefined,
-  initialCreateEntityState: undefined,
   queryString: undefined,
+  totalCount: 0,
+};
+
+export type PagedEntity<T> = {
+  total: number;
+  data: T[];
 };
 
 export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptions<T>) {
   const apiUrl = options.apiUrl ?? environment.apiUrl;
   return signalStoreFeature(
-    withState<CrudEntitiesState<T>>(initialState),
+    withState<CrudEntitiesState>(initialFeatureState),
     withEntities<T>(),
-    withComputed((store) => {
-      return {
-        createEditEntity: computed(() => {
-          const entityId = store.createEditEntityId();
-          if (entityId === undefined) {
-            return undefined;
-          }
-          if (entityId === 0) {
-            const initialState = { ...untracked(store.initialCreateEntityState), ...{ id: 0 } } as Partial<T>;
-            return options.createEntity(initialState);
-          }
-
-          return options.createEntity(store.entities().find((entity) => entity.id === entityId)!);
-        }),
-      };
+    withCreateEditEntityState<T>({
+      entityPropName: 'entities',
+      createEntity: options.createEntity,
     }),
     withMethods((store) => {
       const httpClient = inject(HttpClient);
@@ -61,10 +53,6 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
 
       const setLoadingAll = (loadingAll: boolean) => patchState(store, { loadingAll });
       const setLoadingOne = (loadingOne?: number | string) => patchState(store, { loadingOne });
-      const editEntity = (entityId: number) => patchState(store, { createEditEntityId: entityId });
-      const createEntity = (initialState?: Partial<T>) =>
-        patchState(store, { createEditEntityId: 0, initialCreateEntityState: initialState });
-      const clearCreateEditEntity = () => patchState(store, { createEditEntityId: undefined });
       const setQueryString = (queryString: string) => patchState(store, { queryString });
 
       const loadAll = rxMethod<{ addQueryString?: boolean }>(
@@ -80,6 +68,37 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
               tap((entities) => {
                 patchState(store, setAllEntities(entities));
                 setLoadingAll(false);
+              }),
+              catchError((error) => {
+                console.log(error);
+
+                return of(undefined);
+              }),
+            );
+          }),
+        ),
+      );
+
+      const loadAllPaged = rxMethod<{ addQueryString?: boolean; onSuccess?: (entities: T[]) => void }>(
+        pipe(
+          switchMap((data) => {
+            setLoadingAll(true);
+            let queryString = '';
+            if (data.addQueryString ?? true) {
+              queryString = store.queryString() ?? '';
+            }
+            return httpClient.get<PagedEntity<T>>(`${apiUrl}/${options.pluralEntityName}?${queryString}`).pipe(
+              map((pagedData) => ({
+                total: pagedData.total,
+                data: pagedData.data.map((entity) => options.createEntity(entity)),
+              })),
+              tap((pagedData) => {
+                patchState(store, setAllEntities(pagedData.data));
+                patchState(store, { totalCount: pagedData.total });
+                setLoadingAll(false);
+                if (data.onSuccess) {
+                  data.onSuccess(pagedData.data);
+                }
               }),
               catchError((error) => {
                 console.log(error);
@@ -198,15 +217,13 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
 
       return {
         loadAll,
+        loadAllPaged,
         loadOne,
         upsert,
         create,
         update,
         remove,
         setQueryString,
-        editEntity,
-        createEntity,
-        clearCreateEditEntity,
       };
     }),
   );

@@ -33,6 +33,7 @@ module.exports = tseslint.config(
           caughtErrorsIgnorePattern: "^_",
         },
       ],
+      "@typescript-eslint/consistent-type-definitions": "off",
     },
   },
   {

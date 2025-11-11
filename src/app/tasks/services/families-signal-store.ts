@@ -3,9 +3,9 @@ import { withCrudEntities } from '../../shared/signal-stores/with-crud-feature';
 import { createFamily, Family } from '../models/family.model';
 import { computed } from '@angular/core';
 
-type FamiliesUiState = {
+interface FamiliesUiState {
   activeFamilyId: number | undefined;
-};
+}
 
 const initialState: FamiliesUiState = {
   activeFamilyId: undefined,

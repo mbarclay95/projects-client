@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { EventCache } from '../models/event-cache.model';
 import { EventParticipant } from '../models/event-participant';
 import { BehaviorSubject, combineLatest, filter, Observable } from 'rxjs';
@@ -9,6 +9,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class EventCacheService {
+  private eventService = inject(EventService);
+
   private readonly cacheKey = 'event_cache';
   private eventCache: BehaviorSubject<EventCache[]> = new BehaviorSubject<EventCache[]>([]);
 
@@ -16,8 +18,6 @@ export class EventCacheService {
     this.eventService.event$.pipe(filter((event) => !!event)),
     this.eventCache.asObservable().pipe(filter((eventCache) => eventCache.length > 0)),
   ]).pipe(map(([event, eventCache]) => !!eventCache.find((ec) => ec.eventId === event?.id)));
-
-  constructor(private eventService: EventService) {}
 
   loadEventCache(): void {
     this.eventCache.next(JSON.parse(localStorage.getItem(this.cacheKey) ?? '[]'));

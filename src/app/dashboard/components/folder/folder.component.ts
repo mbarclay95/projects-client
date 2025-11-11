@@ -3,12 +3,18 @@ import { Folder } from '../../models/folder.model';
 import { Site } from '../../models/site.model';
 import { faChevronLeft, faChevronRight, faEdit, faEllipsisV, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FolderSignalStore } from '../../services/folder-signal-store';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { CdkDropList } from '@angular/cdk/drag-drop';
+import { SiteComponent } from '../site/site.component';
 
 @Component({
   selector: 'app-folder',
   templateUrl: './folder.component.html',
   styleUrls: ['./folder.component.scss'],
-  standalone: false,
+  imports: [NzButtonComponent, FaIconComponent, NzTooltipDirective, NzPopconfirmDirective, CdkDropList, SiteComponent],
 })
 export class FolderComponent {
   @Input() folder!: Folder;
@@ -40,7 +46,7 @@ export class FolderComponent {
     this.folderStore.loadAll({}); // load again so that sorts will be in correct order
   }
 
-  dropSite({ event }: { event: any }): void {
+  dropSite({ event }: { event: { previousIndex: number; currentIndex: number } }): void {
     const oldPosition = event.previousIndex + 1;
     const newPosition = event.currentIndex + 1;
     if (oldPosition === newPosition) {

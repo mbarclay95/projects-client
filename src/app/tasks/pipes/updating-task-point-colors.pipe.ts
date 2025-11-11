@@ -1,10 +1,7 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { TaskPointColorsService } from '../services/task-point-colors.service';
 
-@Pipe({
-  name: 'updatingTaskPointColors',
-  standalone: false,
-})
+@Pipe({ name: 'updatingTaskPointColors' })
 export class UpdatingTaskPointColorsPipe implements PipeTransform {
   private taskPointColorsService = inject(TaskPointColorsService);
 

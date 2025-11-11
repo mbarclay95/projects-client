@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzModalComponent, NzModalContentDirective, NzModalModule } from 'ng-zorro-antd/modal';
@@ -26,12 +26,8 @@ import { NzInputNumberLegacyComponent } from 'ng-zorro-antd/input-number-legacy'
   styleUrl: './create-edit-session-modal.component.scss',
 })
 export class CreateEditSessionModalComponent extends DefaultModalComponent<GamingSession> {
-  constructor(
-    private gamingSessionsFacadeService: GamingSessionsFacadeService,
-    private nzMessageService: NzMessageService,
-  ) {
-    super();
-  }
+  private gamingSessionsFacadeService = inject(GamingSessionsFacadeService);
+  private nzMessageService = inject(NzMessageService);
 
   async saveSession(): Promise<void> {
     if (!this.model) {
@@ -44,7 +40,7 @@ export class CreateEditSessionModalComponent extends DefaultModalComponent<Gamin
       } else {
         await this.gamingSessionsFacadeService.updateSessionPromise(this.model);
       }
-    } catch (err) {
+    } catch (_err) {
       this.nzMessageService.error('There was an error saving the session');
       this.saving = false;
       return;

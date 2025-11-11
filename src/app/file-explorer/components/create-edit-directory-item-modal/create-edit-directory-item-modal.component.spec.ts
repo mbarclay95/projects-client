@@ -8,7 +8,7 @@ describe('CreateEditDirectoryItemModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateEditDirectoryItemModalComponent],
+      imports: [CreateEditDirectoryItemModalComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CreateEditDirectoryItemModalComponent);

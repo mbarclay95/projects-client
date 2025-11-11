@@ -13,7 +13,6 @@ import {
   faUpload,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
-import { isMobile } from '../../app.component';
 
 export interface Route {
   icon: IconDefinition;
@@ -36,7 +35,7 @@ export type AppTitle =
   | 'My Profile'
   | 'Goals';
 
-export const routes: Route[] = [
+export const routes = (isMobile: boolean): Route[] => [
   {
     icon: faHome,
     url: 'app/dashboard',

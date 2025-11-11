@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NzSegmentedComponent, NzSegmentedItemComponent, NzSegmentedOption, NzSegmentedOptions } from 'ng-zorro-antd/segmented';
+import { NzSegmentedComponent, NzSegmentedItemComponent, NzSegmentedOption } from 'ng-zorro-antd/segmented';
 import { FormsModule } from '@angular/forms';
 import { faChessBoard, faMicrochip } from '@fortawesome/free-solid-svg-icons';
 

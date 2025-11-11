@@ -1,14 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faChevronRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { SharedModule } from '../../../shared/shared.module';
 import { GamingDevice } from '../../models/gaming-device.model';
 import { createGamingSessionDevice, GamingSessionDevice } from '../../models/gaming-session-device.model';
 import { GamingSession } from '../../models/gaming-session.model';
 
 @Component({
   selector: 'app-connect-to-device',
-  imports: [FaIconComponent, SharedModule],
+  imports: [FaIconComponent],
   templateUrl: './connect-to-device.component.html',
   styleUrl: './connect-to-device.component.scss',
 })

@@ -1,12 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { differenceInDays, differenceInMonths, differenceInWeeks, differenceInYears, startOfToday } from 'date-fns';
 
-@Pipe({
-  name: 'dueDateHumanReadable',
-  standalone: false,
-})
+@Pipe({ name: 'dueDateHumanReadable' })
 export class DueDateHumanReadablePipe implements PipeTransform {
-  transform(dueDate?: Date, ...args: unknown[]): string {
+  transform(dueDate?: Date): string {
     if (!dueDate) {
       return '';
     }

@@ -2,12 +2,15 @@ import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { EventsSignalStore, EventsUiState } from '../../services/events-signal-store';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzSwitchComponent } from 'ng-zorro-antd/switch';
 
 @Component({
   selector: 'app-events-filters',
   templateUrl: './events-filters.component.html',
   styleUrls: ['./events-filters.component.scss'],
-  standalone: false,
+  imports: [NzInputDirective, ReactiveFormsModule, FormsModule, NzSwitchComponent],
 })
 export class EventsFiltersComponent implements OnInit, OnDestroy {
   @Input() ui!: EventsUiState;

@@ -7,12 +7,35 @@ import { FamiliesSignalStore } from '../../services/families-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { TagsSignalStore } from '../../services/tags-signal-store';
+import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzSwitchComponent } from 'ng-zorro-antd/switch';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { NzRadioGroupComponent, NzRadioComponent } from 'ng-zorro-antd/radio';
+import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { PluralFrequencyPipe } from '../../pipes/plural-frequency.pipe';
 
 @Component({
   selector: 'app-create-edit-task-modal',
   templateUrl: './create-edit-task-modal.component.html',
   styleUrls: ['./create-edit-task-modal.component.scss'],
-  standalone: false,
+  imports: [
+    NzModalComponent,
+    NzModalContentDirective,
+    NzSwitchComponent,
+    ReactiveFormsModule,
+    FormsModule,
+    NzInputDirective,
+    NzRadioGroupComponent,
+    NzRadioComponent,
+    NzSelectComponent,
+    NzOptionComponent,
+    NzDatePickerComponent,
+    NzInputNumberComponent,
+    PluralFrequencyPipe,
+  ],
 })
 export class CreateEditTaskModalComponent extends DefaultModalSignalComponent<Task> {
   readonly authStore = inject(AuthSignalStore);
@@ -25,9 +48,7 @@ export class CreateEditTaskModalComponent extends DefaultModalSignalComponent<Ta
     if (!this.model) {
       return;
     }
-    this.model.id === 0
-      ? this.tasksStore.create({ entity: this.model, onSuccess: () => this.taskSaved() })
-      : this.tasksStore.update({ entity: this.model, onSuccess: () => this.taskSaved() });
+    this.tasksStore.upsert({ entity: this.model, onSuccess: () => this.taskSaved() });
   }
 
   taskSaved(): void {

@@ -8,7 +8,7 @@ describe('CreateEditScheduledBackupDrawerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateEditScheduledBackupDrawerComponent],
+      imports: [CreateEditScheduledBackupDrawerComponent],
     }).compileComponents();
   });
 

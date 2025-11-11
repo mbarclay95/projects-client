@@ -8,7 +8,7 @@ describe('EventsFiltersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EventsFiltersComponent],
+      imports: [EventsFiltersComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EventsFiltersComponent);

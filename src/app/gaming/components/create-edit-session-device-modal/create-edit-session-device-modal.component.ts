@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DefaultModalComponent } from '../../../shared/components/default-modal/default-modal.component';
 import { GamingSessionDevice } from '../../models/gaming-session-device.model';
 
@@ -27,12 +27,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   styleUrl: './create-edit-session-device-modal.component.scss',
 })
 export class CreateEditSessionDeviceModalComponent extends DefaultModalComponent<GamingSessionDevice> {
-  constructor(
-    private gamingSessionsFacadeService: GamingSessionsFacadeService,
-    private nzMessageService: NzMessageService,
-  ) {
-    super();
-  }
+  private gamingSessionsFacadeService = inject(GamingSessionsFacadeService);
+  private nzMessageService = inject(NzMessageService);
 
   async save(): Promise<void> {
     if (!this.model) {
@@ -44,7 +40,7 @@ export class CreateEditSessionDeviceModalComponent extends DefaultModalComponent
       await (isNew
         ? this.gamingSessionsFacadeService.createSessionDevicePromise(this.model)
         : this.gamingSessionsFacadeService.updateSessionDevicePromise(this.model));
-    } catch (error) {
+    } catch (_error) {
       this.nzMessageService.error(`There was an error ${isNew ? 'connecting to' : 'updating'} the device`);
       this.saving = false;
       return;

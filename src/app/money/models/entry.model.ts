@@ -22,10 +22,10 @@ export function createEntry(params: Partial<Entry>): Entry {
     amount: params.amount ? Number(params.amount) : null,
     dateSpent: params.dateSpent ? new Date(params.dateSpent) : null,
     description: params.description ?? null,
-    category: !!params.category ? createCategory(params.category) : null,
-    subCategory: !!params.subCategory ? createSubCategory(params.subCategory) : null,
+    category: params.category ? createCategory(params.category) : null,
+    subCategory: params.subCategory ? createSubCategory(params.subCategory) : null,
     fromSavingsSubCategory: params.fromSavingsSubCategory ? createSubCategory(params.fromSavingsSubCategory) : null,
-    bank: !!params.bank ? createBank(params.bank) : null,
+    bank: params.bank ? createBank(params.bank) : null,
     categoryTags: params.categoryTags ? params.categoryTags.map((c) => createCategoryTag(c)) : [],
     duplicate: params.duplicate ?? false,
   } as Entry;

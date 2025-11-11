@@ -1,9 +1,9 @@
 import { patchState, signalStoreFeature, withMethods, withState } from '@ngrx/signals';
 
-type UiState<T> = {
+interface UiState<T> {
   ui: T;
   shouldHttpReload: boolean; // purely a helper boolean to be used when monitoring ui changes
-};
+}
 
 export function withUi<T>(initialState: T) {
   return signalStoreFeature(

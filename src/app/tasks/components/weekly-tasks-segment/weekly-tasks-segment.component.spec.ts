@@ -8,7 +8,7 @@ describe('WeeklyTasksSegmentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [WeeklyTasksSegmentComponent],
+      imports: [WeeklyTasksSegmentComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(WeeklyTasksSegmentComponent);

@@ -6,14 +6,20 @@ import { MobileDisplayService } from '../../../shared/services/mobile-display.se
 import { isMobile } from '../../../app.component';
 import { WorkingDirectoryItem } from '../../models/working-directory-item';
 import { DirectoryItemsSignalStore } from '../../services/directory-items-signal-store';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
+import { DirectoriesFilesListComponent } from '../../components/directories-files-list/directories-files-list.component';
+import { CreateEditDirectoryItemModalComponent } from '../../components/create-edit-directory-item-modal/create-edit-directory-item-modal.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-file-explorer-page',
   templateUrl: './file-explorer-page.component.html',
   styleUrls: ['./file-explorer-page.component.scss'],
-  standalone: false,
+  imports: [PageHeaderComponent, DirectoriesFilesListComponent, CreateEditDirectoryItemModalComponent, NzModalModule],
 })
 export class FileExplorerPageComponent {
+  private mobileHeaderService = inject(MobileDisplayService);
+
   isMobile = isMobile;
 
   openCreateEditModal: Subject<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }> = new Subject<
@@ -38,7 +44,7 @@ export class FileExplorerPageComponent {
   newLocationBeingSelected?: WorkingDirectoryItem[];
   readonly directoryItemsStore = inject(DirectoryItemsSignalStore);
 
-  constructor(private mobileHeaderService: MobileDisplayService) {
+  constructor() {
     effect(() => {
       this.directoryItemsStore.setQueryString(this.directoryItemsStore.buildQueryString());
       this.directoryItemsStore.loadAll({});

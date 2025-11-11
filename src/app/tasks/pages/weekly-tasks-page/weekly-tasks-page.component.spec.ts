@@ -8,7 +8,7 @@ describe('WeeklyTasksPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [WeeklyTasksPageComponent],
+      imports: [WeeklyTasksPageComponent],
     }).compileComponents();
   });
 

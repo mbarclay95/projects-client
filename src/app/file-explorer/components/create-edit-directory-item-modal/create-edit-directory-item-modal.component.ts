@@ -5,14 +5,30 @@ import { DirectoryItem } from '../../models/directory-item.model';
 import { isMobile } from '../../../app.component';
 import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/working-directory-item';
 import { DirectoryItemsSignalStore } from '../../services/directory-items-signal-store';
+import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzRadioGroupComponent, NzRadioComponent } from 'ng-zorro-antd/radio';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-create-edit-directory-item-modal',
   templateUrl: './create-edit-directory-item-modal.component.html',
   styleUrls: ['./create-edit-directory-item-modal.component.scss'],
-  standalone: false,
+  imports: [
+    NzModalComponent,
+    NzModalContentDirective,
+    NzInputDirective,
+    ReactiveFormsModule,
+    FormsModule,
+    NzRadioGroupComponent,
+    NzRadioComponent,
+    NzButtonComponent,
+  ],
 })
 export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy, AfterViewChecked {
+  private nzMessageService = inject(NzMessageService);
+
   @Input() openModal!: Observable<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }>;
   @Input() newLocationSelected!: Observable<WorkingDirectoryItem[] | undefined>;
   @Input() workingDirectory: WorkingDirectoryItem[] = [];
@@ -23,18 +39,16 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy,
   modalStyle = isMobile ? { top: '20px' } : {};
   item?: DirectoryItem;
   createOrUpdate?: 'Create' | 'Update';
-  isVisible: boolean = false;
+  isVisible = false;
   saving = false;
 
-  newName: string = '';
+  newName = '';
   newLocationMode: 'cp' | 'mv' = 'mv';
   newWorkingDirectory?: WorkingDirectoryItem[];
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
   protected readonly workingDirectoryToString = workingDirectoryToString;
   readonly directoryItemsStore = inject(DirectoryItemsSignalStore);
-
-  constructor(private nzMessageService: NzMessageService) {}
 
   ngOnInit(): void {
     this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((item) => {

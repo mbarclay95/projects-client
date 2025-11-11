@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { GamingSegmentComponent } from '../../components/gaming-segment/gaming-segment.component';
 import { GamingSessionsFacadeService } from '../../services/gaming-sessions-facade.service';
@@ -7,7 +7,6 @@ import { MobileDisplayService } from '../../../shared/services/mobile-display.se
 import { Observable, Subject, merge } from 'rxjs';
 import { createGamingDevice, GamingDevice } from '../../models/gaming-device.model';
 import { map } from 'rxjs/operators';
-import { SharedModule } from '../../../shared/shared.module';
 import { CreateEditDeviceModalComponent } from '../../components/create-edit-device-modal/create-edit-device-modal.component';
 import { GamingDevicesListComponent } from '../../components/gaming-devices-list/gaming-devices-list.component';
 import { createGamingSession, GamingSession } from '../../models/gaming-session.model';
@@ -22,7 +21,6 @@ import { FormsModule } from '@angular/forms';
     AsyncPipe,
     GamingSegmentComponent,
     NzSpinComponent,
-    SharedModule,
     CreateEditDeviceModalComponent,
     GamingDevicesListComponent,
     GamingSessionsListComponent,
@@ -34,6 +32,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './gaming-sessions-admin-page.component.scss',
 })
 export class GamingSessionsAdminPageComponent {
+  gamingSessionsFacadeService = inject(GamingSessionsFacadeService);
+  private mobileHeaderService = inject(MobileDisplayService);
+
   tab: 'sessions' | 'devices' = 'sessions';
   editDevice: Subject<GamingDevice> = new Subject<GamingDevice>();
   editSession: Subject<GamingSession> = new Subject<GamingSession>();
@@ -45,9 +46,4 @@ export class GamingSessionsAdminPageComponent {
     this.mobileHeaderService.clickedButton$.pipe(map(() => createGamingSession({}))),
     this.editSession.asObservable(),
   );
-
-  constructor(
-    public gamingSessionsFacadeService: GamingSessionsFacadeService,
-    private mobileHeaderService: MobileDisplayService,
-  ) {}
 }

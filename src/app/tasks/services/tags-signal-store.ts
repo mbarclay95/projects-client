@@ -5,9 +5,9 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-type TagsSignalStoreState = {
+interface TagsSignalStoreState {
   entities: string[];
-};
+}
 
 const initialState: TagsSignalStoreState = {
   entities: [],

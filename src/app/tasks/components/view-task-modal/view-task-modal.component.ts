@@ -6,12 +6,35 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { FamiliesSignalStore } from '../../services/families-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { TagsSignalStore } from '../../services/tags-signal-store';
+import { NzModalComponent, NzModalContentDirective, NzModalFooterDirective } from 'ng-zorro-antd/modal';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { DatePipe } from '@angular/common';
+import { DueDateHumanReadablePipe } from '../../pipes/due-date-human-readable.pipe';
+import { TaskPointColorPipe } from '../../pipes/task-point-color.pipe';
+import { FrequencyToStringPipe } from '../../pipes/frequency-to-string.pipe';
 
 @Component({
   selector: 'app-view-task-modal',
   templateUrl: './view-task-modal.component.html',
   styleUrls: ['./view-task-modal.component.scss'],
-  standalone: false,
+  imports: [
+    NzModalComponent,
+    NzModalContentDirective,
+    FaIconComponent,
+    NzDividerComponent,
+    NzSpinComponent,
+    NzModalFooterDirective,
+    NzButtonComponent,
+    NzPopconfirmDirective,
+    DatePipe,
+    DueDateHumanReadablePipe,
+    TaskPointColorPipe,
+    FrequencyToStringPipe,
+  ],
 })
 export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
   showHistory = false;
@@ -26,10 +49,7 @@ export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
   readonly familiesStore = inject(FamiliesSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
   readonly tagsStore = inject(TagsSignalStore);
-
-  constructor(private nzMessageService: NzMessageService) {
-    super();
-  }
+  readonly nzMessageService = inject(NzMessageService);
 
   override onOpenModal() {
     this.showHistory = false;
@@ -45,7 +65,7 @@ export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
       this.loadingHistory = true;
       try {
         this.model.taskHistory = await this.tasksStore.loadTaskHistoryIfNeeded(this.model);
-      } catch (e) {
+      } catch (_e) {
         this.nzMessageService.error('There was an error getting task history');
       }
       this.loadingHistory = false;

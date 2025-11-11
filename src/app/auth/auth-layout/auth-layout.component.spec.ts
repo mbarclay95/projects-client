@@ -8,7 +8,7 @@ describe('AuthLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AuthLayoutComponent],
+      imports: [AuthLayoutComponent],
     }).compileComponents();
   });
 

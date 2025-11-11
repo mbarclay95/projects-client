@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { NzContentComponent } from 'ng-zorro-antd/layout';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-file-explorer-layout',
   templateUrl: './file-explorer-layout.component.html',
   styleUrls: ['./file-explorer-layout.component.scss'],
-  standalone: false,
+  imports: [NzContentComponent, RouterOutlet],
 })
-export class FileExplorerLayoutComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class FileExplorerLayoutComponent {}

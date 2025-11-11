@@ -4,12 +4,14 @@ import { AuthSignalStore } from '../../auth/services/auth-signal-store';
 import { TaskUserConfigsSignalStore } from '../services/task-user-configs-signal-store';
 import { FamilyStatsSignalStore } from '../services/family-stats-signal-store';
 import { TasksSignalStore } from '../services/tasks-signal-store';
+import { NzContentComponent } from 'ng-zorro-antd/layout';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-tasks-layout',
   templateUrl: './tasks-layout.component.html',
   styleUrls: ['./tasks-layout.component.scss'],
-  standalone: false,
+  imports: [NzContentComponent, RouterOutlet],
 })
 export class TasksLayoutComponent {
   readonly authStore = inject(AuthSignalStore);

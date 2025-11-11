@@ -36,7 +36,7 @@ export const GoalsSignalStore = signalStore(
         return '';
       }
 
-      let date = add(new Date(), {
+      const date = add(new Date(), {
         weeks: weekOffset,
       });
       const startDate = lightFormat(startOfWeek(date, { weekStartsOn: 1 }), 'MM/dd/yy');

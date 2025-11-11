@@ -1,5 +1,15 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { NzTableComponent } from 'ng-zorro-antd/table';
+import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
+import {
+  NzTableComponent,
+  NzTheadComponent,
+  NzTrDirective,
+  NzTableCellDirective,
+  NzThMeasureDirective,
+  NzTbodyComponent,
+  NzTdAddOnComponent,
+  NzTrExpandDirective,
+  NzTableFixedRowComponent,
+} from 'ng-zorro-antd/table';
 import {
   faBoxArchive,
   faBoxOpen,
@@ -14,14 +24,42 @@ import { Event } from '../../models/event.model';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { EventParticipant } from '../../models/event-participant';
+import { NzProgressComponent } from 'ng-zorro-antd/progress';
+import { NzCollapseComponent } from 'ng-zorro-antd/collapse';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { NzListComponent, NzListItemComponent } from 'ng-zorro-antd/list';
+import { DatePipe } from '@angular/common';
+import { ParticipantsGoingPipe } from '../../pipes/participants-going.pipe';
 
 @Component({
   selector: 'app-events-table',
   templateUrl: './events-table.component.html',
   styleUrls: ['./events-table.component.scss'],
-  standalone: false,
+  imports: [
+    NzTableComponent,
+    NzTheadComponent,
+    NzTrDirective,
+    NzTableCellDirective,
+    NzThMeasureDirective,
+    NzTbodyComponent,
+    NzTdAddOnComponent,
+    NzProgressComponent,
+    NzTrExpandDirective,
+    NzTableFixedRowComponent,
+    NzCollapseComponent,
+    FaIconComponent,
+    NzPopconfirmDirective,
+    NzListComponent,
+    NzListItemComponent,
+    DatePipe,
+    ParticipantsGoingPipe,
+  ],
 })
 export class EventsTableComponent {
+  private clipboard = inject(Clipboard);
+  private nzMessageService = inject(NzMessageService);
+
   @ViewChild('eventsTableTag', { static: true }) eventsTable: NzTableComponent<Event> | undefined;
 
   @Input() events: Event[] = [];
@@ -40,11 +78,6 @@ export class EventsTableComponent {
   participantGoing = faThumbsUp;
   participantNotGoing = faThumbsDown;
   participantChange = faUserPen;
-
-  constructor(
-    private clipboard: Clipboard,
-    private nzMessageService: NzMessageService,
-  ) {}
 
   onExpandChange(id: number, checked: boolean) {
     if (checked) {

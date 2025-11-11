@@ -8,7 +8,7 @@ describe('FamilyMemberStatsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FamilyMemberStatsComponent],
+      imports: [FamilyMemberStatsComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FamilyMemberStatsComponent);

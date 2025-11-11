@@ -40,7 +40,7 @@
   <div class="bank-text">
     @if (entry.bank; as bank) {
       @if (bank.filePath) {
-        <img [srcset]="bank.filePath" height="40" />
+        <img [srcset]="bank.filePath" [alt]="bank.name" height="40" />
       }
       @if (!bank.filePath) {
         <span>{{ bank.name }}</span>

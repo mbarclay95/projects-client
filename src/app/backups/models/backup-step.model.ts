@@ -3,7 +3,7 @@ export interface BackupStep {
   name: string;
   sort: number;
   backupStepType: 'tar_zip' | 's3_upload';
-  config: {};
+  config: object;
 }
 
 interface TarZipBackupStepType extends BackupStep {

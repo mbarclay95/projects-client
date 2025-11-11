@@ -8,7 +8,7 @@ describe('TasksListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TasksListComponent],
+      imports: [TasksListComponent],
     }).compileComponents();
   });
 

@@ -8,7 +8,7 @@ describe('LoggingLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LoggingLayoutComponent],
+      imports: [LoggingLayoutComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoggingLayoutComponent);

@@ -1,12 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { MyProfileComponent } from './pages/my-profile/my-profile.component';
-import { authGuard } from './services/auth.guard';
+import { TypedRoute } from '../app.routes';
 import { tryAuthGuard } from './services/try-auth.guard';
-import { TypedRoute } from '../app-routing.module';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { authGuard } from './services/auth.guard';
+import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 
-const routes: TypedRoute[] = [
+export const AUTH_ROUTES: TypedRoute[] = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
@@ -21,9 +19,3 @@ const routes: TypedRoute[] = [
     data: { headerTitle: 'My Profile' },
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class AuthRoutingModule {}

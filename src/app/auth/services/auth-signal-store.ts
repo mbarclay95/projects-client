@@ -10,14 +10,15 @@ import { Permissions } from '../permissions';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { UserConfig } from '../../users/models/user-config.model';
 import { AuthStorageService } from './auth-storage.service';
+import { isMobile } from '../../app.component';
 
-type AuthState = {
+interface AuthState {
   auth: User | undefined;
   loading: boolean;
   badCredsError: boolean;
   expiredTokenError: boolean;
   otherError: boolean;
-};
+}
 
 const initialState: AuthState = {
   auth: undefined,
@@ -37,7 +38,7 @@ export const AuthSignalStore = signalStore(
       if (!user) {
         return [];
       }
-      return routes.filter((route) => route.permission === true || user.clientPermissions.includes(route.permission));
+      return routes(isMobile).filter((route) => route.permission === true || user.clientPermissions.includes(route.permission));
     }),
     viewFamiliesTab: computed(() => !!auth()?.clientPermissions.includes(Permissions.FAMILIES_TAB)),
     showUptimeKuma: computed(() => !!auth()?.clientPermissions.find((p) => p === Permissions.LISTEN_TO_UPTIME_KUMA)),
@@ -46,7 +47,7 @@ export const AuthSignalStore = signalStore(
   withMethods((store) => {
     const httpClient = inject(HttpClient);
     const authStorageService = inject(AuthStorageService);
-    const setLoading = (loading: boolean) => patchState(store, { loading });
+    // const setLoading = (loading: boolean) => patchState(store, { loading });
     const clearLoginErrors = () => patchState(store, { expiredTokenError: false, badCredsError: false, otherError: false });
     const handleLoginErrors = (error: HttpErrorResponse) => {
       console.log(error.error);

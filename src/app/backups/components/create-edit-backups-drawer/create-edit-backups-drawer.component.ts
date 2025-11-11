@@ -6,14 +6,36 @@ import { Target } from '../../models/target.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { BackupsSignalStore } from '../../services/backups-signal-store';
 import { TargetSignalStore } from '../../services/target-signal-store';
+import { NzDrawerComponent, NzDrawerContentDirective } from 'ng-zorro-antd/drawer';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { SortGenericPipe } from '../../../shared/pipes/sort-generic.pipe';
 
 @Component({
   selector: 'app-create-edit-backups-drawer',
   templateUrl: './create-edit-backups-drawer.component.html',
   styleUrls: ['./create-edit-backups-drawer.component.scss'],
-  standalone: false,
+  imports: [
+    NzDrawerComponent,
+    NzDrawerContentDirective,
+    NzInputDirective,
+    ReactiveFormsModule,
+    FormsModule,
+    FaIconComponent,
+    NzSelectComponent,
+    NzOptionComponent,
+    NzDividerComponent,
+    NzButtonComponent,
+    SortGenericPipe,
+  ],
 })
 export class CreateEditBackupsDrawerComponent {
+  private nzMessageService = inject(NzMessageService);
+
   readonly openDrawer = input.required<Backup | undefined>();
   readonly isVisible = computed(() => {
     this.backup = this.openDrawer();
@@ -31,8 +53,7 @@ export class CreateEditBackupsDrawerComponent {
   readonly backupStore = inject(BackupsSignalStore);
   readonly targetStore = inject(TargetSignalStore);
 
-  constructor(private nzMessageService: NzMessageService) {}
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   selectNewTarget({ target, backupStepId }: { target: Target; backupStepId: number }): void {
     // const backupStep = this.backup.backupSteps.find(step => step.id === backupStepId);
     // if (backupStep) {
@@ -51,7 +72,7 @@ export class CreateEditBackupsDrawerComponent {
     return a?.id === b?.id;
   }
 
-  createNewTarget(backupStepId: number) {
+  createNewTarget(_backupStepId: number) {
     this.targetStore.createEntity();
   }
 
@@ -59,9 +80,7 @@ export class CreateEditBackupsDrawerComponent {
     if (!this.backup) {
       return;
     }
-    this.backup.id === 0
-      ? this.backupStore.create({ entity: this.backup, onSuccess: this.backupSaved })
-      : this.backupStore.update({ entity: this.backup, onSuccess: this.backupSaved });
+    this.backupStore.upsert({ entity: this.backup, onSuccess: this.backupSaved });
   }
 
   backupSaved(): void {

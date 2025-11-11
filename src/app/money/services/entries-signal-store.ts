@@ -5,9 +5,9 @@ import { environment } from '../../../environments/environment';
 import { withUi } from '../../shared/signal-stores/with-ui-feature';
 import { computed } from '@angular/core';
 
-export type EntriesUiState = {
+export interface EntriesUiState {
   incomplete: boolean;
-};
+}
 
 const initialUiState: EntriesUiState = {
   incomplete: true,

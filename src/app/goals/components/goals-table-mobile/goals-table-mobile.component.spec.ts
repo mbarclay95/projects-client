@@ -8,7 +8,7 @@ describe('GoalsTableMobileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GoalsTableMobileComponent],
+      imports: [GoalsTableMobileComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(GoalsTableMobileComponent);

@@ -4,14 +4,29 @@ import { DirectoryItem } from '../../models/directory-item.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { WorkingDirectoryItem, workingDirectoryToString } from '../../models/working-directory-item';
 import { DirectoryItemsSignalStore } from '../../services/directory-items-signal-store';
+import { NzListComponent, NzListHeaderComponent, NzListItemComponent } from 'ng-zorro-antd/list';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgClass } from '@angular/common';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-directories-files-list',
   templateUrl: './directories-files-list.component.html',
   styleUrls: ['./directories-files-list.component.scss'],
-  standalone: false,
+  imports: [
+    NzListComponent,
+    NzListHeaderComponent,
+    FaIconComponent,
+    NgClass,
+    NzListItemComponent,
+    NzPopconfirmDirective,
+    NzButtonComponent,
+  ],
 })
 export class DirectoriesFilesListComponent {
+  private nzMessageService = inject(NzMessageService);
+
   @Input() workingDirectory: WorkingDirectoryItem[] = [];
   @Input() newLocationBeingSelected = false;
   @Output() openCreateEditModal: EventEmitter<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }> = new EventEmitter<
@@ -27,8 +42,6 @@ export class DirectoriesFilesListComponent {
   back = faChevronLeft;
 
   readonly directoryItemsStore = inject(DirectoryItemsSignalStore);
-
-  constructor(private nzMessageService: NzMessageService) {}
 
   clickedWorkingDirectory(dir: { sort: number; path: string }, last: boolean): void {
     if (last) {

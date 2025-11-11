@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { AuthSignalStore } from './auth-signal-store';
 import { AuthStorageService } from './auth-storage.service';
 
-export const tryAuthGuard: CanActivateFn = async (route, state) => {
+export const tryAuthGuard: CanActivateFn = async (_route, _state) => {
   const authStore = inject(AuthSignalStore);
   const authStorageService = inject(AuthStorageService);
   if (!authStore.isLoggedIn() && authStorageService.isTokenSet()) {

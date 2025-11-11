@@ -8,7 +8,7 @@ describe('MobileFooterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MobileFooterComponent],
+      imports: [MobileFooterComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MobileFooterComponent);

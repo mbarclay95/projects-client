@@ -1,15 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { TypedRoute } from '../app.routes';
 import { GamingSessionsPageComponent } from './pages/gaming-sessions-page/gaming-sessions-page.component';
-import { GamingSessionsAdminPageComponent } from './pages/gaming-sessions-admin-page/gaming-sessions-admin-page.component';
-import { Permissions } from '../auth/permissions';
-import { GamingSessionViewPageComponent } from './pages/gaming-session-view-page/gaming-session-view-page.component';
-import { viewSessionResolver } from './view-session.resolver';
 import { guestGamingResolver } from './guest-gaming.resolver';
+import { viewSessionResolver } from './view-session.resolver';
+import { GamingSessionViewPageComponent } from './pages/gaming-session-view-page/gaming-session-view-page.component';
 import { authGuard } from '../auth/services/auth.guard';
-import { TypedRoute } from '../app-routing.module';
+import { Permissions } from '../auth/permissions';
+import { GamingSessionsAdminPageComponent } from './pages/gaming-sessions-admin-page/gaming-sessions-admin-page.component';
 
-const routes: TypedRoute[] = [
+export const GAMING_ROUTES: TypedRoute[] = [
   {
     path: '',
     children: [
@@ -33,9 +31,3 @@ const routes: TypedRoute[] = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class GamingRoutingModule {}

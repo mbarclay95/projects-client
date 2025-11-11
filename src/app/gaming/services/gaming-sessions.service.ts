@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -8,7 +8,7 @@ import { GamingSession } from '../models/gaming-session.model';
   providedIn: 'root',
 })
 export class GamingSessionsService {
-  constructor(private httpClient: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   get(queryParams: string): Observable<GamingSession[]> {
     return this.httpClient.get<GamingSession[]>(`${environment.apiUrl}/gaming/sessions?${queryParams}`);
@@ -22,7 +22,7 @@ export class GamingSessionsService {
     return this.httpClient.patch<GamingSession>(`${environment.apiUrl}/gaming/sessions/${session.id}`, session);
   }
 
-  updateSessionDeviceSort(sessionId: number, movedSessionDevices: { id: number; turnOrder: number }[]): Observable<Object> {
+  updateSessionDeviceSort(sessionId: number, movedSessionDevices: { id: number; turnOrder: number }[]): Observable<object> {
     return this.httpClient.patch(`${environment.apiUrl}/gaming/session-device-turn-orders`, { sessionId, data: movedSessionDevices });
   }
 }

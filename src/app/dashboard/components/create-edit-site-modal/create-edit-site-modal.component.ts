@@ -3,20 +3,34 @@ import { Site } from '../../models/site.model';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../../../environments/environment';
 import { createSiteImage } from '../../models/site-image.model';
-import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { NzUploadChangeParam, NzUploadFile, NzUploadComponent } from 'ng-zorro-antd/upload';
 import { FolderSignalStore } from '../../services/folder-signal-store';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
+import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzSelectComponent } from 'ng-zorro-antd/select';
+import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 
 @Component({
   selector: 'app-create-edit-site-modal',
   templateUrl: './create-edit-site-modal.component.html',
   styleUrls: ['./create-edit-site-modal.component.scss'],
-  standalone: false,
+  imports: [
+    NzModalComponent,
+    NzModalContentDirective,
+    NzInputDirective,
+    ReactiveFormsModule,
+    FormsModule,
+    NzSelectComponent,
+    NzCheckboxComponent,
+    NzUploadComponent,
+  ],
 })
 export class CreateEditSiteModalComponent extends DefaultModalSignalComponent<Site> {
   fileList: NzUploadFile[] = [];
   check = faCheckCircle;
-  folderId: number = 0;
+  folderId = 0;
 
   readonly folderStore = inject(FolderSignalStore);
 

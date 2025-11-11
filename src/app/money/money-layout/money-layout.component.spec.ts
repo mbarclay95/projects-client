@@ -8,7 +8,7 @@ describe('MoneyLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MoneyLayoutComponent],
+      imports: [MoneyLayoutComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MoneyLayoutComponent);

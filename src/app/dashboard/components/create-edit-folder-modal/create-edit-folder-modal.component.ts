@@ -2,12 +2,15 @@ import { Component, inject } from '@angular/core';
 import { Folder } from '../../models/folder.model';
 import { FolderSignalStore } from '../../services/folder-signal-store';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
+import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-create-edit-folder-modal',
   templateUrl: './create-edit-folder-modal.component.html',
   styleUrls: ['./create-edit-folder-modal.component.scss'],
-  standalone: false,
+  imports: [NzModalComponent, NzModalContentDirective, NzInputDirective, ReactiveFormsModule, FormsModule],
 })
 export class CreateEditFolderModalComponent extends DefaultModalSignalComponent<Folder> {
   readonly folderStore = inject(FolderSignalStore);

@@ -4,12 +4,16 @@ import { Task } from '../../models/task.model';
 import { addDays, addMonths, addWeeks, addYears, differenceInCalendarDays, endOfDay, setDay } from 'date-fns';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
+import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FrequencyToStringPipe } from '../../pipes/frequency-to-string.pipe';
 
 @Component({
   selector: 'app-skip-task-modal',
   templateUrl: './skip-task-modal.component.html',
   styleUrls: ['./skip-task-modal.component.scss'],
-  standalone: false,
+  imports: [NzModalComponent, NzModalContentDirective, NzDatePickerComponent, ReactiveFormsModule, FormsModule, FrequencyToStringPipe],
 })
 export class SkipTaskModalComponent extends DefaultModalComponent<Task> {
   newDate: Date | null = null;

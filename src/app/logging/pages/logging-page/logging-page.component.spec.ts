@@ -8,7 +8,7 @@ describe('LoggingPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LoggingPageComponent],
+      imports: [LoggingPageComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoggingPageComponent);

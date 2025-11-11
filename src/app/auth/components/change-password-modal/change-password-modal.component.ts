@@ -1,17 +1,21 @@
 import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { isMobile } from '../../../app.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AuthSignalStore } from '../../services/auth-signal-store';
+import { NzModalComponent, NzModalContentDirective, NzModalModule } from 'ng-zorro-antd/modal';
+import { NzInputDirective } from 'ng-zorro-antd/input';
 
 @Component({
   selector: 'app-change-password-modal',
   templateUrl: './change-password-modal.component.html',
   styleUrls: ['./change-password-modal.component.scss'],
-  standalone: false,
+  imports: [NzModalComponent, NzModalContentDirective, ReactiveFormsModule, NzInputDirective, NzModalModule],
 })
 export class ChangePasswordModalComponent implements OnInit, OnDestroy {
+  private nzMessageService = inject(NzMessageService);
+
   @Input() openModal!: Observable<void>;
 
   isVisible = false;
@@ -23,8 +27,6 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 
   readonly authStore = inject(AuthSignalStore);
-
-  constructor(private nzMessageService: NzMessageService) {}
 
   ngOnInit(): void {
     this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe(() => {

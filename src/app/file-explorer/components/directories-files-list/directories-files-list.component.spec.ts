@@ -8,7 +8,7 @@ describe('DirectoriesFilesListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DirectoriesFilesListComponent],
+      imports: [DirectoriesFilesListComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DirectoriesFilesListComponent);

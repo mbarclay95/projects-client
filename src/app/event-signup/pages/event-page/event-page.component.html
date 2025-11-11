@@ -23,7 +23,8 @@
       @for (participant of event.eventParticipants; track participant) {
         <div class="my-2">{{ participant.name }}</div>
       }
-      <div class="w-100 d-flex justify-content-start align-items-center mt-4" *ngLet="eventCacheService.signedUp$ | async as signedUp">
+      <div class="w-100 d-flex justify-content-start align-items-center mt-4">
+        @let signedUp = eventCacheService.signedUp$ | async;
         <button
           nz-button
           nzType="primary"

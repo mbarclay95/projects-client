@@ -8,7 +8,7 @@ describe('MobileEventsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MobileEventsTableComponent],
+      imports: [MobileEventsTableComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MobileEventsTableComponent);

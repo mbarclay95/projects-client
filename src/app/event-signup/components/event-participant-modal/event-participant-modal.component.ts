@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { EventService } from '../../services/event.service';
@@ -6,21 +6,39 @@ import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { EventCacheService } from '../../services/event-cache.service';
 import { EventParticipant } from '../../models/event-participant';
 import { isMobile } from '../../../app.component';
+import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzRadioGroupComponent, NzRadioComponent } from 'ng-zorro-antd/radio';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-event-participant-modal',
   templateUrl: './event-participant-modal.component.html',
   styleUrls: ['./event-participant-modal.component.scss'],
-  standalone: false,
+  imports: [
+    NzModalComponent,
+    NzModalContentDirective,
+    NzInputDirective,
+    ReactiveFormsModule,
+    FormsModule,
+    NzRadioGroupComponent,
+    NzRadioComponent,
+    FaIconComponent,
+  ],
 })
 export class EventParticipantModalComponent implements OnInit, OnDestroy {
+  private eventService = inject(EventService);
+  private eventCacheService = inject(EventCacheService);
+  private nzMessageService = inject(NzMessageService);
+
   @Input() openModal!: Observable<void>;
 
-  isVisible: boolean = false;
+  isVisible = false;
   saving = false;
   nameError = false;
   goingError = false;
-  name: string = '';
+  name = '';
   isGoing?: boolean;
   thumbsUp = faThumbsUp;
   thumbsDown = faThumbsDown;
@@ -28,12 +46,6 @@ export class EventParticipantModalComponent implements OnInit, OnDestroy {
   modalStyle = isMobile ? { top: '20px' } : {};
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
-
-  constructor(
-    private eventService: EventService,
-    private eventCacheService: EventCacheService,
-    private nzMessageService: NzMessageService,
-  ) {}
 
   ngOnInit(): void {
     this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe(() => {
@@ -64,7 +76,7 @@ export class EventParticipantModalComponent implements OnInit, OnDestroy {
     let participant: EventParticipant;
     try {
       participant = await this.eventService.createEventParticipant(this.name, this.isGoing);
-    } catch (e) {
+    } catch (_e) {
       this.nzMessageService.error('There was an error');
       this.saving = false;
       return;

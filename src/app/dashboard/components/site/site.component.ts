@@ -3,14 +3,31 @@ import { Site } from '../../models/site.model';
 import { faEdit, faGripVertical, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FolderSignalStore } from '../../services/folder-signal-store';
+import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NzSwitchComponent } from 'ng-zorro-antd/switch';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 
 @Component({
   selector: 'app-site',
   templateUrl: './site.component.html',
   styleUrls: ['./site.component.scss'],
-  standalone: false,
+  imports: [
+    CdkDrag,
+    NzButtonComponent,
+    CdkDragHandle,
+    FaIconComponent,
+    NzSwitchComponent,
+    ReactiveFormsModule,
+    FormsModule,
+    NzPopconfirmDirective,
+  ],
 })
 export class SiteComponent {
+  private nzMessageService = inject(NzMessageService);
+
   @Input() site!: Site;
   @Input() editMode!: boolean;
 
@@ -22,13 +39,11 @@ export class SiteComponent {
 
   readonly folderStore = inject(FolderSignalStore);
 
-  constructor(private nzMessageService: NzMessageService) {}
-
   updateSiteShow(show: boolean): void {
     const updatedSite = { ...this.site, ...{ show } };
     try {
       this.folderStore.updateSiteHttp({ site: updatedSite, oldFolderId: updatedSite.folderId });
-    } catch (e) {
+    } catch (_e) {
       this.nzMessageService.error('There was an error updating the site');
     }
   }

@@ -1,11 +1,9 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { TypedRoute } from '../app.routes';
+import { checkConfigGuard } from './check-config.guard';
 import { IncompleteEntriesComponent } from './pages/incomplete-entries/incomplete-entries.component';
 import { IncorrectConfigComponent } from './pages/incorrect-config/incorrect-config.component';
-import { TypedRoute } from '../app-routing.module';
-import { checkConfigGuard } from './check-config.guard';
 
-const routes: TypedRoute[] = [
+export const MONEY_ROUTES: TypedRoute[] = [
   {
     path: '',
     canActivateChild: [checkConfigGuard],
@@ -24,9 +22,3 @@ const routes: TypedRoute[] = [
     data: { headerTitle: 'Incorrect Configuration' },
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class MoneyRoutingModule {}

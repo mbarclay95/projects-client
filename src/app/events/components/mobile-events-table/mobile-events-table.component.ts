@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Event } from '../../models/event.model';
 import { EventParticipant } from '../../models/event-participant';
 import {
@@ -16,14 +16,37 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
+import { NzProgressComponent } from 'ng-zorro-antd/progress';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
+import { NzDividerComponent } from 'ng-zorro-antd/divider';
+import { NzListComponent, NzListItemComponent } from 'ng-zorro-antd/list';
+import { NzEmptyComponent } from 'ng-zorro-antd/empty';
+import { DatePipe } from '@angular/common';
+import { ParticipantsGoingPipe } from '../../pipes/participants-going.pipe';
 
 @Component({
   selector: 'app-mobile-events-table',
   templateUrl: './mobile-events-table.component.html',
   styleUrls: ['./mobile-events-table.component.scss'],
-  standalone: false,
+  imports: [
+    NzSpinComponent,
+    NzProgressComponent,
+    FaIconComponent,
+    NzPopconfirmDirective,
+    NzDividerComponent,
+    NzListComponent,
+    NzListItemComponent,
+    NzEmptyComponent,
+    DatePipe,
+    ParticipantsGoingPipe,
+  ],
 })
-export class MobileEventsTableComponent implements OnInit {
+export class MobileEventsTableComponent {
+  private clipboard = inject(Clipboard);
+  private nzMessageService = inject(NzMessageService);
+
   @Input() events: Event[] = [];
   @Input() loading!: boolean;
 
@@ -43,13 +66,6 @@ export class MobileEventsTableComponent implements OnInit {
   arrowDown = faChevronDown;
   arrowUp = faChevronUp;
   participantChange = faUserPen;
-
-  constructor(
-    private clipboard: Clipboard,
-    private nzMessageService: NzMessageService,
-  ) {}
-
-  ngOnInit() {}
 
   getPercent(participants: EventParticipant[], numOfPeople: number): number {
     return Math.ceil((participants.length / numOfPeople) * 100);

@@ -8,7 +8,7 @@ describe('ScheduledBackupsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ScheduledBackupsTableComponent],
+      imports: [ScheduledBackupsTableComponent],
     }).compileComponents();
   });
 

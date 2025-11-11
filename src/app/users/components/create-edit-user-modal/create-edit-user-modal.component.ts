@@ -6,12 +6,30 @@ import { Roles } from '../../../auth/permissions';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { UsersSignalStore } from '../../services/users-signal-store';
 import { RolesSignalStore } from '../../services/roles-signal-store';
+import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NzSwitchComponent } from 'ng-zorro-antd/switch';
+import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
+import { DisplayRoleNamePipe } from '../../../shared/pipes/display-role-name.pipe';
+import { HasRolePipe } from '../../../shared/pipes/has-role.pipe';
 
 @Component({
   selector: 'app-create-edit-user-modal',
   templateUrl: './create-edit-user-modal.component.html',
   styleUrls: ['./create-edit-user-modal.component.scss'],
-  standalone: false,
+  imports: [
+    NzModalComponent,
+    NzModalContentDirective,
+    NzInputDirective,
+    ReactiveFormsModule,
+    FormsModule,
+    NzSwitchComponent,
+    NzSelectComponent,
+    NzOptionComponent,
+    DisplayRoleNamePipe,
+    HasRolePipe,
+  ],
 })
 export class CreateEditUserModalComponent extends DefaultModalSignalComponent<User> {
   readonly usersStore = inject(UsersSignalStore);
@@ -40,9 +58,7 @@ export class CreateEditUserModalComponent extends DefaultModalSignalComponent<Us
     if (!this.model) {
       return;
     }
-    this.model.id === 0
-      ? this.usersStore.create({ entity: this.model, onSuccess: () => this.userSaved() })
-      : this.usersStore.update({ entity: this.model, onSuccess: () => this.userSaved() });
+    this.usersStore.upsert({ entity: this.model, onSuccess: () => this.userSaved() });
   }
 
   private userSaved() {

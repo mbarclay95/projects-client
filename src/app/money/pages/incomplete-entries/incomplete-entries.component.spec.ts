@@ -8,7 +8,7 @@ describe('IncompleteEntriesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [IncompleteEntriesComponent],
+      imports: [IncompleteEntriesComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IncompleteEntriesComponent);

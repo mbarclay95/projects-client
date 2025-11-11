@@ -40,9 +40,13 @@ export class CreateEditEntryModalComponent extends DefaultModalSignalComponent<E
 
   readonly entriesStore = inject(EntriesSignalStore);
 
-  async deleteEntry(): Promise<void> {}
+  async deleteEntry(): Promise<void> {
+    // will implement
+  }
 
-  async saveEntry(): Promise<void> {}
+  async saveEntry(): Promise<void> {
+    // will implement
+  }
 
   async saveEntryAndNext(): Promise<void> {
     await this.saveEntry();

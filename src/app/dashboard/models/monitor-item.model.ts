@@ -9,7 +9,7 @@ export interface MonitorItem {
   lastHeartBeat?: HeartbeatItem;
 }
 
-export function createMonitorItem(params: any): MonitorItem {
+export function createMonitorItem(params: Partial<MonitorItem & { active: boolean; maintenance: boolean }>): MonitorItem {
   return {
     id: params.id,
     name: params.name ?? '',

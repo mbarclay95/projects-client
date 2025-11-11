@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import {
   NzTableComponent,
   NzTheadComponent,
@@ -29,7 +29,7 @@ import { DatePipe } from '@angular/common';
     DatePipe,
   ],
 })
-export class UserTableComponent implements OnInit {
+export class UserTableComponent {
   @ViewChild('usersTableTag', { static: true }) usersTable: NzTableComponent<User> | undefined;
   @Input() set users(users: User[] | null) {
     if (users) {
@@ -40,8 +40,4 @@ export class UserTableComponent implements OnInit {
 
   _users: User[] = [];
   edit = faEdit;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

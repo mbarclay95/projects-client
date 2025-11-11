@@ -6,7 +6,7 @@ import { FamiliesSignalStore } from '../services/families-signal-store';
 export class WeeklyProgressPercentPipe implements PipeTransform {
   private readonly familiesStore = inject(FamiliesSignalStore);
 
-  transform(config: TaskUserConfig, returnFraction: boolean = true): number {
+  transform(config: TaskUserConfig, returnFraction = true): number {
     if (config.tasksPerWeek === 0) {
       return 0;
     }
@@ -14,7 +14,7 @@ export class WeeklyProgressPercentPipe implements PipeTransform {
     if (!activeFamily) {
       return 0;
     }
-    let totalCompleted =
+    const totalCompleted =
       activeFamily.taskStrategy === 'per task'
         ? config.completedFamilyTasks.length
         : config.completedFamilyTasks.reduce((prev, curr) => prev + (curr.taskPoint ?? 0), 0);

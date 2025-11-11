@@ -14,6 +14,8 @@ import { NzInputDirective } from 'ng-zorro-antd/input';
   imports: [NzModalComponent, NzModalContentDirective, ReactiveFormsModule, NzInputDirective, NzModalModule],
 })
 export class ChangePasswordModalComponent implements OnInit, OnDestroy {
+  private nzMessageService = inject(NzMessageService);
+
   @Input() openModal!: Observable<void>;
 
   isVisible = false;
@@ -25,8 +27,6 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
 
   readonly authStore = inject(AuthSignalStore);
-
-  constructor(private nzMessageService: NzMessageService) {}
 
   ngOnInit(): void {
     this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe(() => {

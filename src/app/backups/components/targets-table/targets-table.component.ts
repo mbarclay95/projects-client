@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import {
   NzTableComponent,
   NzTheadComponent,
@@ -27,7 +27,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     FaIconComponent,
   ],
 })
-export class TargetsTableComponent implements OnInit {
+export class TargetsTableComponent {
   @ViewChild('targetsTableTag', { static: true }) targetsTable: NzTableComponent<Target> | undefined;
   @Input() set targets(targets: Target[] | null) {
     if (targets) {
@@ -38,8 +38,4 @@ export class TargetsTableComponent implements OnInit {
 
   _targets: Target[] = [];
   edit = faEdit;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

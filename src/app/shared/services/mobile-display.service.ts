@@ -26,12 +26,13 @@ export class MobileDisplayService {
   private _footerButtons: WritableSignal<MobileFooterButtons | undefined> = signal(undefined);
   footerButtons: Signal<FooterButton[]> = computed(() => {
     switch (this._footerButtons()) {
-      case 'tasks':
+      case 'tasks': {
         const footerButtons = [...defaultTaskButtons];
         if (this.authStore.hasPermissionTo(Permissions.FAMILIES_TAB)) {
           footerButtons.push({ ...taskFamiliesButton });
         }
         return footerButtons;
+      }
       default:
         return [];
     }

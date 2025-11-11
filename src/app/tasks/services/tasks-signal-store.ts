@@ -11,7 +11,7 @@ import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { updateEntity } from '@ngrx/signals/entities';
 
-export type TasksUiState = {
+export interface TasksUiState {
   ownerType: TaskOwnerType | null;
   completedStatus: 'completed' | 'notCompleted' | 'both';
   recurringType: boolean | 'both';
@@ -22,7 +22,7 @@ export type TasksUiState = {
   tags: string[];
   showPaused: boolean;
   highPriorityFirst: boolean;
-};
+}
 
 const weeklyTaskPageUiState: Partial<TasksUiState> = {
   numOfDays: differenceInDays(endOfWeek(new Date(), { weekStartsOn: 1 }), new Date()),

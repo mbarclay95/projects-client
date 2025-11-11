@@ -9,7 +9,7 @@
     <a target="_blank" [href]="site.url" style="color: rgba(255, 255, 255, 0.85); text-decoration: none" class="d-flex w-100 mb-1">
       <div class="d-flex justify-content-center me-2">
         @if (site.siteImage) {
-          <img [srcset]="site.siteImage.imagePath" class="site-image" />
+          <img [srcset]="site.siteImage.imagePath" [alt]="site.name" class="site-image" />
         } @else {
           <div class="site-image"></div>
         }

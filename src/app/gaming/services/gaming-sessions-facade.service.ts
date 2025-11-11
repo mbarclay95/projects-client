@@ -1,4 +1,4 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { Injectable, signal, WritableSignal, inject } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, Observable, tap, combineLatest, shareReplay, switchMap, Subject, takeUntil } from 'rxjs';
 import { createGamingSession, GamingSession } from '../models/gaming-session.model';
 import { createGamingDevice, GamingDevice } from '../models/gaming-device.model';
@@ -16,6 +16,12 @@ import { webSocket } from 'rxjs/webSocket';
   providedIn: 'root',
 })
 export class GamingSessionsFacadeService {
+  private gamingSessionsService = inject(GamingSessionsService);
+  private gamingDevicesService = inject(GamingDevicesService);
+  private gamingSessionDevicesService = inject(GamingSessionDevicesService);
+  private mobileHeaderService = inject(MobileDisplayService);
+  private userGamingSessionsService = inject(UserGamingSessionsService);
+
   sessionsLoading: WritableSignal<boolean> = signal(true);
   private gamingSessionsSubject: BehaviorSubject<GamingSession[]> = new BehaviorSubject<GamingSession[]>([]);
   private gamingSessionsUiSubject: BehaviorSubject<GamingSessionsUi> = new BehaviorSubject<GamingSessionsUi>({
@@ -71,13 +77,7 @@ export class GamingSessionsFacadeService {
   webSocketDestroyer: Subject<void> = new Subject<void>();
   webSocketRetries = 0;
 
-  constructor(
-    private gamingSessionsService: GamingSessionsService,
-    private gamingDevicesService: GamingDevicesService,
-    private gamingSessionDevicesService: GamingSessionDevicesService,
-    private mobileHeaderService: MobileDisplayService,
-    private userGamingSessionsService: UserGamingSessionsService,
-  ) {
+  constructor() {
     this.connectToWs();
     this.loadDevices();
   }
@@ -257,6 +257,6 @@ type WebSocketEvent =
       data: GamingSession[];
     };
 
-export type GamingSessionsUi = {
+export interface GamingSessionsUi {
   showArchived: boolean;
-};
+}

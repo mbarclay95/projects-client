@@ -49,10 +49,7 @@ export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
   readonly familiesStore = inject(FamiliesSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
   readonly tagsStore = inject(TagsSignalStore);
-
-  constructor(private nzMessageService: NzMessageService) {
-    super();
-  }
+  readonly nzMessageService = inject(NzMessageService);
 
   override onOpenModal() {
     this.showHistory = false;
@@ -68,7 +65,7 @@ export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
       this.loadingHistory = true;
       try {
         this.model.taskHistory = await this.tasksStore.loadTaskHistoryIfNeeded(this.model);
-      } catch (e) {
+      } catch (_e) {
         this.nzMessageService.error('There was an error getting task history');
       }
       this.loadingHistory = false;

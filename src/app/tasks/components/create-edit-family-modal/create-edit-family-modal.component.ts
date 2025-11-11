@@ -47,9 +47,7 @@ export class CreateEditFamilyModalComponent extends DefaultModalSignalComponent<
     if (!this.model) {
       return;
     }
-    this.model.id === 0
-      ? this.familiesStore.create({ entity: this.model, onSuccess: () => this.familySaved() })
-      : this.familiesStore.update({ entity: this.model, onSuccess: () => this.familySaved() });
+    this.familiesStore.upsert({ entity: this.model, onSuccess: () => this.familySaved() });
   }
 
   private familySaved(): void {

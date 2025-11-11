@@ -8,9 +8,9 @@ import { AuthSignalStore } from '../../auth/services/auth-signal-store';
 import { updateEntity } from '@ngrx/signals/entities';
 import { Task } from '../models/task.model';
 
-type TaskUserConfigsUiState = {
+interface TaskUserConfigsUiState {
   weekOffset: number;
-};
+}
 
 const initialState: TaskUserConfigsUiState = {
   weekOffset: 0,
@@ -34,7 +34,7 @@ export const TaskUserConfigsSignalStore = signalStore(
       return undefined;
     });
     const weekString = computed(() => {
-      let date = add(new Date(), {
+      const date = add(new Date(), {
         weeks: weekOffset(),
       });
       const startDate = lightFormat(startOfWeek(date, { weekStartsOn: 1 }), 'MM/dd/yy');

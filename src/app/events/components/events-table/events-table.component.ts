@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 import {
   NzTableComponent,
   NzTheadComponent,
@@ -57,6 +57,9 @@ import { ParticipantsGoingPipe } from '../../pipes/participants-going.pipe';
   ],
 })
 export class EventsTableComponent {
+  private clipboard = inject(Clipboard);
+  private nzMessageService = inject(NzMessageService);
+
   @ViewChild('eventsTableTag', { static: true }) eventsTable: NzTableComponent<Event> | undefined;
 
   @Input() events: Event[] = [];
@@ -75,11 +78,6 @@ export class EventsTableComponent {
   participantGoing = faThumbsUp;
   participantNotGoing = faThumbsDown;
   participantChange = faUserPen;
-
-  constructor(
-    private clipboard: Clipboard,
-    private nzMessageService: NzMessageService,
-  ) {}
 
   onExpandChange(id: number, checked: boolean) {
     if (checked) {

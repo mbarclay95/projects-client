@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { CreateEditSessionModalComponent } from '../../components/create-edit-session-modal/create-edit-session-modal.component';
 import { GamingSessionsListComponent } from '../../components/gaming-sessions-list/gaming-sessions-list.component';
@@ -17,6 +17,9 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
   styleUrl: './gaming-sessions-page.component.scss',
 })
 export class GamingSessionsPageComponent {
+  gamingSessionsFacadeService = inject(GamingSessionsFacadeService);
+  private mobileHeaderService = inject(MobileDisplayService);
+
   editSession: Subject<GamingSession> = new Subject<GamingSession>();
   createSession: Subject<void> = new Subject<void>();
   openSessionModal$: Observable<GamingSession> = merge(
@@ -24,9 +27,4 @@ export class GamingSessionsPageComponent {
     this.createSession.asObservable().pipe(map(() => createGamingSession({}))),
     this.editSession.asObservable(),
   );
-
-  constructor(
-    public gamingSessionsFacadeService: GamingSessionsFacadeService,
-    private mobileHeaderService: MobileDisplayService,
-  ) {}
 }

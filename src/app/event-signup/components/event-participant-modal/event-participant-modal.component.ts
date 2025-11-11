@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { EventService } from '../../services/event.service';
@@ -28,13 +28,17 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   ],
 })
 export class EventParticipantModalComponent implements OnInit, OnDestroy {
+  private eventService = inject(EventService);
+  private eventCacheService = inject(EventCacheService);
+  private nzMessageService = inject(NzMessageService);
+
   @Input() openModal!: Observable<void>;
 
-  isVisible: boolean = false;
+  isVisible = false;
   saving = false;
   nameError = false;
   goingError = false;
-  name: string = '';
+  name = '';
   isGoing?: boolean;
   thumbsUp = faThumbsUp;
   thumbsDown = faThumbsDown;
@@ -42,12 +46,6 @@ export class EventParticipantModalComponent implements OnInit, OnDestroy {
   modalStyle = isMobile ? { top: '20px' } : {};
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
-
-  constructor(
-    private eventService: EventService,
-    private eventCacheService: EventCacheService,
-    private nzMessageService: NzMessageService,
-  ) {}
 
   ngOnInit(): void {
     this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe(() => {
@@ -78,7 +76,7 @@ export class EventParticipantModalComponent implements OnInit, OnDestroy {
     let participant: EventParticipant;
     try {
       participant = await this.eventService.createEventParticipant(this.name, this.isGoing);
-    } catch (e) {
+    } catch (_e) {
       this.nzMessageService.error('There was an error');
       this.saving = false;
       return;

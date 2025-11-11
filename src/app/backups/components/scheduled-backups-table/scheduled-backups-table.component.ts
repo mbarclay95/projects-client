@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import {
   NzTableComponent,
   NzTheadComponent,
@@ -27,7 +27,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     FaIconComponent,
   ],
 })
-export class ScheduledBackupsTableComponent implements OnInit {
+export class ScheduledBackupsTableComponent {
   @ViewChild('scheduledBackupsTableTag', { static: true }) scheduledBackupsTable: NzTableComponent<Schedule> | undefined;
   @Input() set schedules(schedules: Schedule[] | null) {
     if (schedules) {
@@ -38,8 +38,4 @@ export class ScheduledBackupsTableComponent implements OnInit {
 
   _schedules: Schedule[] = [];
   edit = faEdit;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

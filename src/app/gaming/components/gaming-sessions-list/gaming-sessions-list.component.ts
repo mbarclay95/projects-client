@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { GamingSession } from '../../models/gaming-session.model';
 import { DatePipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -12,14 +12,14 @@ import { Router } from '@angular/router';
   styleUrl: './gaming-sessions-list.component.scss',
 })
 export class GamingSessionsListComponent {
+  private router = inject(Router);
+
   @Input() sessions: GamingSession[] = [];
   @Input() forAdmin = false;
   @Output() editSession: EventEmitter<GamingSession> = new EventEmitter<GamingSession>();
 
   online = faCircleCheck;
   offline = faCircleXmark;
-
-  constructor(private router: Router) {}
 
   test(session: GamingSession): void {
     void this.router.navigateByUrl(`games/session/${session.id}`);

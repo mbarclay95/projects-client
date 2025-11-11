@@ -35,13 +35,13 @@ export class UptimeKumaService extends Socket {
     if (!this.connect().connected) {
       this.connect();
     }
-    this.on('monitorList', (payload: { [key: number]: MonitorItem }) => {
+    this.on('monitorList', (payload: Record<number, MonitorItem>) => {
       this.monitorItemsSubject.next(Object.values(payload).map((item) => createMonitorItem(item)));
     });
 
     this.on('heartbeatList', (monitorId: number, payload: HeartbeatItem[]) => {
       const lastHeartbeat = createHeartbeatItem({ ...{ monitorID: monitorId }, ...payload[payload.length - 1] });
-      let item = this.findItem(lastHeartbeat.monitorId);
+      const item = this.findItem(lastHeartbeat.monitorId);
       if (!item) {
         return;
       }
@@ -52,7 +52,7 @@ export class UptimeKumaService extends Socket {
 
     this.on('heartbeat', (payload: HeartbeatItem) => {
       const heartbeat = createHeartbeatItem(payload);
-      let item = this.findItem(heartbeat.monitorId);
+      const item = this.findItem(heartbeat.monitorId);
       if (!item) {
         return;
       }
@@ -72,7 +72,7 @@ export class UptimeKumaService extends Socket {
   }
 
   private findItem(monitorId: number): MonitorItem | undefined {
-    let monitorItems: MonitorItem[] = [...this.monitorItemsSubject.getValue()];
+    const monitorItems: MonitorItem[] = [...this.monitorItemsSubject.getValue()];
     const item = monitorItems.find((i) => i.id === monitorId);
     if (item) {
       return { ...item };

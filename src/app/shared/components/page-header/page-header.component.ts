@@ -9,7 +9,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 })
 export class PageHeaderComponent {
   @Input() buttonText?: string;
-  @Input() title: string = '';
+  @Input() title = '';
 
   @Output() createButtonClicked: EventEmitter<void> = new EventEmitter<void>();
 }

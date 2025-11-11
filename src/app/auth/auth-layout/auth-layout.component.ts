@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NzContentComponent } from 'ng-zorro-antd/layout';
 import { RouterOutlet } from '@angular/router';
 
@@ -8,8 +8,4 @@ import { RouterOutlet } from '@angular/router';
   styleUrls: ['./auth-layout.component.scss'],
   imports: [NzContentComponent, RouterOutlet],
 })
-export class AuthLayoutComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class AuthLayoutComponent {}

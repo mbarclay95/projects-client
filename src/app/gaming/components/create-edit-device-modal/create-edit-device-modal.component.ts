@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DefaultModalComponent } from '../../../shared/components/default-modal/default-modal.component';
 import { GamingDevice } from '../../models/gaming-device.model';
 
@@ -25,12 +25,8 @@ import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
   styleUrl: './create-edit-device-modal.component.scss',
 })
 export class CreateEditDeviceModalComponent extends DefaultModalComponent<GamingDevice> {
-  constructor(
-    private gamingSessionsFacadeService: GamingSessionsFacadeService,
-    private nzMessageService: NzMessageService,
-  ) {
-    super();
-  }
+  private gamingSessionsFacadeService = inject(GamingSessionsFacadeService);
+  private nzMessageService = inject(NzMessageService);
 
   async saveDevice(): Promise<void> {
     if (!this.model) {
@@ -43,7 +39,7 @@ export class CreateEditDeviceModalComponent extends DefaultModalComponent<Gaming
       } else {
         await this.gamingSessionsFacadeService.updateDevicePromise(this.model);
       }
-    } catch (err) {
+    } catch (_err) {
       this.nzMessageService.error('There was an error saving the device');
       this.saving = false;
       return;

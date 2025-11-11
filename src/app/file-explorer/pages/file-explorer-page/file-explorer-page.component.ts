@@ -18,6 +18,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
   imports: [PageHeaderComponent, DirectoriesFilesListComponent, CreateEditDirectoryItemModalComponent, NzModalModule],
 })
 export class FileExplorerPageComponent {
+  private mobileHeaderService = inject(MobileDisplayService);
+
   isMobile = isMobile;
 
   openCreateEditModal: Subject<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }> = new Subject<
@@ -42,7 +44,7 @@ export class FileExplorerPageComponent {
   newLocationBeingSelected?: WorkingDirectoryItem[];
   readonly directoryItemsStore = inject(DirectoryItemsSignalStore);
 
-  constructor(private mobileHeaderService: MobileDisplayService) {
+  constructor() {
     effect(() => {
       this.directoryItemsStore.setQueryString(this.directoryItemsStore.buildQueryString());
       this.directoryItemsStore.loadAll({});

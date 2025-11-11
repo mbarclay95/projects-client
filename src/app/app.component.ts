@@ -27,6 +27,9 @@ import { MobileFooterComponent } from './shared/components/mobile-footer/mobile-
   ],
 })
 export class AppComponent {
+  mobileHeaderService = inject(MobileDisplayService);
+  private router = inject(Router);
+
   title = 'projects-client';
   sideMenuClosed?: boolean = undefined;
   isMobile = isMobile;
@@ -37,10 +40,7 @@ export class AppComponent {
 
   readonly authStore = inject(AuthSignalStore);
 
-  constructor(
-    public mobileHeaderService: MobileDisplayService,
-    private router: Router,
-  ) {
+  constructor() {
     effect(() => {
       if (this.isMobile || this.sideMenuClosed !== undefined) {
         return;

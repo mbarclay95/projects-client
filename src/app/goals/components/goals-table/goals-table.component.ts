@@ -44,5 +44,7 @@ export class GoalsTableComponent {
   edit = faEdit;
   delete = faTrash;
 
-  deleteGoal(goal: Goal) {}
+  deleteGoal(_goal: Goal) {
+    // will implement
+  }
 }

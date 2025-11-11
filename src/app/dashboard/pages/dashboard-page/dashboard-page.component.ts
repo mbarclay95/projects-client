@@ -17,18 +17,20 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
   imports: [NzSpinComponent, FolderGridComponent, NzButtonComponent, FaIconComponent, AsyncPipe, NzModalModule],
 })
 export class DashboardPageComponent {
+  uptimeKumaService = inject(UptimeKumaService);
+
   edit = faEdit;
 
   readonly authStore = inject(AuthSignalStore);
   readonly folderStore = inject(FolderSignalStore);
 
-  constructor(public uptimeKumaService: UptimeKumaService) {
+  constructor() {
     effect(() => {
-      this.initUptimeKuma(this.authStore.showUptimeKuma());
+      if (this.authStore.showUptimeKuma()) {
+        this.uptimeKumaService.initSocket();
+      } else {
+        this.uptimeKumaService.disconnectSocket();
+      }
     });
-  }
-
-  initUptimeKuma(show: boolean): void {
-    show ? this.uptimeKumaService.initSocket() : this.uptimeKumaService.disconnectSocket();
   }
 }

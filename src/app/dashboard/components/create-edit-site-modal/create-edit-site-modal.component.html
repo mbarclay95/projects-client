@@ -53,7 +53,7 @@
             Upload Icon:
 
             @if (model.siteImage) {
-              <img [srcset]="model.siteImage.imagePath" class="ms-3" height="40" />
+              <img [srcset]="model.siteImage.imagePath" [alt]="model.name" class="ms-3" height="40" />
             }
           </div>
 

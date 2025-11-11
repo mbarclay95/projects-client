@@ -27,6 +27,8 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
   ],
 })
 export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy, AfterViewChecked {
+  private nzMessageService = inject(NzMessageService);
+
   @Input() openModal!: Observable<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }>;
   @Input() newLocationSelected!: Observable<WorkingDirectoryItem[] | undefined>;
   @Input() workingDirectory: WorkingDirectoryItem[] = [];
@@ -37,18 +39,16 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy,
   modalStyle = isMobile ? { top: '20px' } : {};
   item?: DirectoryItem;
   createOrUpdate?: 'Create' | 'Update';
-  isVisible: boolean = false;
+  isVisible = false;
   saving = false;
 
-  newName: string = '';
+  newName = '';
   newLocationMode: 'cp' | 'mv' = 'mv';
   newWorkingDirectory?: WorkingDirectoryItem[];
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();
   protected readonly workingDirectoryToString = workingDirectoryToString;
   readonly directoryItemsStore = inject(DirectoryItemsSignalStore);
-
-  constructor(private nzMessageService: NzMessageService) {}
 
   ngOnInit(): void {
     this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((item) => {

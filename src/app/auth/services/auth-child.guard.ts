@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { AuthSignalStore } from './auth-signal-store';
 import { Permissions } from '../permissions';
 
-export const authChildGuard: CanActivateChildFn = (childRoute, state) => {
+export const authChildGuard: CanActivateChildFn = (childRoute, _state) => {
   const authStore = inject(AuthSignalStore);
   const router = inject(Router);
 

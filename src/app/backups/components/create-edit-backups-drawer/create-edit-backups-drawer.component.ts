@@ -34,6 +34,8 @@ import { SortGenericPipe } from '../../../shared/pipes/sort-generic.pipe';
   ],
 })
 export class CreateEditBackupsDrawerComponent {
+  private nzMessageService = inject(NzMessageService);
+
   readonly openDrawer = input.required<Backup | undefined>();
   readonly isVisible = computed(() => {
     this.backup = this.openDrawer();
@@ -51,8 +53,7 @@ export class CreateEditBackupsDrawerComponent {
   readonly backupStore = inject(BackupsSignalStore);
   readonly targetStore = inject(TargetSignalStore);
 
-  constructor(private nzMessageService: NzMessageService) {}
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   selectNewTarget({ target, backupStepId }: { target: Target; backupStepId: number }): void {
     // const backupStep = this.backup.backupSteps.find(step => step.id === backupStepId);
     // if (backupStep) {
@@ -71,7 +72,7 @@ export class CreateEditBackupsDrawerComponent {
     return a?.id === b?.id;
   }
 
-  createNewTarget(backupStepId: number) {
+  createNewTarget(_backupStepId: number) {
     this.targetStore.createEntity();
   }
 
@@ -79,9 +80,7 @@ export class CreateEditBackupsDrawerComponent {
     if (!this.backup) {
       return;
     }
-    this.backup.id === 0
-      ? this.backupStore.create({ entity: this.backup, onSuccess: this.backupSaved })
-      : this.backupStore.update({ entity: this.backup, onSuccess: this.backupSaved });
+    this.backupStore.upsert({ entity: this.backup, onSuccess: this.backupSaved });
   }
 
   backupSaved(): void {

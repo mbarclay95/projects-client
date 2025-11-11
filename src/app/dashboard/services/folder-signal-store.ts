@@ -10,12 +10,12 @@ import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { updateEntity } from '@ngrx/signals/entities';
 
-type FolderStoreState = {
+interface FolderStoreState {
   editMode: boolean;
   selectedSiteId: number | undefined;
   newSiteFolderId: number;
   loadingOneSite: boolean;
-};
+}
 
 const initialState: FolderStoreState = {
   editMode: false,
@@ -71,7 +71,7 @@ export const FolderSignalStore = signalStore(
 
       let counter: 1 | 2 | 3 = 1;
       filterAndSorted.forEach((folder) => {
-        // @ts-ignore
+        // @ts-expect-error this isn't the best way, I should probably refactor
         formattedFolders['column' + counter].push(folder);
         counter++;
         if (counter > 3) {

@@ -37,14 +37,16 @@ import { CreateEditTargetModalComponent } from '../create-edit-target-modal/crea
   ],
 })
 export class CreateEditScheduledBackupDrawerComponent implements OnInit, OnDestroy {
+  private nzMessageService = inject(NzMessageService);
+
   @Input() openModal!: Observable<Schedule>;
 
-  isVisible: boolean = false;
+  isVisible = false;
   scheduledBackup!: Schedule;
   plus = faPlus;
   grip = faGripVertical;
   openTargetModal: Subject<{ target: Target; backupStepId: number }> = new Subject<{ target: Target; backupStepId: number }>();
-  saving: boolean = false;
+  saving = false;
   daysOfWeek = daysOfWeek;
   daysOfMonth = daysOfMonth;
 
@@ -52,8 +54,6 @@ export class CreateEditScheduledBackupDrawerComponent implements OnInit, OnDestr
 
   readonly targetStore = inject(TargetSignalStore);
   readonly schedulesStore = inject(SchedulesSignalStore);
-
-  constructor(private nzMessageService: NzMessageService) {}
 
   ngOnInit(): void {
     this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((scheduledBackup) => {
@@ -67,6 +67,7 @@ export class CreateEditScheduledBackupDrawerComponent implements OnInit, OnDestr
     this.subscriptionDestroyer.complete();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   selectNewTarget({ target, backupStepId }: { target: Target; backupStepId: number }): void {
     // const backupStep = this.scheduledBackup.scheduledBackupSteps.find(step => step.id === backupStepId);
     // if (backupStep) {
@@ -91,7 +92,7 @@ export class CreateEditScheduledBackupDrawerComponent implements OnInit, OnDestr
     this.saving = true;
     try {
       this.schedulesStore.create({ entity: this.scheduledBackup });
-    } catch (e) {
+    } catch (_e) {
       this.saving = false;
       this.nzMessageService.error('There was an error saving the backup.');
       return;

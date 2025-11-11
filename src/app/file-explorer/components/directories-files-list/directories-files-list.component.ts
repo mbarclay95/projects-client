@@ -25,6 +25,8 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
   ],
 })
 export class DirectoriesFilesListComponent {
+  private nzMessageService = inject(NzMessageService);
+
   @Input() workingDirectory: WorkingDirectoryItem[] = [];
   @Input() newLocationBeingSelected = false;
   @Output() openCreateEditModal: EventEmitter<DirectoryItem & { createOrUpdate: 'Create' | 'Update' }> = new EventEmitter<
@@ -40,8 +42,6 @@ export class DirectoriesFilesListComponent {
   back = faChevronLeft;
 
   readonly directoryItemsStore = inject(DirectoryItemsSignalStore);
-
-  constructor(private nzMessageService: NzMessageService) {}
 
   clickedWorkingDirectory(dir: { sort: number; path: string }, last: boolean): void {
     if (last) {

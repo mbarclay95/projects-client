@@ -9,12 +9,12 @@ import { AuthSignalStore } from './auth-signal-store';
   providedIn: 'root',
 })
 export class LoginService {
+  private router = inject(Router);
+
   loginForm?: UntypedFormGroup;
   loading = false;
 
   readonly authStore = inject(AuthSignalStore);
-
-  constructor(private router: Router) {}
 
   initializeForm(): void {
     this.loginForm = new UntypedFormGroup({

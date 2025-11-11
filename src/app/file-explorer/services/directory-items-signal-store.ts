@@ -11,19 +11,19 @@ import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { removeEntity } from '@ngrx/signals/entities';
 
-export type DirectoryItemsUiState = {
+export interface DirectoryItemsUiState {
   workingDirectory: WorkingDirectoryItem[];
-};
+}
 
 export const initialState: DirectoryItemsUiState = {
   workingDirectory: [],
 };
 
-type CreateItemRequest = {
+interface CreateItemRequest {
   type: DirectoryItem['type'];
   newName: string;
   workingDirectory: string;
-};
+}
 
 type UpdateItemRequest = DirectoryItem & {
   newPath: string;
@@ -56,7 +56,7 @@ export const DirectoryItemsSignalStore = signalStore(
   withMethods((store) => {
     const httpClient = inject(HttpClient);
     const appendPath = (path: string) => {
-      let current = [...store.ui.workingDirectory()];
+      const current = [...store.ui.workingDirectory()];
       current.push({
         sort: current.length + 1,
         path,

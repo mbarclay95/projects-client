@@ -11,14 +11,12 @@ export class DefaultModalComponent<T> implements OnInit, OnDestroy {
   @Input() openModal!: Observable<T>;
 
   model?: T;
-  isVisible: boolean = false;
+  isVisible = false;
   saving = false;
   modalStyle = isMobile ? { top: '20px' } : {};
   modalWidth = isMobile ? '95%' : '500px';
 
   subscriptionDestroyer: Subject<void> = new Subject<void>();
-
-  constructor() {}
 
   ngOnInit(): void {
     this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((model) => {
@@ -33,7 +31,9 @@ export class DefaultModalComponent<T> implements OnInit, OnDestroy {
     this.subscriptionDestroyer.complete();
   }
 
-  onOpenModal(): void {}
+  onOpenModal(): void {
+    // override if needed
+  }
 
   createModel(model: T): T {
     return { ...model };

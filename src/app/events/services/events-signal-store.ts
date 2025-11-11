@@ -13,15 +13,15 @@ import { updateEntity } from '@ngrx/signals/entities';
 import { AuthSignalStore } from '../../auth/services/auth-signal-store';
 import { Permissions } from '../../auth/permissions';
 
-export type EventsUiState = {
+export interface EventsUiState {
   showArchived: boolean;
   search: string | null;
-};
+}
 
-type EventsStoreState = {
+interface EventsStoreState {
   selectedParticipantId: number | undefined;
   loadingParticipant: boolean;
-};
+}
 
 const initialState: EventsStoreState = {
   selectedParticipantId: undefined,

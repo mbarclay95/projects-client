@@ -27,9 +27,7 @@ export class CreateEditTargetModalComponent extends DefaultModalSignalComponent<
     if (!this.model) {
       return;
     }
-    this.model.id === 0
-      ? this.targetStore.create({ entity: this.model, onSuccess: this.targetSaved })
-      : this.targetStore.update({ entity: this.model, onSuccess: this.targetSaved });
+    this.targetStore.upsert({ entity: this.model, onSuccess: this.targetSaved });
   }
 
   private targetSaved(newTarget: Target): void {

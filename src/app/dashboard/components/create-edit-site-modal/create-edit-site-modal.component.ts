@@ -30,7 +30,7 @@ import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 export class CreateEditSiteModalComponent extends DefaultModalSignalComponent<Site> {
   fileList: NzUploadFile[] = [];
   check = faCheckCircle;
-  folderId: number = 0;
+  folderId = 0;
 
   readonly folderStore = inject(FolderSignalStore);
 

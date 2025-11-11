@@ -5,9 +5,9 @@ import { getYear } from 'date-fns';
 import { computed, inject } from '@angular/core';
 import { FamiliesSignalStore } from './families-signal-store';
 
-type FamilyStatsUiState = {
+interface FamilyStatsUiState {
   year: number;
-};
+}
 
 const initialState: FamilyStatsUiState = {
   year: getYear(new Date()),

@@ -33,9 +33,7 @@ export class CreateEditEventComponent extends DefaultModalSignalComponent<Event>
     if (!this.model) {
       return;
     }
-    this.model.id === 0
-      ? this.eventsStore.create({ entity: this.model, onSuccess: () => this.eventSaved() })
-      : this.eventsStore.update({ entity: this.model, onSuccess: () => this.eventSaved() });
+    this.eventsStore.upsert({ entity: this.model, onSuccess: () => this.eventSaved() });
   }
 
   eventSaved(): void {

@@ -46,7 +46,7 @@ export class FolderComponent {
     this.folderStore.loadAll({}); // load again so that sorts will be in correct order
   }
 
-  dropSite({ event }: { event: any }): void {
+  dropSite({ event }: { event: { previousIndex: number; currentIndex: number } }): void {
     const oldPosition = event.previousIndex + 1;
     const newPosition = event.currentIndex + 1;
     if (oldPosition === newPosition) {

@@ -18,15 +18,15 @@ export interface CrudEntitiesHttpOptions<T extends HasId> {
   apiUrl?: string;
 }
 
-type CrudEntitiesState<T extends HasId> = {
+interface CrudEntitiesState<T extends HasId> {
   loadingAll: boolean;
   loadingOne: number | string | undefined;
   createEditEntityId: number | string | undefined; // use 0 to create
   initialCreateEntityState: Partial<T> | undefined;
   queryString: string | undefined;
-};
+}
 
-const initialState: CrudEntitiesState<any> = {
+const initialState: CrudEntitiesState<never> = {
   loadingAll: false,
   loadingOne: undefined,
   createEditEntityId: undefined,
@@ -111,6 +111,18 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
         ),
       );
 
+      const upsert = rxMethod<{ entity: T; removeFromStore?: boolean; onSuccess?: (upserted: T) => void }>(
+        pipe(
+          map((data) => {
+            if (data.entity.id === 0) {
+              create(data);
+            } else {
+              update(data);
+            }
+          }),
+        ),
+      );
+
       const create = rxMethod<{ entity: T; onSuccess?: (created: T) => void }>(
         switchMap((data) => {
           setLoadingOne(data.entity.id);
@@ -187,6 +199,7 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
       return {
         loadAll,
         loadOne,
+        upsert,
         create,
         update,
         remove,

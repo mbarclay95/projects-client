@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import {
   NzTableComponent,
   NzTheadComponent,
@@ -27,7 +27,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     FaIconComponent,
   ],
 })
-export class FamiliesTableComponent implements OnInit {
+export class FamiliesTableComponent {
   @ViewChild('familiesTableTag', { static: true }) familiesTable: NzTableComponent<Family> | undefined;
   @Input() set families(families: Family[] | null) {
     if (families) {
@@ -38,8 +38,4 @@ export class FamiliesTableComponent implements OnInit {
 
   _families: Family[] = [];
   edit = faEdit;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

@@ -13,9 +13,9 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
   imports: [ReactiveFormsModule, NzInputDirective, NzButtonComponent, NzSpinComponent],
 })
 export class LoginPageComponent implements OnInit {
-  readonly authStore = inject(AuthSignalStore);
+  loginService = inject(LoginService);
 
-  constructor(public loginService: LoginService) {}
+  readonly authStore = inject(AuthSignalStore);
 
   async ngOnInit(): Promise<void> {
     if (!(await this.loginService.redirectIfLoggedIn())) {

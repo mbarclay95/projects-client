@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { GamingSessionsFacadeService } from '../../services/gaming-sessions-facade.service';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
 import { AsyncPipe } from '@angular/common';
@@ -28,7 +28,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './gaming-session-view-page.component.scss',
 })
 export class GamingSessionViewPageComponent {
-  openModal: Subject<GamingSessionDevice> = new Subject<GamingSessionDevice>();
+  gamingSessionsFacadeService = inject(GamingSessionsFacadeService);
 
-  constructor(public gamingSessionsFacadeService: GamingSessionsFacadeService) {}
+  openModal: Subject<GamingSessionDevice> = new Subject<GamingSessionDevice>();
 }

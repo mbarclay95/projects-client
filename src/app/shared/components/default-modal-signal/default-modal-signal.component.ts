@@ -23,9 +23,11 @@ export abstract class DefaultModalSignalComponent<T> {
   modalStyle = isMobile ? { top: '20px' } : {};
   modalWidth = isMobile ? '95%' : '500px';
 
-  // override if needed
-  onOpenModal(): void {}
+  onOpenModal(): void {
+    // override if needed
+  }
 
-  // override if needed
-  onCloseModal(): void {}
+  onCloseModal(): void {
+    // override if needed
+  }
 }

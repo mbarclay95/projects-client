@@ -56,12 +56,11 @@ export class MyFamilyMembersComponent {
   readonly familiesStore = inject(FamiliesSignalStore);
   readonly taskUserConfigsStore = inject(TaskUserConfigsSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
-
-  constructor(private nzMessageService: NzMessageService) {}
+  readonly nzMessageService = inject(NzMessageService);
 
   saveSettings(memberConfig: TaskUserConfig, popoverOpened: boolean) {
     if (!popoverOpened) {
-      let newTaskConfig = { ...memberConfig };
+      const newTaskConfig = { ...memberConfig };
       if (this.newTasksPerWeek !== undefined) {
         newTaskConfig.tasksPerWeek = this.newTasksPerWeek;
         this.newTasksPerWeek = undefined;

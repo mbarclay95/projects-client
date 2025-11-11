@@ -26,6 +26,8 @@ import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
   ],
 })
 export class SiteComponent {
+  private nzMessageService = inject(NzMessageService);
+
   @Input() site!: Site;
   @Input() editMode!: boolean;
 
@@ -37,13 +39,11 @@ export class SiteComponent {
 
   readonly folderStore = inject(FolderSignalStore);
 
-  constructor(private nzMessageService: NzMessageService) {}
-
   updateSiteShow(show: boolean): void {
     const updatedSite = { ...this.site, ...{ show } };
     try {
       this.folderStore.updateSiteHttp({ site: updatedSite, oldFolderId: updatedSite.folderId });
-    } catch (e) {
+    } catch (_e) {
       this.nzMessageService.error('There was an error updating the site');
     }
   }

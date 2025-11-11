@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NzContentComponent } from 'ng-zorro-antd/layout';
 import { RouterOutlet } from '@angular/router';
 
@@ -8,8 +8,4 @@ import { RouterOutlet } from '@angular/router';
   styleUrls: ['./event-signup-layout.component.scss'],
   imports: [NzContentComponent, RouterOutlet],
 })
-export class EventSignupLayoutComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class EventSignupLayoutComponent {}

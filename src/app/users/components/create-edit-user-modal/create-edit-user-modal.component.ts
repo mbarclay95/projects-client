@@ -58,9 +58,7 @@ export class CreateEditUserModalComponent extends DefaultModalSignalComponent<Us
     if (!this.model) {
       return;
     }
-    this.model.id === 0
-      ? this.usersStore.create({ entity: this.model, onSuccess: () => this.userSaved() })
-      : this.usersStore.update({ entity: this.model, onSuccess: () => this.userSaved() });
+    this.usersStore.upsert({ entity: this.model, onSuccess: () => this.userSaved() });
   }
 
   private userSaved() {

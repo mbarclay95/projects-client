@@ -48,9 +48,7 @@ export class CreateEditTaskModalComponent extends DefaultModalSignalComponent<Ta
     if (!this.model) {
       return;
     }
-    this.model.id === 0
-      ? this.tasksStore.create({ entity: this.model, onSuccess: () => this.taskSaved() })
-      : this.tasksStore.update({ entity: this.model, onSuccess: () => this.taskSaved() });
+    this.tasksStore.upsert({ entity: this.model, onSuccess: () => this.taskSaved() });
   }
 
   taskSaved(): void {

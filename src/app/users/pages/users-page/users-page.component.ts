@@ -1,7 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Subject } from 'rxjs';
-import { createNewUserWithDefaultRole, createUser, User } from '../../models/user.model';
-import { Roles } from '../../../auth/permissions';
+import { createNewUserWithDefaultRole } from '../../models/user.model';
 import { isMobile } from '../../../app.component';
 import { UsersSignalStore } from '../../services/users-signal-store';
 import { RolesSignalStore } from '../../services/roles-signal-store';

@@ -36,10 +36,11 @@ export class UserGamingSessionsService {
   }
 }
 
-export type UserGamingSessions = {
-  [sessionId: number]: {
+export type UserGamingSessions = Record<
+  number,
+  {
     gamingSessionDeviceId: number;
-  };
-};
+  }
+>;
 
 const GAMING_STORAGE_KEY = 'user_gaming_sessions';

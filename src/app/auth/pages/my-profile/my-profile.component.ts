@@ -39,6 +39,9 @@ import { HasRolePipe } from '../../../shared/pipes/has-role.pipe';
   ],
 })
 export class MyProfileComponent {
+  private nzMessageService = inject(NzMessageService);
+  private router = inject(Router);
+
   loggingOut = false;
   changePasswordModal: Subject<void> = new Subject<void>();
 
@@ -47,15 +50,10 @@ export class MyProfileComponent {
   readonly authStore = inject(AuthSignalStore);
   readonly rolesStore = inject(RolesSignalStore);
 
-  constructor(
-    private nzMessageService: NzMessageService,
-    private router: Router,
-  ) {}
-
   updateMe(changes: Partial<User>): void {
     try {
       this.authStore.updateMe({ changes });
-    } catch (e) {
+    } catch (_e) {
       this.nzMessageService.error('There was an error');
     }
   }
@@ -63,7 +61,7 @@ export class MyProfileComponent {
   updateUserConfig(changes: Partial<UserConfig>): void {
     try {
       this.authStore.updateUserConfig(changes);
-    } catch (e) {
+    } catch (_e) {
       this.nzMessageService.error('There was an error');
     }
   }

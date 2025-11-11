@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, firstValueFrom, map, Observable, tap } from 'rxjs';
 import { createEvent, Event } from '../models/event.model';
@@ -9,13 +9,13 @@ import { createEventParticipant, EventParticipant } from '../models/event-partic
   providedIn: 'root',
 })
 export class EventService {
+  private http = inject(HttpClient);
+
   private eventSubject: BehaviorSubject<Event | undefined> = new BehaviorSubject<Event | undefined>(undefined);
   event$: Observable<Event | undefined> = this.eventSubject.asObservable();
   private token?: string;
 
   spotsFull$: Observable<boolean> = this.event$.pipe(map((event) => event?.eventParticipants.length === event?.numOfPeople));
-
-  constructor(private http: HttpClient) {}
 
   async getEvent(eventId: string, token: string): Promise<void> {
     await firstValueFrom(

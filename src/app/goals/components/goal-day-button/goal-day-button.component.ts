@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Goal } from '../../models/goal.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { faX } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +14,9 @@ import { PluralizeGoalPipe } from '../../pipes/pluralize-goal.pipe';
   styleUrls: ['./goal-day-button.component.scss'],
   imports: [NzPopoverDirective, NzSpaceComponent, FaIconComponent, PluralizeGoalPipe],
 })
-export class GoalDayButtonComponent implements OnInit {
+export class GoalDayButtonComponent {
+  private nzMessageService = inject(NzMessageService);
+
   @Input() goal!: Goal;
   @Input() day!: string;
 
@@ -23,16 +25,12 @@ export class GoalDayButtonComponent implements OnInit {
     this.initialAmount = goalDay.amount;
   }
 
-  @Input() showBottomLeft: boolean = false;
-  @Input() showBottomRight: boolean = false;
+  @Input() showBottomLeft = false;
+  @Input() showBottomRight = false;
 
   _goalDay: GoalDay | null = null;
   initialAmount: number | null = null;
   clear = faX;
-
-  constructor(private nzMessageService: NzMessageService) {}
-
-  ngOnInit(): void {}
 
   async visibilityChange(isVisible: boolean) {
     if (!this._goalDay || isVisible || this._goalDay.amount === this.initialAmount) {
@@ -40,7 +38,7 @@ export class GoalDayButtonComponent implements OnInit {
     }
     let showSuccess = true;
     try {
-      // @ts-ignore
+      // @ts-expect-error idk why I did this
       if (this._goalDay.amount === null || this._goalDay.amount === '') {
         if (this._goalDay.id === 0) {
           showSuccess = false;
@@ -54,7 +52,7 @@ export class GoalDayButtonComponent implements OnInit {
         //   await this.goalsService.updateGoalDay(this.goal.id, this._goalDay, this._goalDay.amount - (this.initialAmount ?? 0));
         // }
       }
-    } catch (e) {
+    } catch (_e) {
       this.nzMessageService.error('There was an error');
     }
 

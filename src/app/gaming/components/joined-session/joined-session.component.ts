@@ -45,6 +45,11 @@ import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
   styleUrl: './joined-session.component.scss',
 })
 export class JoinedSessionComponent {
+  gamingSessionsFacadeService = inject(GamingSessionsFacadeService);
+  private nzMessageService = inject(NzMessageService);
+  private router = inject(Router);
+  private nzModalService = inject(NzModalService);
+
   @Input() activeSession!: GamingSession;
   @Input() userSessionDeviceId!: number;
   @Output() editSessionDevice: EventEmitter<GamingSessionDevice> = new EventEmitter<GamingSessionDevice>();
@@ -64,18 +69,11 @@ export class JoinedSessionComponent {
 
   readonly authStore = inject(AuthSignalStore);
 
-  constructor(
-    public gamingSessionsFacadeService: GamingSessionsFacadeService,
-    private nzMessageService: NzMessageService,
-    private router: Router,
-    private nzModalService: NzModalService,
-  ) {}
-
   editClicked(sessionDevice: GamingSessionDevice): void {
     this.editSessionDevice.emit(createGamingSessionDevice(sessionDevice));
   }
 
-  dropSessionDevice({ event }: { event: any }): void {
+  dropSessionDevice({ event }: { event: { previousIndex: number; currentIndex: number } }): void {
     const oldPosition = event.previousIndex + 1;
     const newPosition = event.currentIndex + 1;
     if (oldPosition === newPosition) {
@@ -124,7 +122,7 @@ export class JoinedSessionComponent {
     this.updating = true;
     try {
       await this.gamingSessionsFacadeService.updateSessionPromise(createGamingSession({ ...this.activeSession, ...{ currentTurn: turn } }));
-    } catch (error) {
+    } catch (_error) {
       this.nzMessageService.error("There was an error activating the player's turn");
     }
 
@@ -138,7 +136,7 @@ export class JoinedSessionComponent {
         createGamingSession({ ...this.activeSession, ...{ startedAt: new Date() } }),
       );
       this.nzMessageService.success('Session started!');
-    } catch (error) {
+    } catch (_error) {
       this.nzMessageService.error('There was an error starting the session');
     }
 
@@ -152,7 +150,7 @@ export class JoinedSessionComponent {
       );
       this.nzMessageService.success('Session ended!');
       await this.router.navigateByUrl('games');
-    } catch (error) {
+    } catch (_error) {
       this.nzMessageService.error('There was an error ending the session');
     }
   }
@@ -165,7 +163,7 @@ export class JoinedSessionComponent {
         createGamingSession({ ...this.activeSession, ...{ isPaused: !this.activeSession.isPaused } }),
       );
       this.nzMessageService.success(`Session ${isPaused ? 'resumed' : 'paused'}!`);
-    } catch (error) {
+    } catch (_error) {
       this.nzMessageService.error('There was an error pausing the session');
     }
     this.updating = false;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { EventService } from '../../services/event.service';
 import { Subject } from 'rxjs';
 import { EventCacheService } from '../../services/event-cache.service';
@@ -14,13 +14,9 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
   styleUrls: ['./event-page.component.scss'],
   imports: [NzDividerComponent, NzButtonComponent, EventParticipantModalComponent, AsyncPipe, DatePipe, NzModalModule],
 })
-export class EventPageComponent implements OnInit {
+export class EventPageComponent {
+  eventService = inject(EventService);
+  eventCacheService = inject(EventCacheService);
+
   openSignupModal: Subject<void> = new Subject<void>();
-
-  constructor(
-    public eventService: EventService,
-    public eventCacheService: EventCacheService,
-  ) {}
-
-  ngOnInit(): void {}
 }

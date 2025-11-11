@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Event } from '../../models/event.model';
 import { EventParticipant } from '../../models/event-participant';
 import {
@@ -43,7 +43,10 @@ import { ParticipantsGoingPipe } from '../../pipes/participants-going.pipe';
     ParticipantsGoingPipe,
   ],
 })
-export class MobileEventsTableComponent implements OnInit {
+export class MobileEventsTableComponent {
+  private clipboard = inject(Clipboard);
+  private nzMessageService = inject(NzMessageService);
+
   @Input() events: Event[] = [];
   @Input() loading!: boolean;
 
@@ -63,13 +66,6 @@ export class MobileEventsTableComponent implements OnInit {
   arrowDown = faChevronDown;
   arrowUp = faChevronUp;
   participantChange = faUserPen;
-
-  constructor(
-    private clipboard: Clipboard,
-    private nzMessageService: NzMessageService,
-  ) {}
-
-  ngOnInit() {}
 
   getPercent(participants: EventParticipant[], numOfPeople: number): number {
     return Math.ceil((participants.length / numOfPeople) * 100);

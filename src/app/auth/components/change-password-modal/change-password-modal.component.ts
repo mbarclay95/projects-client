@@ -4,14 +4,14 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AuthSignalStore } from '../../services/auth-signal-store';
-import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzModalComponent, NzModalContentDirective, NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 
 @Component({
   selector: 'app-change-password-modal',
   templateUrl: './change-password-modal.component.html',
   styleUrls: ['./change-password-modal.component.scss'],
-  imports: [NzModalComponent, NzModalContentDirective, ReactiveFormsModule, NzInputDirective],
+  imports: [NzModalComponent, NzModalContentDirective, ReactiveFormsModule, NzInputDirective, NzModalModule],
 })
 export class ChangePasswordModalComponent implements OnInit, OnDestroy {
   @Input() openModal!: Observable<void>;

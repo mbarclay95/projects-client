@@ -1,14 +1,30 @@
 import { Component, effect, inject } from '@angular/core';
 import { faBars, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { MobileDisplayService } from './shared/services/mobile-display.service';
-import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { AuthSignalStore } from './auth/services/auth-signal-store';
+import { NzLayoutComponent, NzHeaderComponent, NzSiderComponent, NzContentComponent, NzFooterComponent } from 'ng-zorro-antd/layout';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { SideMenuComponent } from './shared/components/side-menu/side-menu.component';
+import { NzSpinComponent } from 'ng-zorro-antd/spin';
+import { MobileFooterComponent } from './shared/components/mobile-footer/mobile-footer.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  standalone: false,
+  imports: [
+    NzLayoutComponent,
+    NzHeaderComponent,
+    FaIconComponent,
+    NzSiderComponent,
+    SideMenuComponent,
+    NzContentComponent,
+    NzSpinComponent,
+    RouterOutlet,
+    NzFooterComponent,
+    MobileFooterComponent,
+  ],
 })
 export class AppComponent {
   title = 'projects-client';

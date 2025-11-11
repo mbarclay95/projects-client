@@ -8,12 +8,13 @@ import { FolderGridComponent } from '../../components/folder-grid/folder-grid.co
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { AsyncPipe } from '@angular/common';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-dashboard-page',
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.scss'],
-  imports: [NzSpinComponent, FolderGridComponent, NzButtonComponent, FaIconComponent, AsyncPipe],
+  imports: [NzSpinComponent, FolderGridComponent, NzButtonComponent, FaIconComponent, AsyncPipe, NzModalModule],
 })
 export class DashboardPageComponent {
   edit = faEdit;

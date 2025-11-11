@@ -1,5 +1,6 @@
 import { createRole, Role } from './role.model';
 import { createUserConfig, UserConfig } from './user-config.model';
+import { Roles } from '../../auth/permissions';
 
 export interface User {
   id: number;
@@ -25,4 +26,9 @@ export function createUser(params: Partial<User>) {
     userConfig: createUserConfig(params.userConfig ?? {}),
     familyId: params.familyId ?? null,
   } as User;
+}
+
+export function createNewUserWithDefaultRole(roles: Role[]): Partial<User> {
+  const dashboardRole = roles.find((r) => r.name === Roles.DASHBOARD_ROLE);
+  return { id: 0, roles: dashboardRole ? [dashboardRole] : [] };
 }

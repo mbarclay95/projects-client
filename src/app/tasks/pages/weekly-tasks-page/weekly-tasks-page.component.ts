@@ -14,6 +14,7 @@ import { TasksListComponent } from '../../components/tasks-list/tasks-list.compo
 import { CreateEditTaskModalMobileComponent } from '../../components/create-edit-task-modal-mobile/create-edit-task-modal-mobile.component';
 import { ViewTaskModalComponent } from '../../components/view-task-modal/view-task-modal.component';
 import { SkipTaskModalComponent } from '../../components/skip-task-modal/skip-task-modal.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-weekly-tasks-page',
@@ -27,6 +28,7 @@ import { SkipTaskModalComponent } from '../../components/skip-task-modal/skip-ta
     CreateEditTaskModalMobileComponent,
     ViewTaskModalComponent,
     SkipTaskModalComponent,
+    NzModalModule,
   ],
 })
 export class WeeklyTasksPageComponent implements OnInit {

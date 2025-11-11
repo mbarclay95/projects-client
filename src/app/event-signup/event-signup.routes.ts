@@ -1,17 +1,9 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { TypedRoute } from '../app.routes';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { EventPageComponent } from './pages/event-page/event-page.component';
 import { EventSignupResolver } from './event-signup.resolver';
-import { TypedRoute } from '../app-routing.module';
 
-const routes: TypedRoute[] = [
+export const EVENT_SIGNUP_ROUTES: TypedRoute[] = [
   { path: '', component: NotFoundPageComponent },
   { path: 'signup/:eventId', component: EventPageComponent, resolve: { EventSignupResolver } },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class EventSignupRoutingModule {}

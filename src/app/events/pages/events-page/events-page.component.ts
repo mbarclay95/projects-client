@@ -8,6 +8,7 @@ import { MobileEventsTableComponent } from '../../components/mobile-events-table
 import { EventsTableComponent } from '../../components/events-table/events-table.component';
 import { CreateEditEventComponent } from '../../components/create-edit-event/create-edit-event.component';
 import { EditParticipantModalComponent } from '../../components/edit-participant-modal/edit-participant-modal.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-events-page',
@@ -20,6 +21,7 @@ import { EditParticipantModalComponent } from '../../components/edit-participant
     EventsTableComponent,
     CreateEditEventComponent,
     EditParticipantModalComponent,
+    NzModalModule,
   ],
 })
 export class EventsPageComponent {

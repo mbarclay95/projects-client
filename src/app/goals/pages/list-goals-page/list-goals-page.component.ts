@@ -7,6 +7,7 @@ import { WeekSelectorComponent } from '../../components/week-selector/week-selec
 import { GoalsTableMobileComponent } from '../../components/goals-table-mobile/goals-table-mobile.component';
 import { GoalsTableComponent } from '../../components/goals-table/goals-table.component';
 import { CreateEditGoalModalComponent } from '../../components/create-edit-goal-modal/create-edit-goal-modal.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-list-goals-page',
@@ -19,6 +20,7 @@ import { CreateEditGoalModalComponent } from '../../components/create-edit-goal-
     GoalsTableMobileComponent,
     GoalsTableComponent,
     CreateEditGoalModalComponent,
+    NzModalModule,
   ],
 })
 export class ListGoalsPageComponent implements OnInit {

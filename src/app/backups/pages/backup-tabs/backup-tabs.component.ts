@@ -8,6 +8,7 @@ import { TargetsPageComponent } from '../targets-page/targets-page.component';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { CreateEditBackupsDrawerComponent } from '../../components/create-edit-backups-drawer/create-edit-backups-drawer.component';
 import { CreateEditTargetModalComponent } from '../../components/create-edit-target-modal/create-edit-target-modal.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-backup-tabs',
@@ -24,6 +25,7 @@ import { CreateEditTargetModalComponent } from '../../components/create-edit-tar
     NzButtonComponent,
     CreateEditBackupsDrawerComponent,
     CreateEditTargetModalComponent,
+    NzModalModule,
   ],
 })
 export class BackupTabsComponent implements OnInit, OnDestroy {

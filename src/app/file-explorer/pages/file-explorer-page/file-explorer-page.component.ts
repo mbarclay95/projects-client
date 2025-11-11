@@ -9,12 +9,13 @@ import { DirectoryItemsSignalStore } from '../../services/directory-items-signal
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { DirectoriesFilesListComponent } from '../../components/directories-files-list/directories-files-list.component';
 import { CreateEditDirectoryItemModalComponent } from '../../components/create-edit-directory-item-modal/create-edit-directory-item-modal.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-file-explorer-page',
   templateUrl: './file-explorer-page.component.html',
   styleUrls: ['./file-explorer-page.component.scss'],
-  imports: [PageHeaderComponent, DirectoriesFilesListComponent, CreateEditDirectoryItemModalComponent],
+  imports: [PageHeaderComponent, DirectoriesFilesListComponent, CreateEditDirectoryItemModalComponent, NzModalModule],
 })
 export class FileExplorerPageComponent {
   isMobile = isMobile;

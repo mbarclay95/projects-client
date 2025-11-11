@@ -1,14 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { TypedRoute } from '../app.routes';
 import { TaskTabsComponent } from './pages/task-tabs/task-tabs.component';
 import { WeeklyTasksPageComponent } from './pages/weekly-tasks-page/weekly-tasks-page.component';
 import { MyFamilyPageComponent } from './pages/my-family-page/my-family-page.component';
+import { StatsPageComponent } from './pages/stats-page/stats-page.component';
 import { TasksPageComponent } from './pages/tasks-page/tasks-page.component';
 import { FamiliesPageComponent } from './pages/families-page/families-page.component';
-import { StatsPageComponent } from './pages/stats-page/stats-page.component';
-import { TypedRoute } from '../app-routing.module';
 
-const routes: TypedRoute[] = [
+export const TASK_ROUTES: TypedRoute[] = [
   {
     path: '',
     data: { footerButtons: 'tasks' },
@@ -38,9 +36,3 @@ const routes: TypedRoute[] = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class TasksRoutingModule {}

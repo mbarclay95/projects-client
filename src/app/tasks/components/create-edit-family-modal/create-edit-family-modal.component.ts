@@ -5,7 +5,7 @@ import { faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
 import { User } from '../../../users/models/user.model';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { FamiliesSignalStore } from '../../services/families-signal-store';
-import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
+import { NzModalComponent, NzModalContentDirective, NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NzRadioGroupComponent, NzRadioComponent } from 'ng-zorro-antd/radio';
@@ -29,6 +29,7 @@ import { UpdatingTaskPointColorsPipe } from '../../pipes/updating-task-point-col
     NzOptionComponent,
     UsersToIdsPipe,
     UpdatingTaskPointColorsPipe,
+    NzModalModule,
   ],
 })
 export class CreateEditFamilyModalComponent extends DefaultModalSignalComponent<Family> {

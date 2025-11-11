@@ -2,12 +2,16 @@ import { computed, inject, Injectable, Signal, signal, WritableSignal } from '@a
 import { filter, Observable, Subject } from 'rxjs';
 import { EventsSignalStore } from '../../events/services/events-signal-store';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { TypedData } from '../../app-routing.module';
 import { FamiliesSignalStore } from '../../tasks/services/families-signal-store';
 import { TasksSignalStore } from '../../tasks/services/tasks-signal-store';
 import { defaultTaskButtons, FooterButton, taskFamiliesButton } from '../models/footer-button.model';
 import { Permissions } from '../../auth/permissions';
 import { AuthSignalStore } from '../../auth/services/auth-signal-store';
+import { TypedData } from '../../app.routes';
+import { UsersSignalStore } from '../../users/services/users-signal-store';
+import { createNewUserWithDefaultRole } from '../../users/models/user.model';
+import { RolesSignalStore } from '../../users/services/roles-signal-store';
+import { GoalsSignalStore } from '../../goals/services/goals-signal-store';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +46,9 @@ export class MobileDisplayService {
   readonly familiesStore = inject(FamiliesSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
   readonly authStore = inject(AuthSignalStore);
+  readonly usersStore = inject(UsersSignalStore);
+  readonly rolesStore = inject(RolesSignalStore);
+  readonly goalsStore = inject(GoalsSignalStore);
 
   constructor() {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
@@ -83,6 +90,12 @@ export class MobileDisplayService {
           ownerId: this.familiesStore.activeFamilyId(),
           taskPoint: this.familiesStore.minTaskPoint(),
         });
+        break;
+      case 'users':
+        this.usersStore.createEntity(createNewUserWithDefaultRole(this.rolesStore.entities()));
+        break;
+      case 'goals':
+        this.goalsStore.createEntity();
         break;
       default:
         this.clickedButtonSubject.next();

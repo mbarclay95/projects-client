@@ -5,14 +5,10 @@
   width: 100%;
   box-sizing: border-box;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.4);
-  padding: 0.25rem 0.75rem;
+  padding: 0.5rem 0.75rem;
   cursor: pointer;
   min-height: 93px;
   color: white;
-}
-
-.inner-padding {
-  padding: 15px 0;
 }
 
 .missing-attribute-text {
@@ -21,20 +17,20 @@
 }
 
 .category-text {
-  font-size: 15px;
+  font-size: 17px;
 }
 
 .date-amount-text {
   display: flex;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .bank-text {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .description-text {
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .divider-line {

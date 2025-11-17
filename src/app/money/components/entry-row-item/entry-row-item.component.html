@@ -1,7 +1,7 @@
 <div class="entry-box" (click)="entriesStore.editEntity(entry.id)">
-  <div class="inner-padding">
+  <div>
     <div class="category-text">
-      @if (entry.subCategory) {
+      @if (entry.category && entry.subCategory) {
         <div>{{ entry.category.name }}: {{ entry.subCategory.name }}</div>
       }
 
@@ -19,7 +19,7 @@
         <span class="missing-attribute-text">Missing Date</span>
       }
 
-      <span class="mx-1">-</span>
+      <span class="mx-2 fw-bold">|</span>
 
       @if (entry.amount) {
         <span>{{ entry.amount | currency }}</span>
@@ -29,6 +29,12 @@
         <span class="missing-attribute-text">Missing Amount</span>
       }
     </div>
+
+    @if (entry.categoryTags.length > 0) {
+      @for (categoryTag of entry.categoryTags; track categoryTag.id) {
+        <nz-tag>{{ categoryTag.name }}</nz-tag>
+      }
+    }
 
     @if (entry.description) {
       <div class="description-text mt-3">

@@ -1,0 +1,19 @@
+<nz-select
+  [nzAllowClear]="allowClear"
+  nzShowSearch
+  [ngModel]="currentSubCategory()"
+  [compareWith]="compareSubCategories"
+  style="width: 100%"
+  (ngModelChange)="selectedSubCategory.emit($event)"
+  nzPlaceHolder="Select Category"
+>
+  @for (categoryObject of categoriesWithSubCategories(); track categoryObject.category.id) {
+    <nz-option-group [nzLabel]="categoryObject.category.name">
+      @for (subCategory of categoryObject.subCategories; track subCategory.id) {
+        <nz-option nzCustomContent [nzLabel]="categoryObject.category.name + ': ' + subCategory.name" [nzValue]="subCategory">
+          {{ subCategory.name }}
+        </nz-option>
+      }
+    </nz-option-group>
+  }
+</nz-select>

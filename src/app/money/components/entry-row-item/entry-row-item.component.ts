@@ -1,16 +1,17 @@
 import { Component, inject, Input } from '@angular/core';
-import { Entry } from '../../models/entry.model';
-import { EntriesSignalStore } from '../../services/entries-signal-store';
+import { IncompleteEntry } from '../../models/entry.model';
+import { IncompleteEntriesSignalStore } from '../../services/incomplete-entries-signal-store';
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { NzTagComponent } from 'ng-zorro-antd/tag';
 
 @Component({
   selector: 'app-entry-row-item',
   templateUrl: './entry-row-item.component.html',
   styleUrls: ['./entry-row-item.component.scss'],
-  imports: [CurrencyPipe, DatePipe],
+  imports: [CurrencyPipe, DatePipe, NzTagComponent],
 })
 export class EntryRowItemComponent {
-  @Input() entry!: Entry;
+  @Input() entry!: IncompleteEntry;
 
-  readonly entriesStore = inject(EntriesSignalStore);
+  readonly entriesStore = inject(IncompleteEntriesSignalStore);
 }

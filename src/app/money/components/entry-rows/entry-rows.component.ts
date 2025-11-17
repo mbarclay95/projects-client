@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Entry } from '../../models/entry.model';
 import { EntryRowItemComponent } from '../entry-row-item/entry-row-item.component';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
+import { IncompleteEntry } from '../../models/entry.model';
 
 @Component({
   selector: 'app-entry-rows',
@@ -10,5 +10,5 @@ import { NzEmptyComponent } from 'ng-zorro-antd/empty';
   imports: [EntryRowItemComponent, NzEmptyComponent],
 })
 export class EntryRowsComponent {
-  @Input() entries: Entry[] = [];
+  @Input() entries: IncompleteEntry[] = [];
 }

@@ -1,11 +1,11 @@
 <div class="w-100 money-page-container p-2">
-  @if (entriesStore.loadingAll()) {
+  @if (incompleteEntriesStore.loadingAll()) {
     <div class="loading-container">
       <nz-spin></nz-spin>
     </div>
   } @else {
-    <app-entry-rows [entries]="entriesStore.entities()"></app-entry-rows>
+    <app-entry-rows [entries]="incompleteEntriesStore.sortedEntities()"></app-entry-rows>
   }
 </div>
 
-<app-create-edit-entry-modal [openModal]="entriesStore.createEditEntity()"></app-create-edit-entry-modal>
+<app-create-edit-entry-modal [openModal]="incompleteEntriesStore.createEditEntity()"></app-create-edit-entry-modal>

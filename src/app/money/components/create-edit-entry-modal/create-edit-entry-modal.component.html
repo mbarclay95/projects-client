@@ -3,50 +3,77 @@
   [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Transaction'"
   [nzWidth]="modalWidth"
   [nzStyle]="modalStyle"
-  [nzClosable]="false"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="incompleteEntriesStore.clearCreateEditEntity()"
 >
   <ng-container *nzModalContent>
     @if (model) {
-      <div class="d-flex">
-        <!--      <button nz-button nz-popconfirm nzPopconfirmTitle="Your changes will not be saved"-->
-        <!--              (nzOnConfirm)="isVisible = false">-->
-        <button nz-button (click)="entriesStore.clearCreateEditEntity()">
-          <fa-icon [icon]="close"></fa-icon>
-        </button>
+      <!--      <div class="d-flex">-->
+      <!--      <button nz-button nz-popconfirm nzPopconfirmTitle="Your changes will not be saved"-->
+      <!--              (nzOnConfirm)="isVisible = false">-->
+      <!--        <button nz-button (click)="entriesStore.clearCreateEditEntity()">-->
+      <!--          <fa-icon [icon]="close"></fa-icon>-->
+      <!--        </button>-->
 
-        <button nz-button>
-          <fa-icon [icon]="previous"></fa-icon>
-        </button>
+      <!--        <button nz-button>-->
+      <!--          <fa-icon [icon]="previous"></fa-icon>-->
+      <!--        </button>-->
 
-        <button nz-button>
-          <fa-icon [icon]="next"></fa-icon>
-        </button>
-      </div>
+      <!--        <button nz-button>-->
+      <!--          <fa-icon [icon]="next"></fa-icon>-->
+      <!--        </button>-->
+      <!--      </div>-->
 
-      <nz-divider></nz-divider>
+      <!--      <nz-divider></nz-divider>-->
 
       <div class="form-box">
         Category:
 
-        <nz-select></nz-select>
+        <app-category-select [subCategory]="model.subCategory" (selectedSubCategory)="selectedSubcategory($event)"></app-category-select>
       </div>
 
       <div class="form-box">
         Amount:
 
-        <input nz-input [(ngModel)]="model.amount" />
+        <input nz-input currencyMask placeholder="Enter amount" [(ngModel)]="model.amount" [options]="{ align: 'left' }" />
       </div>
 
       <div class="form-box">
         Date:
 
-        <nz-date-picker [(ngModel)]="model.dateSpent"></nz-date-picker>
+        <nz-date-picker [(ngModel)]="model.dateSpent" nzFormat="MM/dd/yyyy"></nz-date-picker>
       </div>
 
       <div class="form-box">
         Bank:
 
-        <nz-select></nz-select>
+        <nz-select [(ngModel)]="model.bank" style="min-width: 110px" nzPlaceHolder="Select bank" nzShowSearch [compareWith]="compareModels">
+          @for (bank of banksStore.entities(); track bank.id) {
+            <nz-option [nzValue]="bank" [nzLabel]="bank.name"></nz-option>
+          }
+        </nz-select>
+      </div>
+
+      <div class="form-box">
+        Description:
+
+        <input nz-input [(ngModel)]="model.description" />
+      </div>
+
+      <div class="form-box">
+        Tags:
+
+        <nz-select
+          [(ngModel)]="model.categoryTags"
+          nzMode="multiple"
+          nzPlaceHolder="Select tags"
+          style="min-width: 150px"
+          [compareWith]="compareModels"
+        >
+          @for (tag of categoryTagsStore.entities(); track tag.id) {
+            <nz-option [nzLabel]="tag.name" [nzValue]="tag"></nz-option>
+          }
+        </nz-select>
       </div>
     }
   </ng-container>
@@ -61,16 +88,32 @@
         (nzOnConfirm)="deleteEntry()"
         nzPopconfirmTitle="Are you sure?"
         [nzLoading]="deleting"
-        [disabled]="deleting || entriesStore.loadingOne()"
+        [disabled]="deleting || incompleteEntriesStore.loadingOne()"
       >
         Delete
       </button>
     </div>
 
     <div>
-      <button nz-button nzType="default" (click)="saveEntry()" [disabled]="deleting || entriesStore.loadingOne()">Save</button>
+      <button
+        nz-button
+        nzType="default"
+        (click)="saveEntry()"
+        [nzLoading]="saving"
+        [disabled]="deleting || incompleteEntriesStore.loadingOne()"
+      >
+        Save
+      </button>
 
-      <button nz-button nzType="primary" (click)="saveEntryAndNext()" [disabled]="deleting || entriesStore.loadingOne()">Save &</button>
+      <button
+        nz-button
+        nzType="primary"
+        (click)="saveEntryAndComplete()"
+        [nzLoading]="savingCompleted"
+        [disabled]="deleting || incompleteEntriesStore.loadingOne() || completeDisabled()"
+      >
+        Save & Complete
+      </button>
     </div>
   </div>
 </nz-modal>

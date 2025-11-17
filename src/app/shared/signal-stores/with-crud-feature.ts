@@ -216,6 +216,7 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
       );
 
       return {
+        setLoadingOne,
         loadAll,
         loadAllPaged,
         loadOne,

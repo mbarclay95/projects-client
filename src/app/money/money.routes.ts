@@ -12,7 +12,7 @@ export const MONEY_ROUTES: TypedRoute[] = [
       {
         path: 'incomplete-transactions',
         component: IncompleteEntriesComponent,
-        data: { headerTitle: 'Incomplete Transactions' },
+        data: { headerTitle: 'Incomplete Transactions', createButtonAction: 'transactions' },
       },
     ],
   },

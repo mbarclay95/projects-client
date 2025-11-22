@@ -27,25 +27,25 @@
       <!--      <nz-divider></nz-divider>-->
 
       <div class="form-box">
-        Category:
+        <span>Category <span class="text-danger">*</span></span>
 
         <app-category-select [subCategory]="model.subCategory" (selectedSubCategory)="selectedSubcategory($event)"></app-category-select>
       </div>
 
       <div class="form-box">
-        Amount:
+        <span>Amount <span class="text-danger">*</span></span>
 
         <input nz-input currencyMask placeholder="Enter amount" [(ngModel)]="model.amount" [options]="{ align: 'left' }" />
       </div>
 
       <div class="form-box">
-        Date:
+        <span>Date <span class="text-danger">*</span></span>
 
         <nz-date-picker [(ngModel)]="model.dateSpent" nzFormat="MM/dd/yyyy"></nz-date-picker>
       </div>
 
       <div class="form-box">
-        Bank:
+        <span>Bank <span class="text-danger">*</span></span>
 
         <nz-select [(ngModel)]="model.bank" style="min-width: 110px" nzPlaceHolder="Select bank" nzShowSearch [compareWith]="compareModels">
           @for (bank of banksStore.entities(); track bank.id) {
@@ -55,13 +55,13 @@
       </div>
 
       <div class="form-box">
-        Description:
+        Description
 
         <input nz-input [(ngModel)]="model.description" />
       </div>
 
       <div class="form-box">
-        Tags:
+        Tags
 
         <nz-select
           [(ngModel)]="model.categoryTags"

@@ -33,7 +33,7 @@
     "bootstrap": "^5.3.8",
     "colorjs.io": "^0.5.2",
     "date-fns": "^4.1.0",
-    "ng-zorro-antd": "^20.3.1",
+    "ng-zorro-antd": "^21.1.0",
     "ng2-currency-mask": "^13.0.3",
     "ngx-socket-io": "4.9.0",
     "rxjs": "~7.5.0",

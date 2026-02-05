@@ -28,7 +28,7 @@
     "@fortawesome/free-brands-svg-icons": "^7.0.1",
     "@fortawesome/free-regular-svg-icons": "^7.0.1",
     "@fortawesome/free-solid-svg-icons": "^7.0.1",
-    "@ngrx/signals": "^20.0.1",
+    "@ngrx/signals": "^21.0.1",
     "@swimlane/ngx-charts": "^23.0.1",
     "bootstrap": "^5.3.8",
     "colorjs.io": "^0.5.2",

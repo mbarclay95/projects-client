@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { faBars, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { MobileDisplayService } from './shared/services/mobile-display.service';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
@@ -27,53 +27,48 @@ import { MobileFooterComponent } from './shared/components/mobile-footer/mobile-
   ],
 })
 export class AppComponent {
-  mobileHeaderService = inject(MobileDisplayService);
-  private router = inject(Router);
-
-  title = 'projects-client';
-  sideMenuClosed?: boolean = undefined;
-  isMobile = isMobile;
-  collapsedWidth = isMobile ? 0 : 64;
+  sideMenuClosed = signal(true);
+  loading = signal(false);
+  readonly isMobile = isMobile;
+  readonly collapsedWidth = isMobile ? 0 : 64;
   menu = faBars;
   plus = faPlus;
-  loading = false;
 
   readonly authStore = inject(AuthSignalStore);
+  readonly mobileHeaderService = inject(MobileDisplayService);
+  private readonly router = inject(Router);
 
   constructor() {
     effect(() => {
-      if (this.isMobile || this.sideMenuClosed !== undefined) {
+      const user = this.authStore.auth();
+      if (this.isMobile) {
         return;
       }
-      const user = this.authStore.auth();
       if (user) {
-        this.sideMenuClosed = false;
-        if (!user.userConfig.sideMenuOpen) {
-          setTimeout(() => {
-            this.sideMenuClosed = true;
-          }, 0);
-        }
+        this.sideMenuClosed.set(!user.userConfig.sideMenuOpen);
       }
     });
 
-    if (this.isMobile) {
-      this.sideMenuClosed = true;
-    }
     this.subscribeToRouter();
+  }
+
+  sideMenuChanged(closed: boolean, saveToServer = true) {
+    this.sideMenuClosed.set(closed);
+    this.authStore.updateUserConfig({ sideMenuOpen: !closed }, saveToServer);
   }
 
   subscribeToRouter() {
     this.router.events.subscribe((event) => {
       switch (true) {
         case event instanceof NavigationStart: {
-          this.loading = true;
+          this.loading.set(true);
           break;
         }
 
         case event instanceof NavigationEnd:
         case event instanceof NavigationCancel:
         case event instanceof NavigationError: {
-          this.loading = false;
+          this.loading.set(false);
           break;
         }
         default: {
@@ -84,13 +79,13 @@ export class AppComponent {
   }
 
   closeSideMenu(saveToServer = true) {
-    this.sideMenuClosed = true;
+    this.sideMenuClosed.set(true);
     void this.authStore.updateUserConfig({ sideMenuOpen: false }, saveToServer);
   }
 
   closeSideIfMobile() {
-    if (this.isMobile && !this.sideMenuClosed) {
-      this.sideMenuClosed = true;
+    if (this.isMobile && !this.sideMenuClosed()) {
+      this.sideMenuClosed.set(true);
     }
   }
 }

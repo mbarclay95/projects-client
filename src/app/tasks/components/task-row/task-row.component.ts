@@ -12,7 +12,7 @@ import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuDirective, NzMenuItemComponent } from 'ng-zorro-antd/menu';
 import { DueDateHumanReadablePipe } from '../../pipes/due-date-human-readable.pipe';
 import { TaskPointColorPipe } from '../../pipes/task-point-color.pipe';
@@ -27,8 +27,7 @@ import { TaskPointColorPipe } from '../../pipes/task-point-color.pipe';
     FormsModule,
     FaIconComponent,
     NzButtonComponent,
-    NzDropDownDirective,
-    NzDropdownMenuComponent,
+    NzDropdownModule,
     NzMenuDirective,
     NzMenuItemComponent,
     DueDateHumanReadablePipe,

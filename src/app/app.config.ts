@@ -1,11 +1,11 @@
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './auth/services/auth.interceptor';
 import { provideRouter } from '@angular/router';
 import { APP_ROUTES } from './app.routes';
+import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 
 const ngZorroConfig: NzConfig = {};
 
@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
       multi: true,
     },
     provideHttpClient(withInterceptorsFromDi()),
-    provideAnimations(),
+    provideNzNoAnimation(),
     provideRouter(APP_ROUTES),
   ],
 };

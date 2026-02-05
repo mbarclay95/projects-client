@@ -15,7 +15,7 @@ import {
 import { createGamingSessionDevice, GamingSessionDevice } from '../../models/gaming-session-device.model';
 import { CdkDragHandle, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzDropdownButtonDirective, NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuDirective, NzMenuItemComponent } from 'ng-zorro-antd/menu';
 import { Subject } from 'rxjs';
 import { CreateEditSessionModalComponent } from '../create-edit-session-modal/create-edit-session-modal.component';
@@ -34,9 +34,7 @@ import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
     CdkDragHandle,
     NzButtonComponent,
     DragDropModule,
-    NzDropDownDirective,
-    NzDropdownButtonDirective,
-    NzDropdownMenuComponent,
+    NzDropdownModule,
     NzMenuDirective,
     NzMenuItemComponent,
     CreateEditSessionModalComponent,

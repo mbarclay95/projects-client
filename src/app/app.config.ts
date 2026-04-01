@@ -1,5 +1,5 @@
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './auth/services/auth.interceptor';
@@ -13,7 +13,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideNzConfig(ngZorroConfig),
     provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    // provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     {
       provide: NZ_I18N,
       useValue: en_US,

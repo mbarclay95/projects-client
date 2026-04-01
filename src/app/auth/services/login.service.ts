@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Roles } from '../permissions';
@@ -11,33 +11,36 @@ import { AuthSignalStore } from './auth-signal-store';
 export class LoginService {
   private router = inject(Router);
 
-  loginForm?: UntypedFormGroup;
-  loading = false;
+  loginForm: WritableSignal<UntypedFormGroup | undefined> = signal(undefined);
+  loading: WritableSignal<boolean> = signal(false);
 
   readonly authStore = inject(AuthSignalStore);
 
   initializeForm(): void {
-    this.loginForm = new UntypedFormGroup({
-      email: new UntypedFormControl('', [Validators.required]),
-      password: new UntypedFormControl('', [Validators.required]),
-    });
+    this.loginForm.set(
+      new UntypedFormGroup({
+        email: new UntypedFormControl('', [Validators.required]),
+        password: new UntypedFormControl('', [Validators.required]),
+      }),
+    );
   }
 
   async login(): Promise<void> {
-    if (!this.loginForm || this.loginForm.invalid) {
+    const form = this.loginForm();
+    if (!form || form.invalid) {
       return;
     }
-    this.loading = true;
+    this.loading.set(true);
 
-    const loginSuccess = await this.authStore.login(this.loginForm.get('email')?.value ?? '', this.loginForm.get('password')?.value ?? '');
+    const loginSuccess = await this.authStore.login(form.get('email')?.value ?? '', form.get('password')?.value ?? '');
     if (!loginSuccess) {
-      this.loading = false;
+      this.loading.set(false);
       return;
     }
 
     await this.authStore.getMe();
 
-    this.loading = false;
+    this.loading.set(false);
     await this.redirectIfLoggedIn();
   }
 

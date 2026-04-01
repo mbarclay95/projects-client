@@ -1,9 +1,9 @@
 <div class="d-flex justify-content-center align-items-center w-100" style="height: 75vh" (keyup.enter)="loginService.login()">
-  @if (loginService.loginForm) {
+  @if (loginService.loginForm(); as form) {
     <div class="login-container" style="padding: 3rem 5rem">
       @if (!authStore.otherError()) {
         <h1 class="mb-4">Login</h1>
-        <form [formGroup]="loginService.loginForm">
+        <form [formGroup]="form">
           <div class="mb-2">
             Username:
             <input nz-input formControlName="email" class="input-borders" />
@@ -34,9 +34,9 @@
           <button
             nz-button
             nzType="primary"
-            [nzLoading]="loginService.loading"
+            [nzLoading]="loginService.loading()"
             (keydown.enter)="loginService.login()"
-            [disabled]="loginService.loading || loginService.loginForm.invalid"
+            [disabled]="loginService.loading() || form.invalid"
             (click)="loginService.login()"
           >
             Login

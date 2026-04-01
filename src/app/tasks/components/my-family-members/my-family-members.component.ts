@@ -12,6 +12,8 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzPopoverDirective } from 'ng-zorro-antd/popover';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
+import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NzProgressComponent } from 'ng-zorro-antd/progress';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
@@ -37,6 +39,9 @@ import { TotalCompletedTasksPipe } from '../../pipes/total-completed-tasks.pipe'
     FirstNamePipe,
     WeeklyProgressPercentPipe,
     TotalCompletedTasksPipe,
+    NzDatePickerComponent,
+    NzSelectComponent,
+    NzOptionComponent,
   ],
 })
 export class MyFamilyMembersComponent {
@@ -47,6 +52,8 @@ export class MyFamilyMembersComponent {
 
   newTasksPerWeek?: number;
   newDefaultTasksPerWeek?: number;
+  newCompletedAt?: Date | null;
+  newTaskPoint?: number;
   isMobile = isMobile;
   settings = faCog;
   undo = faArrowRotateLeft;
@@ -84,6 +91,42 @@ export class MyFamilyMembersComponent {
 
   defaultTasksPerWeekChanged(newDefaultTasksPerWeek: number) {
     this.newDefaultTasksPerWeek = newDefaultTasksPerWeek;
+  }
+
+  taskCompletedAtChanged(newCompletedAt: Date) {
+    this.newCompletedAt = newCompletedAt;
+  }
+
+  taskPointChanged(newTaskPoint: number) {
+    this.newTaskPoint = newTaskPoint;
+  }
+
+  saveTaskSettings(task: Task, popoverOpened: boolean) {
+    if (!popoverOpened) {
+      const updatedTask = { ...task };
+      let changed = false;
+
+      if (this.newCompletedAt !== undefined) {
+        updatedTask.completedAt = this.newCompletedAt ?? undefined;
+        this.newCompletedAt = undefined;
+        changed = true;
+      }
+
+      if (this.newTaskPoint !== undefined) {
+        updatedTask.taskPoint = this.newTaskPoint;
+        this.newTaskPoint = undefined;
+        changed = true;
+      }
+
+      if (changed) {
+        this.tasksStore.update({
+          entity: updatedTask,
+          onSuccess: () => {
+            this.taskUserConfigsStore.loadAll({});
+          },
+        });
+      }
+    }
   }
 
   async undoTask(memberConfigId: number, task: Task) {

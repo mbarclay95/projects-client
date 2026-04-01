@@ -34,8 +34,6 @@ import { SortGenericPipe } from '../../../shared/pipes/sort-generic.pipe';
   ],
 })
 export class CreateEditBackupsDrawerComponent {
-  private nzMessageService = inject(NzMessageService);
-
   readonly openDrawer = input.required<Backup | undefined>();
   readonly isVisible = computed(() => {
     this.backup = this.openDrawer();
@@ -52,6 +50,7 @@ export class CreateEditBackupsDrawerComponent {
 
   readonly backupStore = inject(BackupsSignalStore);
   readonly targetStore = inject(TargetSignalStore);
+  private readonly nzMessageService = inject(NzMessageService);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   selectNewTarget({ target, backupStepId }: { target: Target; backupStepId: number }): void {

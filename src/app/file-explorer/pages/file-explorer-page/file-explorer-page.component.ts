@@ -10,12 +10,21 @@ import { PageHeaderComponent } from '../../../shared/components/page-header/page
 import { DirectoriesFilesListComponent } from '../../components/directories-files-list/directories-files-list.component';
 import { CreateEditDirectoryItemModalComponent } from '../../components/create-edit-directory-item-modal/create-edit-directory-item-modal.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { FormsModule } from '@angular/forms';
+import { NzInputDirective } from 'ng-zorro-antd/input';
 
 @Component({
   selector: 'app-file-explorer-page',
   templateUrl: './file-explorer-page.component.html',
   styleUrls: ['./file-explorer-page.component.scss'],
-  imports: [PageHeaderComponent, DirectoriesFilesListComponent, CreateEditDirectoryItemModalComponent, NzModalModule],
+  imports: [
+    PageHeaderComponent,
+    DirectoriesFilesListComponent,
+    CreateEditDirectoryItemModalComponent,
+    NzModalModule,
+    FormsModule,
+    NzInputDirective,
+  ],
 })
 export class FileExplorerPageComponent {
   private mobileHeaderService = inject(MobileDisplayService);
@@ -52,7 +61,7 @@ export class FileExplorerPageComponent {
   }
 
   newLocationSelectedOrCanceled(newLocation: WorkingDirectoryItem[]): void {
-    this.directoryItemsStore.updateUiState({ workingDirectory: newLocation });
+    this.directoryItemsStore.updateUiState({ workingDirectory: this.newLocationBeingSelected });
     this.newLocationBeingSelected = undefined;
     setTimeout(() => this.newLocationSelected.next(newLocation), 100);
   }

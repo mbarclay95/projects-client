@@ -1,8 +1,8 @@
 <nz-modal
-  [(nzVisible)]="isVisible"
+  [nzVisible]="isVisible()"
   [nzTitle]="createOrUpdate + (item?.type === 'dir' ? ' Directory' : ' File')"
   [nzWidth]="modalWidth"
-  (nzOnCancel)="isVisible = false"
+  (nzOnCancel)="isVisible.set(false)"
   nzOkText="Save"
   nzCancelText="Close"
   (nzOnOk)="saveItem()"

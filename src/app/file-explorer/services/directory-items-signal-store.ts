@@ -13,10 +13,12 @@ import { removeEntity } from '@ngrx/signals/entities';
 
 export interface DirectoryItemsUiState {
   workingDirectory: WorkingDirectoryItem[];
+  search: string;
 }
 
 export const initialState: DirectoryItemsUiState = {
   workingDirectory: [],
+  search: '',
 };
 
 interface CreateItemRequest {
@@ -42,15 +44,25 @@ export const DirectoryItemsSignalStore = signalStore(
     createEntity: createDirectoryItem,
   }),
   withUi(initialState),
-  withComputed(({ ui }) => {
+  withComputed(({ ui, entities }) => {
     const workingDirectoryString = computed(() => workingDirectoryToString(ui.workingDirectory()));
     const buildQueryString = computed(() => `path=${workingDirectoryString()}`);
     const noWorkingDir = computed(() => ui.workingDirectory().length === 0);
+    const filteredEntities = computed(() => {
+      const filtered = [...entities()];
+      const search = ui.search()?.toLowerCase();
+      if (!search || search === '') {
+        return filtered;
+      }
+
+      return filtered.filter((e) => e.id.toLowerCase().includes(search));
+    });
 
     return {
       workingDirectoryString,
       buildQueryString,
       noWorkingDir,
+      filteredEntities,
     };
   }),
   withMethods((store) => {

@@ -1,4 +1,16 @@
-import { AfterViewChecked, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { DirectoryItem } from '../../models/directory-item.model';
@@ -39,7 +51,7 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy,
   modalStyle = isMobile ? { top: '20px' } : {};
   item?: DirectoryItem;
   createOrUpdate?: 'Create' | 'Update';
-  isVisible = false;
+  isVisible = signal(false);
   saving = false;
 
   newName = '';
@@ -59,12 +71,12 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy,
       this.newWorkingDirectory = undefined;
       this.newName = item.id;
       this.createOrUpdate = item.createOrUpdate;
-      this.isVisible = true;
+      this.isVisible.set(true);
     });
 
     this.newLocationSelected.pipe(takeUntil(this.subscriptionDestroyer)).subscribe((newWorkingDirectory) => {
       this.newWorkingDirectory = newWorkingDirectory;
-      this.isVisible = true;
+      this.isVisible.set(true);
     });
   }
 
@@ -110,11 +122,11 @@ export class CreateEditDirectoryItemModalComponent implements OnInit, OnDestroy,
   itemSaved(): void {
     this.nzMessageService.success(`${this.item!.type === 'dir' ? 'Directory' : 'File'} ${this.createOrUpdate}`);
     this.saving = false;
-    this.isVisible = false;
+    this.isVisible.set(false);
   }
 
   selectNewLocationClicked(): void {
-    this.isVisible = false;
+    this.isVisible.set(false);
     this.selectNewLocation.emit(this.workingDirectory);
   }
 }

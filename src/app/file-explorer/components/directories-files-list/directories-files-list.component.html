@@ -27,7 +27,7 @@
     </div>
   </nz-list-header>
 
-  @for (item of directoryItemsStore.entities(); track item.id) {
+  @for (item of directoryItemsStore.filteredEntities(); track item.id) {
     <nz-list-item class="d-flex justify-content-start">
       @if (!newLocationBeingSelected) {
         <div class="me-4">

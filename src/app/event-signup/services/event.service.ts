@@ -19,7 +19,7 @@ export class EventService {
 
   async getEvent(eventId: string, token: string): Promise<void> {
     await firstValueFrom(
-      this.http.get<Event>(`${environment.eventSignupApiUrl}/events/${eventId}?token=${token}`).pipe(
+      this.http.get<Event>(`${environment.publicApiUrl}/events/${eventId}?token=${token}`).pipe(
         map((event) => createEvent(event)),
         tap((event) => this.eventSubject.next(event)),
       ),
@@ -30,7 +30,7 @@ export class EventService {
   async createEventParticipant(name: string, isGoing: boolean): Promise<EventParticipant> {
     const event = createEvent(this.eventSubject.value ?? {});
     return await firstValueFrom(
-      this.http.post(`${environment.eventSignupApiUrl}/event-participants`, { name, isGoing, eventId: event.id, token: this.token }).pipe(
+      this.http.post(`${environment.publicApiUrl}/event-participants`, { name, isGoing, eventId: event.id, token: this.token }).pipe(
         map((participant) => createEventParticipant(participant)),
         tap((participant) => {
           event.eventParticipants.push(participant);

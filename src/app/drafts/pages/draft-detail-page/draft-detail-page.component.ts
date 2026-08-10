@@ -2,7 +2,7 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { isMobile } from '../../../app.component';
 import { DraftsSignalStore } from '../../services/drafts-signal-store';
 import { Draft, DRAFT_STATUS_LABELS, DraftStatus } from '../../models/draft.model';
@@ -34,6 +34,7 @@ import { DraftAdminsTabComponent } from '../../components/draft-admins-tab/draft
     NzTabComponent,
     FormsModule,
     DatePipe,
+    NzModalModule,
     DraftTeamsTabComponent,
     DraftMembersTabComponent,
     DraftOrderTabComponent,

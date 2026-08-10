@@ -4,6 +4,9 @@ import { withUi } from '../../shared/signal-stores/with-ui-feature';
 import { withActive } from '../../shared/signal-stores/with-active-feature';
 import { createDraft, Draft } from '../models/draft.model';
 import { createDraftTeam, DraftTeam } from '../models/draft-team.model';
+import { createDraftMember, DraftMember } from '../models/draft-member.model';
+import { createDraftAdmin, DraftAdmin } from '../models/draft-admin.model';
+import { createDraftAdminCandidate, DraftAdminCandidate } from '../models/draft-admin-candidate.model';
 import { computed, effect, inject } from '@angular/core';
 import { AuthSignalStore } from '../../auth/services/auth-signal-store';
 import { Permissions } from '../../auth/permissions';
@@ -24,12 +27,20 @@ interface DraftsStoreState {
   selectedTeamId: number | undefined;
   newTeamDraftId: number;
   loadingTeam: boolean;
+  loadingMember: boolean;
+  loadingAdmin: boolean;
+  draftAdminCandidates: DraftAdminCandidate[];
+  loadingDraftAdminCandidates: boolean;
 }
 
 const initialState: DraftsStoreState = {
   selectedTeamId: undefined,
   newTeamDraftId: 0,
   loadingTeam: false,
+  loadingMember: false,
+  loadingAdmin: false,
+  draftAdminCandidates: [],
+  loadingDraftAdminCandidates: false,
 };
 
 export const DraftsSignalStore = signalStore(
@@ -83,6 +94,8 @@ export const DraftsSignalStore = signalStore(
     const setSelectedTeam = (teamId?: number) => patchState(store, { selectedTeamId: teamId });
     const setDraftIdForNewTeam = (draftId: number) => patchState(store, { selectedTeamId: 0, newTeamDraftId: draftId });
     const setLoadingTeam = (loadingTeam: boolean) => patchState(store, { loadingTeam });
+    const setLoadingMember = (loadingMember: boolean) => patchState(store, { loadingMember });
+    const setLoadingAdmin = (loadingAdmin: boolean) => patchState(store, { loadingAdmin });
 
     const patchDraftTeamCache = (team: DraftTeam): void => {
       const draft = store.entities().find((d) => d.id === team.draftId);
@@ -195,6 +208,204 @@ export const DraftsSignalStore = signalStore(
       ),
     );
 
+    const createDraftMemberHttp = rxMethod<{ member: DraftMember; onSuccess?: (member: DraftMember) => void }>(
+      pipe(
+        switchMap(({ member, onSuccess }) => {
+          setLoadingMember(true);
+          return httpClient.post<DraftMember>(`${environment.apiUrl}/draft-members`, member).pipe(
+            map((created) => createDraftMember(created)),
+            tap((created) => {
+              const draft = store.entities().find((d) => d.id === created.draftId)!;
+              patchState(store, updateEntity({ id: draft.id, changes: { draftMembers: [...draft.draftMembers, created] } }));
+              setLoadingMember(false);
+              if (onSuccess) {
+                onSuccess(created);
+              }
+            }),
+            catchError((error) => {
+              console.log(error);
+              nzMessageService.error(error.error.message ?? 'There was an error adding the member.');
+              setLoadingMember(false);
+              return of(undefined);
+            }),
+          );
+        }),
+      ),
+    );
+
+    const updateDraftMemberHttp = rxMethod<{ member: DraftMember; onSuccess?: (member: DraftMember) => void }>(
+      pipe(
+        switchMap(({ member, onSuccess }) => {
+          setLoadingMember(true);
+          return httpClient.put<DraftMember>(`${environment.apiUrl}/draft-members/${member.id}`, member).pipe(
+            map((updated) => createDraftMember(updated)),
+            tap((updated) => {
+              const draft = store.entities().find((d) => d.id === updated.draftId)!;
+              patchState(
+                store,
+                updateEntity({
+                  id: draft.id,
+                  changes: { draftMembers: draft.draftMembers.map((m) => (m.id === updated.id ? updated : m)) },
+                }),
+              );
+              setLoadingMember(false);
+              if (onSuccess) {
+                onSuccess(updated);
+              }
+            }),
+            catchError((error) => {
+              console.log(error);
+              nzMessageService.error(error.error.message ?? 'There was an error renaming the member.');
+              setLoadingMember(false);
+              return of(undefined);
+            }),
+          );
+        }),
+      ),
+    );
+
+    const deleteDraftMemberHttp = rxMethod<{ member: DraftMember; onSuccess?: () => void }>(
+      pipe(
+        switchMap(({ member, onSuccess }) => {
+          setLoadingMember(true);
+          return httpClient.delete(`${environment.apiUrl}/draft-members/${member.id}`).pipe(
+            tap(() => {
+              const draft = store.entities().find((d) => d.id === member.draftId)!;
+              patchState(
+                store,
+                updateEntity({ id: draft.id, changes: { draftMembers: draft.draftMembers.filter((m) => m.id !== member.id) } }),
+              );
+              setLoadingMember(false);
+              if (onSuccess) {
+                onSuccess();
+              }
+            }),
+            catchError((error) => {
+              console.log(error);
+              nzMessageService.error(error.error.message ?? 'There was an error removing the member.');
+              setLoadingMember(false);
+              return of(undefined);
+            }),
+          );
+        }),
+      ),
+    );
+
+    /**
+     * `PATCH draft-member-positions` responds `{success: true}`, not the
+     * updated members, so the positions sent are also what gets written into
+     * the cache — they are exactly what the server just persisted.
+     */
+    const updateDraftMemberPositionsHttp = rxMethod<{
+      draftId: number;
+      positions: { draftMemberId: number; pickPosition: number }[];
+      onSuccess?: () => void;
+    }>(
+      pipe(
+        switchMap(({ draftId, positions, onSuccess }) => {
+          setLoadingMember(true);
+          return httpClient.patch(`${environment.apiUrl}/draft-member-positions`, { draftId, positions }).pipe(
+            tap(() => {
+              const draft = store.entities().find((d) => d.id === draftId)!;
+              patchState(
+                store,
+                updateEntity({
+                  id: draft.id,
+                  changes: {
+                    draftMembers: draft.draftMembers.map((member) => {
+                      const position = positions.find((p) => p.draftMemberId === member.id);
+                      return position ? { ...member, pickPosition: position.pickPosition } : member;
+                    }),
+                  },
+                }),
+              );
+              setLoadingMember(false);
+              if (onSuccess) {
+                onSuccess();
+              }
+            }),
+            catchError((error) => {
+              console.log(error);
+              nzMessageService.error(error.error.message ?? 'There was an error saving the pick order.');
+              setLoadingMember(false);
+              return of(undefined);
+            }),
+          );
+        }),
+      ),
+    );
+
+    const createDraftAdminHttp = rxMethod<{ draftId: number; userId: number; onSuccess?: () => void }>(
+      pipe(
+        switchMap(({ draftId, userId, onSuccess }) => {
+          setLoadingAdmin(true);
+          return httpClient.post<DraftAdmin>(`${environment.apiUrl}/draft-admins`, { draftId, userId }).pipe(
+            map((created) => createDraftAdmin(created)),
+            tap((created) => {
+              const draft = store.entities().find((d) => d.id === created.draftId)!;
+              patchState(store, updateEntity({ id: draft.id, changes: { draftAdmins: [...draft.draftAdmins, created] } }));
+              setLoadingAdmin(false);
+              if (onSuccess) {
+                onSuccess();
+              }
+            }),
+            catchError((error) => {
+              console.log(error);
+              nzMessageService.error(error.error.message ?? 'There was an error adding the admin.');
+              setLoadingAdmin(false);
+              return of(undefined);
+            }),
+          );
+        }),
+      ),
+    );
+
+    const deleteDraftAdminHttp = rxMethod<{ admin: DraftAdmin; onSuccess?: () => void }>(
+      pipe(
+        switchMap(({ admin, onSuccess }) => {
+          setLoadingAdmin(true);
+          return httpClient.delete(`${environment.apiUrl}/draft-admins/${admin.id}`).pipe(
+            tap(() => {
+              const draft = store.entities().find((d) => d.id === admin.draftId)!;
+              patchState(
+                store,
+                updateEntity({ id: draft.id, changes: { draftAdmins: draft.draftAdmins.filter((a) => a.id !== admin.id) } }),
+              );
+              setLoadingAdmin(false);
+              if (onSuccess) {
+                onSuccess();
+              }
+            }),
+            catchError((error) => {
+              console.log(error);
+              nzMessageService.error(error.error.message ?? 'There was an error removing the admin.');
+              setLoadingAdmin(false);
+              return of(undefined);
+            }),
+          );
+        }),
+      ),
+    );
+
+    const loadDraftAdminCandidatesHttp = rxMethod<void>(
+      pipe(
+        switchMap(() => {
+          patchState(store, { loadingDraftAdminCandidates: true });
+          return httpClient.get<DraftAdminCandidate[]>(`${environment.apiUrl}/draft-admin-candidates`).pipe(
+            map((candidates) => candidates.map((candidate) => createDraftAdminCandidate(candidate))),
+            tap((candidates) => {
+              patchState(store, { draftAdminCandidates: candidates, loadingDraftAdminCandidates: false });
+            }),
+            catchError((error) => {
+              console.log(error);
+              patchState(store, { loadingDraftAdminCandidates: false });
+              return of(undefined);
+            }),
+          );
+        }),
+      ),
+    );
+
     return {
       setSelectedTeam,
       setDraftIdForNewTeam,
@@ -203,6 +414,13 @@ export const DraftsSignalStore = signalStore(
       updateDraftTeamHttp,
       deleteDraftTeamHttp,
       cloneDraftTeamsHttp,
+      createDraftMemberHttp,
+      updateDraftMemberHttp,
+      deleteDraftMemberHttp,
+      updateDraftMemberPositionsHttp,
+      createDraftAdminHttp,
+      deleteDraftAdminHttp,
+      loadDraftAdminCandidatesHttp,
     };
   }),
   withHooks({

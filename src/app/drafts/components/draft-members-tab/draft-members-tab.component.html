@@ -1,1 +1,43 @@
-<!-- Add / rename / remove, and each member's position lands in stage 3.12 -->
+<div class="fw-bold mb-3">Members</div>
+
+@if (draft.draftMembers.length === 0) {
+  <nz-empty nzNotFoundContent="No Members Yet" class="mb-3"></nz-empty>
+} @else {
+  <div class="member-list mb-3">
+    @for (member of draft.draftMembers; track member.id) {
+      <div class="member-row">
+        @if (member.pickPosition) {
+          <span class="position-badge">{{ member.pickPosition }}</span>
+        }
+
+        @if (editingMemberId() === member.id) {
+          <input
+            nz-input
+            [(ngModel)]="editingName"
+            class="member-name-input"
+            (keydown.enter)="commitEdit(member)"
+            (blur)="commitEdit(member)"
+          />
+        } @else {
+          <div class="member-name">{{ member.name }}</div>
+        }
+
+        <div class="member-actions">
+          <fa-icon class="text-primary" [icon]="edit" (click)="startEditing(member)"></fa-icon>
+          <fa-icon
+            class="text-danger"
+            [icon]="trash"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure?"
+            (nzOnConfirm)="deleteMember(member)"
+          ></fa-icon>
+        </div>
+      </div>
+    }
+  </div>
+}
+
+<div class="d-flex">
+  <input nz-input [(ngModel)]="newMemberName" placeholder="Type a name and press enter" class="me-2" (keydown.enter)="addMember()" />
+  <button nz-button nzType="primary" (click)="addMember()">Add</button>
+</div>

@@ -1,1 +1,60 @@
-<!-- Detail page shell and tabs land in stage 3.10 -->
+@if (draftsStore.activeEntity(); as draft) {
+  <div class="w-100 d-flex justify-content-between align-items-center flex-wrap mb-3">
+    <div>
+      <div class="draft-title">{{ draft.name }}</div>
+      <div class="draft-date">{{ draft.draftDate | date: "short" }}</div>
+    </div>
+
+    @if (isMobile) {
+      <nz-select [ngModel]="selectedStatus()" (ngModelChange)="changeStatus($event)" style="width: 160px">
+        @for (status of statuses; track status) {
+          <nz-option
+            [nzValue]="status"
+            [nzLabel]="statusLabels[status]"
+            [nzDisabled]="!canSelectStatus(status)"
+            [nzTitle]="
+              !canSelectStatus(status)
+                ? 'Every member needs a pick position, 1 through N, before the draft can start.'
+                : statusLabels[status]
+            "
+          ></nz-option>
+        }
+      </nz-select>
+    } @else {
+      <nz-segmented [ngModel]="selectedStatus()" (ngModelChange)="changeStatus($event)">
+        @for (status of statuses; track status) {
+          <label
+            nz-segmented-item
+            [nzValue]="status"
+            [nzDisabled]="!canSelectStatus(status)"
+            nz-tooltip
+            [nzTooltipTitle]="
+              !canSelectStatus(status) ? 'Every member needs a pick position, 1 through N, before the draft can start.' : null
+            "
+          >
+            {{ statusLabels[status] }}
+          </label>
+        }
+      </nz-segmented>
+    }
+  </div>
+
+  <nz-tabs>
+    <nz-tab nzTitle="Teams">
+      <app-draft-teams-tab [draft]="draft"></app-draft-teams-tab>
+    </nz-tab>
+    <nz-tab nzTitle="Members">
+      <app-draft-members-tab [draft]="draft"></app-draft-members-tab>
+    </nz-tab>
+    <nz-tab nzTitle="Order">
+      <app-draft-order-tab [draft]="draft"></app-draft-order-tab>
+    </nz-tab>
+    <nz-tab nzTitle="Admins">
+      <app-draft-admins-tab [draft]="draft"></app-draft-admins-tab>
+    </nz-tab>
+  </nz-tabs>
+} @else {
+  <div class="d-flex justify-content-center align-items-center m-5">
+    <nz-spin></nz-spin>
+  </div>
+}

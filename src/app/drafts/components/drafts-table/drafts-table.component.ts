@@ -8,7 +8,7 @@ import {
   NzTbodyComponent,
 } from 'ng-zorro-antd/table';
 import { faBoxArchive, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { Draft, DraftStatus } from '../../models/draft.model';
+import { Draft, DRAFT_STATUS_COLORS, DRAFT_STATUS_LABELS } from '../../models/draft.model';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
@@ -46,19 +46,8 @@ export class DraftsTableComponent {
   edit = faEdit;
   archive = faBoxArchive;
 
-  statusLabels: Record<DraftStatus, string> = {
-    [DraftStatus.signup]: 'Signup',
-    [DraftStatus.locked]: 'Locked',
-    [DraftStatus.inProgress]: 'In Progress',
-    [DraftStatus.complete]: 'Complete',
-  };
-
-  statusColors: Record<DraftStatus, string> = {
-    [DraftStatus.signup]: 'blue',
-    [DraftStatus.locked]: 'orange',
-    [DraftStatus.inProgress]: 'processing',
-    [DraftStatus.complete]: 'green',
-  };
+  statusLabels = DRAFT_STATUS_LABELS;
+  statusColors = DRAFT_STATUS_COLORS;
 
   openDraft(draftId: number): void {
     this.router.navigate(['/app/drafts', draftId]);

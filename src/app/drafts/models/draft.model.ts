@@ -10,6 +10,20 @@ export enum DraftStatus {
   complete = 'complete',
 }
 
+export const DRAFT_STATUS_LABELS: Record<DraftStatus, string> = {
+  [DraftStatus.signup]: 'Signup',
+  [DraftStatus.locked]: 'Locked',
+  [DraftStatus.inProgress]: 'In Progress',
+  [DraftStatus.complete]: 'Complete',
+};
+
+export const DRAFT_STATUS_COLORS: Record<DraftStatus, string> = {
+  [DraftStatus.signup]: 'blue',
+  [DraftStatus.locked]: 'orange',
+  [DraftStatus.inProgress]: 'processing',
+  [DraftStatus.complete]: 'green',
+};
+
 export interface Draft {
   id: number;
   name: string;

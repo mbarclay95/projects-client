@@ -1,8 +1,14 @@
 @if (draftsStore.activeEntity(); as draft) {
   <div class="w-100 d-flex justify-content-between align-items-center flex-wrap mb-3">
-    <div>
-      <div class="draft-title">{{ draft.name }}</div>
-      <div class="draft-date">{{ draft.draftDate | date: "short" }}</div>
+    <div class="d-flex align-items-center">
+      <button nz-button nzType="text" routerLink="/app/drafts" class="me-2" aria-label="Back to drafts">
+        <fa-icon [icon]="back"></fa-icon>
+      </button>
+
+      <div>
+        <div class="draft-title">{{ draft.name }}</div>
+        <div class="draft-date">{{ draft.draftDate | date: "short" }}</div>
+      </div>
     </div>
 
     @if (isMobile) {

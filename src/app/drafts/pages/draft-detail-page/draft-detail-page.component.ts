@@ -1,7 +1,7 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { isMobile } from '../../../app.component';
 import { DraftsSignalStore } from '../../services/drafts-signal-store';
@@ -12,6 +12,9 @@ import { NzSegmentedComponent, NzSegmentedItemComponent } from 'ng-zorro-antd/se
 import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 import { NzTabsComponent, NzTabComponent } from 'ng-zorro-antd/tabs';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { DraftTeamsTabComponent } from '../../components/draft-teams-tab/draft-teams-tab.component';
@@ -32,6 +35,9 @@ import { DraftAdminsTabComponent } from '../../components/draft-admins-tab/draft
     NzTooltipDirective,
     NzTabsComponent,
     NzTabComponent,
+    NzButtonComponent,
+    FaIconComponent,
+    RouterLink,
     FormsModule,
     DatePipe,
     NzModalModule,
@@ -45,6 +51,7 @@ export class DraftDetailPageComponent {
   isMobile = isMobile;
   statuses = Object.values(DraftStatus);
   statusLabels = DRAFT_STATUS_LABELS;
+  back = faChevronLeft;
 
   readonly draftsStore = inject(DraftsSignalStore);
   private readonly route = inject(ActivatedRoute);

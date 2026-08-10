@@ -1,0 +1,49 @@
+.draft-border {
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  color: white;
+}
+
+.draft-box {
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.4);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+
+  .first-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .second-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 13px;
+    margin: 0.5rem 0;
+  }
+
+  .third-row {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+}
+
+.title {
+  font-size: 17px;
+  color: white;
+}
+
+.due-text {
+  font-style: italic;
+  font-size: 11px;
+}
+
+.archived-text {
+  font-style: italic;
+  font-size: 11px;
+}

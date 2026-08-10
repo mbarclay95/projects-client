@@ -1,0 +1,45 @@
+<nz-table #draftsTableTag [nzData]="drafts" nzSize="default" [nzFrontPagination]="false" [nzLoading]="loading">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Draft Date</th>
+      <th>Status</th>
+      <th>Teams</th>
+      <th>Members</th>
+      <th>Picks</th>
+      <th nzWidth="90px"></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (draft of draftsTable?.data; track draft.id) {
+      <tr class="draft-row" (click)="openDraft(draft.id)">
+        <td>
+          @if (draft.deletedAt) {
+            <div class="text-warning" style="font-style: italic">Archived</div>
+          }
+          {{ draft.name }}
+        </td>
+        <td>{{ draft.draftDate | date: "short" }}</td>
+        <td>
+          <nz-tag [nzColor]="statusColors[draft.status]">{{ statusLabels[draft.status] }}</nz-tag>
+        </td>
+        <td>{{ draft.draftTeams.length }}</td>
+        <td>{{ draft.draftMembers.length }}</td>
+        <td>{{ draft.draftPicks.length }}</td>
+        <td>
+          <div class="d-flex justify-content-evenly">
+            <fa-icon class="text-primary" [icon]="edit" (click)="$event.stopPropagation(); editDraft.emit(draft.id)"></fa-icon>
+            <fa-icon
+              class="text-danger"
+              [icon]="archive"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure?"
+              (click)="$event.stopPropagation()"
+              (nzOnConfirm)="archiveDraft.emit(draft.id)"
+            ></fa-icon>
+          </div>
+        </td>
+      </tr>
+    }
+  </tbody>
+</nz-table>

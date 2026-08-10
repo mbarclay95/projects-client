@@ -16,6 +16,7 @@ import { EventsLayoutComponent } from './events/events-layout/events-layout.comp
 import { FileExplorerLayoutComponent } from './file-explorer/file-explorer-layout/file-explorer-layout.component';
 import { MoneyLayoutComponent } from './money/money-layout/money-layout.component';
 import { LoggingLayoutComponent } from './logging/logging-layout/logging-layout.component';
+import { DraftsLayoutComponent } from './drafts/drafts-layout/drafts-layout.component';
 
 export interface TypedData extends Data {
   headerTitle?: string;
@@ -106,6 +107,12 @@ export const APP_ROUTES: TypedRoute[] = [
         component: LoggingLayoutComponent,
         data: { permission: Permissions.LOGGING_PAGE, headerTitle: 'Logging' },
         loadChildren: () => import('./logging/logging.routes').then((m) => m.LOGGING_ROUTES),
+      },
+      {
+        path: 'drafts',
+        component: DraftsLayoutComponent,
+        data: { permission: Permissions.DRAFTS_PAGE, headerTitle: 'Drafts', createButtonAction: 'drafts' },
+        loadChildren: () => import('./drafts/drafts.routes').then((m) => m.DRAFTS_ROUTES),
       },
     ],
   },

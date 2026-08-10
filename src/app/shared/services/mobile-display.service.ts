@@ -13,6 +13,7 @@ import { createNewUserWithDefaultRole } from '../../users/models/user.model';
 import { RolesSignalStore } from '../../users/services/roles-signal-store';
 import { GoalsSignalStore } from '../../goals/services/goals-signal-store';
 import { IncompleteEntriesSignalStore } from '../../money/services/incomplete-entries-signal-store';
+import { DraftsSignalStore } from '../../drafts/services/drafts-signal-store';
 
 @Injectable({
   providedIn: 'root',
@@ -52,6 +53,7 @@ export class MobileDisplayService {
   readonly rolesStore = inject(RolesSignalStore);
   readonly goalsStore = inject(GoalsSignalStore);
   readonly incompleteEntriesStore = inject(IncompleteEntriesSignalStore);
+  readonly draftsStore = inject(DraftsSignalStore);
 
   constructor() {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
@@ -103,11 +105,23 @@ export class MobileDisplayService {
       case 'transactions':
         this.incompleteEntriesStore.createEntity();
         break;
+      case 'drafts':
+        this.draftsStore.createEntity();
+        break;
       default:
         this.clickedButtonSubject.next();
     }
   }
 }
 
-export type CreateButtonAction = 'goals' | 'events' | 'file-explorer' | 'gaming-sessions' | 'tasks' | 'families' | 'users' | 'transactions';
+export type CreateButtonAction =
+  | 'goals'
+  | 'events'
+  | 'file-explorer'
+  | 'gaming-sessions'
+  | 'tasks'
+  | 'families'
+  | 'users'
+  | 'transactions'
+  | 'drafts';
 export type MobileFooterButtons = 'tasks';

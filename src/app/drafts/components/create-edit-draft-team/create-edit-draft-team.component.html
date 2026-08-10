@@ -1,0 +1,49 @@
+<nz-modal
+  [nzVisible]="isVisible()"
+  [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Team'"
+  [nzWidth]="modalWidth"
+  (nzOnCancel)="closeModal()"
+  nzOkText="Save"
+  nzCancelText="Close"
+  (nzOnOk)="saveTeam()"
+  [nzStyle]="modalStyle"
+  [nzCancelDisabled]="draftsStore.loadingTeam()"
+  [nzOkDisabled]="draftsStore.loadingTeam()"
+  [nzOkLoading]="draftsStore.loadingTeam()"
+  [nzMaskClosable]="false"
+>
+  <ng-container *nzModalContent>
+    @if (model) {
+      <div>
+        <div class="w-100 mb-4">
+          <div class="mb-2"><span class="text-danger">*</span> Team Name:</div>
+
+          <input nz-input [(ngModel)]="model.name" class="w-100" />
+        </div>
+
+        @if (model.id !== 0) {
+          <div class="w-100">
+            <div class="w-100 d-flex align-items-center mb-2">
+              Logo:
+
+              @if (model.s3Path) {
+                <img [srcset]="model.imagePath" [alt]="model.name" class="ms-3" height="40" />
+              }
+            </div>
+
+            <nz-upload
+              class="w-100"
+              nzType="drag"
+              [nzMultiple]="false"
+              [nzAction]="uploadPath()"
+              (nzChange)="handleChange($event)"
+              [(nzFileList)]="fileList"
+            >
+              <p class="ant-upload-text">Click or drag a logo here (png, svg, jpg, jpeg, or webp, under 2MB)</p>
+            </nz-upload>
+          </div>
+        }
+      </div>
+    }
+  </ng-container>
+</nz-modal>

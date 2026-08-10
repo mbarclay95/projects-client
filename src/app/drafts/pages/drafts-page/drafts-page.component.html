@@ -1,0 +1,25 @@
+@if (!isMobile) {
+  <app-page-header buttonText="Create Draft" title="Drafts" (createButtonClicked)="draftsStore.createEntity()"></app-page-header>
+}
+
+<div class="w-100 drafts-page-container p-2">
+  <app-drafts-filters [ui]="draftsStore.ui()"></app-drafts-filters>
+
+  @if (isMobile) {
+    <app-mobile-drafts-table
+      [drafts]="draftsStore.entities()"
+      [loading]="draftsStore.loadingAll()"
+      (editDraft)="draftsStore.editEntity($event)"
+      (archiveDraft)="archiveDraft($event)"
+    ></app-mobile-drafts-table>
+  } @else {
+    <app-drafts-table
+      [drafts]="draftsStore.entities()"
+      [loading]="draftsStore.loadingAll()"
+      (editDraft)="draftsStore.editEntity($event)"
+      (archiveDraft)="archiveDraft($event)"
+    ></app-drafts-table>
+  }
+</div>
+
+<app-create-edit-draft [openModal]="draftsStore.createEditEntity()"></app-create-edit-draft>

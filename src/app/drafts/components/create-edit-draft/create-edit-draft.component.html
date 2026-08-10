@@ -1,0 +1,57 @@
+<nz-modal
+  [nzVisible]="isVisible()"
+  [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Draft'"
+  [nzWidth]="modalWidth"
+  (nzOnCancel)="draftsStore.clearCreateEditEntity()"
+  nzOkText="Save"
+  nzCancelText="Close"
+  (nzOnOk)="saveDraft()"
+  [nzStyle]="modalStyle"
+  [nzCancelDisabled]="draftsStore.loadingOne()"
+  [nzOkDisabled]="draftsStore.loadingOne()"
+  [nzOkLoading]="draftsStore.loadingOne()"
+  [nzMaskClosable]="false"
+>
+  <ng-container *nzModalContent>
+    @if (model) {
+      <div>
+        <div class="w-100 mb-4">
+          <div class="mb-2"><span class="text-danger">*</span> Draft Name:</div>
+
+          <input nz-input [(ngModel)]="model.name" class="w-100" />
+        </div>
+
+        <div class="w-100 mb-4">
+          <div class="mb-2">Draft Date:</div>
+
+          <nz-date-picker [(ngModel)]="model.draftDate" nzFormat="MM/dd/yyyy" [nzShowNow]="false"></nz-date-picker>
+        </div>
+
+        <div class="w-100 mb-4">
+          <div class="mb-2">Notes:</div>
+
+          <textarea nz-input [(ngModel)]="model.notes"></textarea>
+        </div>
+
+        <div class="w-100 mb-4">
+          <div class="mb-2"><span class="text-danger">*</span> Total Rounds:</div>
+
+          <nz-input-number [(ngModel)]="model.totalRounds" [nzMin]="1"></nz-input-number>
+        </div>
+
+        <div class="w-100 mb-4 d-flex align-items-end">
+          <div class="me-4">Limit Participants:</div>
+
+          <nz-switch [ngModel]="model.maxParticipants !== undefined" (ngModelChange)="updateMaxParticipantsSwitch($event)"></nz-switch>
+        </div>
+
+        @if (model.maxParticipants !== undefined) {
+          <div class="w-100 mb-4">
+            <div class="mb-2">Max Participants:</div>
+            <nz-input-number [(ngModel)]="model.maxParticipants" [nzMin]="0"></nz-input-number>
+          </div>
+        }
+      </div>
+    }
+  </ng-container>
+</nz-modal>

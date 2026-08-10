@@ -1,0 +1,36 @@
+<div class="fw-bold mb-3">Admins</div>
+
+<div class="admin-list mb-3">
+  @for (admin of draft.draftAdmins; track admin.id) {
+    <div class="admin-row">
+      <div class="admin-name">{{ candidateName(admin.userId) }}</div>
+
+      @if (admin.userId === draft.createdById) {
+        <nz-tag nzColor="blue">Creator</nz-tag>
+      } @else {
+        <fa-icon
+          class="text-danger"
+          [icon]="trash"
+          nz-popconfirm
+          nzPopconfirmTitle="Are you sure?"
+          (nzOnConfirm)="removeAdmin(admin)"
+        ></fa-icon>
+      }
+    </div>
+  }
+</div>
+
+<div class="d-flex">
+  <nz-select
+    [(ngModel)]="newAdminUserId"
+    nzPlaceHolder="Select a user to add as admin"
+    [nzLoading]="draftsStore.loadingDraftAdminCandidates()"
+    class="me-2"
+    style="flex: 1"
+  >
+    @for (candidate of addableCandidates(); track candidate.id) {
+      <nz-option [nzValue]="candidate.id" [nzLabel]="candidate.name"></nz-option>
+    }
+  </nz-select>
+  <button nz-button nzType="primary" [nzLoading]="draftsStore.loadingAdmin()" (click)="addAdmin()">Add</button>
+</div>

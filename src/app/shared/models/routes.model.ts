@@ -30,6 +30,7 @@ export type AppTitle =
   | 'Games Admin'
   | 'Money'
   | 'Events'
+  | 'Drafts'
   | 'Logging'
   | 'Users'
   | 'My Profile'
@@ -80,6 +81,7 @@ export const routes = (isMobile: boolean): Route[] => [
     queryParams: {},
   },
   { icon: faCalendarDays, url: 'app/events', permission: Permissions.EVENTS_PAGE, title: 'Events', queryParams: {} },
+  { icon: faCalendarDays, url: 'app/drafts', permission: Permissions.DRAFTS_PAGE, title: 'Drafts', queryParams: {} },
   { icon: faDatabase, url: 'app/logging', permission: Permissions.LOGGING_PAGE, title: 'Logging', queryParams: {} },
   { icon: faUsers, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users', queryParams: {} },
   { icon: faGear, url: 'my-profile', permission: true, title: 'My Profile', queryParams: {} },

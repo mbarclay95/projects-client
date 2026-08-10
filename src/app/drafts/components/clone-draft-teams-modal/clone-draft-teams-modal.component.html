@@ -1,0 +1,22 @@
+<nz-modal
+  [nzVisible]="visible"
+  nzTitle="Clone Teams From Another Draft"
+  (nzOnCancel)="close()"
+  nzOkText="Clone Teams"
+  nzCancelText="Close"
+  (nzOnOk)="clone()"
+  [nzCancelDisabled]="draftsStore.loadingTeam()"
+  [nzOkDisabled]="draftsStore.loadingTeam() || !sourceDraftId"
+  [nzOkLoading]="draftsStore.loadingTeam()"
+  [nzMaskClosable]="false"
+>
+  <ng-container *nzModalContent>
+    <div class="mb-2">Teams are appended to this draft's existing teams, logos included, nothing re-uploaded.</div>
+
+    <nz-select [(ngModel)]="sourceDraftId" nzPlaceHolder="Select a draft" style="width: 100%">
+      @for (draft of otherDrafts(); track draft.id) {
+        <nz-option [nzValue]="draft.id" [nzLabel]="draft.name"></nz-option>
+      }
+    </nz-select>
+  </ng-container>
+</nz-modal>

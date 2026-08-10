@@ -1,0 +1,14 @@
+# frontend/Dockerfile.dev
+FROM node:20
+
+WORKDIR /app
+
+# Same pattern as backend — this warms node_modules at build time;
+# the compose file's anonymous volume on /app/node_modules keeps
+# this container's install from being clobbered by the host mount.
+COPY package.json package-lock.json ./
+RUN npm ci --legacy-peer-deps
+
+EXPOSE 4200
+
+CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--poll", "2000"]

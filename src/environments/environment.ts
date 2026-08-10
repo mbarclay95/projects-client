@@ -4,9 +4,11 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8000/api',
+  apiUrl: 'http://10.5.10.14:8000/api',
   // apiUrl: 'https://home-api.bigmike.dev/api',
-  eventSignupApiUrl: 'http://localhost:8001/api',
+  // The `backend-public` compose service. Host IP rather than localhost, since the
+  // browser runs on a workstation rather than on this VM.
+  eventSignupApiUrl: 'http://10.5.10.14:8001/api',
   // moneyAppApiUrl: 'http://localhost:8001/api',
   moneyAppApiUrl: 'https://money-api.bigmike.dev/api',
 };

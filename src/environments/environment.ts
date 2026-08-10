@@ -8,7 +8,7 @@ export const environment = {
   // apiUrl: 'https://home-api.bigmike.dev/api',
   // The `backend-public` compose service. Host IP rather than localhost, since the
   // browser runs on a workstation rather than on this VM.
-  eventSignupApiUrl: 'http://10.5.10.14:8001/api',
+  publicApiUrl: 'http://10.5.10.14:8001/api',
   // moneyAppApiUrl: 'http://localhost:8001/api',
   moneyAppApiUrl: 'https://money-api.bigmike.dev/api',
 };

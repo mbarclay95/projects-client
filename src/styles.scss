@@ -32,3 +32,19 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+/**
+ * NzImageService's full-screen preview renders in the CDK overlay
+ * container, appended outside any component's view — no component-scoped
+ * stylesheet can reach it, and the operations list (which buttons show)
+ * has no public @Input to configure. This hides rotate and flip by icon
+ * class, leaving zoom and close. It's global rather than scoped to the
+ * draft page's viewer because there's no narrower way to target it; if
+ * another feature adds its own image preview later, this rule applies
+ * there too.
+ */
+.ant-image-preview-operations-operation:has(.anticon-rotate-right),
+.ant-image-preview-operations-operation:has(.anticon-rotate-left),
+.ant-image-preview-operations-operation:has(.anticon-swap) {
+  display: none;
+}

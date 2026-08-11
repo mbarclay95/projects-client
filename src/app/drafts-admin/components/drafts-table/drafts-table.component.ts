@@ -7,7 +7,7 @@ import {
   NzThMeasureDirective,
   NzTbodyComponent,
 } from 'ng-zorro-antd/table';
-import { faBoxArchive, faCopy, faEdit, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { faBoxArchive, faChevronRight, faCopy, faEdit, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { Draft, DRAFT_STATUS_COLORS, DRAFT_STATUS_LABELS } from '../../models/draft.model';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
@@ -51,6 +51,7 @@ export class DraftsTableComponent {
   archive = faBoxArchive;
   copy = faCopy;
   open = faUpRightFromSquare;
+  chevron = faChevronRight;
 
   statusLabels = DRAFT_STATUS_LABELS;
   statusColors = DRAFT_STATUS_COLORS;

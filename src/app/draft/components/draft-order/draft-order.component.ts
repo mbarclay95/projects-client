@@ -34,4 +34,32 @@ export class DraftOrderComponent {
   get isSignup(): boolean {
     return this._draft.status === DraftStatus.signup;
   }
+
+  get heading(): string {
+    if (this.isSignup) {
+      return "Who's In";
+    }
+    if (this._draft.status === DraftStatus.complete && this._draft.totalRounds === 1) {
+      return 'Results';
+    }
+    return 'Pick Order';
+  }
+
+  /**
+   * A2 makes every draft creatable from the UI one round, so this is the
+   * only view most participants ever see — the multi-round Board and My
+   * Roster it replaces are unaffected and keep rendering for
+   * totalRounds > 1.
+   */
+  get showPicks(): boolean {
+    return !this.isSignup && this._draft.totalRounds === 1;
+  }
+
+  pickedTeamName(memberId: number): string | undefined {
+    const pick = this._draft.draftPicks.find((p) => p.draftMemberId === memberId);
+    if (!pick) {
+      return undefined;
+    }
+    return this._draft.draftTeams.find((t) => t.id === pick.draftTeamId)?.name;
+  }
 }

@@ -1,4 +1,4 @@
-<div class="fw-bold mb-2">{{ isSignup ? "Who's In" : "Pick Order" }}</div>
+<div class="fw-bold mb-2">{{ heading }}</div>
 
 @if (sortedMembers.length === 0) {
   <nz-empty nzNotFoundContent="No one has joined yet"></nz-empty>
@@ -13,6 +13,9 @@
         <div class="order-name">{{ member.name }}</div>
         @if (member.id === me?.draftMemberId) {
           <span class="you-badge">You</span>
+        }
+        @if (showPicks && pickedTeamName(member.id); as pickedTeam) {
+          <div class="order-pick">{{ pickedTeam }}</div>
         }
       </div>
     }

@@ -1,4 +1,11 @@
 .draft-page-container {
   background: #3b4563;
   border-radius: 5px;
+  position: relative;
+}
+
+.header-menu {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
 }

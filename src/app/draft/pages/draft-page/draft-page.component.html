@@ -1,5 +1,17 @@
 @if (draftService.draft$ | async; as draft) {
   <div class="w-100 draft-page-container p-2">
+    @if (draft.status !== draftStatus.complete && hasUnclaimedMembers(draft)) {
+      <div class="header-menu">
+        <button nz-button nzType="text" nz-dropdown nzTrigger="click" [nzDropdownMenu]="headerMenu" aria-label="More options">
+          <fa-icon [icon]="moreIcon"></fa-icon>
+        </button>
+        <nz-dropdown-menu #headerMenu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="openClaimModal.set(true)">Claim your name</li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    }
     <div class="w-100 d-flex justify-content-center text-light" style="font-size: 30px">
       {{ draft.name }}
     </div>
@@ -10,11 +22,6 @@
     }
     @if (draft.notes) {
       <div class="w-100 d-flex justify-content-center mb-2" style="color: #c0c7d1">{{ draft.notes }}</div>
-    }
-    @if (draft.status !== draftStatus.signup && draft.status !== draftStatus.complete && hasUnclaimedMembers(draft)) {
-      <div class="w-100 d-flex justify-content-center mb-2">
-        <button nz-button nzSize="small" (click)="openClaimModal.set(true)">Claim your name</button>
-      </div>
     }
     <nz-divider></nz-divider>
 
@@ -32,9 +39,6 @@
               <button nz-button nzType="primary" (click)="openSignupModal.set(true)" [disabled]="draft.spotsRemaining === 0">
                 Join this draft
               </button>
-            }
-            @if (hasUnclaimedMembers(draft)) {
-              <button nz-button class="ms-2" (click)="openClaimModal.set(true)">Claim your name</button>
             }
             @if (!me && draft.spotsRemaining === 0) {
               <div class="text-danger ms-3" style="font-style: italic">* Draft is full</div>

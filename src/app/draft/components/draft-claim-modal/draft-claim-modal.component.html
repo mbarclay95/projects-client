@@ -1,0 +1,37 @@
+<nz-modal
+  [nzVisible]="isVisible()"
+  nzTitle="Claim your name"
+  [nzWidth]="modalWidth"
+  (nzOnCancel)="closed.emit()"
+  nzOkText="Claim"
+  nzCancelText="Close"
+  (nzOnOk)="claim()"
+  [nzCancelDisabled]="saving"
+  [nzStyle]="modalStyle"
+  [nzOkDisabled]="saving"
+  [nzOkLoading]="saving"
+  [nzMaskClosable]="false"
+>
+  <ng-container *nzModalContent>
+    @if (draftCacheService.me$ | async; as me) {
+      <div class="w-100 mb-3 text-danger" style="font-style: italic">
+        Claiming a different name replaces the identity this browser currently holds, {{ me.name }}.
+      </div>
+    }
+
+    @if (unclaimedMembers().length === 0) {
+      <div class="w-100" style="font-style: italic">Every name in this draft has been claimed.</div>
+    } @else {
+      <div class="w-100 mb-2">Which name is yours?</div>
+      <nz-radio-group class="w-100 d-flex flex-column" [(ngModel)]="selectedMemberId">
+        @for (member of unclaimedMembers(); track member.id) {
+          <label nz-radio [nzValue]="member.id" class="mb-1">{{ member.name }}</label>
+        }
+      </nz-radio-group>
+
+      @if (selectionError) {
+        <div class="w-100 text-danger" style="font-style: italic">Please select a name.</div>
+      }
+    }
+  </ng-container>
+</nz-modal>

@@ -11,24 +11,37 @@
     @if (draft.notes) {
       <div class="w-100 d-flex justify-content-center mb-2" style="color: #c0c7d1">{{ draft.notes }}</div>
     }
+    @if (draft.status !== draftStatus.signup && draft.status !== draftStatus.complete && hasUnclaimedMembers(draft)) {
+      <div class="w-100 d-flex justify-content-center mb-2">
+        <button nz-button nzSize="small" (click)="openClaimModal.set(true)">Claim your name</button>
+      </div>
+    }
     <nz-divider></nz-divider>
 
     @let me = draftCacheService.me$ | async;
 
+    @if (draftCacheService.staleIdentity$ | async) {
+      <div class="w-100 text-danger mb-3" style="font-style: italic">Your claim was reset. Claim your name again.</div>
+    }
+
     @switch (draft.status) {
       @case (draftStatus.signup) {
         <div class="mb-3">
-          @if (!me) {
-            <div class="w-100 d-flex justify-content-start align-items-center">
+          <div class="w-100 d-flex justify-content-start align-items-center">
+            @if (!me) {
               <button nz-button nzType="primary" (click)="openSignupModal.set(true)" [disabled]="draft.spotsRemaining === 0">
                 Join this draft
               </button>
-              @if (draft.spotsRemaining === 0) {
-                <div class="text-danger ms-3" style="font-style: italic">* Draft is full</div>
-              }
-            </div>
-          } @else {
-            <div class="text-success" style="font-style: italic">* You're in, {{ me.name }}! Waiting for the draft to start.</div>
+            }
+            @if (hasUnclaimedMembers(draft)) {
+              <button nz-button class="ms-2" (click)="openClaimModal.set(true)">Claim your name</button>
+            }
+            @if (!me && draft.spotsRemaining === 0) {
+              <div class="text-danger ms-3" style="font-style: italic">* Draft is full</div>
+            }
+          </div>
+          @if (me) {
+            <div class="text-success mt-2" style="font-style: italic">* You're in, {{ me.name }}! Waiting for the draft to start.</div>
           }
         </div>
         <app-draft-order [draft]="draft"></app-draft-order>
@@ -64,3 +77,7 @@
 }
 
 <app-draft-signup-modal [openModal]="openSignupModal()" (closed)="openSignupModal.set(false)"></app-draft-signup-modal>
+
+@if (draftService.draft$ | async; as draft) {
+  <app-draft-claim-modal [draft]="draft" [openModal]="openClaimModal()" (closed)="openClaimModal.set(false)"></app-draft-claim-modal>
+}

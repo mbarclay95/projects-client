@@ -7,13 +7,15 @@ import {
   NzThMeasureDirective,
   NzTbodyComponent,
 } from 'ng-zorro-antd/table';
-import { faBoxArchive, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faBoxArchive, faCopy, faEdit, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { Draft, DRAFT_STATUS_COLORS, DRAFT_STATUS_LABELS } from '../../models/draft.model';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-drafts-table',
@@ -34,6 +36,8 @@ import { Router } from '@angular/router';
 })
 export class DraftsTableComponent {
   private router = inject(Router);
+  private clipboard = inject(Clipboard);
+  private nzMessageService = inject(NzMessageService);
 
   @ViewChild('draftsTableTag', { static: true }) draftsTable: NzTableComponent<Draft> | undefined;
 
@@ -45,11 +49,18 @@ export class DraftsTableComponent {
 
   edit = faEdit;
   archive = faBoxArchive;
+  copy = faCopy;
+  open = faUpRightFromSquare;
 
   statusLabels = DRAFT_STATUS_LABELS;
   statusColors = DRAFT_STATUS_COLORS;
 
   openDraft(draftId: number): void {
     this.router.navigate(['/app/drafts', draftId]);
+  }
+
+  copyToClipboard(draft: Draft): void {
+    this.clipboard.copy(`${window.location.protocol}//${window.location.host}${draft.draftUrl}`);
+    this.nzMessageService.success('Draft link copied!');
   }
 }

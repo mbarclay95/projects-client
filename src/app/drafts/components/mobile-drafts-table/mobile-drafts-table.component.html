@@ -28,6 +28,22 @@
         </div>
 
         <div class="third-row">
+          <div class="d-flex flex-column align-items-center" (click)="$event.stopPropagation(); copyToClipboard(draft)">
+            <fa-icon class="text-info" [icon]="copy"></fa-icon>
+            Copy
+          </div>
+
+          <a
+            class="d-flex flex-column align-items-center"
+            [href]="draft.draftUrl"
+            target="_blank"
+            (click)="$event.stopPropagation()"
+            style="text-decoration: none; color: white"
+          >
+            <fa-icon class="text-warning" [icon]="open"></fa-icon>
+            Open
+          </a>
+
           <div class="d-flex flex-column align-items-center" (click)="$event.stopPropagation(); editDraft.emit(draft.id)">
             <fa-icon class="text-primary" [icon]="edit"></fa-icon>
             Edit

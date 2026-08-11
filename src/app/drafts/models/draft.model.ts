@@ -39,6 +39,7 @@ export interface Draft {
   draftTeams: DraftTeam[];
   draftMembers: DraftMember[];
   draftPicks: DraftPick[];
+  draftUrl: string;
 }
 
 export function createDraft(params: Partial<Draft>) {
@@ -57,5 +58,6 @@ export function createDraft(params: Partial<Draft>) {
     draftTeams: params.draftTeams ? params.draftTeams.map((t) => createDraftTeam(t)) : [],
     draftMembers: params.draftMembers ? params.draftMembers.map((m) => createDraftMember(m)) : [],
     draftPicks: params.draftPicks ? params.draftPicks.map((p) => createDraftPick(p)) : [],
+    draftUrl: `/draft/${params.id}?token=${params.token}`,
   } as Draft;
 }

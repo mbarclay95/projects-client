@@ -7,7 +7,7 @@
       <th>Teams</th>
       <th>Members</th>
       <th>Picks</th>
-      <th nzWidth="90px"></th>
+      <th nzWidth="140px"></th>
     </tr>
   </thead>
   <tbody>
@@ -28,6 +28,10 @@
         <td>{{ draft.draftPicks.length }}</td>
         <td>
           <div class="d-flex justify-content-evenly">
+            <fa-icon class="text-info" [icon]="copy" (click)="$event.stopPropagation(); copyToClipboard(draft)"></fa-icon>
+            <a [href]="draft.draftUrl" target="_blank" (click)="$event.stopPropagation()" style="text-decoration: none; color: inherit">
+              <fa-icon class="text-warning" [icon]="open"></fa-icon>
+            </a>
             <fa-icon class="text-primary" [icon]="edit" (click)="$event.stopPropagation(); editDraft.emit(draft.id)"></fa-icon>
             <fa-icon
               class="text-danger"

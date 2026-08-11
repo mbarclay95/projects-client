@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
+import { Component, ViewChild, inject, input, output } from '@angular/core';
 import {
   NzTableComponent,
   NzTheadComponent,
@@ -41,11 +41,11 @@ export class DraftsTableComponent {
 
   @ViewChild('draftsTableTag', { static: true }) draftsTable: NzTableComponent<Draft> | undefined;
 
-  @Input() drafts: Draft[] = [];
-  @Input() loading!: boolean;
+  drafts = input.required<Draft[]>();
+  loading = input.required<boolean>();
 
-  @Output() editDraft: EventEmitter<number> = new EventEmitter<number>();
-  @Output() archiveDraft: EventEmitter<number> = new EventEmitter<number>();
+  editDraft = output<number>();
+  archiveDraft = output<number>();
 
   edit = faEdit;
   archive = faBoxArchive;

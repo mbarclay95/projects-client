@@ -1,4 +1,4 @@
-import { Component, Input, inject, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
@@ -31,7 +31,7 @@ export class TeamPoolComponent {
   private nzModalService = inject(NzModalService);
   private nzImageService = inject(NzImageService);
 
-  @Input({ required: true }) draft!: Draft;
+  draft = input.required<Draft>();
 
   isMobile = isMobile;
   picking = false;
@@ -42,9 +42,9 @@ export class TeamPoolComponent {
   filteredTeams(): DraftTeam[] {
     const filter = this.filter();
     if (filter === 'All') {
-      return this.draft.draftTeams;
+      return this.draft().draftTeams;
     }
-    return this.draft.draftTeams.filter((team) => !!this.pickedBy(team) === (filter === 'Picked'));
+    return this.draft().draftTeams.filter((team) => !!this.pickedBy(team) === (filter === 'Picked'));
   }
 
   imageUrl(team: DraftTeam): string {
@@ -68,11 +68,11 @@ export class TeamPoolComponent {
   }
 
   pickedBy(team: DraftTeam): string | undefined {
-    const pick = this.draft.draftPicks.find((p) => p.draftTeamId === team.id);
+    const pick = this.draft().draftPicks.find((p) => p.draftTeamId === team.id);
     if (!pick) {
       return undefined;
     }
-    return this.draft.draftMembers.find((m) => m.id === pick.draftMemberId)?.name ?? 'Someone';
+    return this.draft().draftMembers.find((m) => m.id === pick.draftMemberId)?.name ?? 'Someone';
   }
 
   confirmPick(team: DraftTeam, isMyTurn: boolean | null): void {
@@ -85,7 +85,7 @@ export class TeamPoolComponent {
     });
   }
 
-  private async pick(team: DraftTeam, isMyTurn: boolean | null): Promise<void> {
+  async pick(team: DraftTeam, isMyTurn: boolean | null): Promise<void> {
     if (!isMyTurn || this.pickedBy(team) || this.picking) {
       return;
     }

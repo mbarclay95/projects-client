@@ -29,7 +29,7 @@
   <div class="order-locked-note mb-2">The order is fixed once the draft is under way.</div>
 }
 
-@if (orderedMembers.length === 0) {
+@if (orderedMembers().length === 0) {
   <nz-empty nzNotFoundContent="No Members Yet"></nz-empty>
 } @else {
   <div class="order-container">
@@ -39,13 +39,13 @@
       rather than travel with whichever name is currently dragged past them.
     -->
     <div class="order-numbers">
-      @for (member of orderedMembers; track member.id; let i = $index) {
+      @for (member of orderedMembers(); track member.id; let i = $index) {
         <div class="order-number">{{ i + 1 }}</div>
       }
     </div>
 
     <div cdkDropList (cdkDropListDropped)="drop($event)" class="order-list">
-      @for (member of orderedMembers; track member.id) {
+      @for (member of orderedMembers(); track member.id) {
         <div class="order-row" cdkDrag [cdkDragDisabled]="!canEditOrder()">
           <button class="grip-handle" cdkDragHandle [disabled]="!canEditOrder()">
             <fa-icon [icon]="grip"></fa-icon>

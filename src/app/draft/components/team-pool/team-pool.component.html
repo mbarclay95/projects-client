@@ -1,7 +1,9 @@
 @let isMyTurn = draftCacheService.isMyTurn$ | async;
 
+<nz-segmented class="mb-3" [nzOptions]="filterOptions" [ngModel]="filter()" (ngModelChange)="filter.set($event)"></nz-segmented>
+
 <div class="team-grid" [class.mobile]="isMobile">
-  @for (team of draft.draftTeams; track team.id) {
+  @for (team of filteredTeams(); track team.id) {
     @let takenBy = pickedBy(team);
     <div class="team-tile" [class.clickable]="isMyTurn && !takenBy" [class.taken]="!!takenBy" (click)="pick(team, isMyTurn)">
       @if (takenBy) {

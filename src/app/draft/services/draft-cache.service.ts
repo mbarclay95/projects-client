@@ -4,6 +4,11 @@ import { DraftCache } from '../models/draft-cache.model';
 import { DraftMemberClaim } from '../models/draft-member-claim.model';
 import { DraftService } from './draft.service';
 
+interface CachedMemberStatus {
+  cached: DraftCache;
+  validClaim: boolean;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,9 +18,38 @@ export class DraftCacheService {
   private readonly cacheKey = 'draft_cache';
   private draftCache: BehaviorSubject<DraftCache[]> = new BehaviorSubject<DraftCache[]>([]);
 
-  me$: Observable<DraftCache | undefined> = combineLatest([this.draftService.draft$, this.draftCache.asObservable()]).pipe(
-    map(([draft, draftCache]) => draftCache.find((dc) => dc.draftId === draft?.id)),
+  /**
+   * The cache is trusted blindly no further than this: a cached entry whose
+   * member is gone from the draft, or whose claim was cleared, is not "me"
+   * any more. Shared by me$ and staleIdentity$ so the two conditions can't
+   * drift apart.
+   */
+  private cachedMemberStatus$: Observable<CachedMemberStatus | undefined> = combineLatest([
+    this.draftService.draft$,
+    this.draftCache.asObservable(),
+  ]).pipe(
+    map(([draft, draftCache]) => {
+      const cached = draftCache.find((dc) => dc.draftId === draft?.id);
+      if (!cached || !draft) {
+        return undefined;
+      }
+      const member = draft.draftMembers.find((m) => m.id === cached.draftMemberId);
+
+      return { cached, validClaim: !!member && member.claimed };
+    }),
   );
+
+  me$: Observable<DraftCache | undefined> = this.cachedMemberStatus$.pipe(
+    map((status) => (status?.validClaim ? status.cached : undefined)),
+  );
+
+  /**
+   * True exactly when this browser held an identity for the current draft
+   * and it stopped being valid — the member was removed, or an admin cleared
+   * the claim. Drives the "Your claim was reset" line; claim/signup buttons
+   * come back on their own because me$ goes undefined at the same time.
+   */
+  staleIdentity$: Observable<boolean> = this.cachedMemberStatus$.pipe(map((status) => !!status && !status.validClaim));
 
   isMyTurn$: Observable<boolean> = combineLatest([this.draftService.draft$, this.me$]).pipe(
     map(([draft, me]) => !!draft && !!me && draft.onTheClockMemberId === me.draftMemberId),
@@ -29,8 +63,13 @@ export class DraftCacheService {
     localStorage.setItem(this.cacheKey, JSON.stringify(this.draftCache.value));
   }
 
-  loadNewMemberIntoCache(draftId: number, member: DraftMemberClaim): void {
-    const draftCache = this.draftCache.value;
+  /**
+   * Replaces, rather than appends, any existing entry for this draft — claiming
+   * when an entry already exists must not leave a second, stale one behind for
+   * me$ to find first.
+   */
+  setMemberInCache(draftId: number, member: DraftMemberClaim): void {
+    const draftCache = this.draftCache.value.filter((dc) => dc.draftId !== draftId);
     draftCache.push({
       draftId,
       draftMemberId: member.id,

@@ -54,6 +54,7 @@
   <ng-template #adminsTitle
     >Admins <span class="tab-count">{{ draft.draftAdmins.length }}</span></ng-template
   >
+  <ng-template #boardTitle>Board</ng-template>
   <ng-template #orderTitle>
     Order
     @if (orderDirty()) {
@@ -73,6 +74,9 @@
     </nz-tab>
     <nz-tab [nzTitle]="adminsTitle">
       <app-draft-admins-tab [draft]="draft"></app-draft-admins-tab>
+    </nz-tab>
+    <nz-tab [nzTitle]="boardTitle">
+      <app-draft-board-tab [draft]="draft"></app-draft-board-tab>
     </nz-tab>
   </nz-tabs>
 } @else {

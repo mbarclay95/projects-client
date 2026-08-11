@@ -61,3 +61,45 @@ export function createDraft(params: Partial<Draft>) {
     draftUrl: `/draft/${params.id}?token=${params.token}`,
   } as Draft;
 }
+
+/**
+ * A client-side mirror of `DraftService`'s turn derivation on the backend,
+ * following the precedent `rosterIsFullyOrdered()` set in
+ * `draft-member.model.ts`: this is UX only. The backend is the enforcement
+ * and does not move with it.
+ */
+export function draftIsComplete(draft: Draft): boolean {
+  return pickCount(draft) >= orderedMemberCount(draft) * draft.totalRounds;
+}
+
+export function nextPickNumber(draft: Draft): number {
+  return pickCount(draft) + 1;
+}
+
+export function currentRound(draft: Draft): number {
+  const memberCount = orderedMemberCount(draft);
+  if (memberCount === 0) {
+    return 1;
+  }
+
+  return Math.floor(pickCount(draft) / memberCount) + 1;
+}
+
+export function onTheClockMemberId(draft: Draft): number | undefined {
+  const memberCount = orderedMemberCount(draft);
+  if (memberCount === 0 || draftIsComplete(draft)) {
+    return undefined;
+  }
+
+  const position = (pickCount(draft) % memberCount) + 1;
+
+  return draft.draftMembers.find((member) => member.pickPosition === position)?.id;
+}
+
+function pickCount(draft: Draft): number {
+  return draft.draftPicks.length;
+}
+
+function orderedMemberCount(draft: Draft): number {
+  return draft.draftMembers.filter((member) => member.pickPosition !== null).length;
+}

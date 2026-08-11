@@ -2,9 +2,10 @@ import { patchState, signalStore, withComputed, withHooks, withMethods, withStat
 import { withCrudEntities } from '../../shared/signal-stores/with-crud-feature';
 import { withUi } from '../../shared/signal-stores/with-ui-feature';
 import { withActive } from '../../shared/signal-stores/with-active-feature';
-import { createDraft, Draft } from '../models/draft.model';
+import { createDraft, Draft, DraftStatus } from '../models/draft.model';
 import { createDraftTeam, DraftTeam } from '../models/draft-team.model';
 import { createDraftMember, DraftMember } from '../models/draft-member.model';
+import { createDraftPick, DraftPick } from '../models/draft-pick.model';
 import { createDraftAdmin, DraftAdmin } from '../models/draft-admin.model';
 import { createDraftAdminCandidate, DraftAdminCandidate } from '../models/draft-admin-candidate.model';
 import { computed, effect, inject } from '@angular/core';
@@ -29,6 +30,7 @@ interface DraftsStoreState {
   loadingTeam: boolean;
   loadingMember: boolean;
   loadingAdmin: boolean;
+  loadingPick: boolean;
   draftAdminCandidates: DraftAdminCandidate[];
   loadingDraftAdminCandidates: boolean;
 }
@@ -39,9 +41,21 @@ const initialState: DraftsStoreState = {
   loadingTeam: false,
   loadingMember: false,
   loadingAdmin: false,
+  loadingPick: false,
   draftAdminCandidates: [],
   loadingDraftAdminCandidates: false,
 };
+
+/**
+ * The envelope every DraftPickController verb returns: `pick` is the api
+ * model on store/update, `null` on destroy. `status` is included because the
+ * client cannot derive it — auto-complete and the un-complete-on-undo rule
+ * both happen server-side.
+ */
+interface DraftPickEnvelope {
+  pick: DraftPick | null;
+  status: DraftStatus;
+}
 
 export const DraftsSignalStore = signalStore(
   { providedIn: 'root' },
@@ -96,6 +110,12 @@ export const DraftsSignalStore = signalStore(
     const setLoadingTeam = (loadingTeam: boolean) => patchState(store, { loadingTeam });
     const setLoadingMember = (loadingMember: boolean) => patchState(store, { loadingMember });
     const setLoadingAdmin = (loadingAdmin: boolean) => patchState(store, { loadingAdmin });
+    const setLoadingPick = (loadingPick: boolean) => patchState(store, { loadingPick });
+
+    const patchDraftPickResult = (draftId: number, envelope: DraftPickEnvelope, patchPicks: (picks: DraftPick[]) => DraftPick[]): void => {
+      const draft = store.entities().find((d) => d.id === draftId)!;
+      patchState(store, updateEntity({ id: draft.id, changes: { draftPicks: patchPicks(draft.draftPicks), status: envelope.status } }));
+    };
 
     const patchDraftTeamCache = (team: DraftTeam): void => {
       const draft = store.entities().find((d) => d.id === team.draftId);
@@ -406,6 +426,107 @@ export const DraftsSignalStore = signalStore(
       ),
     );
 
+    const createDraftPickHttp = rxMethod<{ draftId: number; draftTeamId: number; onSuccess?: () => void }>(
+      pipe(
+        switchMap(({ draftId, draftTeamId, onSuccess }) => {
+          setLoadingPick(true);
+          return httpClient.post<DraftPickEnvelope>(`${environment.apiUrl}/draft-picks`, { draftId, draftTeamId }).pipe(
+            tap((envelope) => {
+              patchDraftPickResult(draftId, envelope, (picks) => [...picks, createDraftPick(envelope.pick!)]);
+              setLoadingPick(false);
+              if (onSuccess) {
+                onSuccess();
+              }
+            }),
+            catchError((error) => {
+              console.log(error);
+              nzMessageService.error(error.error.message ?? 'There was an error making the pick.');
+              setLoadingPick(false);
+              return of(undefined);
+            }),
+          );
+        }),
+      ),
+    );
+
+    const updateDraftPickHttp = rxMethod<{ pick: DraftPick; draftTeamId: number; onSuccess?: () => void }>(
+      pipe(
+        switchMap(({ pick, draftTeamId, onSuccess }) => {
+          setLoadingPick(true);
+          return httpClient.put<DraftPickEnvelope>(`${environment.apiUrl}/draft-picks/${pick.id}`, { draftTeamId }).pipe(
+            tap((envelope) => {
+              const updated = createDraftPick(envelope.pick!);
+              patchDraftPickResult(pick.draftId, envelope, (picks) => picks.map((p) => (p.id === updated.id ? updated : p)));
+              setLoadingPick(false);
+              if (onSuccess) {
+                onSuccess();
+              }
+            }),
+            catchError((error) => {
+              console.log(error);
+              nzMessageService.error(error.error.message ?? 'There was an error correcting the pick.');
+              setLoadingPick(false);
+              return of(undefined);
+            }),
+          );
+        }),
+      ),
+    );
+
+    const deleteDraftPickHttp = rxMethod<{ pick: DraftPick; onSuccess?: () => void }>(
+      pipe(
+        switchMap(({ pick, onSuccess }) => {
+          setLoadingPick(true);
+          return httpClient.delete<DraftPickEnvelope>(`${environment.apiUrl}/draft-picks/${pick.id}`).pipe(
+            tap((envelope) => {
+              patchDraftPickResult(pick.draftId, envelope, (picks) => picks.filter((p) => p.id !== pick.id));
+              setLoadingPick(false);
+              if (onSuccess) {
+                onSuccess();
+              }
+            }),
+            catchError((error) => {
+              console.log(error);
+              nzMessageService.error(error.error.message ?? 'There was an error undoing the pick.');
+              setLoadingPick(false);
+              return of(undefined);
+            }),
+          );
+        }),
+      ),
+    );
+
+    const clearDraftMemberClaimHttp = rxMethod<{ member: DraftMember; onSuccess?: () => void }>(
+      pipe(
+        switchMap(({ member, onSuccess }) => {
+          setLoadingMember(true);
+          return httpClient.delete<DraftMember>(`${environment.apiUrl}/draft-member-claims/${member.id}`).pipe(
+            map((updated) => createDraftMember(updated)),
+            tap((updated) => {
+              const draft = store.entities().find((d) => d.id === updated.draftId)!;
+              patchState(
+                store,
+                updateEntity({
+                  id: draft.id,
+                  changes: { draftMembers: draft.draftMembers.map((m) => (m.id === updated.id ? updated : m)) },
+                }),
+              );
+              setLoadingMember(false);
+              if (onSuccess) {
+                onSuccess();
+              }
+            }),
+            catchError((error) => {
+              console.log(error);
+              nzMessageService.error(error.error.message ?? 'There was an error clearing the claim.');
+              setLoadingMember(false);
+              return of(undefined);
+            }),
+          );
+        }),
+      ),
+    );
+
     return {
       setSelectedTeam,
       setDraftIdForNewTeam,
@@ -421,6 +542,10 @@ export const DraftsSignalStore = signalStore(
       createDraftAdminHttp,
       deleteDraftAdminHttp,
       loadDraftAdminCandidatesHttp,
+      createDraftPickHttp,
+      updateDraftPickHttp,
+      deleteDraftPickHttp,
+      clearDraftMemberClaimHttp,
     };
   }),
   withHooks({

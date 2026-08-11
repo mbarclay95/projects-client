@@ -21,6 +21,7 @@ import { DraftTeamsTabComponent } from '../../components/draft-teams-tab/draft-t
 import { DraftMembersTabComponent } from '../../components/draft-members-tab/draft-members-tab.component';
 import { DraftOrderTabComponent } from '../../components/draft-order-tab/draft-order-tab.component';
 import { DraftAdminsTabComponent } from '../../components/draft-admins-tab/draft-admins-tab.component';
+import { DraftBoardTabComponent } from '../../components/draft-board-tab/draft-board-tab.component';
 
 @Component({
   selector: 'app-draft-detail-page',
@@ -45,6 +46,7 @@ import { DraftAdminsTabComponent } from '../../components/draft-admins-tab/draft
     DraftMembersTabComponent,
     DraftOrderTabComponent,
     DraftAdminsTabComponent,
+    DraftBoardTabComponent,
   ],
 })
 export class DraftDetailPageComponent {

@@ -1,0 +1,30 @@
+<nz-modal
+  [nzVisible]="isVisible()"
+  [nzTitle]="model?.mode === 'correct' ? 'Correct Pick' : 'Pick a Team'"
+  [nzWidth]="modalWidth"
+  (nzOnCancel)="closed.emit()"
+  nzOkText="Confirm"
+  nzCancelText="Close"
+  (nzOnOk)="confirm()"
+  [nzStyle]="modalStyle"
+  [nzCancelDisabled]="draftsStore.loadingPick()"
+  [nzOkDisabled]="draftsStore.loadingPick()"
+  [nzOkLoading]="draftsStore.loadingPick()"
+  [nzMaskClosable]="false"
+>
+  <ng-container *nzModalContent>
+    @if (candidateTeams().length === 0) {
+      <div class="w-100" style="font-style: italic">No teams are available.</div>
+    } @else {
+      <nz-radio-group class="w-100 d-flex flex-column" [(ngModel)]="selectedTeamId">
+        @for (team of candidateTeams(); track team.id) {
+          <label nz-radio [nzValue]="team.id" class="mb-1">{{ team.name }}</label>
+        }
+      </nz-radio-group>
+
+      @if (selectionError) {
+        <div class="w-100 text-danger" style="font-style: italic">Please select a team.</div>
+      }
+    }
+  </ng-container>
+</nz-modal>

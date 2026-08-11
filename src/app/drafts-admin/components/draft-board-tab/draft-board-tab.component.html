@@ -1,0 +1,49 @@
+@if (!hasStarted()) {
+  <nz-empty nzNotFoundContent="Nothing to run yet. Set the status above to Locked, then In Progress, to start the draft."></nz-empty>
+} @else {
+  <div class="board-header mb-3">
+    <div>Round {{ currentRoundNumber() }} of {{ draft().totalRounds }}</div>
+    <div>Pick #{{ currentPickNumber() }}</div>
+    @if (isComplete()) {
+      <div class="fw-bold">Draft complete</div>
+    } @else if (onTheClockMember(); as clockMember) {
+      <div class="fw-bold">On the clock: {{ clockMember.name }}</div>
+    }
+  </div>
+
+  <div class="board-list">
+    @for (member of orderedMembers(); track member.id) {
+      <div class="board-row" [class.on-the-clock]="member.id === onTheClockId()">
+        <div class="member-name">{{ member.name }}</div>
+
+        <div class="pick-chips">
+          @for (pick of picksFor(member.id); track pick.id) {
+            <span class="pick-chip" [class.admin-pick]="pick.madeByAdmin" (click)="openCorrect(pick)">
+              #{{ pick.pickNumber }} {{ teamName(pick.draftTeamId) }}
+              @if (pick.pickNumber === highestPickNumber()) {
+                <fa-icon
+                  [icon]="undoIcon"
+                  class="ms-1"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Undo this pick?"
+                  (nzOnConfirm)="undo(pick)"
+                  (click)="$event.stopPropagation()"
+                ></fa-icon>
+              }
+            </span>
+          }
+        </div>
+
+        @if (member.id === onTheClockId()) {
+          <button nz-button nzType="primary" nzSize="small" (click)="openPickForClock()">Pick for {{ member.name }}</button>
+        }
+      </div>
+    }
+  </div>
+}
+
+<app-draft-pick-team-modal
+  [draft]="draft()"
+  [openModal]="pickerTarget()"
+  (closed)="pickerTarget.set(undefined)"
+></app-draft-pick-team-modal>

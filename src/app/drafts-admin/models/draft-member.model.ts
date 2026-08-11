@@ -3,6 +3,7 @@ export interface DraftMember {
   draftId: number;
   name: string;
   pickPosition: number | null;
+  claimedAt: Date | null;
 }
 
 export function createDraftMember(params: Partial<DraftMember>) {
@@ -11,6 +12,7 @@ export function createDraftMember(params: Partial<DraftMember>) {
     draftId: params.draftId ?? 0,
     name: params.name ?? '',
     pickPosition: params.pickPosition ?? null,
+    claimedAt: params.claimedAt ? new Date(params.claimedAt) : null,
   } as DraftMember;
 }
 

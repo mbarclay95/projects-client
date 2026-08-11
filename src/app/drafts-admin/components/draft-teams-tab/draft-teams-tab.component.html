@@ -40,7 +40,7 @@
 <app-create-edit-draft-team [openModal]="draftsStore.selectedTeam()"></app-create-edit-draft-team>
 
 <app-clone-draft-teams-modal
-  [visible]="cloneModalOpen()"
+  [openModal]="cloneModalOpen()"
   [draftId]="draft().id"
   (closed)="cloneModalOpen.set(false)"
 ></app-clone-draft-teams-modal>

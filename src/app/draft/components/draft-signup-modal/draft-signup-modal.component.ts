@@ -1,8 +1,8 @@
-import { Component, effect, inject, input, output } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { DraftService } from '../../services/draft.service';
 import { DraftCacheService } from '../../services/draft-cache.service';
-import { isMobile } from '../../../app.component';
+import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
@@ -13,27 +13,20 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./draft-signup-modal.component.scss'],
   imports: [NzModalComponent, NzModalContentDirective, NzInputDirective, FormsModule],
 })
-export class DraftSignupModalComponent {
+export class DraftSignupModalComponent extends DefaultModalSignalComponent {
   private draftService = inject(DraftService);
   private draftCacheService = inject(DraftCacheService);
   private nzMessageService = inject(NzMessageService);
 
-  openModal = input.required<boolean>();
   closed = output<void>();
 
   saving = false;
   nameError = false;
   name = '';
-  modalWidth = isMobile ? '95%' : '500px';
-  modalStyle = isMobile ? { top: '20px' } : {};
 
-  constructor() {
-    effect(() => {
-      if (this.openModal()) {
-        this.name = '';
-        this.nameError = false;
-      }
-    });
+  override onOpenModal(): void {
+    this.name = '';
+    this.nameError = false;
   }
 
   async claim() {

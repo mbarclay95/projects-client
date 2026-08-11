@@ -1,7 +1,7 @@
 <nz-modal
-  [nzVisible]="visible()"
+  [nzVisible]="isVisible()"
   nzTitle="Clone Teams From Another Draft"
-  (nzOnCancel)="close()"
+  (nzOnCancel)="closed.emit()"
   nzOkText="Clone Teams"
   nzCancelText="Close"
   (nzOnOk)="clone()"

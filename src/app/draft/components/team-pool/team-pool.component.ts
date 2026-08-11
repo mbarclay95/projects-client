@@ -3,7 +3,9 @@ import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzSegmentedComponent } from 'ng-zorro-antd/segmented';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { Draft } from '../../models/draft.model';
 import { DraftTeam } from '../../models/draft-team.model';
 import { DraftService } from '../../services/draft.service';
@@ -17,12 +19,13 @@ type TeamPoolFilter = 'All' | 'Unpicked' | 'Picked';
   selector: 'app-team-pool',
   templateUrl: './team-pool.component.html',
   styleUrls: ['./team-pool.component.scss'],
-  imports: [AsyncPipe, FormsModule, NzSegmentedComponent],
+  imports: [AsyncPipe, FormsModule, NzSegmentedComponent, NzButtonComponent],
 })
 export class TeamPoolComponent {
   private draftService = inject(DraftService);
   draftCacheService = inject(DraftCacheService);
   private nzMessageService = inject(NzMessageService);
+  private nzModalService = inject(NzModalService);
 
   @Input({ required: true }) draft!: Draft;
 
@@ -52,7 +55,17 @@ export class TeamPoolComponent {
     return this.draft.draftMembers.find((m) => m.id === pick.draftMemberId)?.name ?? 'Someone';
   }
 
-  async pick(team: DraftTeam, isMyTurn: boolean | null): Promise<void> {
+  confirmPick(team: DraftTeam, isMyTurn: boolean | null): void {
+    this.nzModalService.confirm({
+      nzTitle: 'Are you sure?',
+      nzContent: `Pick ${team.name}?`,
+      nzOkText: 'Pick',
+      nzCancelText: 'Cancel',
+      nzOnOk: () => this.pick(team, isMyTurn),
+    });
+  }
+
+  private async pick(team: DraftTeam, isMyTurn: boolean | null): Promise<void> {
     if (!isMyTurn || this.pickedBy(team) || this.picking) {
       return;
     }

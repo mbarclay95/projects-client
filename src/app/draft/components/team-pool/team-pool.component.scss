@@ -17,14 +17,6 @@
   padding: 0.75rem;
   background: rgba(255, 255, 255, 0.04);
 
-  &.clickable {
-    cursor: pointer;
-
-    &:hover {
-      border-color: rgba(255, 255, 255, 0.5);
-    }
-  }
-
   // Taken tiles recede toward the panel colour behind them instead of
   // taking a translucent wash, so the banner text stays fully readable.
   &.taken {
@@ -70,4 +62,11 @@
   margin-top: 0.5rem;
   text-align: center;
   word-break: break-word;
+}
+
+// Reserved even when empty, so the grid doesn't jump each time the turn
+// comes round to whoever is viewing.
+.team-actions {
+  min-height: 32px;
+  margin-top: 0.5rem;
 }

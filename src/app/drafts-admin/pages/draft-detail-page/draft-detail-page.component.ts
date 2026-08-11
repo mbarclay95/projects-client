@@ -14,7 +14,7 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 import { NzTabsComponent, NzTabComponent } from 'ng-zorro-antd/tabs';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { DraftTeamsTabComponent } from '../../components/draft-teams-tab/draft-teams-tab.component';
@@ -52,6 +52,10 @@ export class DraftDetailPageComponent {
   statuses = Object.values(DraftStatus);
   statusLabels = DRAFT_STATUS_LABELS;
   back = faChevronLeft;
+  warning = faCircleExclamation;
+
+  /** Set by app-draft-order-tab's dirtyChange — read by the Order tab's own label. */
+  orderDirty = signal(false);
 
   readonly draftsStore = inject(DraftsSignalStore);
   private readonly route = inject(ActivatedRoute);

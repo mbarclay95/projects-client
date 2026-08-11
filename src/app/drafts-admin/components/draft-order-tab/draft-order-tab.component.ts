@@ -1,9 +1,9 @@
-import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Draft, DraftStatus } from '../../models/draft.model';
 import { DraftMember } from '../../models/draft-member.model';
 import { DraftsSignalStore } from '../../services/drafts-signal-store';
 import { CdkDragDrop, CdkDragHandle, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { faGripVertical, faShuffle } from '@fortawesome/free-solid-svg-icons';
+import { faCircleExclamation, faGripVertical, faShuffle } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
@@ -17,20 +17,26 @@ import { NzEmptyComponent } from 'ng-zorro-antd/empty';
 export class DraftOrderTabComponent implements OnChanges {
   @Input({ required: true }) draft!: Draft;
 
+  /** So the Order tab label can show an unsaved-changes cue without reaching into this component's internals. */
+  @Output() dirtyChange = new EventEmitter<boolean>();
+
   readonly draftsStore = inject(DraftsSignalStore);
 
   orderedMembers: DraftMember[] = [];
   grip = faGripVertical;
   shuffleIcon = faShuffle;
+  warning = faCircleExclamation;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['draft']) {
       this.orderedMembers = this.sortedByPosition(this.draft.draftMembers);
+      this.dirtyChange.emit(this.isDirty());
     }
   }
 
   drop(event: CdkDragDrop<DraftMember[]>): void {
     moveItemInArray(this.orderedMembers, event.previousIndex, event.currentIndex);
+    this.dirtyChange.emit(this.isDirty());
   }
 
   shuffle(): void {
@@ -40,6 +46,7 @@ export class DraftOrderTabComponent implements OnChanges {
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     this.orderedMembers = shuffled;
+    this.dirtyChange.emit(this.isDirty());
   }
 
   /**

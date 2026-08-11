@@ -54,6 +54,12 @@
   <ng-template #adminsTitle
     >Admins <span class="tab-count">{{ draft.draftAdmins.length }}</span></ng-template
   >
+  <ng-template #orderTitle>
+    Order
+    @if (orderDirty()) {
+      <fa-icon [icon]="warning" class="text-danger ms-1"></fa-icon>
+    }
+  </ng-template>
 
   <nz-tabs>
     <nz-tab [nzTitle]="teamsTitle">
@@ -62,8 +68,8 @@
     <nz-tab [nzTitle]="membersTitle">
       <app-draft-members-tab [draft]="draft"></app-draft-members-tab>
     </nz-tab>
-    <nz-tab nzTitle="Order">
-      <app-draft-order-tab [draft]="draft"></app-draft-order-tab>
+    <nz-tab [nzTitle]="orderTitle">
+      <app-draft-order-tab [draft]="draft" (dirtyChange)="orderDirty.set($event)"></app-draft-order-tab>
     </nz-tab>
     <nz-tab [nzTitle]="adminsTitle">
       <app-draft-admins-tab [draft]="draft"></app-draft-admins-tab>

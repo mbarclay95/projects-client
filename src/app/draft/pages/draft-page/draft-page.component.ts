@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { DraftService } from '../../services/draft.service';
 import { DraftCacheService } from '../../services/draft-cache.service';
 import { DraftStatus } from '../../models/draft.model';
@@ -21,6 +22,7 @@ import { TeamPoolComponent } from '../../components/team-pool/team-pool.componen
     DatePipe,
     NzDividerComponent,
     NzButtonComponent,
+    NzModalModule,
     DraftSignupModalComponent,
     DraftOrderComponent,
     DraftBoardComponent,

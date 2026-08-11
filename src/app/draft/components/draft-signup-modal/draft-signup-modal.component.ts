@@ -1,5 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Component, effect, inject, input, output } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { DraftService } from '../../services/draft.service';
 import { DraftCacheService } from '../../services/draft-cache.service';
@@ -14,32 +13,27 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./draft-signup-modal.component.scss'],
   imports: [NzModalComponent, NzModalContentDirective, NzInputDirective, FormsModule],
 })
-export class DraftSignupModalComponent implements OnInit, OnDestroy {
+export class DraftSignupModalComponent {
   private draftService = inject(DraftService);
   private draftCacheService = inject(DraftCacheService);
   private nzMessageService = inject(NzMessageService);
 
-  @Input() openModal!: Observable<void>;
+  openModal = input.required<boolean>();
+  closed = output<void>();
 
-  isVisible = false;
   saving = false;
   nameError = false;
   name = '';
   modalWidth = isMobile ? '95%' : '500px';
   modalStyle = isMobile ? { top: '20px' } : {};
 
-  private subscriptionDestroyer: Subject<void> = new Subject<void>();
-
-  ngOnInit(): void {
-    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe(() => {
-      this.name = '';
-      this.isVisible = true;
+  constructor() {
+    effect(() => {
+      if (this.openModal()) {
+        this.name = '';
+        this.nameError = false;
+      }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptionDestroyer.next();
-    this.subscriptionDestroyer.complete();
   }
 
   async claim() {
@@ -63,6 +57,6 @@ export class DraftSignupModalComponent implements OnInit, OnDestroy {
 
     this.nzMessageService.success('You are signed up!');
     this.saving = false;
-    this.isVisible = false;
+    this.closed.emit();
   }
 }

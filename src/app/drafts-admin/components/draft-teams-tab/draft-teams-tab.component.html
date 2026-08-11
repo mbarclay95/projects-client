@@ -6,11 +6,11 @@
   </div>
 </div>
 
-@if (draft.draftTeams.length === 0) {
+@if (draft().draftTeams.length === 0) {
   <nz-empty nzNotFoundContent="No Teams Yet"></nz-empty>
 } @else {
   <div class="teams-grid" [class.mobile]="isMobile">
-    @for (team of draft.draftTeams; track team.id) {
+    @for (team of draft().draftTeams; track team.id) {
       <div class="team-card">
         @if (team.s3Path) {
           <img [srcset]="team.imagePath" [alt]="team.name" class="team-logo" width="100" height="100" />
@@ -41,6 +41,6 @@
 
 <app-clone-draft-teams-modal
   [visible]="cloneModalOpen()"
-  [draftId]="draft.id"
+  [draftId]="draft().id"
   (closed)="cloneModalOpen.set(false)"
 ></app-clone-draft-teams-modal>

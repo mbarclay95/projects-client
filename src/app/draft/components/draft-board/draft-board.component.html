@@ -1,10 +1,10 @@
 <div class="fw-bold mb-2">Board</div>
 
-@if (draft.draftPicks.length === 0) {
+@if (draft().draftPicks.length === 0) {
   <nz-empty nzNotFoundContent="No picks yet"></nz-empty>
 } @else {
   <div class="board-list">
-    @for (pick of draft.draftPicks; track pick.id) {
+    @for (pick of draft().draftPicks; track pick.id) {
       <div class="board-row">
         <span class="round-badge">R{{ round(pick) }}</span>
         <span class="board-member">{{ memberName(pick.draftMemberId) }}</span>

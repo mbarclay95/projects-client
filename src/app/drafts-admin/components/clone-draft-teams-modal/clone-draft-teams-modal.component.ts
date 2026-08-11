@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { DraftsSignalStore } from '../../services/drafts-signal-store';
 import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
 import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
@@ -11,23 +11,23 @@ import { FormsModule } from '@angular/forms';
   imports: [NzModalComponent, NzModalContentDirective, NzSelectComponent, NzOptionComponent, FormsModule],
 })
 export class CloneDraftTeamsModalComponent {
-  @Input() visible = false;
-  @Input({ required: true }) draftId!: number;
-  @Output() closed: EventEmitter<void> = new EventEmitter<void>();
+  visible = input(false);
+  draftId = input.required<number>();
+  closed = output<void>();
 
   readonly draftsStore = inject(DraftsSignalStore);
 
   sourceDraftId: number | undefined;
 
   otherDrafts() {
-    return this.draftsStore.entities().filter((draft) => draft.id !== this.draftId);
+    return this.draftsStore.entities().filter((draft) => draft.id !== this.draftId());
   }
 
   clone(): void {
     if (!this.sourceDraftId) {
       return;
     }
-    this.draftsStore.cloneDraftTeamsHttp({ draftId: this.draftId, sourceDraftId: this.sourceDraftId, onSuccess: () => this.close() });
+    this.draftsStore.cloneDraftTeamsHttp({ draftId: this.draftId(), sourceDraftId: this.sourceDraftId, onSuccess: () => this.close() });
   }
 
   close(): void {

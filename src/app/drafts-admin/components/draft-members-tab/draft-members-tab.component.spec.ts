@@ -14,7 +14,7 @@ describe('DraftMembersTabComponent', () => {
 
     fixture = TestBed.createComponent(DraftMembersTabComponent);
     component = fixture.componentInstance;
-    component.draft = createDraft({ id: 1 });
+    fixture.componentRef.setInput('draft', createDraft({ id: 1 }));
     fixture.detectChanges();
   });
 

@@ -1,8 +1,8 @@
 <nz-modal
-  [(nzVisible)]="isVisible"
+  [nzVisible]="openModal()"
   nzTitle="Claim your name"
   [nzWidth]="modalWidth"
-  (nzOnCancel)="isVisible = false"
+  (nzOnCancel)="closed.emit()"
   nzOkText="Save"
   nzCancelText="Close"
   (nzOnOk)="claim()"

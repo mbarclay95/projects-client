@@ -1,10 +1,10 @@
 <div class="w-100 draft-border">
-  @if (loading) {
+  @if (loading()) {
     <div class="d-flex justify-content-center align-items-center m-5">
       <nz-spin></nz-spin>
     </div>
   } @else {
-    @for (draft of drafts; track draft.id) {
+    @for (draft of drafts(); track draft.id) {
       <div class="draft-box" (click)="openDraft(draft.id)">
         <div class="first-row">
           <div>
@@ -63,7 +63,7 @@
       </div>
     }
 
-    @if (drafts.length === 0) {
+    @if (drafts().length === 0) {
       <nz-empty class="my-4" nzNotFoundContent="No Drafts"></nz-empty>
     }
   }

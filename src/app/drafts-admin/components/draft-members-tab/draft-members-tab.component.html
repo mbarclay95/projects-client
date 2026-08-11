@@ -1,10 +1,10 @@
 <div class="fw-bold mb-3">Members</div>
 
-@if (draft.draftMembers.length === 0) {
+@if (draft().draftMembers.length === 0) {
   <nz-empty nzNotFoundContent="No Members Yet" class="mb-3"></nz-empty>
 } @else {
   <div class="member-list mb-3">
-    @for (member of draft.draftMembers; track member.id) {
+    @for (member of draft().draftMembers; track member.id) {
       <div class="member-row">
         @if (member.pickPosition) {
           <span class="position-badge">{{ member.pickPosition }}</span>

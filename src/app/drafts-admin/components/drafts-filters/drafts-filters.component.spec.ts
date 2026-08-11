@@ -13,6 +13,7 @@ describe('DraftsFiltersComponent', () => {
 
     fixture = TestBed.createComponent(DraftsFiltersComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('ui', { showArchived: false, search: null });
     fixture.detectChanges();
   });
 

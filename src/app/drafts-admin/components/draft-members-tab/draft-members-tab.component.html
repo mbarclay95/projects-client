@@ -22,7 +22,20 @@
           <div class="member-name">{{ member.name }}</div>
         }
 
+        @if (member.claimedAt) {
+          <nz-tag nzColor="success" class="me-2">Claimed</nz-tag>
+        }
+
         <div class="member-actions">
+          @if (member.claimedAt) {
+            <fa-icon
+              class="text-warning"
+              [icon]="clearClaimIcon"
+              nz-popconfirm
+              nzPopconfirmTitle="This signs that person's device out of the draft. They will need to claim their name again."
+              (nzOnConfirm)="clearClaim(member)"
+            ></fa-icon>
+          }
           <fa-icon class="text-primary" [icon]="edit" (click)="startEditing(member)"></fa-icon>
           <fa-icon
             class="text-danger"

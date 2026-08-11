@@ -91,6 +91,10 @@ export class DraftService {
     return this.draftSubject.value?.id ?? 0;
   }
 
+  getToken(): string {
+    return this.token ?? '';
+  }
+
   private fetchDraft(): Observable<Draft> {
     return this.http
       .get<Draft>(`${environment.publicApiUrl}/drafts/${this.draftId}?token=${this.token}`)

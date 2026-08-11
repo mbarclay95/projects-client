@@ -10,6 +10,7 @@ import { DraftSignupModalComponent } from '../../components/draft-signup-modal/d
 import { DraftOrderComponent } from '../../components/draft-order/draft-order.component';
 import { DraftBoardComponent } from '../../components/draft-board/draft-board.component';
 import { MyRosterComponent } from '../../components/my-roster/my-roster.component';
+import { TeamPoolComponent } from '../../components/team-pool/team-pool.component';
 
 @Component({
   selector: 'app-draft-page',
@@ -24,6 +25,7 @@ import { MyRosterComponent } from '../../components/my-roster/my-roster.componen
     DraftOrderComponent,
     DraftBoardComponent,
     MyRosterComponent,
+    TeamPoolComponent,
   ],
 })
 export class DraftPageComponent {

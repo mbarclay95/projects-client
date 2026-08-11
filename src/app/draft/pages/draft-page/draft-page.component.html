@@ -43,6 +43,7 @@
         } @else if (me) {
           <div class="mb-3" style="color: #787d82; font-style: italic">Waiting for your turn…</div>
         }
+        <app-team-pool [draft]="draft" class="d-block mb-3"></app-team-pool>
         <app-draft-order [draft]="draft" class="d-block mb-3"></app-draft-order>
         <app-draft-board [draft]="draft" class="d-block mb-3"></app-draft-board>
         <app-my-roster [draft]="draft"></app-my-roster>

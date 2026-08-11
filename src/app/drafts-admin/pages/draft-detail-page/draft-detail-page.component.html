@@ -45,17 +45,27 @@
     }
   </div>
 
+  <ng-template #teamsTitle
+    >Teams <span class="tab-count">{{ draft.draftTeams.length }}</span></ng-template
+  >
+  <ng-template #membersTitle
+    >Members <span class="tab-count">{{ draft.draftMembers.length }}</span></ng-template
+  >
+  <ng-template #adminsTitle
+    >Admins <span class="tab-count">{{ draft.draftAdmins.length }}</span></ng-template
+  >
+
   <nz-tabs>
-    <nz-tab nzTitle="Teams">
+    <nz-tab [nzTitle]="teamsTitle">
       <app-draft-teams-tab [draft]="draft"></app-draft-teams-tab>
     </nz-tab>
-    <nz-tab nzTitle="Members">
+    <nz-tab [nzTitle]="membersTitle">
       <app-draft-members-tab [draft]="draft"></app-draft-members-tab>
     </nz-tab>
     <nz-tab nzTitle="Order">
       <app-draft-order-tab [draft]="draft"></app-draft-order-tab>
     </nz-tab>
-    <nz-tab nzTitle="Admins">
+    <nz-tab [nzTitle]="adminsTitle">
       <app-draft-admins-tab [draft]="draft"></app-draft-admins-tab>
     </nz-tab>
   </nz-tabs>

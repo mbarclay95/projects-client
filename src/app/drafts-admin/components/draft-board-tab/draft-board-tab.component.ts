@@ -1,4 +1,6 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { distinctUntilChanged, EMPTY, map, switchMap, timer } from 'rxjs';
 import { faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
@@ -44,6 +46,26 @@ export class DraftBoardTabComponent {
   highestPickNumber = computed(() => Math.max(0, ...this.draft().draftPicks.map((pick) => pick.pickNumber)));
 
   pickerTarget = signal<DraftPickTarget | undefined>(undefined);
+
+  /**
+   * Polls only while in_progress, mirroring the public page's own poll —
+   * without it the admin's board silently lies whenever a participant is the
+   * one picking. loadOne() upserts the whole draft entity, which is safe to
+   * do from here specifically because canEditOrder is false during
+   * in_progress: DraftOrderTabComponent.orderedMembers holds unsaved drag
+   * state in a linkedSignal that this same upsert would otherwise reset out
+   * from under an admin mid-drag.
+   */
+  constructor() {
+    toObservable(this.draft)
+      .pipe(
+        map((draft) => ({ id: draft.id, status: draft.status })),
+        distinctUntilChanged((prev, curr) => prev.id === curr.id && prev.status === curr.status),
+        switchMap(({ id, status }) => (status === DraftStatus.inProgress ? timer(0, 3000).pipe(map(() => id)) : EMPTY)),
+        takeUntilDestroyed(),
+      )
+      .subscribe((draftId) => this.draftsStore.loadOne({ entityId: draftId }));
+  }
 
   picksFor(memberId: number): DraftPick[] {
     return this.draft()

@@ -2,6 +2,18 @@
 @import "ng-zorro-antd/ng-zorro-antd.dark.css";
 @import "bootstrap/dist/css/bootstrap.min.css";
 
+/**
+ * Bootstrap's body { color: #212529 } loads after ng-zorro's dark-theme
+ * body { color: rgba(255,255,255,.85) } and wins on specificity, so raw
+ * markup that isn't an ant component inherits near-black text. Restoring
+ * ng-zorro's colour here fixes exactly that, without reordering the two
+ * imports and changing precedence for every other colliding rule between
+ * them.
+ */
+body {
+  color: rgba(255, 255, 255, 0.85);
+}
+
 .cursor-pointer {
   cursor: pointer;
 }

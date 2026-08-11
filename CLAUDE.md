@@ -87,3 +87,14 @@ Each feature module composes these into a single signal store (e.g., `TasksSigna
 - Model files include factory functions (e.g., `createTask()`, `createEvent()`)
 - Strict TypeScript (`strict`, `noImplicitOverride`, `noImplicitReturns`)
 - Pre-commit hook via Husky runs lint/format checks
+- **New code uses signal-based `input()` / `output()`, never the `@Input()` / `@Output()`
+  decorators.** This app is zoneless, and decorator-based inputs read as plain fields
+  (`this.draft`) rather than signals, so nothing downstream reacts to them reliably —
+  see `DefaultModalSignalComponent` (`src/app/shared/components/default-modal-signal/`)
+  for the pattern to follow. This especially rules out an **input setter**
+  (`@Input() set x(v) { ... derive other state ... }` with a paired getter) for
+  deriving state from an incoming value — that's exactly what `input()` plus
+  `computed()` (or `linkedSignal()` for state that also needs local mutation, e.g.
+  drag-reorder before a save) replaces. Existing decorator-based components are not
+  retrofitted on sight; convert a component when you're already touching it for
+  other reasons, not as a drive-by change.

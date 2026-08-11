@@ -67,6 +67,9 @@
 // Reserved even when empty, so the grid doesn't jump each time the turn
 // comes round to whoever is viewing.
 .team-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
   min-height: 32px;
   margin-top: 0.5rem;
 }

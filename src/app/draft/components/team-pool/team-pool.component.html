@@ -21,6 +21,9 @@
       </div>
 
       <div class="team-actions">
+        @if (team.hasImage) {
+          <button nz-button nzSize="small" (click)="viewImage(team)">View</button>
+        }
         @if (isMyTurn && !takenBy) {
           <button nz-button nzType="primary" nzSize="small" (click)="confirmPick(team, isMyTurn)">Pick</button>
         }

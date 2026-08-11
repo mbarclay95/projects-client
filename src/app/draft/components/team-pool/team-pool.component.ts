@@ -6,6 +6,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzSegmentedComponent } from 'ng-zorro-antd/segmented';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzImage, NzImageService } from 'ng-zorro-antd/image';
 import { Draft } from '../../models/draft.model';
 import { DraftTeam } from '../../models/draft-team.model';
 import { DraftService } from '../../services/draft.service';
@@ -26,6 +27,7 @@ export class TeamPoolComponent {
   draftCacheService = inject(DraftCacheService);
   private nzMessageService = inject(NzMessageService);
   private nzModalService = inject(NzModalService);
+  private nzImageService = inject(NzImageService);
 
   @Input({ required: true }) draft!: Draft;
 
@@ -45,6 +47,22 @@ export class TeamPoolComponent {
 
   imageUrl(team: DraftTeam): string {
     return `${environment.publicApiUrl}/draft-teams/${team.id}/image?token=${this.draftService.getToken()}`;
+  }
+
+  /**
+   * The arrows traverse the filtered set the grid is showing, not every
+   * team — agreed 2026-08-11, so the viewer and the grid never disagree
+   * about what list is being looked at.
+   */
+  viewImage(team: DraftTeam): void {
+    const teamsWithImages = this.filteredTeams().filter((t) => t.hasImage);
+    const startIndex = teamsWithImages.findIndex((t) => t.id === team.id);
+    const images: NzImage[] = teamsWithImages.map((t) => ({ src: this.imageUrl(t), alt: t.name }));
+
+    const ref = this.nzImageService.preview(images);
+    if (startIndex > 0) {
+      ref.switchTo(startIndex);
+    }
   }
 
   pickedBy(team: DraftTeam): string | undefined {

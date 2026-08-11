@@ -39,7 +39,7 @@ export class DraftSignupModalComponent extends DefaultModalSignalComponent {
     this.saving = true;
     try {
       const member = await this.draftService.claimMember(this.name);
-      this.draftCacheService.loadNewMemberIntoCache(this.draftService.getId(), member);
+      this.draftCacheService.setMemberInCache(this.draftService.getId(), member);
     } catch (_e) {
       // 422s here are almost always "that name is taken" or "this draft is full" —
       // both are things a stranger typing a name needs to see, not a generic error.

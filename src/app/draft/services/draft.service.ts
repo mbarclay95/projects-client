@@ -58,8 +58,34 @@ export class DraftService {
       }),
     );
 
+    // The response carries no `claimed` field — it's the signup endpoint,
+    // not the read — but a name just signed up is claimed by definition.
     const draft = createDraft(this.draftSubject.value ?? {});
-    draft.draftMembers.push(createDraftMember(claimed));
+    draft.draftMembers.push(createDraftMember({ ...claimed, claimed: true }));
+    this.draftSubject.next(draft);
+
+    return claimed;
+  }
+
+  /**
+   * Binds this browser to an existing, unclaimed member. Response shape is
+   * byte-identical to claimMember()'s, per in-draft-control.md, so the same
+   * DraftMemberClaim type covers both.
+   */
+  async claimExistingMember(draftMemberId: number): Promise<DraftMemberClaim> {
+    const claimed = await firstValueFrom(
+      this.http.post<DraftMemberClaim>(`${environment.publicApiUrl}/draft-member-claims`, {
+        draftId: this.getId(),
+        token: this.token,
+        draftMemberId,
+      }),
+    );
+
+    const draft = createDraft(this.draftSubject.value ?? {});
+    const member = draft.draftMembers.find((m) => m.id === draftMemberId);
+    if (member) {
+      member.claimed = true;
+    }
     this.draftSubject.next(draft);
 
     return claimed;
@@ -80,6 +106,17 @@ export class DraftService {
     draft.status = result.status;
     draft.currentPickNumber = result.currentPickNumber;
     draft.onTheClockMemberId = result.onTheClockMemberId ?? undefined;
+    this.draftSubject.next(draft);
+  }
+
+  /**
+   * Re-fetches outside the 3s poll — used after a failed claim, where the
+   * member list shown might already be stale (someone else claimed the same
+   * row in the interim) and the next poll tick could be seconds away, or
+   * never arrive at all outside in_progress.
+   */
+  async refreshDraft(): Promise<void> {
+    const draft = await firstValueFrom(this.fetchDraft());
     this.draftSubject.next(draft);
   }
 

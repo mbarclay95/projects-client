@@ -3,18 +3,20 @@
 <div class="team-grid" [class.mobile]="isMobile">
   @for (team of draft.draftTeams; track team.id) {
     @let takenBy = pickedBy(team);
-    <div class="team-tile" [class.clickable]="isMyTurn && !takenBy" [class.dimmed]="!!takenBy" (click)="pick(team, isMyTurn)">
-      @if (team.hasImage) {
-        <img [src]="imageUrl(team)" [alt]="team.name" class="team-logo" width="100" height="100" />
-      } @else {
-        <div class="team-logo team-placeholder"></div>
-      }
-
-      <div class="team-name">{{ team.name }}</div>
-
+    <div class="team-tile" [class.clickable]="isMyTurn && !takenBy" [class.taken]="!!takenBy" (click)="pick(team, isMyTurn)">
       @if (takenBy) {
-        <div class="team-overlay">{{ takenBy }}</div>
+        <div class="team-taken-banner">{{ takenBy }}</div>
       }
+
+      <div class="team-content" [class.dimmed]="!!takenBy">
+        @if (team.hasImage) {
+          <img [src]="imageUrl(team)" [alt]="team.name" class="team-logo" width="100" height="100" />
+        } @else {
+          <div class="team-logo team-placeholder"></div>
+        }
+
+        <div class="team-name">{{ team.name }}</div>
+      </div>
     </div>
   }
 </div>

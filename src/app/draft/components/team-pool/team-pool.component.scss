@@ -9,13 +9,13 @@
 }
 
 .team-tile {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px;
   padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
 
   &.clickable {
     cursor: pointer;
@@ -24,6 +24,31 @@
       border-color: rgba(255, 255, 255, 0.5);
     }
   }
+
+  // Taken tiles recede toward the panel colour behind them instead of
+  // taking a translucent wash, so the banner text stays fully readable.
+  &.taken {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.team-taken-banner {
+  width: 100%;
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  margin: -0.75rem -0.75rem 0.5rem;
+  font-style: italic;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px 4px 0 0;
+}
+
+.team-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 
   &.dimmed {
     opacity: 0.4;
@@ -45,18 +70,4 @@
   margin-top: 0.5rem;
   text-align: center;
   word-break: break-word;
-}
-
-.team-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 0.5rem;
-  font-style: italic;
-  font-size: 12px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
 }

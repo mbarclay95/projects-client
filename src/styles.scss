@@ -2,6 +2,18 @@
 @import "ng-zorro-antd/ng-zorro-antd.dark.css";
 @import "bootstrap/dist/css/bootstrap.min.css";
 
+/**
+ * Bootstrap's body { color: #212529 } loads after ng-zorro's dark-theme
+ * body { color: rgba(255,255,255,.85) } and wins on specificity, so raw
+ * markup that isn't an ant component inherits near-black text. Restoring
+ * ng-zorro's colour here fixes exactly that, without reordering the two
+ * imports and changing precedence for every other colliding rule between
+ * them.
+ */
+body {
+  color: rgba(255, 255, 255, 0.85);
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -19,4 +31,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/**
+ * NzImageService's full-screen preview renders in the CDK overlay
+ * container, appended outside any component's view — no component-scoped
+ * stylesheet can reach it, and the operations list (which buttons show)
+ * has no public @Input to configure. This hides rotate and flip by icon
+ * class, leaving zoom and close. It's global rather than scoped to the
+ * draft page's viewer because there's no narrower way to target it; if
+ * another feature adds its own image preview later, this rule applies
+ * there too.
+ */
+.ant-image-preview-operations-operation:has(.anticon-rotate-right),
+.ant-image-preview-operations-operation:has(.anticon-rotate-left),
+.ant-image-preview-operations-operation:has(.anticon-swap) {
+  display: none;
 }

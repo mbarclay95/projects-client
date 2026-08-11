@@ -1,8 +1,7 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
-import { Draft } from '../../models/draft.model';
-import { DraftMember } from '../../models/draft-member.model';
+import { Draft, DraftStatus } from '../../models/draft.model';
 import { DraftCacheService } from '../../services/draft-cache.service';
 
 @Component({
@@ -14,19 +13,42 @@ import { DraftCacheService } from '../../services/draft-cache.service';
 export class DraftOrderComponent {
   draftCacheService = inject(DraftCacheService);
 
-  private _draft!: Draft;
+  draft = input.required<Draft>();
 
-  sortedMembers: DraftMember[] = [];
+  isSignup = computed(() => this.draft().status === DraftStatus.signup);
 
-  @Input({ required: true })
-  set draft(draft: Draft) {
-    this._draft = draft;
-    this.sortedMembers = [...draft.draftMembers].sort(
-      (a, b) => (a.pickPosition ?? Number.MAX_SAFE_INTEGER) - (b.pickPosition ?? Number.MAX_SAFE_INTEGER),
-    );
-  }
+  sortedMembers = computed(() => {
+    const draft = this.draft();
+    return draft.status === DraftStatus.signup
+      ? [...draft.draftMembers].sort((a, b) => a.id - b.id)
+      : [...draft.draftMembers].sort((a, b) => (a.pickPosition ?? Number.MAX_SAFE_INTEGER) - (b.pickPosition ?? Number.MAX_SAFE_INTEGER));
+  });
 
-  get draft(): Draft {
-    return this._draft;
+  heading = computed(() => {
+    if (this.isSignup()) {
+      return "Who's In";
+    }
+    const draft = this.draft();
+    if (draft.status === DraftStatus.complete && draft.totalRounds === 1) {
+      return 'Results';
+    }
+    return 'Pick Order';
+  });
+
+  /**
+   * A2 makes every draft creatable from the UI one round, so this is the
+   * only view most participants ever see — the multi-round Board and My
+   * Roster it replaces are unaffected and keep rendering for
+   * totalRounds > 1.
+   */
+  showPicks = computed(() => !this.isSignup() && this.draft().totalRounds === 1);
+
+  pickedTeamName(memberId: number): string | undefined {
+    const draft = this.draft();
+    const pick = draft.draftPicks.find((p) => p.draftMemberId === memberId);
+    if (!pick) {
+      return undefined;
+    }
+    return draft.draftTeams.find((t) => t.id === pick.draftTeamId)?.name;
   }
 }

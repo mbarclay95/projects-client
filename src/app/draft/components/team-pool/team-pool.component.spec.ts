@@ -35,7 +35,7 @@ describe('TeamPoolComponent', () => {
 
     fixture = TestBed.createComponent(TeamPoolComponent);
     component = fixture.componentInstance;
-    component.draft = createDraft({ id: 1, draftTeams: [theOnlyTeam], draftPicks: [] });
+    fixture.componentRef.setInput('draft', createDraft({ id: 1, draftTeams: [theOnlyTeam], draftPicks: [] }));
     fixture.detectChanges();
   });
 
@@ -46,11 +46,14 @@ describe('TeamPoolComponent', () => {
   });
 
   it('does not make a pick for an already-taken team', async () => {
-    component.draft = createDraft({
-      id: 1,
-      draftTeams: [theOnlyTeam],
-      draftPicks: [createDraftPick({ id: 1, draftTeamId: 5, draftMemberId: 99, pickNumber: 1 })],
-    });
+    fixture.componentRef.setInput(
+      'draft',
+      createDraft({
+        id: 1,
+        draftTeams: [theOnlyTeam],
+        draftPicks: [createDraftPick({ id: 1, draftTeamId: 5, draftMemberId: 99, pickNumber: 1 })],
+      }),
+    );
 
     await component.pick(theOnlyTeam, true);
 

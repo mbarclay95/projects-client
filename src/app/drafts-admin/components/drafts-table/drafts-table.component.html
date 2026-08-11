@@ -1,4 +1,4 @@
-<nz-table #draftsTableTag [nzData]="drafts" nzSize="default" [nzFrontPagination]="false" [nzLoading]="loading">
+<nz-table #draftsTableTag [nzData]="drafts()" nzSize="default" [nzFrontPagination]="false" [nzLoading]="loading()">
   <thead>
     <tr>
       <th>Name</th>
@@ -8,6 +8,7 @@
       <th>Members</th>
       <th>Picks</th>
       <th nzWidth="140px"></th>
+      <th nzWidth="32px"></th>
     </tr>
   </thead>
   <tbody>
@@ -17,7 +18,7 @@
           @if (draft.deletedAt) {
             <div class="text-warning" style="font-style: italic">Archived</div>
           }
-          {{ draft.name }}
+          <span class="draft-name-link">{{ draft.name }}</span>
         </td>
         <td>{{ draft.draftDate | date: "short" }}</td>
         <td>
@@ -42,6 +43,9 @@
               (nzOnConfirm)="archiveDraft.emit(draft.id)"
             ></fa-icon>
           </div>
+        </td>
+        <td>
+          <fa-icon class="draft-row-chevron" [icon]="chevron"></fa-icon>
         </td>
       </tr>
     }

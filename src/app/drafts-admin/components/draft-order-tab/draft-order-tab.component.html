@@ -1,25 +1,58 @@
 <div class="w-100 d-flex justify-content-between align-items-center mb-3">
-  <div class="fw-bold">Pick Order</div>
+  <div class="d-flex align-items-center">
+    <div class="fw-bold">Pick Order</div>
+    @if (isDirty()) {
+      <div class="text-danger ms-2" style="font-style: italic">
+        <fa-icon [icon]="warning" class="me-1"></fa-icon>
+        Unsaved changes
+      </div>
+    }
+  </div>
   <div class="d-flex">
-    <button nz-button (click)="shuffle()" class="me-2">
+    <button nz-button [disabled]="!canEditOrder()" (click)="shuffle()" class="me-2">
       <fa-icon [icon]="shuffleIcon" class="me-1"></fa-icon>
       Shuffle
     </button>
-    <button nz-button nzType="primary" [disabled]="!isDirty()" [nzLoading]="draftsStore.loadingMember()" (click)="save()">Save</button>
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="!canEditOrder() || !isDirty()"
+      [nzLoading]="draftsStore.loadingMember()"
+      (click)="save()"
+    >
+      Save
+    </button>
   </div>
 </div>
 
-@if (orderedMembers.length === 0) {
+@if (!canEditOrder()) {
+  <div class="order-locked-note mb-2">The order is fixed once the draft is under way.</div>
+}
+
+@if (orderedMembers().length === 0) {
   <nz-empty nzNotFoundContent="No Members Yet"></nz-empty>
 } @else {
-  <div cdkDropList (cdkDropListDropped)="drop($event)" class="order-list">
-    @for (member of orderedMembers; track member.id) {
-      <div class="order-row" cdkDrag>
-        <button class="grip-handle" cdkDragHandle>
-          <fa-icon [icon]="grip"></fa-icon>
-        </button>
-        <div class="order-name">{{ member.name }}</div>
-      </div>
-    }
+  <div class="order-container">
+    <!--
+      A static gutter, not part of the drag list: it's a reference for
+      reading off "who's 4th", so the numbers must stay put in their slots
+      rather than travel with whichever name is currently dragged past them.
+    -->
+    <div class="order-numbers">
+      @for (member of orderedMembers(); track member.id; let i = $index) {
+        <div class="order-number">{{ i + 1 }}</div>
+      }
+    </div>
+
+    <div cdkDropList (cdkDropListDropped)="drop($event)" class="order-list">
+      @for (member of orderedMembers(); track member.id) {
+        <div class="order-row" cdkDrag [cdkDragDisabled]="!canEditOrder()">
+          <button class="grip-handle" cdkDragHandle [disabled]="!canEditOrder()">
+            <fa-icon [icon]="grip"></fa-icon>
+          </button>
+          <div class="order-name">{{ member.name }}</div>
+        </div>
+      }
+    </div>
   </div>
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
+import { Component, ViewChild, inject, input, output } from '@angular/core';
 import {
   NzTableComponent,
   NzTheadComponent,
@@ -7,7 +7,7 @@ import {
   NzThMeasureDirective,
   NzTbodyComponent,
 } from 'ng-zorro-antd/table';
-import { faBoxArchive, faCopy, faEdit, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { faBoxArchive, faChevronRight, faCopy, faEdit, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { Draft, DRAFT_STATUS_COLORS, DRAFT_STATUS_LABELS } from '../../models/draft.model';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
@@ -41,16 +41,17 @@ export class DraftsTableComponent {
 
   @ViewChild('draftsTableTag', { static: true }) draftsTable: NzTableComponent<Draft> | undefined;
 
-  @Input() drafts: Draft[] = [];
-  @Input() loading!: boolean;
+  drafts = input.required<Draft[]>();
+  loading = input.required<boolean>();
 
-  @Output() editDraft: EventEmitter<number> = new EventEmitter<number>();
-  @Output() archiveDraft: EventEmitter<number> = new EventEmitter<number>();
+  editDraft = output<number>();
+  archiveDraft = output<number>();
 
   edit = faEdit;
   archive = faBoxArchive;
   copy = faCopy;
   open = faUpRightFromSquare;
+  chevron = faChevronRight;
 
   statusLabels = DRAFT_STATUS_LABELS;
   statusColors = DRAFT_STATUS_COLORS;

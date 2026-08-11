@@ -5,3 +5,12 @@
 .draft-row:hover {
   background: rgba(255, 255, 255, 0.05);
 }
+
+.draft-name-link {
+  color: var(--bs-primary);
+}
+
+.draft-row-chevron {
+  color: var(--bs-primary);
+  opacity: 0.6;
+}

@@ -14,7 +14,8 @@
   }
 
   &.on-the-clock {
-    background: #3b4563;
+    background: #666e85;
+    border-left: 3px solid #586cb9;
   }
 }
 
@@ -37,5 +38,10 @@
 .you-badge {
   font-size: 12px;
   font-style: italic;
-  color: #787d82;
+  color: #c0c7d1;
+}
+
+.order-pick {
+  margin-left: 0.75rem;
+  font-weight: 600;
 }

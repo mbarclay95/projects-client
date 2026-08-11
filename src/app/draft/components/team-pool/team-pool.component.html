@@ -1,20 +1,33 @@
 @let isMyTurn = draftCacheService.isMyTurn$ | async;
 
+<nz-segmented class="mb-3" [nzOptions]="filterOptions" [ngModel]="filter()" (ngModelChange)="filter.set($event)"></nz-segmented>
+
 <div class="team-grid" [class.mobile]="isMobile">
-  @for (team of draft.draftTeams; track team.id) {
+  @for (team of filteredTeams(); track team.id) {
     @let takenBy = pickedBy(team);
-    <div class="team-tile" [class.clickable]="isMyTurn && !takenBy" [class.dimmed]="!!takenBy" (click)="pick(team, isMyTurn)">
-      @if (team.hasImage) {
-        <img [src]="imageUrl(team)" [alt]="team.name" class="team-logo" width="100" height="100" />
-      } @else {
-        <div class="team-logo team-placeholder"></div>
-      }
-
-      <div class="team-name">{{ team.name }}</div>
-
+    <div class="team-tile" [class.taken]="!!takenBy">
       @if (takenBy) {
-        <div class="team-overlay">{{ takenBy }}</div>
+        <div class="team-taken-banner">{{ takenBy }}</div>
       }
+
+      <div class="team-content" [class.dimmed]="!!takenBy">
+        @if (team.hasImage) {
+          <img [src]="imageUrl(team)" [alt]="team.name" class="team-logo" width="100" height="100" />
+        } @else {
+          <div class="team-logo team-placeholder"></div>
+        }
+
+        <div class="team-name">{{ team.name }}</div>
+      </div>
+
+      <div class="team-actions">
+        @if (team.hasImage) {
+          <button nz-button nzSize="small" (click)="viewImage(team)">View</button>
+        }
+        @if (isMyTurn && !takenBy) {
+          <button nz-button nzType="primary" nzSize="small" (click)="confirmPick(team, isMyTurn)">Pick</button>
+        }
+      </div>
     </div>
   }
 </div>

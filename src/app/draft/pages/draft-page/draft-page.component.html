@@ -1,15 +1,15 @@
 @if (draftService.draft$ | async; as draft) {
-  <div class="w-100">
+  <div class="w-100 draft-page-container p-2">
     <div class="w-100 d-flex justify-content-center text-light" style="font-size: 30px">
       {{ draft.name }}
     </div>
     @if (draft.draftDate) {
-      <div class="w-100 d-flex justify-content-center mb-3" style="color: #787d82">
+      <div class="w-100 d-flex justify-content-center mb-3" style="color: #c0c7d1">
         {{ draft.draftDate | date: "short" }}
       </div>
     }
     @if (draft.notes) {
-      <div class="w-100 d-flex justify-content-center mb-2" style="color: #787d82">{{ draft.notes }}</div>
+      <div class="w-100 d-flex justify-content-center mb-2" style="color: #c0c7d1">{{ draft.notes }}</div>
     }
     <nz-divider></nz-divider>
 
@@ -34,24 +34,30 @@
         <app-draft-order [draft]="draft"></app-draft-order>
       }
       @case (draftStatus.locked) {
-        <div class="mb-3" style="color: #787d82; font-style: italic">The order is set. Waiting for the draft to start.</div>
+        <div class="mb-3" style="color: #c0c7d1; font-style: italic">The order is set. Waiting for the draft to start.</div>
         <app-draft-order [draft]="draft"></app-draft-order>
       }
       @case (draftStatus.inProgress) {
         @if (draftCacheService.isMyTurn$ | async) {
           <div class="text-success mb-3" style="font-style: italic">It's your turn!</div>
         } @else if (me) {
-          <div class="mb-3" style="color: #787d82; font-style: italic">Waiting for your turn…</div>
+          <div class="mb-3" style="color: #c0c7d1; font-style: italic">Waiting for your turn…</div>
         }
         <app-team-pool [draft]="draft" class="d-block mb-3"></app-team-pool>
         <app-draft-order [draft]="draft" class="d-block mb-3"></app-draft-order>
-        <app-draft-board [draft]="draft" class="d-block mb-3"></app-draft-board>
-        <app-my-roster [draft]="draft"></app-my-roster>
+        @if (draft.totalRounds !== 1) {
+          <app-draft-board [draft]="draft" class="d-block mb-3"></app-draft-board>
+          <app-my-roster [draft]="draft"></app-my-roster>
+        }
       }
       @case (draftStatus.complete) {
-        <div class="mb-3" style="color: #787d82; font-style: italic">This draft is complete.</div>
-        <app-draft-board [draft]="draft" class="d-block mb-3"></app-draft-board>
-        <app-my-roster [draft]="draft"></app-my-roster>
+        <div class="mb-3" style="color: #c0c7d1; font-style: italic">This draft is complete.</div>
+        @if (draft.totalRounds === 1) {
+          <app-draft-order [draft]="draft"></app-draft-order>
+        } @else {
+          <app-draft-board [draft]="draft" class="d-block mb-3"></app-draft-board>
+          <app-my-roster [draft]="draft"></app-my-roster>
+        }
       }
     }
   </div>

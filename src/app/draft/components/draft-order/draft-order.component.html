@@ -1,18 +1,21 @@
-<div class="fw-bold mb-2">Pick Order</div>
+<div class="fw-bold mb-2">{{ heading() }}</div>
 
-@if (sortedMembers.length === 0) {
+@if (sortedMembers().length === 0) {
   <nz-empty nzNotFoundContent="No one has joined yet"></nz-empty>
 } @else {
   @let me = draftCacheService.me$ | async;
   <div class="order-list">
-    @for (member of sortedMembers; track member.id) {
-      <div class="order-row" [class.on-the-clock]="member.id === draft.onTheClockMemberId">
-        @if (member.pickPosition) {
+    @for (member of sortedMembers(); track member.id) {
+      <div class="order-row" [class.on-the-clock]="!isSignup() && member.id === draft().onTheClockMemberId">
+        @if (!isSignup() && member.pickPosition) {
           <span class="position-badge">{{ member.pickPosition }}</span>
         }
         <div class="order-name">{{ member.name }}</div>
         @if (member.id === me?.draftMemberId) {
           <span class="you-badge">You</span>
+        }
+        @if (showPicks() && pickedTeamName(member.id); as pickedTeam) {
+          <div class="order-pick">{{ pickedTeam }}</div>
         }
       </div>
     }

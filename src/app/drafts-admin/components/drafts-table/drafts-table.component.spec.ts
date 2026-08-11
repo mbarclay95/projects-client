@@ -13,6 +13,8 @@ describe('DraftsTableComponent', () => {
 
     fixture = TestBed.createComponent(DraftsTableComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('drafts', []);
+    fixture.componentRef.setInput('loading', false);
     fixture.detectChanges();
   });
 

@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
 import { Draft } from '../../models/draft.model';
@@ -14,13 +14,13 @@ import { DraftCacheService } from '../../services/draft-cache.service';
 export class MyRosterComponent {
   draftCacheService = inject(DraftCacheService);
 
-  @Input({ required: true }) draft!: Draft;
+  draft = input.required<Draft>();
 
   myPicks(draftMemberId: number): DraftPick[] {
-    return this.draft.draftPicks.filter((pick) => pick.draftMemberId === draftMemberId);
+    return this.draft().draftPicks.filter((pick) => pick.draftMemberId === draftMemberId);
   }
 
   teamName(draftTeamId: number): string {
-    return this.draft.draftTeams.find((t) => t.id === draftTeamId)?.name ?? 'Unknown team';
+    return this.draft().draftTeams.find((t) => t.id === draftTeamId)?.name ?? 'Unknown team';
   }
 }

@@ -1,11 +1,11 @@
 <div class="fw-bold mb-3">Admins</div>
 
 <div class="admin-list mb-3">
-  @for (admin of draft.draftAdmins; track admin.id) {
+  @for (admin of draft().draftAdmins; track admin.id) {
     <div class="admin-row">
       <div class="admin-name">{{ candidateName(admin.userId) }}</div>
 
-      @if (admin.userId === draft.createdById) {
+      @if (admin.userId === draft().createdById) {
         <nz-tag nzColor="blue">Creator</nz-tag>
       } @else {
         <fa-icon

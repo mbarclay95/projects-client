@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
 import { Draft } from '../../models/draft.model';
 import { DraftPick } from '../../models/draft-pick.model';
@@ -10,10 +10,10 @@ import { DraftPick } from '../../models/draft-pick.model';
   imports: [NzEmptyComponent],
 })
 export class DraftBoardComponent {
-  @Input({ required: true }) draft!: Draft;
+  draft = input.required<Draft>();
 
   round(pick: DraftPick): number {
-    const memberCount = this.draft.draftMembers.length;
+    const memberCount = this.draft().draftMembers.length;
     if (memberCount === 0) {
       return 1;
     }
@@ -21,10 +21,10 @@ export class DraftBoardComponent {
   }
 
   teamName(draftTeamId: number): string {
-    return this.draft.draftTeams.find((t) => t.id === draftTeamId)?.name ?? 'Unknown team';
+    return this.draft().draftTeams.find((t) => t.id === draftTeamId)?.name ?? 'Unknown team';
   }
 
   memberName(draftMemberId: number): string {
-    return this.draft.draftMembers.find((m) => m.id === draftMemberId)?.name ?? 'Unknown member';
+    return this.draft().draftMembers.find((m) => m.id === draftMemberId)?.name ?? 'Unknown member';
   }
 }

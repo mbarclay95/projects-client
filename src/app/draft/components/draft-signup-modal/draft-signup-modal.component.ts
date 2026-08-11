@@ -1,9 +1,8 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Component, inject, output } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { DraftService } from '../../services/draft.service';
 import { DraftCacheService } from '../../services/draft-cache.service';
-import { isMobile } from '../../../app.component';
+import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
@@ -14,32 +13,20 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./draft-signup-modal.component.scss'],
   imports: [NzModalComponent, NzModalContentDirective, NzInputDirective, FormsModule],
 })
-export class DraftSignupModalComponent implements OnInit, OnDestroy {
+export class DraftSignupModalComponent extends DefaultModalSignalComponent {
   private draftService = inject(DraftService);
   private draftCacheService = inject(DraftCacheService);
   private nzMessageService = inject(NzMessageService);
 
-  @Input() openModal!: Observable<void>;
+  closed = output<void>();
 
-  isVisible = false;
   saving = false;
   nameError = false;
   name = '';
-  modalWidth = isMobile ? '95%' : '500px';
-  modalStyle = isMobile ? { top: '20px' } : {};
 
-  private subscriptionDestroyer: Subject<void> = new Subject<void>();
-
-  ngOnInit(): void {
-    this.openModal.pipe(takeUntil(this.subscriptionDestroyer)).subscribe(() => {
-      this.name = '';
-      this.isVisible = true;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptionDestroyer.next();
-    this.subscriptionDestroyer.complete();
+  override onOpenModal(): void {
+    this.name = '';
+    this.nameError = false;
   }
 
   async claim() {
@@ -63,6 +50,6 @@ export class DraftSignupModalComponent implements OnInit, OnDestroy {
 
     this.nzMessageService.success('You are signed up!');
     this.saving = false;
-    this.isVisible = false;
+    this.closed.emit();
   }
 }

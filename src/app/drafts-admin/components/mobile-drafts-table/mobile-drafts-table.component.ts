@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Draft, DRAFT_STATUS_COLORS, DRAFT_STATUS_LABELS } from '../../models/draft.model';
 import { faBoxArchive, faCopy, faEdit, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
@@ -22,11 +22,11 @@ export class MobileDraftsTableComponent {
   private clipboard = inject(Clipboard);
   private nzMessageService = inject(NzMessageService);
 
-  @Input() drafts: Draft[] = [];
-  @Input() loading!: boolean;
+  drafts = input.required<Draft[]>();
+  loading = input.required<boolean>();
 
-  @Output() editDraft: EventEmitter<number> = new EventEmitter<number>();
-  @Output() archiveDraft: EventEmitter<number> = new EventEmitter<number>();
+  editDraft = output<number>();
+  archiveDraft = output<number>();
 
   edit = faEdit;
   archive = faBoxArchive;

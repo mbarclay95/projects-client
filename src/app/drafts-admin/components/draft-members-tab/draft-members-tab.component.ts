@@ -1,4 +1,4 @@
-import { Component, inject, Input, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { Draft } from '../../models/draft.model';
 import { createDraftMember, DraftMember } from '../../models/draft-member.model';
 import { DraftsSignalStore } from '../../services/drafts-signal-store';
@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
   imports: [FaIconComponent, NzPopconfirmDirective, NzEmptyComponent, NzInputDirective, NzButtonComponent, FormsModule],
 })
 export class DraftMembersTabComponent {
-  @Input({ required: true }) draft!: Draft;
+  draft = input.required<Draft>();
 
   readonly draftsStore = inject(DraftsSignalStore);
 
@@ -34,7 +34,7 @@ export class DraftMembersTabComponent {
       return;
     }
     this.draftsStore.createDraftMemberHttp({
-      member: createDraftMember({ draftId: this.draft.id, name }),
+      member: createDraftMember({ draftId: this.draft().id, name }),
       onSuccess: () => (this.newMemberName = ''),
     });
   }

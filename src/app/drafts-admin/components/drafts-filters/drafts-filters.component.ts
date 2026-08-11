@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { DraftsSignalStore, DraftsUiState } from '../../services/drafts-signal-store';
@@ -13,7 +13,7 @@ import { NzSwitchComponent } from 'ng-zorro-antd/switch';
   imports: [NzInputDirective, ReactiveFormsModule, FormsModule, NzSwitchComponent],
 })
 export class DraftsFiltersComponent implements OnInit, OnDestroy {
-  @Input() ui!: DraftsUiState;
+  ui = input.required<DraftsUiState>();
   search$: Subject<string> = new Subject<string>();
 
   private subscriptionDestroyer: Subject<void> = new Subject<void>();

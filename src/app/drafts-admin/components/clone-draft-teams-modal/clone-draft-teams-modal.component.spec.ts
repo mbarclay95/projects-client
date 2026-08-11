@@ -13,7 +13,8 @@ describe('CloneDraftTeamsModalComponent', () => {
 
     fixture = TestBed.createComponent(CloneDraftTeamsModalComponent);
     component = fixture.componentInstance;
-    component.draftId = 1;
+    fixture.componentRef.setInput('draftId', 1);
+    fixture.componentRef.setInput('openModal', false);
     fixture.detectChanges();
   });
 

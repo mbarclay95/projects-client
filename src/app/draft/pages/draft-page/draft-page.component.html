@@ -20,7 +20,7 @@
         <div class="mb-3">
           @if (!me) {
             <div class="w-100 d-flex justify-content-start align-items-center">
-              <button nz-button nzType="primary" (click)="openSignupModal.next()" [disabled]="draft.spotsRemaining === 0">
+              <button nz-button nzType="primary" (click)="openSignupModal.set(true)" [disabled]="draft.spotsRemaining === 0">
                 Join this draft
               </button>
               @if (draft.spotsRemaining === 0) {
@@ -63,4 +63,4 @@
   </div>
 }
 
-<app-draft-signup-modal [openModal]="openSignupModal.asObservable()"></app-draft-signup-modal>
+<app-draft-signup-modal [openModal]="openSignupModal()" (closed)="openSignupModal.set(false)"></app-draft-signup-modal>

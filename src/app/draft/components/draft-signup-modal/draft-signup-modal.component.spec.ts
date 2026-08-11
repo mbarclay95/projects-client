@@ -13,6 +13,7 @@ describe('DraftSignupModalComponent', () => {
 
     fixture = TestBed.createComponent(DraftSignupModalComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('openModal', false);
     fixture.detectChanges();
   });
 

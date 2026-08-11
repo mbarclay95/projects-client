@@ -1,4 +1,4 @@
-import { Component, inject, Input, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { Draft } from '../../models/draft.model';
 import { DraftTeam } from '../../models/draft-team.model';
 import { DraftsSignalStore } from '../../services/drafts-signal-store';
@@ -25,7 +25,7 @@ import { CloneDraftTeamsModalComponent } from '../clone-draft-teams-modal/clone-
   ],
 })
 export class DraftTeamsTabComponent {
-  @Input({ required: true }) draft!: Draft;
+  draft = input.required<Draft>();
 
   isMobile = isMobile;
   edit = faEdit;
@@ -37,7 +37,7 @@ export class DraftTeamsTabComponent {
   cloneModalOpen = signal(false);
 
   addTeam(): void {
-    this.draftsStore.setDraftIdForNewTeam(this.draft.id);
+    this.draftsStore.setDraftIdForNewTeam(this.draft().id);
   }
 
   editTeam(teamId: number): void {

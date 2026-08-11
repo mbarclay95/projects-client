@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { Draft } from '../../models/draft.model';
 import { DraftAdmin } from '../../models/draft-admin.model';
 import { DraftsSignalStore } from '../../services/drafts-signal-store';
@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
   imports: [FaIconComponent, NzPopconfirmDirective, NzTagComponent, NzSelectComponent, NzOptionComponent, NzButtonComponent, FormsModule],
 })
 export class DraftAdminsTabComponent implements OnInit {
-  @Input({ required: true }) draft!: Draft;
+  draft = input.required<Draft>();
 
   readonly draftsStore = inject(DraftsSignalStore);
 
@@ -33,7 +33,7 @@ export class DraftAdminsTabComponent implements OnInit {
   }
 
   addableCandidates() {
-    const adminUserIds = this.draft.draftAdmins.map((admin) => admin.userId);
+    const adminUserIds = this.draft().draftAdmins.map((admin) => admin.userId);
     return this.draftsStore.draftAdminCandidates().filter((candidate) => !adminUserIds.includes(candidate.id));
   }
 
@@ -42,7 +42,7 @@ export class DraftAdminsTabComponent implements OnInit {
       return;
     }
     this.draftsStore.createDraftAdminHttp({
-      draftId: this.draft.id,
+      draftId: this.draft().id,
       userId: this.newAdminUserId,
       onSuccess: () => (this.newAdminUserId = undefined),
     });

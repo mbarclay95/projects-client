@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, inject, signal } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -35,5 +34,5 @@ export class DraftPageComponent {
   draftCacheService = inject(DraftCacheService);
 
   draftStatus = DraftStatus;
-  openSignupModal: Subject<void> = new Subject<void>();
+  openSignupModal = signal(false);
 }

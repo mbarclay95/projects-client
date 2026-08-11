@@ -30,12 +30,12 @@ export class DraftService {
     // Polls only while in_progress: signup and locked have nothing to poll
     // for, and complete never changes again. distinctUntilChanged on the
     // status alone (not the whole draft) means a poll tick that returns the
-    // same status doesn't restart timer(0, 3000) at zero every 3s.
+    // same status doesn't restart timer(0, 1000) at zero every 1s.
     this.draft$
       .pipe(
         map((draft) => draft?.status),
         distinctUntilChanged(),
-        switchMap((status) => (status === DraftStatus.inProgress ? timer(0, 3000) : EMPTY)),
+        switchMap((status) => (status === DraftStatus.inProgress ? timer(0, 1000) : EMPTY)),
         switchMap(() => this.fetchDraft()),
         takeUntilDestroyed(),
       )
@@ -110,7 +110,7 @@ export class DraftService {
   }
 
   /**
-   * Re-fetches outside the 3s poll — used after a failed claim, where the
+   * Re-fetches outside the 1s poll — used after a failed claim, where the
    * member list shown might already be stale (someone else claimed the same
    * row in the interim) and the next poll tick could be seconds away, or
    * never arrive at all outside in_progress.

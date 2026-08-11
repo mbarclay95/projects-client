@@ -24,7 +24,12 @@
         <div class="w-100 mb-4">
           <div class="mb-2">Draft Date:</div>
 
-          <nz-date-picker [(ngModel)]="model.draftDate" nzFormat="MM/dd/yyyy" [nzShowNow]="false"></nz-date-picker>
+          <nz-date-picker
+            [(ngModel)]="model.draftDate"
+            nzFormat="MM/dd/yyyy HH:mm"
+            [nzShowNow]="false"
+            [nzShowTime]="{ nzFormat: 'HH:mm', nzUse12Hours: true, nzMinuteStep: 15 }"
+          ></nz-date-picker>
         </div>
 
         <div class="w-100 mb-4">

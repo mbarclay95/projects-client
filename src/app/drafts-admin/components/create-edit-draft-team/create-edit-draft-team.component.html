@@ -18,7 +18,7 @@
         <div class="w-100 mb-4">
           <div class="mb-2"><span class="text-danger">*</span> Team Name:</div>
 
-          <input nz-input [(ngModel)]="model.name" class="w-100" />
+          <input nz-input [(ngModel)]="model.name" class="w-100" (keydown.enter)="saveTeam()" />
         </div>
 
         @if (model.id !== 0) {

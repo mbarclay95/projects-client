@@ -3,7 +3,7 @@ import { createDraftMember, DraftMember } from './draft-member.model';
 import { createDraftPick, DraftPick } from './draft-pick.model';
 
 /**
- * Duplicated from `src/app/drafts/models/draft.model.ts` rather than shared —
+ * Duplicated from `src/app/drafts-admin/models/draft.model.ts` rather than shared —
  * the admin `Draft` carries `token` and `draftAdmins`, which the public
  * payload never does. See public-draft.md.
  */

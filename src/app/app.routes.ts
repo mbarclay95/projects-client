@@ -3,6 +3,7 @@ import { Permissions } from './auth/permissions';
 import { CreateButtonAction, MobileFooterButtons } from './shared/services/mobile-display.service';
 import { AuthLayoutComponent } from './auth/auth-layout/auth-layout.component';
 import { EventSignupLayoutComponent } from './event-signup/event-signup-layout/event-signup-layout.component';
+import { DraftLayoutComponent } from './draft/draft-layout/draft-layout.component';
 import { tryAuthGuard } from './auth/services/try-auth.guard';
 import { GamingLayoutComponent } from './gaming/gaming-layout/gaming-layout.component';
 import { authGuard } from './auth/services/auth.guard';
@@ -16,7 +17,7 @@ import { EventsLayoutComponent } from './events/events-layout/events-layout.comp
 import { FileExplorerLayoutComponent } from './file-explorer/file-explorer-layout/file-explorer-layout.component';
 import { MoneyLayoutComponent } from './money/money-layout/money-layout.component';
 import { LoggingLayoutComponent } from './logging/logging-layout/logging-layout.component';
-import { DraftsLayoutComponent } from './drafts/drafts-layout/drafts-layout.component';
+import { DraftsLayoutComponent } from './drafts-admin/drafts-layout/drafts-layout.component';
 
 export interface TypedData extends Data {
   headerTitle?: string;
@@ -41,6 +42,12 @@ export const APP_ROUTES: TypedRoute[] = [
     component: EventSignupLayoutComponent,
     data: { headerTitle: 'Signup' },
     loadChildren: () => import('./event-signup/event-signup.routes').then((m) => m.EVENT_SIGNUP_ROUTES),
+  },
+  {
+    path: 'draft',
+    component: DraftLayoutComponent,
+    data: { headerTitle: 'Draft' },
+    loadChildren: () => import('./draft/draft.routes').then((m) => m.DRAFT_ROUTES),
   },
   {
     path: 'games',
@@ -112,7 +119,7 @@ export const APP_ROUTES: TypedRoute[] = [
         path: 'drafts',
         component: DraftsLayoutComponent,
         data: { permission: Permissions.DRAFTS_PAGE, headerTitle: 'Drafts', createButtonAction: 'drafts' },
-        loadChildren: () => import('./drafts/drafts.routes').then((m) => m.DRAFTS_ROUTES),
+        loadChildren: () => import('./drafts-admin/drafts.routes').then((m) => m.DRAFTS_ROUTES),
       },
     ],
   },

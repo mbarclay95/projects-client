@@ -1,0 +1,42 @@
+.board-list {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+.board-row {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.round-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 32px;
+  height: 24px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+  margin-right: 0.75rem;
+  padding: 0 0.5rem;
+}
+
+.board-member {
+  font-weight: 600;
+}
+
+.board-took {
+  margin: 0 0.4rem;
+  color: #787d82;
+  font-style: italic;
+}
+
+.board-team {
+  flex: 1;
+}

@@ -1,0 +1,41 @@
+.order-list {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+.order-row {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.on-the-clock {
+    background: #3b4563;
+  }
+}
+
+.position-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+  margin-right: 0.75rem;
+}
+
+.order-name {
+  flex: 1;
+}
+
+.you-badge {
+  font-size: 12px;
+  font-style: italic;
+  color: #787d82;
+}

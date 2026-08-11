@@ -13,7 +13,7 @@ import { createNewUserWithDefaultRole } from '../../users/models/user.model';
 import { RolesSignalStore } from '../../users/services/roles-signal-store';
 import { GoalsSignalStore } from '../../goals/services/goals-signal-store';
 import { IncompleteEntriesSignalStore } from '../../money/services/incomplete-entries-signal-store';
-import { DraftsSignalStore } from '../../drafts/services/drafts-signal-store';
+import { DraftsSignalStore } from '../../drafts-admin/services/drafts-signal-store';
 
 @Injectable({
   providedIn: 'root',

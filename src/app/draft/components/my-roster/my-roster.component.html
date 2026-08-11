@@ -1,0 +1,15 @@
+@let me = draftCacheService.me$ | async;
+@if (me) {
+  <div class="fw-bold mb-2">My Roster</div>
+
+  @let picks = myPicks(me.draftMemberId);
+  @if (picks.length === 0) {
+    <nz-empty nzNotFoundContent="No picks yet"></nz-empty>
+  } @else {
+    <div class="roster-list">
+      @for (pick of picks; track pick.id) {
+        <div class="roster-row">{{ teamName(pick.draftTeamId) }}</div>
+      }
+    </div>
+  }
+}

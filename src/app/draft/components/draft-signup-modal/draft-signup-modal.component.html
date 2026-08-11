@@ -1,0 +1,26 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Claim your name"
+  [nzWidth]="modalWidth"
+  (nzOnCancel)="isVisible = false"
+  nzOkText="Save"
+  nzCancelText="Close"
+  (nzOnOk)="claim()"
+  [nzCancelDisabled]="saving"
+  [nzStyle]="modalStyle"
+  [nzOkDisabled]="saving"
+  [nzOkLoading]="saving"
+  [nzMaskClosable]="false"
+>
+  <ng-container *nzModalContent>
+    <div class="w-100 mb-4">
+      <div class="mb-2"><span class="text-danger">*</span> Name:</div>
+
+      <input nz-input [(ngModel)]="name" class="w-100" (keydown.enter)="claim()" />
+    </div>
+
+    @if (nameError) {
+      <div class="w-100 text-danger" style="font-style: italic">Please enter a name.</div>
+    }
+  </ng-container>
+</nz-modal>

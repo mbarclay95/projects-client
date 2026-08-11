@@ -6,7 +6,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzSegmentedComponent } from 'ng-zorro-antd/segmented';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzImage, NzImageService } from 'ng-zorro-antd/image';
+import { NzImage, NzImageModule, NzImageService } from 'ng-zorro-antd/image';
 import { Draft } from '../../models/draft.model';
 import { DraftTeam } from '../../models/draft-team.model';
 import { DraftService } from '../../services/draft.service';
@@ -20,7 +20,9 @@ type TeamPoolFilter = 'All' | 'Unpicked' | 'Picked';
   selector: 'app-team-pool',
   templateUrl: './team-pool.component.html',
   styleUrls: ['./team-pool.component.scss'],
-  imports: [AsyncPipe, FormsModule, NzSegmentedComponent, NzButtonComponent],
+  // NzImageService isn't providedIn: 'root' — it only comes from NzImageModule's
+  // own providers, which a standalone component picks up by importing the module.
+  imports: [AsyncPipe, FormsModule, NzSegmentedComponent, NzButtonComponent, NzImageModule],
 })
 export class TeamPoolComponent {
   private draftService = inject(DraftService);

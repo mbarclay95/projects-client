@@ -61,7 +61,7 @@ export class DraftBoardTabComponent {
       .pipe(
         map((draft) => ({ id: draft.id, status: draft.status })),
         distinctUntilChanged((prev, curr) => prev.id === curr.id && prev.status === curr.status),
-        switchMap(({ id, status }) => (status === DraftStatus.inProgress ? timer(0, 3000).pipe(map(() => id)) : EMPTY)),
+        switchMap(({ id, status }) => (status === DraftStatus.inProgress ? timer(0, 2000).pipe(map(() => id)) : EMPTY)),
         takeUntilDestroyed(),
       )
       .subscribe((draftId) => this.draftsStore.loadOne({ entityId: draftId }));

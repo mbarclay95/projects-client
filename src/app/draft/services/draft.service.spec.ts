@@ -22,22 +22,22 @@ describe('DraftService', () => {
     httpMock.verify();
   });
 
-  it('polls every 3s while in_progress and stops once the status leaves in_progress', fakeAsync(() => {
+  it('polls every 2s while in_progress and stops once the status leaves in_progress', fakeAsync(() => {
     service.getDraft('12', 'tok');
     httpMock.expectOne(`${environment.publicApiUrl}/drafts/12?token=tok`).flush(inProgressDraft());
     tick();
 
-    // timer(0, 3000)'s immediate tick, fired by the status transition to in_progress.
+    // timer(0, 2000)'s immediate tick, fired by the status transition to in_progress.
     httpMock.expectOne(`${environment.publicApiUrl}/drafts/12?token=tok`).flush(inProgressDraft());
     tick();
 
-    // The next 3s tick.
-    tick(3000);
+    // The next 2s tick.
+    tick(2000);
     httpMock.expectOne(`${environment.publicApiUrl}/drafts/12?token=tok`).flush(completeDraft());
     tick();
 
     // No further request once status has left in_progress.
-    tick(3000);
+    tick(2000);
     httpMock.expectNone(`${environment.publicApiUrl}/drafts/12?token=tok`);
   }));
 

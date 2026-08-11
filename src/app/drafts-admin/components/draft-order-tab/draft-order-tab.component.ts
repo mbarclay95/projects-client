@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Draft } from '../../models/draft.model';
+import { Draft, DraftStatus } from '../../models/draft.model';
 import { DraftMember } from '../../models/draft-member.model';
 import { DraftsSignalStore } from '../../services/drafts-signal-store';
 import { CdkDragDrop, CdkDragHandle, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -40,6 +40,15 @@ export class DraftOrderTabComponent implements OnChanges {
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     this.orderedMembers = shuffled;
+  }
+
+  /**
+   * Mirrors the status allow-list `updatePickPositions()` enforces on the
+   * backend. This is UX only — the backend check is the actual enforcement
+   * and does not move with this one.
+   */
+  canEditOrder(): boolean {
+    return this.draft.status === DraftStatus.signup || this.draft.status === DraftStatus.locked;
   }
 
   isDirty(): boolean {

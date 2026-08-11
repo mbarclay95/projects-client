@@ -13,8 +13,9 @@
   <nz-empty nzNotFoundContent="No Members Yet"></nz-empty>
 } @else {
   <div cdkDropList (cdkDropListDropped)="drop($event)" class="order-list">
-    @for (member of orderedMembers; track member.id) {
+    @for (member of orderedMembers; track member.id; let i = $index) {
       <div class="order-row" cdkDrag>
+        <div class="order-number">{{ i + 1 }}</div>
         <button class="grip-handle" cdkDragHandle>
           <fa-icon [icon]="grip"></fa-icon>
         </button>

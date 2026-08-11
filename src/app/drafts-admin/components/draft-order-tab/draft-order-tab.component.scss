@@ -15,6 +15,15 @@
   }
 }
 
+.order-number {
+  width: 2rem;
+  padding-right: 0.75rem;
+  margin-right: 0.75rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: right;
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .grip-handle {
   background: none;
   border: none;

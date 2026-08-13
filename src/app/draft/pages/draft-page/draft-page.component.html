@@ -80,6 +80,10 @@
   </div>
 }
 
+@if (celebrating()) {
+  <app-draft-fireworks (finished)="celebrating.set(false)"></app-draft-fireworks>
+}
+
 <app-draft-signup-modal [openModal]="openSignupModal()" (closed)="openSignupModal.set(false)"></app-draft-signup-modal>
 
 @if (draftService.draft$ | async; as draft) {

@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
@@ -15,6 +16,7 @@ import { DraftOrderComponent } from '../../components/draft-order/draft-order.co
 import { DraftBoardComponent } from '../../components/draft-board/draft-board.component';
 import { MyRosterComponent } from '../../components/my-roster/my-roster.component';
 import { TeamPoolComponent } from '../../components/team-pool/team-pool.component';
+import { DraftFireworksComponent } from '../../components/draft-fireworks/draft-fireworks.component';
 
 @Component({
   selector: 'app-draft-page',
@@ -34,6 +36,7 @@ import { TeamPoolComponent } from '../../components/team-pool/team-pool.componen
     DraftBoardComponent,
     MyRosterComponent,
     TeamPoolComponent,
+    DraftFireworksComponent,
   ],
 })
 export class DraftPageComponent {
@@ -44,6 +47,24 @@ export class DraftPageComponent {
   moreIcon = faEllipsisV;
   openSignupModal = signal(false);
   openClaimModal = signal(false);
+  celebrating = signal(false);
+
+  /**
+   * Marked as celebrated the moment it starts, not when the animation ends,
+   * so a reload part-way through doesn't replay it. Everyone watching when
+   * the last pick lands sees this within a poll tick of each other; anyone
+   * arriving later gets it once, on their first look at the finished draft.
+   */
+  constructor() {
+    this.draftService.draft$.pipe(takeUntilDestroyed()).subscribe((draft) => {
+      if (!draft || draft.status !== DraftStatus.complete || this.draftCacheService.hasCelebrated(draft.id)) {
+        return;
+      }
+
+      this.draftCacheService.markCelebrated(draft.id);
+      this.celebrating.set(true);
+    });
+  }
 
   /**
    * Not gated on `me` — "I claimed the wrong name" needs this menu item as

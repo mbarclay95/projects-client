@@ -16,6 +16,14 @@ export class DraftCacheService {
   private draftService = inject(DraftService);
 
   private readonly cacheKey = 'draft_cache';
+
+  /**
+   * Kept out of `draft_cache` deliberately: that key holds claim identities
+   * and only ever has entries for drafts this browser joined, while the
+   * celebration fires for anyone watching, claimed or not.
+   */
+  private readonly celebratedKey = 'draft_celebrated';
+
   private draftCache: BehaviorSubject<DraftCache[]> = new BehaviorSubject<DraftCache[]>([]);
 
   /**
@@ -78,5 +86,23 @@ export class DraftCacheService {
     });
     this.draftCache.next(draftCache);
     this.setDraftCache();
+  }
+
+  hasCelebrated(draftId: number): boolean {
+    return this.celebratedDraftIds().includes(draftId);
+  }
+
+  markCelebrated(draftId: number): void {
+    const draftIds = this.celebratedDraftIds();
+    if (draftIds.includes(draftId)) {
+      return;
+    }
+
+    draftIds.push(draftId);
+    localStorage.setItem(this.celebratedKey, JSON.stringify(draftIds));
+  }
+
+  private celebratedDraftIds(): number[] {
+    return JSON.parse(localStorage.getItem(this.celebratedKey) ?? '[]');
   }
 }

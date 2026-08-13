@@ -35,7 +35,15 @@
   flex: 1;
 }
 
+@media only screen and (min-width: 601px) {
+  .order-name {
+    flex: 0 1 auto;
+    min-width: 220px;
+  }
+}
+
 .you-badge {
+  margin-left: 0.4rem;
   font-size: 12px;
   font-style: italic;
   color: #c0c7d1;

@@ -10,10 +10,12 @@
         @if (!isSignup() && member.pickPosition) {
           <span class="position-badge">{{ member.pickPosition }}</span>
         }
-        <div class="order-name">{{ member.name }}</div>
-        @if (member.id === me?.draftMemberId) {
-          <span class="you-badge">You</span>
-        }
+        <div class="order-name">
+          {{ member.name }}
+          @if (member.id === me?.draftMemberId) {
+            <span class="you-badge">You</span>
+          }
+        </div>
         @if (showPicks() && pickedTeamName(member.id); as pickedTeam) {
           <div class="order-pick">{{ pickedTeam }}</div>
         }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, input, output, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, output, viewChild } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 
 interface Rocket {
@@ -28,10 +28,6 @@ interface Spark {
 export class DraftFireworksComponent implements AfterViewInit, OnDestroy {
   private canvasRef = viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
 
-  // Pressing a button labelled "Test fireworks" is a request for fireworks,
-  // whatever the motion preference says.
-  ignoreReducedMotion = input(false);
-
   finished = output<void>();
 
   private readonly colors = ['#ffc53d', '#ff7875', '#69c0ff', '#95de64', '#b37feb', '#ffffff'];
@@ -50,7 +46,7 @@ export class DraftFireworksComponent implements AfterViewInit, OnDestroy {
   private lastLaunchAt = 0;
 
   ngAfterViewInit(): void {
-    if (!this.ignoreReducedMotion() && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       this.giveUp('the browser asks for reduced motion');
       return;
     }

@@ -23,6 +23,11 @@
     @if (draft.notes) {
       <div class="w-100 d-flex justify-content-center mb-2" style="color: #c0c7d1">{{ draft.notes }}</div>
     }
+    @if (showImage(draft)) {
+      <div class="w-100 d-flex justify-content-center mb-2">
+        <img [src]="imageUrl(draft)" [alt]="draft.name" class="draft-image" />
+      </div>
+    }
     <nz-divider></nz-divider>
 
     @let me = draftCacheService.me$ | async;

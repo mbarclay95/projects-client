@@ -1,4 +1,5 @@
 import { createDraftAdmin, DraftAdmin } from './draft-admin.model';
+import { createDraftImage, DraftImage } from './draft-image.model';
 import { createDraftTeam, DraftTeam } from './draft-team.model';
 import { createDraftMember, DraftMember } from './draft-member.model';
 import { createDraftPick, DraftPick } from './draft-pick.model';
@@ -33,6 +34,8 @@ export interface Draft {
   status: DraftStatus;
   totalRounds: number;
   maxParticipants?: number;
+  draftImage: DraftImage | null;
+  draftImageId: number | null;
   createdById: number;
   deletedAt: Date;
   draftAdmins: DraftAdmin[];
@@ -52,6 +55,10 @@ export function createDraft(params: Partial<Draft>) {
     status: params.status ?? DraftStatus.signup,
     totalRounds: params.totalRounds ?? 1,
     maxParticipants: params.maxParticipants ?? undefined,
+    // Both are carried because the store PUTs the whole entity: draftImage
+    // renders the thumbnail, draftImageId is what the API persists.
+    draftImage: params.draftImage ? createDraftImage(params.draftImage) : null,
+    draftImageId: params.draftImage?.id ?? params.draftImageId ?? null,
     createdById: params.createdById ?? 0,
     deletedAt: params.deletedAt ? new Date(params.deletedAt) : null,
     draftAdmins: params.draftAdmins ? params.draftAdmins.map((a) => createDraftAdmin(a)) : [],

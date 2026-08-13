@@ -91,12 +91,33 @@ export class DraftDetailPageComponent {
   }
 
   canSelectStatus(status: DraftStatus): boolean {
-    if (status !== DraftStatus.inProgress) {
-      return true;
+    return this.statusDisabledReason(status) === null;
+  }
+
+  /**
+   * The tooltip and the disabled state read from one place so they cannot
+   * disagree about why an option is unavailable.
+   */
+  statusDisabledReason(status: DraftStatus): string | null {
+    const draft = this.draftsStore.activeEntity();
+    if (!draft) {
+      return null;
     }
 
-    const draft = this.draftsStore.activeEntity();
-    return !!draft && rosterIsFullyOrdered(draft.draftMembers);
+    // Complete is terminal. It is reached by the last pick landing, and the
+    // only way back out is undoing one on the Board tab — which reopens the
+    // draft server-side. Offering the control here would also hit the
+    // totalRounds guard in Draft::updateEntity(), whose message names a
+    // problem the organizer does not have.
+    if (draft.status === DraftStatus.complete && status !== DraftStatus.complete) {
+      return 'A completed draft cannot change status. Undo a pick on the Board tab to reopen it.';
+    }
+
+    if (status === DraftStatus.inProgress && !rosterIsFullyOrdered(draft.draftMembers)) {
+      return 'Every member needs a pick position, 1 through N, before the draft can start.';
+    }
+
+    return null;
   }
 
   changeStatus(status: DraftStatus): void {

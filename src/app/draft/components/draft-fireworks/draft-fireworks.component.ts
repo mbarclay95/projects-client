@@ -36,7 +36,7 @@ export class DraftFireworksComponent implements AfterViewInit, OnDestroy {
 
   private readonly colors = ['#ffc53d', '#ff7875', '#69c0ff', '#95de64', '#b37feb', '#ffffff'];
   private readonly launchWindowMs = 6000;
-  private readonly launchIntervalMs = 500;
+  private readonly launchIntervalMs = 100;
   private readonly gravity = 260;
 
   private ctx?: CanvasRenderingContext2D;
@@ -64,10 +64,6 @@ export class DraftFireworksComponent implements AfterViewInit, OnDestroy {
     this.ctx = ctx;
     this.resize();
     window.addEventListener('resize', this.resize);
-
-    if (!environment.production) {
-      console.info(`[fireworks] running at ${this.width}x${this.height}`);
-    }
 
     this.startedAt = performance.now();
     this.lastFrameAt = this.startedAt;

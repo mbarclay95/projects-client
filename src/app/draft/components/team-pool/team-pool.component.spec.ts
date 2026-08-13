@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Mock, vi } from 'vitest';
 import { BehaviorSubject } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzImageService } from 'ng-zorro-antd/image';
 import { TeamPoolComponent } from './team-pool.component';
 import { DraftService } from '../../services/draft.service';
 import { DraftCacheService } from '../../services/draft-cache.service';
@@ -12,15 +15,16 @@ import { DraftCache } from '../../models/draft-cache.model';
 describe('TeamPoolComponent', () => {
   let component: TeamPoolComponent;
   let fixture: ComponentFixture<TeamPoolComponent>;
-  let draftServiceSpy: jasmine.SpyObj<Pick<DraftService, 'makePick' | 'getToken'>>;
+  let draftServiceSpy: { makePick: Mock; getToken: Mock };
   let me$: BehaviorSubject<DraftCache | undefined>;
 
   const theOnlyTeam = createDraftTeam({ id: 5, name: 'Team A' });
 
   beforeEach(async () => {
-    draftServiceSpy = jasmine.createSpyObj('DraftService', ['makePick', 'getToken']);
-    draftServiceSpy.makePick.and.resolveTo(undefined);
-    draftServiceSpy.getToken.and.returnValue('tok');
+    draftServiceSpy = {
+      makePick: vi.fn().mockResolvedValue(undefined),
+      getToken: vi.fn().mockReturnValue('tok'),
+    };
 
     me$ = new BehaviorSubject<DraftCache | undefined>({ draftId: 1, draftMemberId: 34, name: 'Mike', secret: 'aB3' });
 
@@ -29,7 +33,9 @@ describe('TeamPoolComponent', () => {
       providers: [
         { provide: DraftService, useValue: draftServiceSpy },
         { provide: DraftCacheService, useValue: { me$: me$.asObservable(), isMyTurn$: me$.asObservable() } },
-        { provide: NzMessageService, useValue: jasmine.createSpyObj('NzMessageService', ['error']) },
+        { provide: NzMessageService, useValue: { error: vi.fn() } },
+        { provide: NzModalService, useValue: { confirm: vi.fn() } },
+        { provide: NzImageService, useValue: { preview: vi.fn() } },
       ],
     }).compileComponents();
 

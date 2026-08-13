@@ -18,11 +18,7 @@
             [nzValue]="status"
             [nzLabel]="statusLabels[status]"
             [nzDisabled]="!canSelectStatus(status)"
-            [nzTitle]="
-              !canSelectStatus(status)
-                ? 'Every member needs a pick position, 1 through N, before the draft can start.'
-                : statusLabels[status]
-            "
+            [nzTitle]="statusDisabledReason(status) ?? statusLabels[status]"
           ></nz-option>
         }
       </nz-select>
@@ -34,9 +30,7 @@
             [nzValue]="status"
             [nzDisabled]="!canSelectStatus(status)"
             nz-tooltip
-            [nzTooltipTitle]="
-              !canSelectStatus(status) ? 'Every member needs a pick position, 1 through N, before the draft can start.' : null
-            "
+            [nzTooltipTitle]="statusDisabledReason(status)"
           >
             {{ statusLabels[status] }}
           </label>

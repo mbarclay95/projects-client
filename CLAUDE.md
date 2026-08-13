@@ -53,7 +53,17 @@ Each feature module composes these into a single signal store (e.g., `TasksSigna
 
 ### UI Library
 
-**ng-zorro-antd** (Ant Design) is the primary component library. **Bootstrap 5** provides CSS utilities. Icons come from **FontAwesome**. Charts use **@swimlane/ngx-charts**.
+**ng-zorro-antd** (Ant Design) is the primary component library. **Bootstrap 5** provides CSS utilities. Icons come from **FontAwesome**. There is no charting library — `@swimlane/ngx-charts` was a dependency for a long time without a single import, and has been removed.
+
+### Dependencies
+
+`npm ci` runs **without** `--legacy-peer-deps`. Keep it that way — if an install starts
+failing on peer resolution, fix the offending package rather than reaching for the flag,
+because it silently masks every subsequent conflict too.
+
+**`ngx-socket-io` is pinned to an exact version, deliberately — do not add a caret.**
+4.11.0+ requires Angular 22, so a caret range resolves to a version this project cannot
+satisfy, and the failure only appears on a clean install, not an incremental one.
 
 ### Mobile
 

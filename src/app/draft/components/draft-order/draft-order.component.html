@@ -13,10 +13,11 @@
         <div class="order-name">
           {{ member.name }}
           @if (member.id === me?.draftMemberId) {
-            <span class="you-badge">You</span>
+            <span class="you-badge"><fa-icon [icon]="starIcon"></fa-icon> You</span>
           }
         </div>
         @if (showPicks() && pickedTeamName(member.id); as pickedTeam) {
+          <span class="order-dash" aria-hidden="true">—</span>
           <div class="order-pick">{{ pickedTeam }}</div>
         }
       </div>

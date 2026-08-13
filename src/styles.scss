@@ -53,14 +53,14 @@ body {
    CDK overlay container, out of reach of any component stylesheet. */
 .ant-image-preview-switch-left,
 .ant-image-preview-switch-right {
-  width: 60px;
-  height: 60px;
+  width: 68px;
+  height: 68px;
   background: rgba(0, 0, 0, 0.45);
 }
 
 .ant-image-preview-switch-left > .anticon,
 .ant-image-preview-switch-right > .anticon {
-  font-size: 30px;
+  font-size: 34px;
 }
 
 /* The anticon chevrons are filled paths with no stroke, so a matching

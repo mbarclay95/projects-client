@@ -1,0 +1,14 @@
+// Below ng-zorro's 1000-and-up overlays, so a modal that happens to be
+// open is never covered by the celebration.
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

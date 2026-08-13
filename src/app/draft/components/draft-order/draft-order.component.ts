@@ -1,5 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
 import { Draft, DraftStatus } from '../../models/draft.model';
 import { DraftCacheService } from '../../services/draft-cache.service';
@@ -8,12 +10,14 @@ import { DraftCacheService } from '../../services/draft-cache.service';
   selector: 'app-draft-order',
   templateUrl: './draft-order.component.html',
   styleUrls: ['./draft-order.component.scss'],
-  imports: [NzEmptyComponent, AsyncPipe],
+  imports: [NzEmptyComponent, AsyncPipe, FaIconComponent],
 })
 export class DraftOrderComponent {
   draftCacheService = inject(DraftCacheService);
 
   draft = input.required<Draft>();
+
+  starIcon = faStar;
 
   isSignup = computed(() => this.draft().status === DraftStatus.signup);
 

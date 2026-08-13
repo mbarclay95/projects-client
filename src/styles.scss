@@ -48,3 +48,31 @@ body {
 .ant-image-preview-operations-operation:has(.anticon-swap) {
   display: none;
 }
+
+/* Global for the same reason as the rule above: the preview lives in the
+   CDK overlay container, out of reach of any component stylesheet. */
+.ant-image-preview-switch-left,
+.ant-image-preview-switch-right {
+  width: 68px;
+  height: 68px;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.ant-image-preview-switch-left > .anticon,
+.ant-image-preview-switch-right > .anticon {
+  font-size: 34px;
+}
+
+/* The anticon chevrons are filled paths with no stroke, so a matching
+   stroke is the only way to thicken them. */
+.ant-image-preview-switch-left > .anticon svg,
+.ant-image-preview-switch-right > .anticon svg {
+  stroke: currentColor;
+  stroke-width: 30;
+  stroke-linejoin: round;
+}
+
+.ant-image-preview-switch-left:not(.ant-image-preview-switch-left-disabled):hover,
+.ant-image-preview-switch-right:not(.ant-image-preview-switch-right-disabled):hover {
+  background: rgba(0, 0, 0, 0.65);
+}

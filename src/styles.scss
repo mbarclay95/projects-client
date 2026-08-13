@@ -26,6 +26,19 @@ body {
   font-weight: bold;
 }
 
+/* Global so the pick order and the team tiles mark "this one is yours" the
+   same way — two components, one badge. */
+.you-badge {
+  margin-left: 0.4rem;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffc53d;
+
+  fa-icon {
+    font-size: 10px;
+  }
+}
+
 .loading-container {
   height: 25vh;
   display: flex;

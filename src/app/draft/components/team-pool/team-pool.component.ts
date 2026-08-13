@@ -7,6 +7,8 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzSegmentedComponent } from 'ng-zorro-antd/segmented';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzImage, NzImageModule, NzImageService } from 'ng-zorro-antd/image';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Draft } from '../../models/draft.model';
 import { DraftTeam } from '../../models/draft-team.model';
 import { DraftService } from '../../services/draft.service';
@@ -22,7 +24,7 @@ type TeamPoolFilter = 'All' | 'Unpicked' | 'Picked';
   styleUrls: ['./team-pool.component.scss'],
   // NzImageService isn't providedIn: 'root' — it only comes from NzImageModule's
   // own providers, which a standalone component picks up by importing the module.
-  imports: [AsyncPipe, FormsModule, NzSegmentedComponent, NzButtonComponent, NzImageModule],
+  imports: [AsyncPipe, FormsModule, NzSegmentedComponent, NzButtonComponent, NzImageModule, FaIconComponent],
 })
 export class TeamPoolComponent {
   private draftService = inject(DraftService);
@@ -33,18 +35,34 @@ export class TeamPoolComponent {
 
   draft = input.required<Draft>();
 
+  /**
+   * The completed page shows the pool as a record of who ended up with what,
+   * so the teams nobody took are noise there — and with nothing left to pick,
+   * a filter that can only subtract from that is too.
+   */
+  pickedOnly = input(false);
+
   isMobile = isMobile;
   picking = false;
+  starIcon = faStar;
 
   filterOptions: TeamPoolFilter[] = ['All', 'Unpicked', 'Picked'];
   filter = signal<TeamPoolFilter>('All');
 
   filteredTeams(): DraftTeam[] {
+    if (this.pickedOnly()) {
+      return this.draft().draftTeams.filter((team) => !!this.pickedBy(team));
+    }
+
     const filter = this.filter();
     if (filter === 'All') {
       return this.draft().draftTeams;
     }
     return this.draft().draftTeams.filter((team) => !!this.pickedBy(team) === (filter === 'Picked'));
+  }
+
+  isMyPick(team: DraftTeam, myMemberId?: number): boolean {
+    return !!myMemberId && this.draft().draftPicks.some((p) => p.draftTeamId === team.id && p.draftMemberId === myMemberId);
   }
 
   imageUrl(team: DraftTeam): string {

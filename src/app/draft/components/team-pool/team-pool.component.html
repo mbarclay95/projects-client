@@ -1,13 +1,21 @@
 @let isMyTurn = draftCacheService.isMyTurn$ | async;
+@let me = draftCacheService.me$ | async;
 
-<nz-segmented class="mb-3" [nzOptions]="filterOptions" [ngModel]="filter()" (ngModelChange)="filter.set($event)"></nz-segmented>
+@if (!pickedOnly()) {
+  <nz-segmented class="mb-3" [nzOptions]="filterOptions" [ngModel]="filter()" (ngModelChange)="filter.set($event)"></nz-segmented>
+}
 
 <div class="team-grid" [class.mobile]="isMobile">
   @for (team of filteredTeams(); track team.id) {
     @let takenBy = pickedBy(team);
     <div class="team-tile" [class.taken]="!!takenBy">
       @if (takenBy) {
-        <div class="team-taken-banner">{{ takenBy }}</div>
+        <div class="team-taken-banner">
+          {{ takenBy }}
+          @if (isMyPick(team, me?.draftMemberId)) {
+            <span class="you-badge"><fa-icon [icon]="starIcon"></fa-icon> You</span>
+          }
+        </div>
       }
 
       <div class="team-content" [class.dimmed]="!!takenBy">

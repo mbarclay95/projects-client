@@ -68,7 +68,8 @@
         }
       }
       @case (draftStatus.complete) {
-        <div class="mb-3" style="color: #c0c7d1; font-style: italic">This draft is complete.</div>
+        <div class="draft-complete-banner">Draft Completed 🎉</div>
+        <app-team-pool [draft]="draft" [pickedOnly]="true" class="d-block mb-3"></app-team-pool>
         @if (draft.totalRounds === 1) {
           <app-draft-order [draft]="draft"></app-draft-order>
         } @else {

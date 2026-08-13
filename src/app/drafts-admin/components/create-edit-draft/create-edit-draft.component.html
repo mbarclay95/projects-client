@@ -50,6 +50,29 @@
             <nz-input-number [(ngModel)]="model.maxParticipants" [nzMin]="0"></nz-input-number>
           </div>
         }
+
+        <div class="w-100">
+          <div class="w-100 d-flex align-items-center mb-2">
+            <div>Draft Image:</div>
+
+            @if (model.draftImage) {
+              <img [srcset]="model.draftImage.imagePath" [alt]="model.name" class="ms-3" height="40" />
+
+              <button nz-button nzType="text" nzDanger nzSize="small" class="ms-2" (click)="removeImage()">Remove</button>
+            }
+          </div>
+
+          <nz-upload
+            class="w-100"
+            nzType="drag"
+            [nzMultiple]="false"
+            [nzAction]="uploadPath()"
+            (nzChange)="handleChange($event)"
+            [(nzFileList)]="fileList"
+          >
+            <p class="ant-upload-text">Click or drag an image here (png, svg, jpg, jpeg, or webp, under 2MB)</p>
+          </nz-upload>
+        </div>
       </div>
     }
   </ng-container>

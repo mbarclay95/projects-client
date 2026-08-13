@@ -81,4 +81,17 @@ export class DraftPageComponent {
   hasUnclaimedMembers(draft: Draft): boolean {
     return draft.draftMembers.some((m) => !m.claimed);
   }
+
+  /**
+   * Signup and locked only: once picking starts the page is about the board,
+   * and the banner would push it below the fold. The backend serves the image
+   * in every status — this is the whole of the rule.
+   */
+  showImage(draft: Draft): boolean {
+    return draft.hasImage && (draft.status === DraftStatus.signup || draft.status === DraftStatus.locked);
+  }
+
+  imageUrl(draft: Draft): string {
+    return `${environment.publicApiUrl}/drafts/${draft.id}/image?token=${this.draftService.getToken()}`;
+  }
 }

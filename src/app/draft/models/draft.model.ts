@@ -22,6 +22,7 @@ export interface Draft {
   status: DraftStatus;
   totalRounds: number;
   maxParticipants?: number;
+  hasImage: boolean;
   spotsRemaining?: number;
   currentRound: number;
   currentPickNumber: number;
@@ -40,6 +41,7 @@ export function createDraft(params: Partial<Draft>) {
     status: params.status ?? DraftStatus.signup,
     totalRounds: params.totalRounds ?? 1,
     maxParticipants: params.maxParticipants ?? undefined,
+    hasImage: params.hasImage ?? false,
     spotsRemaining: params.spotsRemaining ?? undefined,
     currentRound: params.currentRound ?? 1,
     currentPickNumber: params.currentPickNumber ?? 1,

@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ng serve                    # Dev server
 ng build                    # Development build
 ng build --configuration=production  # Production build
-ng test                     # Run unit tests (Karma + Jasmine)
+ng test --watch=false       # Run unit tests (Vitest + jsdom)
 ng lint                     # ESLint
 npm run format              # Prettier format
 npm run format-check        # Check formatting without writing
@@ -17,7 +17,7 @@ npm run format-check        # Check formatting without writing
 To run a single test file, pass the `--include` flag:
 
 ```bash
-ng test --include='src/app/tasks/**/*.spec.ts'
+ng test --watch=false --include='src/app/draft/**/*.spec.ts'
 ```
 
 ## Architecture Overview
@@ -79,6 +79,43 @@ Each feature module composes these into a single signal store (e.g., `TasksSigna
 | `money`         | `/app/money`         | Financial tracking                 |
 | `logging`       | `/app/logging`       | Event logs                         |
 | `event-signup`  | `/events`            | Public, no auth required           |
+
+### Testing
+
+Runner is **Vitest in jsdom** via the `@angular/build:unit-test` builder (`runner: "vitest"`,
+no `browsers` key). There is deliberately **no browser** in the loop — CI installs no
+Chromium, and any test that needs a real browser to pass does not belong here. Config
+lives in `angular.json`; `src/test-setup.ts` stubs `window.matchMedia` (jsdom has none,
+and `isMobile` in `app.component.ts` reads it at module scope), and `src/test-providers.ts`
+supplies `provideZonelessChangeDetection()`.
+
+**The app is zoneless, so there is no `zone.js/testing`.** `fakeAsync`/`tick` do not work.
+Use `vi.useFakeTimers()` with `await vi.advanceTimersByTimeAsync(ms)` instead — see
+`draft.service.spec.ts` for the pattern against an rxjs polling stream.
+
+**Do not write a test per file.** This repo previously carried 126 spec files, 123 of which
+were untouched `ng generate` boilerplate — a single `should create` asserting the component
+is truthy. They were deleted. They caught nothing, cost a full browser toolchain in CI, and
+one had been asserting against deleted starter markup for months without anyone noticing.
+**Never add a `should create` test, and never add a spec file just because a component was
+created.** Angular's schematics generate these by default; delete the spec unless you are
+about to put a real assertion in it.
+
+A new spec is justified when there is **logic worth breaking** — branching, ordering,
+caching, state transitions, time-dependent behavior, non-obvious edge cases. The surviving
+tests are the shape to copy:
+
+- `draft-cache.service.spec.ts` — localStorage round-trip, per-draft isolation, stale-identity detection
+- `draft.service.spec.ts` — polls every 2s while `in_progress`, stops when the status leaves it
+- `team-pool.component.spec.ts` — pick guards (not your turn / already taken), calling the method directly
+
+Note the last one: it tests a **component method**, never the rendered DOM. Prefer that. If
+behavior is worth testing, it is nearly always reachable without a fixture — and pulling
+logic out of the template into a method or a service is the right response to "this is hard
+to test". Rendering assertions are a last resort, and template-only changes get no test at all.
+
+Testing a component does mean providing everything it injects — see `team-pool.component.spec.ts`,
+which mocks `NzModalService` and `NzImageService` purely to let construction succeed.
 
 ### Conventions
 

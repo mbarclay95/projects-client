@@ -1,4 +1,5 @@
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { afterEach, beforeEach, describe, it, vi } from 'vitest';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { DraftService } from './draft.service';
@@ -9,7 +10,11 @@ describe('DraftService', () => {
   let service: DraftService;
   let httpMock: HttpTestingController;
 
+  const url = `${environment.publicApiUrl}/drafts/12?token=tok`;
+
   beforeEach(() => {
+    vi.useFakeTimers();
+
     TestBed.configureTestingModule({
       providers: [provideHttpClient(), provideHttpClientTesting()],
     });
@@ -20,26 +25,27 @@ describe('DraftService', () => {
 
   afterEach(() => {
     httpMock.verify();
+    vi.useRealTimers();
   });
 
-  it('polls every 2s while in_progress and stops once the status leaves in_progress', fakeAsync(() => {
-    service.getDraft('12', 'tok');
-    httpMock.expectOne(`${environment.publicApiUrl}/drafts/12?token=tok`).flush(inProgressDraft());
-    tick();
+  it('polls every 2s while in_progress and stops once the status leaves in_progress', async () => {
+    const loaded = service.getDraft('12', 'tok');
+    httpMock.expectOne(url).flush(inProgressDraft());
+    await loaded;
 
     // timer(0, 2000)'s immediate tick, fired by the status transition to in_progress.
-    httpMock.expectOne(`${environment.publicApiUrl}/drafts/12?token=tok`).flush(inProgressDraft());
-    tick();
+    await vi.advanceTimersByTimeAsync(0);
+    httpMock.expectOne(url).flush(inProgressDraft());
 
     // The next 2s tick.
-    tick(2000);
-    httpMock.expectOne(`${environment.publicApiUrl}/drafts/12?token=tok`).flush(completeDraft());
-    tick();
+    await vi.advanceTimersByTimeAsync(2000);
+    httpMock.expectOne(url).flush(completeDraft());
+    await vi.advanceTimersByTimeAsync(0);
 
     // No further request once status has left in_progress.
-    tick(2000);
-    httpMock.expectNone(`${environment.publicApiUrl}/drafts/12?token=tok`);
-  }));
+    await vi.advanceTimersByTimeAsync(2000);
+    httpMock.expectNone(url);
+  });
 
   function inProgressDraft() {
     return {

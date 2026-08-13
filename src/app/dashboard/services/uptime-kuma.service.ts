@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ApplicationRef, inject, Injectable } from '@angular/core';
 import { Socket, SocketIoConfig } from 'ngx-socket-io';
 import { createMonitorItem, MonitorItem } from '../models/monitor-item.model';
 import { createHeartbeatItem, HeartbeatItem, HeartbeatStatus } from '../models/heartbeat-item.model';
@@ -28,7 +28,7 @@ export class UptimeKumaService extends Socket {
         autoConnect: false,
       },
     };
-    super(config);
+    super(config, inject(ApplicationRef));
   }
 
   initSocket(): void {

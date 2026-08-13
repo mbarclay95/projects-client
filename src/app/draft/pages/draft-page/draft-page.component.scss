@@ -10,9 +10,14 @@
   right: 0.25rem;
 }
 
+/**
+ * Both caps double together. The height is what actually binds for anything
+ * narrower than 4:3, so raising the width alone would leave most images
+ * exactly the size they already were.
+ */
 .draft-image {
-  max-width: min(320px, 100%);
-  max-height: 240px;
+  max-width: min(640px, 100%);
+  max-height: 480px;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -31,6 +36,14 @@
 @media only screen and (max-width: 600px) {
   .draft-complete-banner {
     font-size: 28px;
+  }
+
+  // Edge to edge, so the height cap has to go too — it would otherwise scale
+  // a portrait image back down and leave gaps either side.
+  .draft-image {
+    width: 100%;
+    max-width: 100%;
+    max-height: none;
   }
 }
 

@@ -39,10 +39,6 @@
   .order-name {
     flex: 0 1 auto;
   }
-
-  .order-dash {
-    display: inline;
-  }
 }
 
 .you-badge {
@@ -57,9 +53,14 @@
 }
 
 .order-dash {
-  display: none;
   margin: 0 0.5rem;
   color: rgba(255, 255, 255, 0.35);
+}
+
+@media only screen and (max-width: 600px) {
+  .order-dash {
+    display: none;
+  }
 }
 
 .order-pick {

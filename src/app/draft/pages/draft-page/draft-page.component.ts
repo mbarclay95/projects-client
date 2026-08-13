@@ -17,6 +17,7 @@ import { DraftBoardComponent } from '../../components/draft-board/draft-board.co
 import { MyRosterComponent } from '../../components/my-roster/my-roster.component';
 import { TeamPoolComponent } from '../../components/team-pool/team-pool.component';
 import { DraftFireworksComponent } from '../../components/draft-fireworks/draft-fireworks.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-draft-page',
@@ -48,6 +49,11 @@ export class DraftPageComponent {
   openSignupModal = signal(false);
   openClaimModal = signal(false);
   celebrating = signal(false);
+
+  // The real trigger needs a draft to actually finish, which isn't something
+  // you can stage on demand. Dev builds only — `ng build` swaps in
+  // environment.prod.ts, where this is false.
+  showFireworksTest = !environment.production;
 
   /**
    * Marked as celebrated the moment it starts, not when the animation ends,

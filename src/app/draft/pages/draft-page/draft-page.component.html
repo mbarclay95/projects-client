@@ -84,6 +84,10 @@
   <app-draft-fireworks (finished)="celebrating.set(false)"></app-draft-fireworks>
 }
 
+@if (showFireworksTest) {
+  <button nz-button nzSize="small" class="fireworks-test" (click)="celebrating.set(true)">Test fireworks</button>
+}
+
 <app-draft-signup-modal [openModal]="openSignupModal()" (closed)="openSignupModal.set(false)"></app-draft-signup-modal>
 
 @if (draftService.draft$ | async; as draft) {

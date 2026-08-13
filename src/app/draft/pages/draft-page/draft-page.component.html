@@ -81,11 +81,11 @@
 }
 
 @if (celebrating()) {
-  <app-draft-fireworks (finished)="celebrating.set(false)"></app-draft-fireworks>
+  <app-draft-fireworks [ignoreReducedMotion]="testingFireworks()" (finished)="stopCelebrating()"></app-draft-fireworks>
 }
 
 @if (showFireworksTest) {
-  <button nz-button nzSize="small" class="fireworks-test" (click)="celebrating.set(true)">Test fireworks</button>
+  <button nz-button nzSize="small" class="fireworks-test" (click)="testFireworks()">Test fireworks</button>
 }
 
 <app-draft-signup-modal [openModal]="openSignupModal()" (closed)="openSignupModal.set(false)"></app-draft-signup-modal>

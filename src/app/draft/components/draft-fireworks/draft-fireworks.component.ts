@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, output, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, input, output, viewChild } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 
 interface Rocket {
   x: number;
@@ -27,6 +28,10 @@ interface Spark {
 export class DraftFireworksComponent implements AfterViewInit, OnDestroy {
   private canvasRef = viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
 
+  // Pressing a button labelled "Test fireworks" is a request for fireworks,
+  // whatever the motion preference says.
+  ignoreReducedMotion = input(false);
+
   finished = output<void>();
 
   private readonly colors = ['#ffc53d', '#ff7875', '#69c0ff', '#95de64', '#b37feb', '#ffffff'];
@@ -45,20 +50,24 @@ export class DraftFireworksComponent implements AfterViewInit, OnDestroy {
   private lastLaunchAt = 0;
 
   ngAfterViewInit(): void {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      this.giveUp();
+    if (!this.ignoreReducedMotion() && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.giveUp('the browser asks for reduced motion');
       return;
     }
 
     const ctx = this.canvasRef().nativeElement.getContext('2d');
     if (!ctx) {
-      this.giveUp();
+      this.giveUp('the canvas has no 2d context');
       return;
     }
 
     this.ctx = ctx;
     this.resize();
     window.addEventListener('resize', this.resize);
+
+    if (!environment.production) {
+      console.info(`[fireworks] running at ${this.width}x${this.height}`);
+    }
 
     this.startedAt = performance.now();
     this.lastFrameAt = this.startedAt;
@@ -77,7 +86,10 @@ export class DraftFireworksComponent implements AfterViewInit, OnDestroy {
    * on `finished`, and doing that while its own view is still being checked
    * is a write-after-read Angular complains about.
    */
-  private giveUp(): void {
+  private giveUp(reason: string): void {
+    if (!environment.production) {
+      console.warn(`[fireworks] skipped: ${reason}`);
+    }
     setTimeout(() => this.finished.emit());
   }
 
@@ -85,8 +97,11 @@ export class DraftFireworksComponent implements AfterViewInit, OnDestroy {
     const canvas = this.canvasRef().nativeElement;
     const ratio = window.devicePixelRatio || 1;
 
-    this.width = canvas.clientWidth;
-    this.height = canvas.clientHeight;
+    // The viewport fallback covers a host that measures zero — a transformed
+    // ancestor turns the fixed overlay into a 0x0 box, and a canvas sized
+    // from that draws nothing at all.
+    this.width = canvas.clientWidth || window.innerWidth;
+    this.height = canvas.clientHeight || window.innerHeight;
     canvas.width = this.width * ratio;
     canvas.height = this.height * ratio;
     this.ctx?.setTransform(ratio, 0, 0, ratio, 0, 0);

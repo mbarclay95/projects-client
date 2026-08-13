@@ -49,6 +49,7 @@ export class DraftPageComponent {
   openSignupModal = signal(false);
   openClaimModal = signal(false);
   celebrating = signal(false);
+  testingFireworks = signal(false);
 
   // The real trigger needs a draft to actually finish, which isn't something
   // you can stage on demand. Dev builds only — `ng build` swaps in
@@ -80,5 +81,15 @@ export class DraftPageComponent {
    */
   hasUnclaimedMembers(draft: Draft): boolean {
     return draft.draftMembers.some((m) => !m.claimed);
+  }
+
+  testFireworks(): void {
+    this.testingFireworks.set(true);
+    this.celebrating.set(true);
+  }
+
+  stopCelebrating(): void {
+    this.celebrating.set(false);
+    this.testingFireworks.set(false);
   }
 }

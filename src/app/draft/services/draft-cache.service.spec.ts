@@ -134,4 +134,30 @@ describe('DraftCacheService', () => {
 
     expect(await firstValueFrom(service.staleIdentity$)).toBe(false);
   });
+
+  it('celebrating is undone by clearCelebrated, so a re-finished draft celebrates again', () => {
+    service.markCelebrated(12);
+    expect(service.hasCelebrated(12)).toBe(true);
+
+    service.clearCelebrated(12);
+    expect(service.hasCelebrated(12)).toBe(false);
+
+    service.markCelebrated(12);
+    expect(service.hasCelebrated(12)).toBe(true);
+  });
+
+  it('clearCelebrated leaves other drafts marked', () => {
+    service.markCelebrated(12);
+    service.markCelebrated(99);
+    service.clearCelebrated(12);
+
+    expect(service.hasCelebrated(12)).toBe(false);
+    expect(service.hasCelebrated(99)).toBe(true);
+  });
+
+  it('clearCelebrated writes nothing for a draft that was never celebrated', () => {
+    service.clearCelebrated(12);
+
+    expect(localStorage.getItem('draft_celebrated')).toBeNull();
+  });
 });

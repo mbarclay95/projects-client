@@ -60,10 +60,23 @@ export class DraftPageComponent {
    * so a reload part-way through doesn't replay it. Everyone watching when
    * the last pick lands sees this within a poll tick of each other; anyone
    * arriving later gets it once, on their first look at the finished draft.
+   *
+   * The mark is dropped again whenever the draft is seen unfinished, so an
+   * admin undoing the final pick and the draft finishing again celebrates a
+   * second time rather than going silent for good.
    */
   constructor() {
     this.draftService.draft$.pipe(takeUntilDestroyed()).subscribe((draft) => {
-      if (!draft || draft.status !== DraftStatus.complete || this.draftCacheService.hasCelebrated(draft.id)) {
+      if (!draft) {
+        return;
+      }
+
+      if (draft.status !== DraftStatus.complete) {
+        this.draftCacheService.clearCelebrated(draft.id);
+        return;
+      }
+
+      if (this.draftCacheService.hasCelebrated(draft.id)) {
         return;
       }
 

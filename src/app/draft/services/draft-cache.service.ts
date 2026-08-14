@@ -102,6 +102,21 @@ export class DraftCacheService {
     localStorage.setItem(this.celebratedKey, JSON.stringify(draftIds));
   }
 
+  /**
+   * An admin undoing the final pick puts the draft back in progress, so
+   * finishing it a second time is a new completion and has to be able to
+   * celebrate again. Nothing writes unless the id is actually there — this is
+   * called on every poll tick of an unfinished draft.
+   */
+  clearCelebrated(draftId: number): void {
+    const draftIds = this.celebratedDraftIds();
+    if (!draftIds.includes(draftId)) {
+      return;
+    }
+
+    localStorage.setItem(this.celebratedKey, JSON.stringify(draftIds.filter((id) => id !== draftId)));
+  }
+
   private celebratedDraftIds(): number[] {
     return JSON.parse(localStorage.getItem(this.celebratedKey) ?? '[]');
   }

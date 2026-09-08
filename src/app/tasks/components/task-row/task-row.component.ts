@@ -4,7 +4,7 @@ import { faArrowRightToBracket, faEdit, faEllipsisV, faFlag } from '@fortawesome
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { isMobile } from '../../../app.component';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
-import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
 import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { TagsSignalStore } from '../../../shared/services/tags-signal-store';

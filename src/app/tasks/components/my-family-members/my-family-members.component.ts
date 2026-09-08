@@ -5,7 +5,7 @@ import { Task } from '../../models/task.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { isMobile } from '../../../app.component';
 import { TaskUserConfig } from '../../models/task-user-config.model';
-import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
 import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';

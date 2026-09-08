@@ -3,7 +3,7 @@ import { withCrudEntities } from '../../shared/signal-stores/with-crud-feature';
 import { createFamilyMemberStats, FamilyMemberStats } from '../models/family-member-stats.model';
 import { getYear } from 'date-fns';
 import { computed, inject } from '@angular/core';
-import { FamiliesSignalStore } from './families-signal-store';
+import { FamiliesSignalStore } from '../../shared/services/families-signal-store';
 
 interface FamilyStatsUiState {
   year: number;

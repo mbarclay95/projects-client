@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { isMobile } from '../../../app.component';
 import { UsersSignalStore } from '../../../users/services/users-signal-store';
-import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
 import { FamiliesTableComponent } from '../../components/families-table/families-table.component';
 import { CreateEditFamilyModalComponent } from '../../components/create-edit-family-modal/create-edit-family-modal.component';
 

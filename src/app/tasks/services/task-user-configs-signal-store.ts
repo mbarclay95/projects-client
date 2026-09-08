@@ -2,7 +2,7 @@ import { patchState, signalStore, withComputed, withMethods, withState } from '@
 import { withCrudEntities } from '../../shared/signal-stores/with-crud-feature';
 import { createTaskUserConfig, TaskUserConfig } from '../models/task-user-config.model';
 import { computed, inject } from '@angular/core';
-import { FamiliesSignalStore } from './families-signal-store';
+import { FamiliesSignalStore } from '../../shared/services/families-signal-store';
 import { add, endOfWeek, lightFormat, startOfWeek } from 'date-fns';
 import { AuthSignalStore } from '../../auth/services/auth-signal-store';
 import { updateEntity } from '@ngrx/signals/entities';

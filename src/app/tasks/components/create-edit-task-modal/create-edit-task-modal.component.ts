@@ -3,7 +3,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Task } from '../../models/task.model';
 import { differenceInCalendarDays } from 'date-fns';
 import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
-import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { TagsSignalStore } from '../../../shared/services/tags-signal-store';

@@ -1,7 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { Family } from '../../../shared/models/family.model';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { CreateEditFamilyModalComponent } from '../create-edit-family-modal/create-edit-family-modal.component';

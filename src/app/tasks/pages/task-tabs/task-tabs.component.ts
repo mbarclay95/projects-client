@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Task } from '../../models/task.model';
 import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
-import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
 import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { NzTabsComponent, NzTabComponent, NzTabLinkTemplateDirective, NzTabLinkDirective } from 'ng-zorro-antd/tabs';

@@ -2,7 +2,7 @@ import { computed, inject, Injectable, Signal, signal, WritableSignal } from '@a
 import { filter, Observable, Subject } from 'rxjs';
 import { EventsSignalStore } from '../../events/services/events-signal-store';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { FamiliesSignalStore } from '../../tasks/services/families-signal-store';
+import { FamiliesSignalStore } from '../services/families-signal-store';
 import { TasksSignalStore } from '../../tasks/services/tasks-signal-store';
 import { defaultTaskButtons, FooterButton, taskFamiliesButton } from '../models/footer-button.model';
 import { Permissions } from '../../auth/permissions';

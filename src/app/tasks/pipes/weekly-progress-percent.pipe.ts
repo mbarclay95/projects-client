@@ -1,6 +1,6 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { TaskUserConfig } from '../models/task-user-config.model';
-import { FamiliesSignalStore } from '../services/families-signal-store';
+import { FamiliesSignalStore } from '../../shared/services/families-signal-store';
 
 @Pipe({ name: 'weeklyProgressPercent' })
 export class WeeklyProgressPercentPipe implements PipeTransform {

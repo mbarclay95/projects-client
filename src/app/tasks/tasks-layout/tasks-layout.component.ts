@@ -4,6 +4,7 @@ import { AuthSignalStore } from '../../auth/services/auth-signal-store';
 import { TaskUserConfigsSignalStore } from '../services/task-user-configs-signal-store';
 import { FamilyStatsSignalStore } from '../services/family-stats-signal-store';
 import { TasksSignalStore } from '../services/tasks-signal-store';
+import { TagsSignalStore } from '../../shared/services/tags-signal-store';
 import { NzContentComponent } from 'ng-zorro-antd/layout';
 import { RouterOutlet } from '@angular/router';
 
@@ -19,8 +20,10 @@ export class TasksLayoutComponent {
   readonly taskUserConfigsStore = inject(TaskUserConfigsSignalStore);
   readonly familyStatsStore = inject(FamilyStatsSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
+  readonly tagsStore = inject(TagsSignalStore);
 
   constructor() {
+    this.tagsStore.loadAll('tasks');
     effect(() => {
       this.tasksStore.setQueryString(this.tasksStore.buildQueryString());
       if (this.tasksStore.shouldHttpReload()) {

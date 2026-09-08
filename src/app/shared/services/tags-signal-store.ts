@@ -1,16 +1,18 @@
-import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
-import { inject } from '@angular/core';
+import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
+import { inject, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+export type TagScope = 'tasks';
+
 interface TagsSignalStoreState {
-  entities: string[];
+  tagsByScope: Record<TagScope, string[]>;
 }
 
 const initialState: TagsSignalStoreState = {
-  entities: [],
+  tagsByScope: { tasks: [] },
 };
 
 export const TagsSignalStore = signalStore(
@@ -18,9 +20,13 @@ export const TagsSignalStore = signalStore(
   withState(initialState),
   withMethods((store) => {
     const httpClient = inject(HttpClient);
-    const loadAll = rxMethod<void>(
+    const loadAll = rxMethod<TagScope>(
       pipe(
-        switchMap(() => httpClient.get<string[]>(`${environment.apiUrl}/tags`).pipe(tap((tags) => patchState(store, { entities: tags })))),
+        switchMap((scope) =>
+          httpClient
+            .get<string[]>(`${environment.apiUrl}/tags?scope=${scope}`)
+            .pipe(tap((tags) => patchState(store, { tagsByScope: { ...store.tagsByScope(), [scope]: tags } }))),
+        ),
       ),
     );
 
@@ -28,9 +34,7 @@ export const TagsSignalStore = signalStore(
       loadAll,
     };
   }),
-  withHooks({
-    onInit(store) {
-      store.loadAll();
-    },
-  }),
+  withComputed(({ tagsByScope }) => ({
+    taskTags: computed(() => tagsByScope().tasks),
+  })),
 );

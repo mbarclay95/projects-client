@@ -62,7 +62,7 @@ export class TasksTableComponent {
       id: task.id,
       onSuccess: () => {
         this.nzMessageService.success('Task deleted');
-        this.tagsStore.loadAll();
+        this.tagsStore.loadAll('tasks');
       },
     });
   }

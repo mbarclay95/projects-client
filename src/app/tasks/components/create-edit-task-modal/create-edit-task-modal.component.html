@@ -64,7 +64,7 @@
         <div class="">Task Tags:</div>
 
         <nz-select class="w-100" nzMode="tags" [(ngModel)]="model.tags">
-          @for (tag of tagsStore.entities(); track $index) {
+          @for (tag of tagsStore.taskTags(); track $index) {
             <nz-option [nzLabel]="tag" [nzValue]="tag"></nz-option>
           }
         </nz-select>

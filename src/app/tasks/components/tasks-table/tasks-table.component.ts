@@ -12,7 +12,7 @@ import { fa1, faEdit, faPeopleRoof, faRepeat, faTrash, faUser } from '@fortaweso
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FamiliesSignalStore } from '../../services/families-signal-store';
 import { TasksSignalStore, TasksUiState } from '../../services/tasks-signal-store';
-import { TagsSignalStore } from '../../services/tags-signal-store';
+import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
 import { NgClass, DatePipe } from '@angular/common';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';

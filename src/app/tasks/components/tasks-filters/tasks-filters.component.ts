@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { TasksSignalStore, TasksUiState } from '../../services/tasks-signal-store';
-import { TagsSignalStore } from '../../services/tags-signal-store';
+import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';

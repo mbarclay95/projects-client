@@ -7,7 +7,7 @@ import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { FamiliesSignalStore } from '../../services/families-signal-store';
 import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
-import { TagsSignalStore } from '../../services/tags-signal-store';
+import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';

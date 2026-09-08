@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { Family } from '../../models/family.model';
+import { Family } from '../../../shared/models/family.model';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { FamiliesSignalStore } from '../../services/families-signal-store';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';

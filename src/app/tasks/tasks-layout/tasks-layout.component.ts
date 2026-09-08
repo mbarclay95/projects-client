@@ -30,8 +30,8 @@ export class TasksLayoutComponent {
         this.tasksStore.loadAll({});
       }
     });
-    const familyId = this.authStore.auth()?.familyId;
-    if (familyId) {
+    const taskGroupId = this.authStore.auth()?.taskGroupId;
+    if (taskGroupId) {
       effect(() => {
         const queryString = this.taskUserConfigsStore.buildQueryString();
         if (queryString) {
@@ -44,9 +44,9 @@ export class TasksLayoutComponent {
         this.familyStatsStore.loadAll({});
       });
     }
-    if (familyId) {
-      this.familiesStore.loadOne({ entityId: familyId });
-      this.familiesStore.setActiveFamily(familyId);
+    if (taskGroupId) {
+      this.familiesStore.loadOne({ entityId: taskGroupId });
+      this.familiesStore.setActiveFamily(taskGroupId);
     }
   }
 }

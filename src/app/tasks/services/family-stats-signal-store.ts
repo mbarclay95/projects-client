@@ -22,7 +22,7 @@ export const FamilyStatsSignalStore = signalStore(
   }),
   withComputed(({ year }) => {
     const familiesStore = inject(FamiliesSignalStore);
-    const buildQueryString = computed(() => `familyId=${familiesStore.activeFamilyId()}&year=${year()}`);
+    const buildQueryString = computed(() => `userGroupId=${familiesStore.activeFamilyId()}&year=${year()}`);
     const yearBehindDisabled = computed(() => {
       const activeFamily = familiesStore.activeFamily();
       return !!activeFamily && activeFamily.minYear === year();

@@ -12,7 +12,7 @@ export interface User {
   roles: Role[];
   clientPermissions: string[];
   userConfig: UserConfig;
-  familyId: number | null;
+  taskGroupId: number | null;
 }
 
 export function createUser(params: Partial<User>) {
@@ -24,7 +24,7 @@ export function createUser(params: Partial<User>) {
     roles: params.roles?.map((role) => createRole(role)) ?? [],
     clientPermissions: params.clientPermissions ?? [],
     userConfig: createUserConfig(params.userConfig ?? {}),
-    familyId: params.familyId ?? null,
+    taskGroupId: params.taskGroupId ?? null,
   } as User;
 }
 

@@ -29,7 +29,7 @@ export const TaskUserConfigsSignalStore = signalStore(
     const buildQueryString = computed(() => {
       const activeFamilyId = familiesStore.activeFamilyId();
       if (activeFamilyId) {
-        return `familyId=${activeFamilyId}&weekOffset=${weekOffset()}`;
+        return `userGroupId=${activeFamilyId}&weekOffset=${weekOffset()}`;
       }
       return undefined;
     });

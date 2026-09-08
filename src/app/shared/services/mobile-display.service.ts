@@ -79,7 +79,7 @@ export class MobileDisplayService {
       case 'events':
         this.eventsStore.createEntity();
         break;
-      case 'families':
+      case 'user-groups':
         this.familiesStore.createEntity();
         break;
       case 'tasks':
@@ -112,7 +112,7 @@ export type CreateButtonAction =
   | 'file-explorer'
   | 'gaming-sessions'
   | 'tasks'
-  | 'families'
+  | 'user-groups'
   | 'users'
   | 'transactions'
   | 'drafts';

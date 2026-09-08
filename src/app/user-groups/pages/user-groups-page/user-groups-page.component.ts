@@ -2,18 +2,18 @@ import { Component, inject } from '@angular/core';
 import { isMobile } from '../../../app.component';
 import { UsersSignalStore } from '../../../users/services/users-signal-store';
 import { UserGroupsSignalStore } from '../../../shared/services/user-groups-signal-store';
-import { FamiliesTableComponent } from '../../components/families-table/families-table.component';
-import { CreateEditFamilyModalComponent } from '../../components/create-edit-family-modal/create-edit-family-modal.component';
+import { UserGroupsTableComponent } from '../../components/user-groups-table/user-groups-table.component';
+import { CreateEditUserGroupModalComponent } from '../../components/create-edit-user-group-modal/create-edit-user-group-modal.component';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
 
 @Component({
-  selector: 'app-families-page',
-  templateUrl: './families-page.component.html',
-  styleUrls: ['./families-page.component.scss'],
-  imports: [FamiliesTableComponent, CreateEditFamilyModalComponent, PageHeaderComponent, NzSpinComponent],
+  selector: 'app-user-groups-page',
+  templateUrl: './user-groups-page.component.html',
+  styleUrls: ['./user-groups-page.component.scss'],
+  imports: [UserGroupsTableComponent, CreateEditUserGroupModalComponent, PageHeaderComponent, NzSpinComponent],
 })
-export class FamiliesPageComponent {
+export class UserGroupsPageComponent {
   isMobile = isMobile;
 
   readonly usersStore = inject(UsersSignalStore);

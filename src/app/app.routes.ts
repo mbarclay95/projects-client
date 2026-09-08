@@ -10,7 +10,7 @@ import { authGuard } from './auth/services/auth.guard';
 import { authChildGuard } from './auth/services/auth-child.guard';
 import { DashboardLayoutComponent } from './dashboard/dashboard-layout/dashboard-layout.component';
 import { UsersLayoutComponent } from './users/users-layout/users-layout.component';
-import { FamiliesLayoutComponent } from './families/families-layout/families-layout.component';
+import { UserGroupsLayoutComponent } from './user-groups/user-groups-layout/user-groups-layout.component';
 import { GoalsLayoutComponent } from './goals/goals-layout/goals-layout.component';
 import { BackupsLayoutComponent } from './backups/backups-layout/backups-layout.component';
 import { TasksLayoutComponent } from './tasks/tasks-layout/tasks-layout.component';
@@ -75,10 +75,10 @@ export const APP_ROUTES: TypedRoute[] = [
         loadChildren: () => import('./users/users.routes').then((m) => m.USERS_ROUTES),
       },
       {
-        path: 'families',
-        component: FamiliesLayoutComponent,
-        data: { permission: Permissions.FAMILIES_PAGE, headerTitle: 'Families' },
-        loadChildren: () => import('./families/families.routes').then((m) => m.FAMILIES_ROUTES),
+        path: 'user-groups',
+        component: UserGroupsLayoutComponent,
+        data: { permission: Permissions.FAMILIES_PAGE, headerTitle: 'User Groups' },
+        loadChildren: () => import('./user-groups/user-groups.routes').then((m) => m.USER_GROUPS_ROUTES),
       },
       {
         path: 'goals',

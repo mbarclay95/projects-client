@@ -4,12 +4,12 @@ import { RouterOutlet } from '@angular/router';
 import { UserGroupsSignalStore } from '../../shared/services/user-groups-signal-store';
 
 @Component({
-  selector: 'app-families-layout',
-  templateUrl: './families-layout.component.html',
-  styleUrls: ['./families-layout.component.scss'],
+  selector: 'app-user-groups-layout',
+  templateUrl: './user-groups-layout.component.html',
+  styleUrls: ['./user-groups-layout.component.scss'],
   imports: [NzContentComponent, RouterOutlet],
 })
-export class FamiliesLayoutComponent {
+export class UserGroupsLayoutComponent {
   readonly familiesStore = inject(UserGroupsSignalStore);
 
   constructor() {

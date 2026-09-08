@@ -1,0 +1,26 @@
+<nz-table #groupsTableTag [nzData]="_groups">
+  <thead>
+    <tr>
+      <th nzWidth="60px"></th>
+      <th>Name</th>
+      <th>Scope</th>
+      <th>Number of Members</th>
+      <th>Task Strategy</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (group of groupsTable?.data; track group.id) {
+      <tr>
+        <td>
+          <button nz-button class="ant-btn-icon-only" nzType="text" (click)="openUserGroupModal.emit(group.id)">
+            <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
+          </button>
+        </td>
+        <td>{{ group.name }}</td>
+        <td>{{ group.scope }}</td>
+        <td>{{ group.members.length }}</td>
+        <td>{{ group.taskStrategy }}</td>
+      </tr>
+    }
+  </tbody>
+</nz-table>

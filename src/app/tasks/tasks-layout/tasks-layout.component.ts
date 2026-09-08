@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { FamiliesSignalStore } from '../services/families-signal-store';
+import { FamiliesSignalStore } from '../../shared/services/families-signal-store';
 import { AuthSignalStore } from '../../auth/services/auth-signal-store';
 import { TaskUserConfigsSignalStore } from '../services/task-user-configs-signal-store';
 import { FamilyStatsSignalStore } from '../services/family-stats-signal-store';
@@ -44,12 +44,8 @@ export class TasksLayoutComponent {
         this.familyStatsStore.loadAll({});
       });
     }
-    if (this.authStore.viewFamiliesTab()) {
-      this.familiesStore.loadAll({});
-    } else if (familyId) {
-      this.familiesStore.loadOne({ entityId: familyId });
-    }
     if (familyId) {
+      this.familiesStore.loadOne({ entityId: familyId });
       this.familiesStore.setActiveFamily(familyId);
     }
   }

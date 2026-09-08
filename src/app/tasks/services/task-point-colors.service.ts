@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import Color from 'colorjs.io';
-import { FamiliesSignalStore } from './families-signal-store';
+import { FamiliesSignalStore } from '../../shared/services/families-signal-store';
 
 @Injectable({
   providedIn: 'root',

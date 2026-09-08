@@ -40,7 +40,6 @@ export const AuthSignalStore = signalStore(
       }
       return routes(isMobile).filter((route) => route.permission === true || user.clientPermissions.includes(route.permission));
     }),
-    viewFamiliesTab: computed(() => !!auth()?.clientPermissions.includes(Permissions.FAMILIES_TAB)),
     showUptimeKuma: computed(() => !!auth()?.clientPermissions.find((p) => p === Permissions.LISTEN_TO_UPTIME_KUMA)),
     hasMoneyAppToken: computed(() => !!auth()?.userConfig.moneyAppToken),
   })),

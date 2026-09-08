@@ -3,7 +3,7 @@ import { Task } from '../../models/task.model';
 import { DefaultModalComponent } from '../../../shared/components/default-modal/default-modal.component';
 import { faChevronDown, faChevronUp, faFlag, faPeopleRoof, faUser } from '@fortawesome/free-solid-svg-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { FamiliesSignalStore } from '../../services/families-signal-store';
+import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
 import { NzModalComponent, NzModalContentDirective, NzModalFooterDirective } from 'ng-zorro-antd/modal';

@@ -13,12 +13,6 @@
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'tasks' }" queryParamsHandling="merge"> Tasks </a>
     <app-tasks-page></app-tasks-page>
   </nz-tab>
-  @if (authStore.viewFamiliesTab()) {
-    <nz-tab (nzSelect)="selectedTab = 'Family'">
-      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'families' }" queryParamsHandling="merge"> Families </a>
-      <app-families-page></app-families-page>
-    </nz-tab>
-  }
 </nz-tabs>
 
 <ng-template #createButton>

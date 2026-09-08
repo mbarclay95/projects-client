@@ -1,5 +1,5 @@
 import { IconDefinition } from '@fortawesome/free-brands-svg-icons';
-import { faChartPie, faPeopleGroup, faPeopleRoof, faTableList, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { faChartPie, faPeopleRoof, faTableList, faTasks } from '@fortawesome/free-solid-svg-icons';
 
 export interface FooterButton {
   path: string;
@@ -29,9 +29,3 @@ export const defaultTaskButtons = [
     path: '/app/tasks/tasks',
   },
 ];
-
-export const taskFamiliesButton = {
-  icon: faPeopleGroup,
-  title: 'Families',
-  path: '/app/tasks/families',
-};

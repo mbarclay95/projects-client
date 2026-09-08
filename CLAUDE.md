@@ -75,20 +75,21 @@ satisfy, and the failure only appears on a clean install, not an incremental one
 
 ### Feature Modules
 
-| Module          | Path                 | Notes                                                                                                  |
-| --------------- | -------------------- | ------------------------------------------------------------------------------------------------------ |
-| `auth`          | `/app/auth`          | Login, password change                                                                                 |
-| `users`         | `/app/users`         | User admin                                                                                             |
-| `tasks`         | `/app/tasks`         | Tasks; `Family` shared, `TagsSignalStore` shared and scoped — one list per `TagScope`, `taskTags` here |
-| `events`        | `/app/events`        | Events + participants                                                                                  |
-| `goals`         | `/app/goals`         | Goal tracking                                                                                          |
-| `dashboard`     | `/app/dashboard`     | Main dashboard                                                                                         |
-| `backups`       | `/app/backups`       | Backups, targets, schedules                                                                            |
-| `file-explorer` | `/app/file-explorer` | File/directory browser                                                                                 |
-| `gaming`        | `/app/gaming`        | Sessions + device mgmt (WebSocket)                                                                     |
-| `money`         | `/app/money`         | Financial tracking                                                                                     |
-| `logging`       | `/app/logging`       | Event logs                                                                                             |
-| `event-signup`  | `/events`            | Public, no auth required                                                                               |
+| Module          | Path                 | Notes                                                                                                                                                                                                                                                        |
+| --------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `auth`          | `/app/auth`          | Login, password change                                                                                                                                                                                                                                       |
+| `users`         | `/app/users`         | User admin                                                                                                                                                                                                                                                   |
+| `tasks`         | `/app/tasks`         | `My Family`; `Family` shared, `FamiliesSignalStore` in `shared/services/`, `TagsSignalStore` shared and scoped — one list per `TagScope`, `taskTags` here; owns `TaskPointColorsService` and the task-point pipes, which the families modal reaches back for |
+| `families`      | `/app/families`      | Admin families table; create/edit family modal, shared with Tasks for `My Family`                                                                                                                                                                            |
+| `events`        | `/app/events`        | Events + participants                                                                                                                                                                                                                                        |
+| `goals`         | `/app/goals`         | Goal tracking                                                                                                                                                                                                                                                |
+| `dashboard`     | `/app/dashboard`     | Main dashboard                                                                                                                                                                                                                                               |
+| `backups`       | `/app/backups`       | Backups, targets, schedules                                                                                                                                                                                                                                  |
+| `file-explorer` | `/app/file-explorer` | File/directory browser                                                                                                                                                                                                                                       |
+| `gaming`        | `/app/gaming`        | Sessions + device mgmt (WebSocket)                                                                                                                                                                                                                           |
+| `money`         | `/app/money`         | Financial tracking                                                                                                                                                                                                                                           |
+| `logging`       | `/app/logging`       | Event logs                                                                                                                                                                                                                                                   |
+| `event-signup`  | `/events`            | Public, no auth required                                                                                                                                                                                                                                     |
 
 ### Testing
 

@@ -15,7 +15,7 @@ export const UserGroupsSignalStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withCrudEntities<UserGroup>({
-    pluralEntityName: 'families',
+    pluralEntityName: 'user-groups',
     createEntity: createUserGroup,
   }),
   withComputed(({ activeGroupId, entities }) => {

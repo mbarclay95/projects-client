@@ -77,7 +77,7 @@ export const APP_ROUTES: TypedRoute[] = [
       {
         path: 'user-groups',
         component: UserGroupsLayoutComponent,
-        data: { permission: Permissions.FAMILIES_PAGE, headerTitle: 'User Groups' },
+        data: { permission: Permissions.USER_GROUPS_PAGE, headerTitle: 'User Groups' },
         loadChildren: () => import('./user-groups/user-groups.routes').then((m) => m.USER_GROUPS_ROUTES),
       },
       {

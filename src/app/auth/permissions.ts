@@ -4,7 +4,7 @@ export const enum Permissions {
   GOALS_PAGE = 'client_view_goals_page',
   BACKUPS_PAGE = 'client_view_backups_page',
   TASKS_PAGE = 'client_view_tasks_page',
-  FAMILIES_PAGE = 'client_view_families_page',
+  USER_GROUPS_PAGE = 'client_view_user_groups_page',
   EVENTS_PAGE = 'client_view_events_page',
   FILE_EXPLORER_PAGE = 'client_view_file_explorer_page',
   MONEY_APP_PAGE = 'client_view_money_app_page',

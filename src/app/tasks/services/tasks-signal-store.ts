@@ -26,7 +26,7 @@ export interface TasksUiState {
 
 const weeklyTaskPageUiState: Partial<TasksUiState> = {
   numOfDays: differenceInDays(endOfWeek(new Date(), { weekStartsOn: 1 }), new Date()),
-  ownerType: 'family',
+  ownerType: 'user-group',
   recurringType: 'both',
   completedStatus: 'notCompleted',
   search: null,
@@ -107,7 +107,7 @@ export const TasksSignalStore = signalStore(
 
       return filteredTasks;
     });
-    const familyCount = computed(() => entities().filter((task) => task.ownerType === 'family').length);
+    const familyCount = computed(() => entities().filter((task) => task.ownerType === 'user-group').length);
     const userCount = computed(() => entities().filter((task) => task.ownerType === 'user').length);
     const selectedWeeklyPageIndex = computed(() => (ui.ownerType() === 'user' ? 1 : 0));
 

@@ -57,7 +57,7 @@ export class CreateEditTaskModalComponent extends DefaultModalSignalComponent<Ta
     this.tasksStore.clearCreateEditEntity();
   }
 
-  changeOwner(type: 'user' | 'family') {
+  changeOwner(type: 'user' | 'user-group') {
     if (!this.model) {
       return;
     }
@@ -65,7 +65,7 @@ export class CreateEditTaskModalComponent extends DefaultModalSignalComponent<Ta
       case 'user':
         this.model.ownerId = this.authStore.auth()!.id;
         break;
-      case 'family':
+      case 'user-group':
         this.model.ownerId = this.familiesStore.activeFamilyId() ?? 0;
     }
   }

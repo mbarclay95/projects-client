@@ -19,7 +19,7 @@ export interface Task {
   taskHistory?: TaskHistory[];
 }
 
-export type TaskOwnerType = 'family' | 'user';
+export type TaskOwnerType = 'user-group' | 'user';
 
 export function createTask(params: Partial<Task>) {
   return {
@@ -29,7 +29,7 @@ export function createTask(params: Partial<Task>) {
     clearedAt: params.clearedAt ? new Date(params.clearedAt) : null,
     dueDate: params.dueDate ? new Date(params.dueDate) : null,
     description: params.description ?? null,
-    ownerType: params.ownerType ?? 'family',
+    ownerType: params.ownerType ?? 'user-group',
     ownerId: params.ownerId ?? 0,
     recurring: params.recurring ?? false,
     frequencyAmount: params.frequencyAmount,

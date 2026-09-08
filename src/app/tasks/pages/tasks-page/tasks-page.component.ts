@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { Task } from '../../models/task.model';
 import { isMobile } from '../../../app.component';
-import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../../shared/services/user-groups-signal-store';
 import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { TasksFiltersComponent } from '../../components/tasks-filters/tasks-filters.component';
@@ -29,7 +29,7 @@ export class TasksPageComponent implements OnInit {
 
   isMobile = isMobile;
 
-  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly familiesStore = inject(UserGroupsSignalStore);
   readonly taskUserConfigsStore = inject(TaskUserConfigsSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
 

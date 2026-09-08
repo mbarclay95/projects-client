@@ -2,7 +2,7 @@ import { computed, inject, Injectable, Signal, signal, WritableSignal } from '@a
 import { filter, Observable, Subject } from 'rxjs';
 import { EventsSignalStore } from '../../events/services/events-signal-store';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { FamiliesSignalStore } from '../services/families-signal-store';
+import { UserGroupsSignalStore } from '../services/user-groups-signal-store';
 import { TasksSignalStore } from '../../tasks/services/tasks-signal-store';
 import { defaultTaskButtons, FooterButton } from '../models/footer-button.model';
 import { TypedData } from '../../app.routes';
@@ -39,7 +39,7 @@ export class MobileDisplayService {
   readonly router = inject(Router);
   readonly route = inject(ActivatedRoute);
   readonly eventsStore = inject(EventsSignalStore);
-  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly familiesStore = inject(UserGroupsSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
   readonly usersStore = inject(UsersSignalStore);
   readonly rolesStore = inject(RolesSignalStore);
@@ -79,12 +79,12 @@ export class MobileDisplayService {
       case 'events':
         this.eventsStore.createEntity();
         break;
-      case 'families':
+      case 'user-groups':
         this.familiesStore.createEntity();
         break;
       case 'tasks':
         this.tasksStore.createEntity({
-          ownerId: this.familiesStore.activeFamilyId(),
+          ownerId: this.familiesStore.activeGroupId(),
           taskPoint: this.familiesStore.minTaskPoint(),
         });
         break;
@@ -112,7 +112,7 @@ export type CreateButtonAction =
   | 'file-explorer'
   | 'gaming-sessions'
   | 'tasks'
-  | 'families'
+  | 'user-groups'
   | 'users'
   | 'transactions'
   | 'drafts';

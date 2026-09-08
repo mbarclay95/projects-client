@@ -1,6 +1,6 @@
 import { getYear } from 'date-fns';
 
-export interface Family {
+export interface UserGroup {
   id: number;
   name: string;
   members: { id: number; name: string }[];
@@ -10,11 +10,14 @@ export interface Family {
   taskStrategy: TaskStrategy;
   minWeekOffset: number;
   minYear: number;
+  scope: UserGroupScope;
 }
 
 export type TaskStrategy = 'per task' | 'per task point';
 
-export function createFamily(params: Partial<Family>) {
+export type UserGroupScope = 'tasks';
+
+export function createUserGroup(params: Partial<UserGroup>) {
   return {
     id: params.id ?? 0,
     name: params.name ?? '',
@@ -25,5 +28,6 @@ export function createFamily(params: Partial<Family>) {
     taskStrategy: params.taskStrategy ?? 'per task',
     minWeekOffset: params.minWeekOffset ?? 0,
     minYear: params.minYear ?? getYear(new Date()),
-  } as Family;
+    scope: params.scope ?? 'tasks',
+  } as UserGroup;
 }

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Task } from '../../models/task.model';
-import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../../shared/services/user-groups-signal-store';
 import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { NzTabsComponent, NzTabComponent, NzTabLinkTemplateDirective, NzTabLinkDirective } from 'ng-zorro-antd/tabs';
@@ -38,7 +38,7 @@ export class TaskTabsComponent implements OnInit {
   openSkipTaskModal: Subject<Task> = new Subject<Task>();
   openViewTaskModal: Subject<Task> = new Subject<Task>();
 
-  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly familiesStore = inject(UserGroupsSignalStore);
   readonly taskUserConfigsStore = inject(TaskUserConfigsSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
 
@@ -60,7 +60,7 @@ export class TaskTabsComponent implements OnInit {
 
   createEntity() {
     this.tasksStore.createEntity({
-      ownerId: this.familiesStore.activeFamilyId(),
+      ownerId: this.familiesStore.activeGroupId(),
       taskPoint: this.familiesStore.minTaskPoint(),
     });
   }

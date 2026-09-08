@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { FamiliesSignalStore } from '../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../shared/services/user-groups-signal-store';
 import { AuthSignalStore } from '../../auth/services/auth-signal-store';
 import { TaskUserConfigsSignalStore } from '../services/task-user-configs-signal-store';
 import { FamilyStatsSignalStore } from '../services/family-stats-signal-store';
@@ -16,7 +16,7 @@ import { RouterOutlet } from '@angular/router';
 })
 export class TasksLayoutComponent {
   readonly authStore = inject(AuthSignalStore);
-  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly familiesStore = inject(UserGroupsSignalStore);
   readonly taskUserConfigsStore = inject(TaskUserConfigsSignalStore);
   readonly familyStatsStore = inject(FamilyStatsSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
@@ -30,8 +30,8 @@ export class TasksLayoutComponent {
         this.tasksStore.loadAll({});
       }
     });
-    const familyId = this.authStore.auth()?.familyId;
-    if (familyId) {
+    const taskGroupId = this.authStore.auth()?.taskGroupId;
+    if (taskGroupId) {
       effect(() => {
         const queryString = this.taskUserConfigsStore.buildQueryString();
         if (queryString) {
@@ -44,9 +44,9 @@ export class TasksLayoutComponent {
         this.familyStatsStore.loadAll({});
       });
     }
-    if (familyId) {
-      this.familiesStore.loadOne({ entityId: familyId });
-      this.familiesStore.setActiveFamily(familyId);
+    if (taskGroupId) {
+      this.familiesStore.loadOne({ entityId: taskGroupId });
+      this.familiesStore.setActiveGroup(taskGroupId);
     }
   }
 }

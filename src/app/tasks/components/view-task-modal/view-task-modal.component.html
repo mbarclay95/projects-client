@@ -13,7 +13,7 @@
           <div class="d-flex w-100 justify-content-between align-items-center">
             <div class="title">{{ model.name }}</div>
 
-            @if (model.ownerType === "family") {
+            @if (model.ownerType === "user-group") {
               <fa-icon style="color: grey" class="fa-lg" [icon]="household"></fa-icon>
             }
             @if (model.ownerType === "user") {

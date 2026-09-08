@@ -18,6 +18,6 @@ export class WeeklyTasksSegmentComponent {
   readonly tasksStore = inject(TasksSignalStore);
 
   changePage(page: number) {
-    this.tasksStore.updateUiState({ ownerType: page === 0 ? 'family' : 'user' }, false);
+    this.tasksStore.updateUiState({ ownerType: page === 0 ? 'user-group' : 'user' }, false);
   }
 }

@@ -1,18 +1,18 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { TaskUserConfig } from '../models/task-user-config.model';
-import { FamiliesSignalStore } from '../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../shared/services/user-groups-signal-store';
 
 @Pipe({ name: 'totalCompletedTasks' })
 export class TotalCompletedTasksPipe implements PipeTransform {
-  private readonly familiesStore = inject(FamiliesSignalStore);
+  private readonly familiesStore = inject(UserGroupsSignalStore);
 
   transform(config: TaskUserConfig): number {
-    const activeFamily = this.familiesStore.activeFamily();
-    if (!activeFamily) {
+    const activeGroup = this.familiesStore.activeGroup();
+    if (!activeGroup) {
       return 0;
     }
 
-    return activeFamily.taskStrategy === 'per task'
+    return activeGroup.taskStrategy === 'per task'
       ? config.completedFamilyTasks.length
       : config.completedFamilyTasks.reduce((prev, curr) => prev + (curr.taskPoint ?? 0), 0);
   }

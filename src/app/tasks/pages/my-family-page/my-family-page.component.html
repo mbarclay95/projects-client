@@ -1,6 +1,6 @@
 <app-week-selector></app-week-selector>
 
-@if (familiesSignalStore.activeFamily(); as myFamily) {
+@if (familiesSignalStore.activeGroup(); as myFamily) {
   <div class="my-family-page-container pt-2">
     <app-my-family-edit-family [myFamily]="myFamily"></app-my-family-edit-family>
 

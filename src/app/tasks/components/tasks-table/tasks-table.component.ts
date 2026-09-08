@@ -10,7 +10,7 @@ import {
 } from 'ng-zorro-antd/table';
 import { fa1, faEdit, faPeopleRoof, faRepeat, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../../shared/services/user-groups-signal-store';
 import { TasksSignalStore, TasksUiState } from '../../services/tasks-signal-store';
 import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
 import { NgClass, DatePipe } from '@angular/common';
@@ -52,7 +52,7 @@ export class TasksTableComponent {
   household = faPeopleRoof;
   personal = faUser;
 
-  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly familiesStore = inject(UserGroupsSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
   readonly nzMessageService = inject(NzMessageService);
   readonly tagsStore = inject(TagsSignalStore);

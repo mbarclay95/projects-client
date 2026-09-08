@@ -7,15 +7,15 @@ import {
   NzThMeasureDirective,
   NzTbodyComponent,
 } from 'ng-zorro-antd/table';
-import { Family } from '../../../shared/models/family.model';
+import { UserGroup } from '../../../shared/models/user-group.model';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  selector: 'app-families-table',
-  templateUrl: './families-table.component.html',
-  styleUrls: ['./families-table.component.scss'],
+  selector: 'app-user-groups-table',
+  templateUrl: './user-groups-table.component.html',
+  styleUrls: ['./user-groups-table.component.scss'],
   imports: [
     NzTableComponent,
     NzTheadComponent,
@@ -27,15 +27,15 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     FaIconComponent,
   ],
 })
-export class FamiliesTableComponent {
-  @ViewChild('familiesTableTag', { static: true }) familiesTable: NzTableComponent<Family> | undefined;
-  @Input() set families(families: Family[] | null) {
-    if (families) {
-      this._families = families;
+export class UserGroupsTableComponent {
+  @ViewChild('groupsTableTag', { static: true }) groupsTable: NzTableComponent<UserGroup> | undefined;
+  @Input() set groups(groups: UserGroup[] | null) {
+    if (groups) {
+      this._groups = groups;
     }
   }
-  @Output() openFamilyModal: EventEmitter<number> = new EventEmitter<number>();
+  @Output() openUserGroupModal: EventEmitter<number> = new EventEmitter<number>();
 
-  _families: Family[] = [];
+  _groups: UserGroup[] = [];
   edit = faEdit;
 }

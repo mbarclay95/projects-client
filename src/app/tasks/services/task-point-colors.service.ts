@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import Color from 'colorjs.io';
-import { FamiliesSignalStore } from '../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../shared/services/user-groups-signal-store';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class TaskPointColorsService {
     outputSpace: 'srgb',
   });
 
-  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly familiesStore = inject(UserGroupsSignalStore);
 
   getColor(max: number, min: number, point: number): string {
     if (min === max) {

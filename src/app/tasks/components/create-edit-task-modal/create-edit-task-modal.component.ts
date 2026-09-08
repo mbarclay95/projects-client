@@ -52,7 +52,7 @@ export class CreateEditTaskModalComponent extends DefaultModalSignalComponent<Ta
   }
 
   taskSaved(): void {
-    this.tagsStore.loadAll();
+    this.tagsStore.loadAll('tasks');
     this.nzMessageService.success('Task Saved!');
     this.tasksStore.clearCreateEditEntity();
   }

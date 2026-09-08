@@ -58,7 +58,7 @@ export class TaskRowComponent {
       entity: { ...this.task, ...{ completedAt: new Date() } },
       removeFromStore: true,
       onSuccess: (task) => {
-        this.tagsStore.loadAll();
+        this.tagsStore.loadAll('tasks');
         this.taskUserConfigsStore.addCompletedTaskToActive(task);
         this.nzMessageService.success('Task Completed!');
       },

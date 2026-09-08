@@ -80,7 +80,7 @@ export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
     this.tasksStore.remove({
       id: this.model.id,
       onSuccess: () => {
-        this.tagsStore.loadAll();
+        this.tagsStore.loadAll('tasks');
         this.deleting = false;
         this.nzMessageService.success('Task deleted');
         this.isVisible = false;

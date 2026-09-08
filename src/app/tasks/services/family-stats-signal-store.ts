@@ -3,7 +3,7 @@ import { withCrudEntities } from '../../shared/signal-stores/with-crud-feature';
 import { createFamilyMemberStats, FamilyMemberStats } from '../models/family-member-stats.model';
 import { getYear } from 'date-fns';
 import { computed, inject } from '@angular/core';
-import { FamiliesSignalStore } from '../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../shared/services/user-groups-signal-store';
 
 interface FamilyStatsUiState {
   year: number;
@@ -21,11 +21,11 @@ export const FamilyStatsSignalStore = signalStore(
     createEntity: createFamilyMemberStats,
   }),
   withComputed(({ year }) => {
-    const familiesStore = inject(FamiliesSignalStore);
-    const buildQueryString = computed(() => `userGroupId=${familiesStore.activeFamilyId()}&year=${year()}`);
+    const familiesStore = inject(UserGroupsSignalStore);
+    const buildQueryString = computed(() => `userGroupId=${familiesStore.activeGroupId()}&year=${year()}`);
     const yearBehindDisabled = computed(() => {
-      const activeFamily = familiesStore.activeFamily();
-      return !!activeFamily && activeFamily.minYear === year();
+      const activeGroup = familiesStore.activeGroup();
+      return !!activeGroup && activeGroup.minYear === year();
     });
     const yearAheadDisabled = computed(() => getYear(new Date()) === year());
 

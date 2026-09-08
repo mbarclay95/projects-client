@@ -1,11 +1,11 @@
 import { Component, inject, Input } from '@angular/core';
-import { TaskStrategy } from '../../../shared/models/family.model';
+import { TaskStrategy } from '../../../shared/models/user-group.model';
 import { faArrowRotateLeft, faCog, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Task } from '../../models/task.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { isMobile } from '../../../app.component';
 import { TaskUserConfig } from '../../models/task-user-config.model';
-import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../../shared/services/user-groups-signal-store';
 import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
@@ -60,7 +60,7 @@ export class MyFamilyMembersComponent {
   spinner = faSpinner;
   loadingUndoId: number | null = null;
 
-  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly familiesStore = inject(UserGroupsSignalStore);
   readonly taskUserConfigsStore = inject(TaskUserConfigsSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
   readonly nzMessageService = inject(NzMessageService);

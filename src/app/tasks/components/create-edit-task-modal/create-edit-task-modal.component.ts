@@ -3,7 +3,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Task } from '../../models/task.model';
 import { differenceInCalendarDays } from 'date-fns';
 import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
-import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../../shared/services/user-groups-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
@@ -39,7 +39,7 @@ import { PluralFrequencyPipe } from '../../pipes/plural-frequency.pipe';
 })
 export class CreateEditTaskModalComponent extends DefaultModalSignalComponent<Task> {
   readonly authStore = inject(AuthSignalStore);
-  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly familiesStore = inject(UserGroupsSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
   readonly nzMessageService = inject(NzMessageService);
   readonly tagsStore = inject(TagsSignalStore);
@@ -66,7 +66,7 @@ export class CreateEditTaskModalComponent extends DefaultModalSignalComponent<Ta
         this.model.ownerId = this.authStore.auth()!.id;
         break;
       case 'user-group':
-        this.model.ownerId = this.familiesStore.activeFamilyId() ?? 0;
+        this.model.ownerId = this.familiesStore.activeGroupId() ?? 0;
     }
   }
 

@@ -3,7 +3,7 @@ import { Task } from '../../models/task.model';
 import { DefaultModalComponent } from '../../../shared/components/default-modal/default-modal.component';
 import { faChevronDown, faChevronUp, faFlag, faPeopleRoof, faUser } from '@fortawesome/free-solid-svg-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../../shared/services/user-groups-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
 import { NzModalComponent, NzModalContentDirective, NzModalFooterDirective } from 'ng-zorro-antd/modal';
@@ -46,7 +46,7 @@ export class ViewTaskModalComponent extends DefaultModalComponent<Task> {
   arrowDown = faChevronDown;
   arrowUp = faChevronUp;
 
-  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly familiesStore = inject(UserGroupsSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
   readonly tagsStore = inject(TagsSignalStore);
   readonly nzMessageService = inject(NzMessageService);

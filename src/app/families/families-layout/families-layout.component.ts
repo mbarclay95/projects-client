@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { NzContentComponent } from 'ng-zorro-antd/layout';
 import { RouterOutlet } from '@angular/router';
-import { FamiliesSignalStore } from '../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../shared/services/user-groups-signal-store';
 
 @Component({
   selector: 'app-families-layout',
@@ -10,7 +10,7 @@ import { FamiliesSignalStore } from '../../shared/services/families-signal-store
   imports: [NzContentComponent, RouterOutlet],
 })
 export class FamiliesLayoutComponent {
-  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly familiesStore = inject(UserGroupsSignalStore);
 
   constructor() {
     this.familiesStore.loadAll({});

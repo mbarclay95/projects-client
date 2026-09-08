@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
-import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../../shared/services/user-groups-signal-store';
 import { WeekSelectorComponent } from '../../components/week-selector/week-selector.component';
 import { MyFamilyEditFamilyComponent } from '../../components/my-family-edit-family/my-family-edit-family.component';
 import { MyFamilyMembersComponent } from '../../components/my-family-members/my-family-members.component';
@@ -13,5 +13,5 @@ import { MyFamilyMembersComponent } from '../../components/my-family-members/my-
 })
 export class MyFamilyPageComponent {
   readonly taskUserConfigsSignalStore = inject(TaskUserConfigsSignalStore);
-  readonly familiesSignalStore = inject(FamiliesSignalStore);
+  readonly familiesSignalStore = inject(UserGroupsSignalStore);
 }

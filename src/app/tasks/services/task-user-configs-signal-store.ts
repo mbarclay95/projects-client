@@ -2,7 +2,7 @@ import { patchState, signalStore, withComputed, withMethods, withState } from '@
 import { withCrudEntities } from '../../shared/signal-stores/with-crud-feature';
 import { createTaskUserConfig, TaskUserConfig } from '../models/task-user-config.model';
 import { computed, inject } from '@angular/core';
-import { FamiliesSignalStore } from '../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../shared/services/user-groups-signal-store';
 import { add, endOfWeek, lightFormat, startOfWeek } from 'date-fns';
 import { AuthSignalStore } from '../../auth/services/auth-signal-store';
 import { updateEntity } from '@ngrx/signals/entities';
@@ -24,12 +24,12 @@ export const TaskUserConfigsSignalStore = signalStore(
     createEntity: createTaskUserConfig,
   }),
   withComputed(({ weekOffset, entities }) => {
-    const familiesStore = inject(FamiliesSignalStore);
+    const familiesStore = inject(UserGroupsSignalStore);
     const authStore = inject(AuthSignalStore);
     const buildQueryString = computed(() => {
-      const activeFamilyId = familiesStore.activeFamilyId();
-      if (activeFamilyId) {
-        return `userGroupId=${activeFamilyId}&weekOffset=${weekOffset()}`;
+      const activeGroupId = familiesStore.activeGroupId();
+      if (activeGroupId) {
+        return `userGroupId=${activeGroupId}&weekOffset=${weekOffset()}`;
       }
       return undefined;
     });
@@ -43,7 +43,7 @@ export const TaskUserConfigsSignalStore = signalStore(
       return `${startDate} - ${endDate}`;
     });
     const weekForwardDisabled = computed(() => weekOffset() === 1);
-    const weekBehindDisabled = computed(() => weekOffset() === familiesStore.activeFamily()?.minWeekOffset);
+    const weekBehindDisabled = computed(() => weekOffset() === familiesStore.activeGroup()?.minWeekOffset);
     const authUserConfig = computed(() => entities().find((config) => config.userId === authStore.auth()?.id));
 
     return {

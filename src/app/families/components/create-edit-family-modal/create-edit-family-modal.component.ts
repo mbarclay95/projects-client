@@ -1,10 +1,10 @@
 import { Component, inject, Input } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Family } from '../../../shared/models/family.model';
+import { UserGroup } from '../../../shared/models/user-group.model';
 import { faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
 import { User } from '../../../users/models/user.model';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
-import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
+import { UserGroupsSignalStore } from '../../../shared/services/user-groups-signal-store';
 import { NzModalComponent, NzModalContentDirective, NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -32,7 +32,7 @@ import { UpdatingTaskPointColorsPipe } from '../../../tasks/pipes/updating-task-
     NzModalModule,
   ],
 })
-export class CreateEditFamilyModalComponent extends DefaultModalSignalComponent<Family> {
+export class CreateEditFamilyModalComponent extends DefaultModalSignalComponent<UserGroup> {
   @Input() showFamilyMembers = false;
   @Input() users: User[] = [];
 
@@ -40,7 +40,7 @@ export class CreateEditFamilyModalComponent extends DefaultModalSignalComponent<
   edit = faEdit;
   listOfPoints: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  readonly familiesStore = inject(FamiliesSignalStore);
+  readonly familiesStore = inject(UserGroupsSignalStore);
   readonly nzMessageService = inject(NzMessageService);
 
   saveFamily() {

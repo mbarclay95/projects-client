@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Task } from '../../models/task.model';
-import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
 import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
 import { TaskUserConfigsSignalStore } from '../../services/task-user-configs-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
@@ -10,7 +9,6 @@ import { RouterLink } from '@angular/router';
 import { WeeklyTasksPageComponent } from '../weekly-tasks-page/weekly-tasks-page.component';
 import { MyFamilyPageComponent } from '../my-family-page/my-family-page.component';
 import { TasksPageComponent } from '../tasks-page/tasks-page.component';
-import { FamiliesPageComponent } from '../../../families/pages/families-page/families-page.component';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { CreateEditTaskModalMobileComponent } from '../../components/create-edit-task-modal-mobile/create-edit-task-modal-mobile.component';
 import { ViewTaskModalComponent } from '../../components/view-task-modal/view-task-modal.component';
@@ -29,7 +27,6 @@ import { SkipTaskModalComponent } from '../../components/skip-task-modal/skip-ta
     WeeklyTasksPageComponent,
     MyFamilyPageComponent,
     TasksPageComponent,
-    FamiliesPageComponent,
     NzButtonComponent,
     CreateEditTaskModalMobileComponent,
     ViewTaskModalComponent,
@@ -37,11 +34,10 @@ import { SkipTaskModalComponent } from '../../components/skip-task-modal/skip-ta
   ],
 })
 export class TaskTabsComponent implements OnInit {
-  selectedTab: 'Task' | 'Family' | 'My Family' = 'Task';
+  selectedTab: 'Task' | 'My Family' = 'Task';
   openSkipTaskModal: Subject<Task> = new Subject<Task>();
   openViewTaskModal: Subject<Task> = new Subject<Task>();
 
-  readonly authStore = inject(AuthSignalStore);
   readonly familiesStore = inject(FamiliesSignalStore);
   readonly taskUserConfigsStore = inject(TaskUserConfigsSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
@@ -63,16 +59,9 @@ export class TaskTabsComponent implements OnInit {
   }
 
   createEntity() {
-    switch (this.selectedTab) {
-      case 'Family':
-        this.familiesStore.createEntity();
-        break;
-      case 'Task':
-        this.tasksStore.createEntity({
-          ownerId: this.familiesStore.activeFamilyId(),
-          taskPoint: this.familiesStore.minTaskPoint(),
-        });
-        break;
-    }
+    this.tasksStore.createEntity({
+      ownerId: this.familiesStore.activeFamilyId(),
+      taskPoint: this.familiesStore.minTaskPoint(),
+    });
   }
 }

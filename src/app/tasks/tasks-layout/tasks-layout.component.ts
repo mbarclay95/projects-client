@@ -44,12 +44,8 @@ export class TasksLayoutComponent {
         this.familyStatsStore.loadAll({});
       });
     }
-    if (this.authStore.viewFamiliesTab()) {
-      this.familiesStore.loadAll({});
-    } else if (familyId) {
-      this.familiesStore.loadOne({ entityId: familyId });
-    }
     if (familyId) {
+      this.familiesStore.loadOne({ entityId: familyId });
       this.familiesStore.setActiveFamily(familyId);
     }
   }

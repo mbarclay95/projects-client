@@ -61,7 +61,7 @@ export const routes = (isMobile: boolean): Route[] => [
     title: 'Tasks',
     queryParams: isMobile ? {} : { tab: 'weekly-tasks' },
   },
-  { icon: faPeopleGroup, url: 'app/families', permission: Permissions.FAMILIES_TAB, title: 'Families', queryParams: {} },
+  { icon: faPeopleGroup, url: 'app/families', permission: Permissions.FAMILIES_PAGE, title: 'Families', queryParams: {} },
   {
     icon: faFolderOpen,
     url: 'app/file-explorer',

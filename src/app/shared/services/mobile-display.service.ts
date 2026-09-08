@@ -4,9 +4,7 @@ import { EventsSignalStore } from '../../events/services/events-signal-store';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FamiliesSignalStore } from '../services/families-signal-store';
 import { TasksSignalStore } from '../../tasks/services/tasks-signal-store';
-import { defaultTaskButtons, FooterButton, taskFamiliesButton } from '../models/footer-button.model';
-import { Permissions } from '../../auth/permissions';
-import { AuthSignalStore } from '../../auth/services/auth-signal-store';
+import { defaultTaskButtons, FooterButton } from '../models/footer-button.model';
 import { TypedData } from '../../app.routes';
 import { UsersSignalStore } from '../../users/services/users-signal-store';
 import { createNewUserWithDefaultRole } from '../../users/models/user.model';
@@ -28,13 +26,8 @@ export class MobileDisplayService {
   private _footerButtons: WritableSignal<MobileFooterButtons | undefined> = signal(undefined);
   footerButtons: Signal<FooterButton[]> = computed(() => {
     switch (this._footerButtons()) {
-      case 'tasks': {
-        const footerButtons = [...defaultTaskButtons];
-        if (this.authStore.hasPermissionTo(Permissions.FAMILIES_TAB)) {
-          footerButtons.push({ ...taskFamiliesButton });
-        }
-        return footerButtons;
-      }
+      case 'tasks':
+        return defaultTaskButtons;
       default:
         return [];
     }
@@ -48,7 +41,6 @@ export class MobileDisplayService {
   readonly eventsStore = inject(EventsSignalStore);
   readonly familiesStore = inject(FamiliesSignalStore);
   readonly tasksStore = inject(TasksSignalStore);
-  readonly authStore = inject(AuthSignalStore);
   readonly usersStore = inject(UsersSignalStore);
   readonly rolesStore = inject(RolesSignalStore);
   readonly goalsStore = inject(GoalsSignalStore);

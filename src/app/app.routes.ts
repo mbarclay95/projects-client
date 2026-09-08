@@ -77,7 +77,7 @@ export const APP_ROUTES: TypedRoute[] = [
       {
         path: 'families',
         component: FamiliesLayoutComponent,
-        data: { permission: Permissions.FAMILIES_TAB, headerTitle: 'Families' },
+        data: { permission: Permissions.FAMILIES_PAGE, headerTitle: 'Families' },
         loadChildren: () => import('./families/families.routes').then((m) => m.FAMILIES_ROUTES),
       },
       {

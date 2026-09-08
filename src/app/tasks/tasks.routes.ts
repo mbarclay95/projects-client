@@ -4,7 +4,7 @@ import { WeeklyTasksPageComponent } from './pages/weekly-tasks-page/weekly-tasks
 import { MyFamilyPageComponent } from './pages/my-family-page/my-family-page.component';
 import { StatsPageComponent } from './pages/stats-page/stats-page.component';
 import { TasksPageComponent } from './pages/tasks-page/tasks-page.component';
-import { FamiliesPageComponent } from './pages/families-page/families-page.component';
+import { FamiliesPageComponent } from '../families/pages/families-page/families-page.component';
 
 export const TASK_ROUTES: TypedRoute[] = [
   {

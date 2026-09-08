@@ -10,8 +10,8 @@ import { NzInputDirective } from 'ng-zorro-antd/input';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NzRadioGroupComponent, NzRadioComponent } from 'ng-zorro-antd/radio';
 import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
-import { UsersToIdsPipe } from '../../pipes/users-to-ids.pipe';
-import { UpdatingTaskPointColorsPipe } from '../../pipes/updating-task-point-colors.pipe';
+import { UsersToIdsPipe } from '../../../tasks/pipes/users-to-ids.pipe';
+import { UpdatingTaskPointColorsPipe } from '../../../tasks/pipes/updating-task-point-colors.pipe';
 
 @Component({
   selector: 'app-create-edit-family-modal',

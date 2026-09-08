@@ -1,9 +1,0 @@
-<div>
-  <app-families-table [families]="familiesStore.entities()" (openFamilyModal)="familiesStore.editEntity($event)"></app-families-table>
-</div>
-
-<app-create-edit-family-modal
-  [showFamilyMembers]="true"
-  [openModal]="familiesStore.createEditEntity()"
-  [users]="usersStore.entities()"
-></app-create-edit-family-modal>

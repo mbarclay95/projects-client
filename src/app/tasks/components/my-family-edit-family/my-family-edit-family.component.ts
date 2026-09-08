@@ -4,7 +4,7 @@ import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { FamiliesSignalStore } from '../../../shared/services/families-signal-store';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { CreateEditFamilyModalComponent } from '../create-edit-family-modal/create-edit-family-modal.component';
+import { CreateEditFamilyModalComponent } from '../../../families/components/create-edit-family-modal/create-edit-family-modal.component';
 import { DecimalPipe } from '@angular/common';
 
 @Component({

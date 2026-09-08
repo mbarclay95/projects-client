@@ -10,7 +10,7 @@ import { RouterLink } from '@angular/router';
 import { WeeklyTasksPageComponent } from '../weekly-tasks-page/weekly-tasks-page.component';
 import { MyFamilyPageComponent } from '../my-family-page/my-family-page.component';
 import { TasksPageComponent } from '../tasks-page/tasks-page.component';
-import { FamiliesPageComponent } from '../families-page/families-page.component';
+import { FamiliesPageComponent } from '../../../families/pages/families-page/families-page.component';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { CreateEditTaskModalMobileComponent } from '../../components/create-edit-task-modal-mobile/create-edit-task-modal-mobile.component';
 import { ViewTaskModalComponent } from '../../components/view-task-modal/view-task-modal.component';

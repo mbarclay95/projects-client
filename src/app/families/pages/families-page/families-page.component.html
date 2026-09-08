@@ -1,0 +1,19 @@
+@if (!isMobile) {
+  <app-page-header title="Families" buttonText="Create Family" (createButtonClicked)="familiesStore.createEntity()"></app-page-header>
+}
+
+<div>
+  @if (familiesStore.loadingAll()) {
+    <div class="d-flex w-100 justify-content-center align-items-center" style="height: 25vh">
+      <nz-spin></nz-spin>
+    </div>
+  } @else {
+    <app-families-table [families]="familiesStore.entities()" (openFamilyModal)="familiesStore.editEntity($event)"></app-families-table>
+  }
+</div>
+
+<app-create-edit-family-modal
+  [showFamilyMembers]="true"
+  [openModal]="familiesStore.createEditEntity()"
+  [users]="usersStore.entities()"
+></app-create-edit-family-modal>

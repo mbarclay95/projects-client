@@ -5,7 +5,7 @@ import { faChevronDown, faChevronUp, faFlag, faPeopleRoof, faUser } from '@forta
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FamiliesSignalStore } from '../../services/families-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
-import { TagsSignalStore } from '../../services/tags-signal-store';
+import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
 import { NzModalComponent, NzModalContentDirective, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';

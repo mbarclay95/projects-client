@@ -1,6 +1,6 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { withCrudEntities } from '../../shared/signal-stores/with-crud-feature';
-import { createFamily, Family } from '../models/family.model';
+import { createFamily, Family } from '../../shared/models/family.model';
 import { computed } from '@angular/core';
 
 interface FamiliesUiState {

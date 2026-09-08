@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Family } from '../../models/family.model';
+import { Family } from '../../../shared/models/family.model';
 import { faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
 import { User } from '../../../users/models/user.model';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';

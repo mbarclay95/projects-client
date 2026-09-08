@@ -6,7 +6,7 @@ import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
 import { FamiliesSignalStore } from '../../services/families-signal-store';
 import { TasksSignalStore } from '../../services/tasks-signal-store';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
-import { TagsSignalStore } from '../../services/tags-signal-store';
+import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
 import { NzModalComponent, NzModalContentDirective } from 'ng-zorro-antd/modal';
 import { NzSwitchComponent } from 'ng-zorro-antd/switch';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';

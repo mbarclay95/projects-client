@@ -75,20 +75,20 @@ satisfy, and the failure only appears on a clean install, not an incremental one
 
 ### Feature Modules
 
-| Module          | Path                 | Notes                              |
-| --------------- | -------------------- | ---------------------------------- |
-| `auth`          | `/app/auth`          | Login, password change             |
-| `users`         | `/app/users`         | User admin                         |
-| `tasks`         | `/app/tasks`         | Tasks, tags, families              |
-| `events`        | `/app/events`        | Events + participants              |
-| `goals`         | `/app/goals`         | Goal tracking                      |
-| `dashboard`     | `/app/dashboard`     | Main dashboard                     |
-| `backups`       | `/app/backups`       | Backups, targets, schedules        |
-| `file-explorer` | `/app/file-explorer` | File/directory browser             |
-| `gaming`        | `/app/gaming`        | Sessions + device mgmt (WebSocket) |
-| `money`         | `/app/money`         | Financial tracking                 |
-| `logging`       | `/app/logging`       | Event logs                         |
-| `event-signup`  | `/events`            | Public, no auth required           |
+| Module          | Path                 | Notes                                     |
+| --------------- | -------------------- | ----------------------------------------- |
+| `auth`          | `/app/auth`          | Login, password change                    |
+| `users`         | `/app/users`         | User admin                                |
+| `tasks`         | `/app/tasks`         | Tasks; `Family`, `TagsSignalStore` shared |
+| `events`        | `/app/events`        | Events + participants                     |
+| `goals`         | `/app/goals`         | Goal tracking                             |
+| `dashboard`     | `/app/dashboard`     | Main dashboard                            |
+| `backups`       | `/app/backups`       | Backups, targets, schedules               |
+| `file-explorer` | `/app/file-explorer` | File/directory browser                    |
+| `gaming`        | `/app/gaming`        | Sessions + device mgmt (WebSocket)        |
+| `money`         | `/app/money`         | Financial tracking                        |
+| `logging`       | `/app/logging`       | Event logs                                |
+| `event-signup`  | `/events`            | Public, no auth required                  |
 
 ### Testing
 

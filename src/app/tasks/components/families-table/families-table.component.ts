@@ -7,7 +7,7 @@ import {
   NzThMeasureDirective,
   NzTbodyComponent,
 } from 'ng-zorro-antd/table';
-import { Family } from '../../models/family.model';
+import { Family } from '../../../shared/models/family.model';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';

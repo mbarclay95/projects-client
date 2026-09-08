@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { TaskStrategy } from '../../models/family.model';
+import { TaskStrategy } from '../../../shared/models/family.model';
 import { faArrowRotateLeft, faCog, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Task } from '../../models/task.model';
 import { NzMessageService } from 'ng-zorro-antd/message';

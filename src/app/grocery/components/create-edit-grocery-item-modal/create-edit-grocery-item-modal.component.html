@@ -2,6 +2,7 @@
   [nzVisible]="isVisible()"
   [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Item'"
   nzWidth="500px"
+  [nzMaskClosable]="false"
   (nzOnCancel)="groceryItemsStore.clearCreateEditEntity()"
 >
   <ng-container *nzModalContent>

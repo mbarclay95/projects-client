@@ -9,12 +9,6 @@
   <ng-container *nzModalContent>
     <div class="filter-container">
       <input nz-input placeholder="Search" [ngModel]="search()" (ngModelChange)="updateSearch($event)" class="filter-boxes" />
-
-      <nz-select nzMode="multiple" [ngModel]="tags()" (ngModelChange)="tags.set($event)" nzPlaceHolder="Tags" class="filter-boxes">
-        @for (tag of tagsStore.groceryTags(); track $index) {
-          <nz-option [nzLabel]="tag" [nzValue]="tag"></nz-option>
-        }
-      </nz-select>
     </div>
 
     <div class="picker-list">
@@ -31,7 +25,15 @@
             }
           </div>
 
-          <div class="amount">{{ formatGroceryItemAmount(item) }}</div>
+          @if (item.unit !== groceryItemUnit.none) {
+            <nz-input-number
+              class="amount"
+              [ngModel]="quantityFor(item)"
+              (ngModelChange)="setQuantity(item, $event)"
+              [nzMin]="minFor(item)"
+              [nzStep]="stepFor(item)"
+            ></nz-input-number>
+          }
 
           <button nz-button class="ant-btn-icon-only" nzType="text" (click)="toggle(item)">
             @if (groceryListItemsStore.entryByGroceryItemId().has(item.id)) {

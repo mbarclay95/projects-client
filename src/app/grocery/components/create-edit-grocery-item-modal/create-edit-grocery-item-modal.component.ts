@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { GroceryItem } from '../../models/grocery-item.model';
+import { GROCERY_ITEM_UNIT_LABELS, GroceryItem, GroceryItemUnit } from '../../models/grocery-item.model';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { GroceryItemsSignalStore } from '../../services/grocery-items-signal-store';
 import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
 import { NzModalComponent, NzModalContentDirective, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzInputDirective } from 'ng-zorro-antd/input';
+import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -19,6 +20,7 @@ import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
     NzModalComponent,
     NzModalContentDirective,
     NzInputDirective,
+    NzInputNumberComponent,
     ReactiveFormsModule,
     FormsModule,
     NzSelectComponent,
@@ -34,6 +36,20 @@ export class CreateEditGroceryItemModalComponent extends DefaultModalSignalCompo
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
   readonly tagsStore = inject(TagsSignalStore);
   readonly nzMessageService = inject(NzMessageService);
+
+  readonly groceryItemUnit = GroceryItemUnit;
+  readonly units = Object.values(GroceryItemUnit);
+  readonly unitLabels = GROCERY_ITEM_UNIT_LABELS;
+
+  onUnitChange(unit: GroceryItemUnit): void {
+    if (!this.model) {
+      return;
+    }
+    this.model.unit = unit;
+    if (unit === GroceryItemUnit.none) {
+      this.model.defaultQuantity = null;
+    }
+  }
 
   saveItem() {
     if (!this.model) {

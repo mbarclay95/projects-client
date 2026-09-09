@@ -28,6 +28,24 @@
           }
         </nz-select>
       </div>
+
+      <div class="w-100 mb-4">
+        <div class="mb-2">Unit:</div>
+
+        <nz-select class="w-100" [ngModel]="model.unit" (ngModelChange)="onUnitChange($event)">
+          @for (unit of units; track unit) {
+            <nz-option [nzLabel]="unitLabels[unit]" [nzValue]="unit"></nz-option>
+          }
+        </nz-select>
+      </div>
+
+      @if (model.unit !== groceryItemUnit.none) {
+        <div class="w-100 mb-4">
+          <div class="mb-2">Default Quantity:</div>
+
+          <nz-input-number class="w-100" [(ngModel)]="model.defaultQuantity" [nzMin]="0"></nz-input-number>
+        </div>
+      }
     }
   </ng-container>
 

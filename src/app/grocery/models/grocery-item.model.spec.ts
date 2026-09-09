@@ -1,4 +1,4 @@
-import { createGroceryItem, filterGroceryItems, GroceryItem } from './grocery-item.model';
+import { createGroceryItem, filterGroceryItems, formatGroceryItemAmount, GroceryItem, GroceryItemUnit } from './grocery-item.model';
 
 describe('filterGroceryItems', () => {
   const items: GroceryItem[] = [
@@ -21,5 +21,27 @@ describe('filterGroceryItems', () => {
 
   it('composes a search and a tag filter', () => {
     expect(filterGroceryItems(items, 'milk', ['costco']).map((item) => item.id)).toEqual([1, 3]);
+  });
+});
+
+describe('formatGroceryItemAmount', () => {
+  it('is empty for a unit-less item', () => {
+    expect(formatGroceryItemAmount(createGroceryItem({ unit: GroceryItemUnit.none }))).toEqual('');
+  });
+
+  it('appends lb to a weight quantity', () => {
+    expect(formatGroceryItemAmount(createGroceryItem({ unit: GroceryItemUnit.weight, defaultQuantity: 1.5 }))).toEqual('1.5 lb');
+  });
+
+  it('falls back to the unit label when a weight has no default quantity', () => {
+    expect(formatGroceryItemAmount(createGroceryItem({ unit: GroceryItemUnit.weight }))).toEqual('lb');
+  });
+
+  it('shows a bare number for a count quantity', () => {
+    expect(formatGroceryItemAmount(createGroceryItem({ unit: GroceryItemUnit.count, defaultQuantity: 4 }))).toEqual('4');
+  });
+
+  it('falls back to the unit label when a count has no default quantity', () => {
+    expect(formatGroceryItemAmount(createGroceryItem({ unit: GroceryItemUnit.count }))).toEqual('Count');
   });
 });

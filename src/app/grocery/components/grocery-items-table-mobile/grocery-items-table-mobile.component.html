@@ -3,6 +3,9 @@
     <div class="grocery-item-box" (click)="editItem.emit(item.id)">
       <div class="first-row">
         <div class="title">{{ item.name }}</div>
+        @if (formatGroceryItemAmount(item)) {
+          <div class="amount">{{ formatGroceryItemAmount(item) }}</div>
+        }
       </div>
 
       @if (item.tags.length > 0) {

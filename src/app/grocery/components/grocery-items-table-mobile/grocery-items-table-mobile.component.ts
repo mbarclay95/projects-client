@@ -4,7 +4,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
-import { GroceryItem } from '../../models/grocery-item.model';
+import { formatGroceryItemAmount, GroceryItem } from '../../models/grocery-item.model';
 
 @Component({
   selector: 'app-grocery-items-table-mobile',
@@ -20,4 +20,6 @@ export class GroceryItemsTableMobileComponent {
 
   edit = faEdit;
   trash = faTrash;
+
+  formatGroceryItemAmount = formatGroceryItemAmount;
 }

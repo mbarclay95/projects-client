@@ -1,6 +1,7 @@
 import { createRole, Role } from './role.model';
 import { createUserConfig, UserConfig } from './user-config.model';
 import { Roles } from '../../auth/permissions';
+import { UserGroupScope } from '../../shared/models/user-group.model';
 
 export interface User {
   id: number;
@@ -12,7 +13,7 @@ export interface User {
   roles: Role[];
   clientPermissions: string[];
   userConfig: UserConfig;
-  taskGroupId: number | null;
+  groupIds: Record<UserGroupScope, number | null>;
 }
 
 export function createUser(params: Partial<User>) {
@@ -24,7 +25,7 @@ export function createUser(params: Partial<User>) {
     roles: params.roles?.map((role) => createRole(role)) ?? [],
     clientPermissions: params.clientPermissions ?? [],
     userConfig: createUserConfig(params.userConfig ?? {}),
-    taskGroupId: params.taskGroupId ?? null,
+    groupIds: params.groupIds ?? { tasks: null, grocery: null },
   } as User;
 }
 

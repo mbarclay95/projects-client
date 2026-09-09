@@ -5,6 +5,7 @@ import { GroceryItemsSignalStore } from '../../services/grocery-items-signal-sto
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { GroceryItemsFiltersComponent } from '../../components/grocery-items-filters/grocery-items-filters.component';
 import { GroceryItemsTableComponent } from '../../components/grocery-items-table/grocery-items-table.component';
+import { GroceryItemsTableMobileComponent } from '../../components/grocery-items-table-mobile/grocery-items-table-mobile.component';
 import { CreateEditGroceryItemModalComponent } from '../../components/create-edit-grocery-item-modal/create-edit-grocery-item-modal.component';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -17,6 +18,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     PageHeaderComponent,
     GroceryItemsFiltersComponent,
     GroceryItemsTableComponent,
+    GroceryItemsTableMobileComponent,
     CreateEditGroceryItemModalComponent,
     NzEmptyComponent,
     NzModalModule,

@@ -11,12 +11,20 @@
 } @else {
   <app-grocery-items-filters [ui]="groceryItemsStore.ui()"></app-grocery-items-filters>
 
-  <app-grocery-items-table
-    [items]="groceryItemsStore.filteredItems()"
-    (editItem)="groceryItemsStore.editEntity($event)"
-    (deleteItem)="groceryItemsStore.remove({ id: $event })"
-  >
-  </app-grocery-items-table>
+  @if (isMobile) {
+    <app-grocery-items-table-mobile
+      [items]="groceryItemsStore.filteredItems()"
+      (editItem)="groceryItemsStore.editEntity($event)"
+      (deleteItem)="groceryItemsStore.remove({ id: $event })"
+    ></app-grocery-items-table-mobile>
+  } @else {
+    <app-grocery-items-table
+      [items]="groceryItemsStore.filteredItems()"
+      (editItem)="groceryItemsStore.editEntity($event)"
+      (deleteItem)="groceryItemsStore.remove({ id: $event })"
+    >
+    </app-grocery-items-table>
+  }
 
   <app-create-edit-grocery-item-modal [openModal]="groceryItemsStore.createEditEntity()"></app-create-edit-grocery-item-modal>
 }

@@ -1,5 +1,9 @@
 @if (!isMobile) {
-  <app-page-header title="Grocery"></app-page-header>
+  <app-page-header
+    title="Grocery"
+    [buttonText]="authStore.auth()?.groupIds?.grocery === null ? undefined : 'Create Item'"
+    (createButtonClicked)="createItem()"
+  ></app-page-header>
 }
 
 @if (authStore.auth()?.groupIds?.grocery === null) {
@@ -7,6 +11,12 @@
 } @else {
   <app-grocery-items-filters [ui]="groceryItemsStore.ui()"></app-grocery-items-filters>
 
-  <app-grocery-items-table [items]="groceryItemsStore.filteredItems()" (editItem)="groceryItemsStore.editEntity($event)">
+  <app-grocery-items-table
+    [items]="groceryItemsStore.filteredItems()"
+    (editItem)="groceryItemsStore.editEntity($event)"
+    (deleteItem)="groceryItemsStore.remove({ id: $event })"
+  >
   </app-grocery-items-table>
+
+  <app-create-edit-grocery-item-modal [openModal]="groceryItemsStore.createEditEntity()"></app-create-edit-grocery-item-modal>
 }

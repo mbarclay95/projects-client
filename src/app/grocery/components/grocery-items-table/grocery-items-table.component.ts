@@ -7,10 +7,11 @@ import {
   NzThMeasureDirective,
   NzTbodyComponent,
 } from 'ng-zorro-antd/table';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { GroceryItem } from '../../models/grocery-item.model';
 
 @Component({
@@ -27,6 +28,7 @@ import { GroceryItem } from '../../models/grocery-item.model';
     FaIconComponent,
     NzTagComponent,
     NzButtonComponent,
+    NzPopconfirmDirective,
   ],
 })
 export class GroceryItemsTableComponent {
@@ -35,6 +37,8 @@ export class GroceryItemsTableComponent {
   items = input.required<GroceryItem[]>();
 
   editItem = output<number>();
+  deleteItem = output<number>();
 
   edit = faEdit;
+  trash = faTrash;
 }

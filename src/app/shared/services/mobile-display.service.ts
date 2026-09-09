@@ -12,6 +12,7 @@ import { RolesSignalStore } from '../../users/services/roles-signal-store';
 import { GoalsSignalStore } from '../../goals/services/goals-signal-store';
 import { IncompleteEntriesSignalStore } from '../../money/services/incomplete-entries-signal-store';
 import { DraftsSignalStore } from '../../drafts-admin/services/drafts-signal-store';
+import { GroceryItemsSignalStore } from '../../grocery/services/grocery-items-signal-store';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +47,7 @@ export class MobileDisplayService {
   readonly goalsStore = inject(GoalsSignalStore);
   readonly incompleteEntriesStore = inject(IncompleteEntriesSignalStore);
   readonly draftsStore = inject(DraftsSignalStore);
+  readonly groceryItemsStore = inject(GroceryItemsSignalStore);
 
   constructor() {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
@@ -100,6 +102,9 @@ export class MobileDisplayService {
       case 'drafts':
         this.draftsStore.createEntity();
         break;
+      case 'grocery':
+        this.groceryItemsStore.createEntity();
+        break;
       default:
         this.clickedButtonSubject.next();
     }
@@ -115,5 +120,6 @@ export type CreateButtonAction =
   | 'user-groups'
   | 'users'
   | 'transactions'
-  | 'drafts';
+  | 'drafts'
+  | 'grocery';
 export type MobileFooterButtons = 'tasks';

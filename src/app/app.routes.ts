@@ -132,7 +132,7 @@ export const APP_ROUTES: TypedRoute[] = [
       {
         path: 'grocery',
         component: GroceryLayoutComponent,
-        data: { permission: Permissions.GROCERY_PAGE, headerTitle: 'Grocery' },
+        data: { permission: Permissions.GROCERY_PAGE, headerTitle: 'Grocery', createButtonAction: 'grocery' },
         loadChildren: () => import('./grocery/grocery.routes').then((m) => m.GROCERY_ROUTES),
       },
     ],

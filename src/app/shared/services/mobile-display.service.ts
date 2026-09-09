@@ -4,7 +4,7 @@ import { EventsSignalStore } from '../../events/services/events-signal-store';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { UserGroupsSignalStore } from '../services/user-groups-signal-store';
 import { TasksSignalStore } from '../../tasks/services/tasks-signal-store';
-import { defaultTaskButtons, FooterButton } from '../models/footer-button.model';
+import { defaultGroceryButtons, defaultTaskButtons, FooterButton } from '../models/footer-button.model';
 import { TypedData } from '../../app.routes';
 import { UsersSignalStore } from '../../users/services/users-signal-store';
 import { createNewUserWithDefaultRole } from '../../users/models/user.model';
@@ -13,6 +13,7 @@ import { GoalsSignalStore } from '../../goals/services/goals-signal-store';
 import { IncompleteEntriesSignalStore } from '../../money/services/incomplete-entries-signal-store';
 import { DraftsSignalStore } from '../../drafts-admin/services/drafts-signal-store';
 import { GroceryItemsSignalStore } from '../../grocery/services/grocery-items-signal-store';
+import { GroceryListItemsSignalStore } from '../../grocery/services/grocery-list-items-signal-store';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,8 @@ export class MobileDisplayService {
     switch (this._footerButtons()) {
       case 'tasks':
         return defaultTaskButtons;
+      case 'grocery':
+        return defaultGroceryButtons;
       default:
         return [];
     }
@@ -48,6 +51,7 @@ export class MobileDisplayService {
   readonly incompleteEntriesStore = inject(IncompleteEntriesSignalStore);
   readonly draftsStore = inject(DraftsSignalStore);
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
+  readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);
 
   constructor() {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
@@ -105,6 +109,9 @@ export class MobileDisplayService {
       case 'grocery':
         this.groceryItemsStore.createEntity();
         break;
+      case 'grocery-list':
+        this.groceryListItemsStore.openPicker();
+        break;
       default:
         this.clickedButtonSubject.next();
     }
@@ -121,5 +128,6 @@ export type CreateButtonAction =
   | 'users'
   | 'transactions'
   | 'drafts'
-  | 'grocery';
-export type MobileFooterButtons = 'tasks';
+  | 'grocery'
+  | 'grocery-list';
+export type MobileFooterButtons = 'tasks' | 'grocery';

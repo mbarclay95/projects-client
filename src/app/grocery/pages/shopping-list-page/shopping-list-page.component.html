@@ -1,0 +1,22 @@
+@if (authStore.auth()?.groupIds?.grocery === null) {
+  <app-no-grocery-group></app-no-grocery-group>
+} @else {
+  <div class="w-100 grocery-page-container p-2">
+    @if (isMobile) {
+      <app-shopping-list-table-mobile
+        [entries]="groceryListItemsStore.entities()"
+        (markBought)="groceryListItemsStore.markBought($event)"
+        (editEntry)="groceryListItemsStore.editEntity($event)"
+      ></app-shopping-list-table-mobile>
+    } @else {
+      <app-shopping-list-table
+        [entries]="groceryListItemsStore.entities()"
+        (markBought)="groceryListItemsStore.markBought($event)"
+        (editEntry)="groceryListItemsStore.editEntity($event)"
+      ></app-shopping-list-table>
+    }
+  </div>
+
+  <app-add-items-picker-modal [openModal]="groceryListItemsStore.pickerOpen()"></app-add-items-picker-modal>
+  <app-edit-grocery-list-item-modal [openModal]="groceryListItemsStore.createEditEntity()"></app-edit-grocery-list-item-modal>
+}

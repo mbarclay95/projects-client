@@ -1,13 +1,5 @@
-@if (!isMobile) {
-  <app-page-header
-    title="Groceries"
-    [buttonText]="authStore.auth()?.groupIds?.grocery === null ? undefined : 'Create Item'"
-    (createButtonClicked)="createItem()"
-  ></app-page-header>
-}
-
 @if (authStore.auth()?.groupIds?.grocery === null) {
-  <nz-empty nzNotFoundContent="You're not in a grocery group yet. Ask an admin to add you."></nz-empty>
+  <app-no-grocery-group></app-no-grocery-group>
 } @else {
   <app-grocery-items-filters [ui]="groceryItemsStore.ui()"></app-grocery-items-filters>
 
@@ -16,13 +8,13 @@
       <app-grocery-items-table-mobile
         [items]="groceryItemsStore.filteredItems()"
         (editItem)="groceryItemsStore.editEntity($event)"
-        (deleteItem)="groceryItemsStore.remove({ id: $event })"
+        (deleteItem)="deleteItem($event)"
       ></app-grocery-items-table-mobile>
     } @else {
       <app-grocery-items-table
         [items]="groceryItemsStore.filteredItems()"
         (editItem)="groceryItemsStore.editEntity($event)"
-        (deleteItem)="groceryItemsStore.remove({ id: $event })"
+        (deleteItem)="deleteItem($event)"
       >
       </app-grocery-items-table>
     }

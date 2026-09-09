@@ -1,0 +1,32 @@
+<nz-table #shoppingListTableTag [nzData]="entries()" nzSize="default" [nzFrontPagination]="false">
+  <thead>
+    <tr>
+      <th nzWidth="50px"></th>
+      <th>Item</th>
+      <th>Tags</th>
+      <th>Amount</th>
+      <th>Added By</th>
+      <th nzWidth="60px"></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (entry of shoppingListTable?.data; track entry.id) {
+      <tr>
+        <td><label nz-checkbox [ngModel]="entry.bought" (ngModelChange)="markBought.emit(entry)"></label></td>
+        <td>{{ entry.groceryItem.name }}</td>
+        <td>
+          @for (tag of entry.groceryItem.tags; track tag) {
+            <nz-tag>{{ tag }}</nz-tag>
+          }
+        </td>
+        <td>{{ formatGroceryListItemAmount(entry) }}</td>
+        <td>{{ entry.addedBy?.name }}</td>
+        <td>
+          <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editEntry.emit(entry.id)">
+            <fa-icon [icon]="edit" class="text-primary"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</nz-table>

@@ -1,0 +1,39 @@
+<nz-table #groceryItemsTableTag [nzData]="items()" nzSize="default" [nzFrontPagination]="false">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Tags</th>
+      <th>Amount</th>
+      <th nzWidth="100px"></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of groceryItemsTable?.data; track item.id) {
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>
+          @for (tag of item.tags; track tag) {
+            <nz-tag>{{ tag }}</nz-tag>
+          }
+        </td>
+        <td>{{ formatGroceryItemAmount(item) }}</td>
+        <td>
+          <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editItem.emit(item.id)">
+            <fa-icon [icon]="edit" class="text-primary"></fa-icon>
+          </button>
+
+          <button
+            nz-button
+            class="ant-btn-icon-only"
+            nzType="text"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure?"
+            (nzOnConfirm)="deleteItem.emit(item.id)"
+          >
+            <fa-icon [icon]="trash" class="text-danger"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</nz-table>

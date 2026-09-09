@@ -3,6 +3,7 @@ import { Permissions } from '../../auth/permissions';
 import {
   faBullseye,
   faCalendarDays,
+  faCartShopping,
   faChessKnight,
   faDatabase,
   faFolderOpen,
@@ -36,7 +37,8 @@ export type AppTitle =
   | 'Logging'
   | 'Users'
   | 'My Profile'
-  | 'Goals';
+  | 'Goals'
+  | 'Groceries';
 
 export const routes = (isMobile: boolean): Route[] => [
   {
@@ -84,6 +86,13 @@ export const routes = (isMobile: boolean): Route[] => [
     queryParams: {},
   },
   { icon: faCalendarDays, url: 'app/events', permission: Permissions.EVENTS_PAGE, title: 'Events', queryParams: {} },
+  {
+    icon: faCartShopping,
+    url: 'app/grocery',
+    permission: Permissions.GROCERY_PAGE,
+    title: 'Groceries',
+    queryParams: {},
+  },
   { icon: faCalendarDays, url: 'app/drafts', permission: Permissions.DRAFTS_PAGE, title: 'Drafts', queryParams: {} },
   { icon: faDatabase, url: 'app/logging', permission: Permissions.LOGGING_PAGE, title: 'Logging', queryParams: {} },
   { icon: faUsers, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users', queryParams: {} },

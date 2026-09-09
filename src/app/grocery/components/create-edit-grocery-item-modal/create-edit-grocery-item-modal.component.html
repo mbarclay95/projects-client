@@ -1,0 +1,91 @@
+<nz-modal
+  [nzVisible]="isVisible()"
+  [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Item'"
+  nzWidth="500px"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="groceryItemsStore.clearCreateEditEntity()"
+>
+  <ng-container *nzModalContent>
+    @if (model) {
+      <div class="w-100 mb-4">
+        <div class="mb-2">Name: <span class="text-danger">*</span></div>
+
+        <input nz-input [(ngModel)]="model.name" class="w-100" />
+      </div>
+
+      <div class="w-100 mb-4">
+        <div class="mb-2">Notes:</div>
+
+        <textarea nz-input [(ngModel)]="model.notes" class="w-100"></textarea>
+      </div>
+
+      <div class="w-100 mb-4">
+        <div class="mb-2">Tags:</div>
+
+        <nz-select class="w-100" nzMode="tags" [(ngModel)]="model.tags">
+          @for (tag of tagsStore.groceryTags(); track $index) {
+            <nz-option [nzLabel]="tag" [nzValue]="tag"></nz-option>
+          }
+        </nz-select>
+      </div>
+
+      <div class="w-100 mb-4">
+        <div class="mb-2">Unit:</div>
+
+        <nz-select class="w-100" [ngModel]="model.unit" (ngModelChange)="onUnitChange($event)">
+          @for (unit of units; track unit) {
+            <nz-option [nzLabel]="unitLabels[unit]" [nzValue]="unit"></nz-option>
+          }
+        </nz-select>
+      </div>
+
+      @if (model.unit !== groceryItemUnit.none) {
+        <div class="w-100 mb-4">
+          <div class="mb-2">Default Quantity:</div>
+
+          <nz-input-number class="w-100" [(ngModel)]="model.defaultQuantity" [nzMin]="0"></nz-input-number>
+        </div>
+      }
+    }
+  </ng-container>
+
+  <div *nzModalFooter class="d-flex justify-content-between">
+    <div>
+      @if (model?.id !== 0) {
+        <button
+          nz-button
+          nzType="primary"
+          nzDanger
+          nz-popconfirm
+          (nzOnConfirm)="deleteItem()"
+          nzPopconfirmTitle="Are you sure?"
+          [nzLoading]="deleting"
+          [disabled]="deleting || groceryItemsStore.loadingOne()"
+        >
+          Delete
+        </button>
+      }
+    </div>
+
+    <div>
+      <button
+        nz-button
+        nzType="default"
+        (click)="groceryItemsStore.clearCreateEditEntity()"
+        [disabled]="groceryItemsStore.loadingOne() || deleting"
+      >
+        Cancel
+      </button>
+
+      <button
+        nz-button
+        nzType="primary"
+        (click)="saveItem()"
+        [nzLoading]="groceryItemsStore.loadingOne()"
+        [disabled]="groceryItemsStore.loadingOne() || deleting"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</nz-modal>

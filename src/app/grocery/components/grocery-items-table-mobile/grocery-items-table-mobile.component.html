@@ -1,0 +1,42 @@
+<div class="w-100 grocery-item-border">
+  @for (item of items(); track item.id) {
+    <div class="grocery-item-box" (click)="editItem.emit(item.id)">
+      <div class="first-row">
+        <div class="title">{{ item.name }}</div>
+        @if (formatGroceryItemAmount(item)) {
+          <div class="amount">{{ formatGroceryItemAmount(item) }}</div>
+        }
+      </div>
+
+      @if (item.tags.length > 0) {
+        <div class="second-row">
+          @for (tag of item.tags; track tag) {
+            <nz-tag>{{ tag }}</nz-tag>
+          }
+        </div>
+      }
+
+      <div class="third-row">
+        <div class="d-flex flex-column align-items-center" (click)="$event.stopPropagation(); editItem.emit(item.id)">
+          <fa-icon class="text-primary" [icon]="edit"></fa-icon>
+          Edit
+        </div>
+
+        <div
+          class="d-flex flex-column align-items-center"
+          nz-popconfirm
+          nzPopconfirmTitle="Are you sure?"
+          (click)="$event.stopPropagation()"
+          (nzOnConfirm)="deleteItem.emit(item.id)"
+        >
+          <fa-icon class="text-danger" [icon]="trash"></fa-icon>
+          Delete
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (items().length === 0) {
+    <nz-empty class="my-4" nzNotFoundContent="No Items"></nz-empty>
+  }
+</div>

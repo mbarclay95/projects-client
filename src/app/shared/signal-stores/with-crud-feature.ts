@@ -188,7 +188,14 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
             }),
             catchError((error) => {
               console.log(error);
+              const message = error.error.message;
+              if (message) {
+                nzMessageService.error(message);
+              } else {
+                nzMessageService.error('There was an error updating the entity.');
+              }
 
+              setLoadingOne();
               return of(undefined);
             }),
           );

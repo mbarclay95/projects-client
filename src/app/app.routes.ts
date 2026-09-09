@@ -19,6 +19,7 @@ import { FileExplorerLayoutComponent } from './file-explorer/file-explorer-layou
 import { MoneyLayoutComponent } from './money/money-layout/money-layout.component';
 import { LoggingLayoutComponent } from './logging/logging-layout/logging-layout.component';
 import { DraftsLayoutComponent } from './drafts-admin/drafts-layout/drafts-layout.component';
+import { GroceryLayoutComponent } from './grocery/grocery-layout/grocery-layout.component';
 
 export interface TypedData extends Data {
   headerTitle?: string;
@@ -127,6 +128,12 @@ export const APP_ROUTES: TypedRoute[] = [
         component: DraftsLayoutComponent,
         data: { permission: Permissions.DRAFTS_PAGE, headerTitle: 'Drafts', createButtonAction: 'drafts' },
         loadChildren: () => import('./drafts-admin/drafts.routes').then((m) => m.DRAFTS_ROUTES),
+      },
+      {
+        path: 'grocery',
+        component: GroceryLayoutComponent,
+        data: { permission: Permissions.GROCERY_PAGE, headerTitle: 'Groceries', createButtonAction: 'grocery' },
+        loadChildren: () => import('./grocery/grocery.routes').then((m) => m.GROCERY_ROUTES),
       },
     ],
   },

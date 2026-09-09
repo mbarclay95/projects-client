@@ -5,14 +5,14 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-export type TagScope = 'tasks';
+export type TagScope = 'tasks' | 'grocery';
 
 interface TagsSignalStoreState {
   tagsByScope: Record<TagScope, string[]>;
 }
 
 const initialState: TagsSignalStoreState = {
-  tagsByScope: { tasks: [] },
+  tagsByScope: { tasks: [], grocery: [] },
 };
 
 export const TagsSignalStore = signalStore(
@@ -36,5 +36,6 @@ export const TagsSignalStore = signalStore(
   }),
   withComputed(({ tagsByScope }) => ({
     taskTags: computed(() => tagsByScope().tasks),
+    groceryTags: computed(() => tagsByScope().grocery),
   })),
 );

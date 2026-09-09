@@ -1,0 +1,32 @@
+@if (!isMobile) {
+  <app-page-header
+    title="Groceries"
+    [buttonText]="authStore.auth()?.groupIds?.grocery === null ? undefined : 'Create Item'"
+    (createButtonClicked)="createItem()"
+  ></app-page-header>
+}
+
+@if (authStore.auth()?.groupIds?.grocery === null) {
+  <nz-empty nzNotFoundContent="You're not in a grocery group yet. Ask an admin to add you."></nz-empty>
+} @else {
+  <app-grocery-items-filters [ui]="groceryItemsStore.ui()"></app-grocery-items-filters>
+
+  <div class="w-100 grocery-page-container p-2">
+    @if (isMobile) {
+      <app-grocery-items-table-mobile
+        [items]="groceryItemsStore.filteredItems()"
+        (editItem)="groceryItemsStore.editEntity($event)"
+        (deleteItem)="groceryItemsStore.remove({ id: $event })"
+      ></app-grocery-items-table-mobile>
+    } @else {
+      <app-grocery-items-table
+        [items]="groceryItemsStore.filteredItems()"
+        (editItem)="groceryItemsStore.editEntity($event)"
+        (deleteItem)="groceryItemsStore.remove({ id: $event })"
+      >
+      </app-grocery-items-table>
+    }
+  </div>
+
+  <app-create-edit-grocery-item-modal [openModal]="groceryItemsStore.createEditEntity()"></app-create-edit-grocery-item-modal>
+}

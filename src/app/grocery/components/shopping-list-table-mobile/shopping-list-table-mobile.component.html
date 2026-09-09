@@ -16,15 +16,15 @@
             <span class="amount">({{ formatGroceryListItemAmount(entry) }})</span>
           }
         </div>
-      </div>
 
-      @if (entry.groceryItem.tags.length > 0) {
-        <div class="second-row">
-          @for (tag of entry.groceryItem.tags; track tag) {
-            <nz-tag>{{ tag }}</nz-tag>
-          }
-        </div>
-      }
+        @if (entry.groceryItem.tags.length > 0) {
+          <div class="tags">
+            @for (tag of entry.groceryItem.tags; track tag) {
+              <nz-tag>{{ tag }}</nz-tag>
+            }
+          </div>
+        }
+      </div>
     </div>
   }
 

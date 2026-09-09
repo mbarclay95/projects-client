@@ -83,6 +83,7 @@ satisfy, and the failure only appears on a clean install, not an incremental one
 | `user-groups`   | `/app/user-groups`   | Admin user-groups table with a Scope column; `CreateEditUserGroupModalComponent`, shared with Tasks for `My Family`, driven by `USER_GROUP_SCOPE_LABELS`                                                                                                                                        |
 | `events`        | `/app/events`        | Events + participants                                                                                                                                                                                                                                                                           |
 | `goals`         | `/app/goals`         | Goal tracking                                                                                                                                                                                                                                                                                   |
+| `grocery`       | `/app/grocery`       | The master list — `GroceryItemsSignalStore`; filtering (search + tags) runs client-side over the loaded list through `filterGroceryItems`; an empty state for a user with no grocery group                                                                                                      |
 | `dashboard`     | `/app/dashboard`     | Main dashboard                                                                                                                                                                                                                                                                                  |
 | `backups`       | `/app/backups`       | Backups, targets, schedules                                                                                                                                                                                                                                                                     |
 | `file-explorer` | `/app/file-explorer` | File/directory browser                                                                                                                                                                                                                                                                          |
@@ -106,6 +107,15 @@ regardless of scope, so a non-tasks group's payload can omit them and the
 `UserGroup` interface's fields stay required. The one place that default
 would otherwise show through is the admin table's Task Strategy cell, which is
 gated on `group.scope === 'tasks'` for that reason.
+
+`TagsSignalStore` (`shared/services/tags-signal-store.ts`) now serves two
+scopes — `TagScope` is `'tasks' | 'grocery'`, `tagsByScope` carries a list per
+scope, and `taskTags` and `groceryTags` are the computed each feature reads.
+
+`withCrudEntities`'s `update()` surfaces a failed save the way `create()`
+always has — an `error.error.message` toast plus a `setLoadingOne()` reset —
+rather than only logging it, so a rejected edit (a duplicate grocery item name,
+for instance) leaves the modal's buttons usable instead of stuck disabled.
 
 ### Testing
 

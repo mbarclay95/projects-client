@@ -16,10 +16,6 @@
         </div>
       }
 
-      @if (item.notes) {
-        <div class="notes-row">{{ item.notes }}</div>
-      }
-
       <div class="third-row">
         <div class="d-flex flex-column align-items-center" (click)="$event.stopPropagation(); editItem.emit(item.id)">
           <fa-icon class="text-primary" [icon]="edit"></fa-icon>

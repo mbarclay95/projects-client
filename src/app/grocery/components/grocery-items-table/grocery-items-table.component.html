@@ -3,7 +3,6 @@
     <tr>
       <th>Name</th>
       <th>Tags</th>
-      <th>Notes</th>
       <th>Amount</th>
       <th nzWidth="100px"></th>
     </tr>
@@ -17,7 +16,6 @@
             <nz-tag>{{ tag }}</nz-tag>
           }
         </td>
-        <td>{{ item.notes }}</td>
         <td>{{ formatGroceryItemAmount(item) }}</td>
         <td>
           <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editItem.emit(item.id)">

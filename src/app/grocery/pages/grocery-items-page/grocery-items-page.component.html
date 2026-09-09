@@ -1,0 +1,12 @@
+@if (!isMobile) {
+  <app-page-header title="Grocery"></app-page-header>
+}
+
+@if (authStore.auth()?.groupIds?.grocery === null) {
+  <nz-empty nzNotFoundContent="You're not in a grocery group yet. Ask an admin to add you."></nz-empty>
+} @else {
+  <app-grocery-items-filters [ui]="groceryItemsStore.ui()"></app-grocery-items-filters>
+
+  <app-grocery-items-table [items]="groceryItemsStore.filteredItems()" (editItem)="groceryItemsStore.editEntity($event)">
+  </app-grocery-items-table>
+}

@@ -89,6 +89,9 @@ export class LoginService {
       case Roles.MONEY_APP_ROLE:
         await this.router.navigate(['/app/money']);
         return;
+      case Roles.GROCERY_ROLE:
+        await this.router.navigate(['/app/grocery']);
+        return;
     }
     throw new Error('Un-configured role set to homepage');
   }

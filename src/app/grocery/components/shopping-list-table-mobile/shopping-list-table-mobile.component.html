@@ -1,0 +1,28 @@
+<div class="w-100 grocery-item-border">
+  @for (entry of entries(); track entry.id) {
+    <div class="grocery-item-box">
+      <div class="first-row">
+        <div class="title">{{ entry.groceryItem.name }}</div>
+        @if (formatGroceryListItemAmount(entry)) {
+          <div class="amount">{{ formatGroceryListItemAmount(entry) }}</div>
+        }
+      </div>
+
+      @if (entry.groceryItem.tags.length > 0) {
+        <div class="second-row">
+          @for (tag of entry.groceryItem.tags; track tag) {
+            <nz-tag>{{ tag }}</nz-tag>
+          }
+        </div>
+      }
+
+      @if (entry.addedBy) {
+        <div class="added-by">Added by {{ entry.addedBy.name }}</div>
+      }
+    </div>
+  }
+
+  @if (entries().length === 0) {
+    <nz-empty class="my-4" nzNotFoundContent="Nothing on the list"></nz-empty>
+  }
+</div>

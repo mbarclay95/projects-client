@@ -1,0 +1,11 @@
+@if (authStore.auth()?.groupIds?.grocery === null) {
+  <app-no-grocery-group></app-no-grocery-group>
+} @else {
+  <div class="w-100 grocery-page-container p-2">
+    @if (isMobile) {
+      <app-shopping-list-table-mobile [entries]="groceryListItemsStore.entities()"></app-shopping-list-table-mobile>
+    } @else {
+      <app-shopping-list-table [entries]="groceryListItemsStore.entities()"></app-shopping-list-table>
+    }
+  </div>
+}

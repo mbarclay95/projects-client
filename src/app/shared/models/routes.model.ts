@@ -88,10 +88,10 @@ export const routes = (isMobile: boolean): Route[] => [
   { icon: faCalendarDays, url: 'app/events', permission: Permissions.EVENTS_PAGE, title: 'Events', queryParams: {} },
   {
     icon: faCartShopping,
-    url: 'app/grocery',
+    url: `app/grocery${isMobile ? '/shopping-list' : ''}`,
     permission: Permissions.GROCERY_PAGE,
     title: 'Groceries',
-    queryParams: {},
+    queryParams: isMobile ? {} : { tab: 'shopping-list' },
   },
   { icon: faCalendarDays, url: 'app/drafts', permission: Permissions.DRAFTS_PAGE, title: 'Drafts', queryParams: {} },
   { icon: faDatabase, url: 'app/logging', permission: Permissions.LOGGING_PAGE, title: 'Logging', queryParams: {} },

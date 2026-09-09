@@ -1,0 +1,24 @@
+<nz-table #shoppingListTableTag [nzData]="entries()" nzSize="default" [nzFrontPagination]="false">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Tags</th>
+      <th>Amount</th>
+      <th>Added By</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (entry of shoppingListTable?.data; track entry.id) {
+      <tr>
+        <td>{{ entry.groceryItem.name }}</td>
+        <td>
+          @for (tag of entry.groceryItem.tags; track tag) {
+            <nz-tag>{{ tag }}</nz-tag>
+          }
+        </td>
+        <td>{{ formatGroceryListItemAmount(entry) }}</td>
+        <td>{{ entry.addedBy?.name }}</td>
+      </tr>
+    }
+  </tbody>
+</nz-table>

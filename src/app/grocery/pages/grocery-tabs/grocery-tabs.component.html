@@ -1,0 +1,16 @@
+<nz-tabs [nzTabBarExtraContent]="createButton" nzSize="large" nzLinkRouter>
+  <nz-tab (nzSelect)="selectedTab = 'Shopping List'">
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'shopping-list' }" queryParamsHandling="merge"> Shopping List </a>
+    <app-shopping-list-page></app-shopping-list-page>
+  </nz-tab>
+  <nz-tab (nzSelect)="selectedTab = 'Master List'">
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'master-list' }" queryParamsHandling="merge"> Master List </a>
+    <app-grocery-items-page></app-grocery-items-page>
+  </nz-tab>
+</nz-tabs>
+
+<ng-template #createButton>
+  @if (selectedTab === "Master List") {
+    <button nz-button nzType="primary" (click)="createItem()">Create Item</button>
+  }
+</ng-template>

@@ -7,6 +7,7 @@ import { GroceryItemsFiltersComponent } from '../../components/grocery-items-fil
 import { GroceryItemsTableComponent } from '../../components/grocery-items-table/grocery-items-table.component';
 import { CreateEditGroceryItemModalComponent } from '../../components/create-edit-grocery-item-modal/create-edit-grocery-item-modal.component';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-grocery-items-page',
@@ -18,6 +19,7 @@ import { NzEmptyComponent } from 'ng-zorro-antd/empty';
     GroceryItemsTableComponent,
     CreateEditGroceryItemModalComponent,
     NzEmptyComponent,
+    NzModalModule,
   ],
 })
 export class GroceryItemsPageComponent {

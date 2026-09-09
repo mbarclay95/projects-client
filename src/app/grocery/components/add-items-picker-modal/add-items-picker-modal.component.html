@@ -16,13 +16,6 @@
         <div class="picker-row">
           <div class="picker-info">
             <div class="title">{{ item.name }}</div>
-            @if (item.tags.length > 0) {
-              <div class="tags">
-                @for (tag of item.tags; track tag) {
-                  <nz-tag>{{ tag }}</nz-tag>
-                }
-              </div>
-            }
           </div>
 
           @if (item.unit !== groceryItemUnit.none) {

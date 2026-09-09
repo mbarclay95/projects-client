@@ -5,7 +5,6 @@ import { NzModalComponent, NzModalContentDirective, NzModalFooterDirective } fro
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
-import { NzTagComponent } from 'ng-zorro-antd/tag';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -26,7 +25,6 @@ import { filterGroceryItems, GroceryItem, GroceryItemUnit } from '../../models/g
     NzInputDirective,
     FormsModule,
     NzInputNumberComponent,
-    NzTagComponent,
     NzButtonComponent,
     FaIconComponent,
   ],

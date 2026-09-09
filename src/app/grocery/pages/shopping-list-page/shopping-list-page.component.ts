@@ -7,6 +7,7 @@ import { ShoppingListTableComponent } from '../../components/shopping-list-table
 import { ShoppingListTableMobileComponent } from '../../components/shopping-list-table-mobile/shopping-list-table-mobile.component';
 import { AddItemsPickerModalComponent } from '../../components/add-items-picker-modal/add-items-picker-modal.component';
 import { EditGroceryListItemModalComponent } from '../../components/edit-grocery-list-item-modal/edit-grocery-list-item-modal.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-shopping-list-page',
@@ -18,6 +19,7 @@ import { EditGroceryListItemModalComponent } from '../../components/edit-grocery
     ShoppingListTableMobileComponent,
     AddItemsPickerModalComponent,
     EditGroceryListItemModalComponent,
+    NzModalModule,
   ],
 })
 export class ShoppingListPageComponent {

@@ -19,7 +19,11 @@
         <td>{{ group.name }}</td>
         <td>{{ group.scope }}</td>
         <td>{{ group.members.length }}</td>
-        <td>{{ group.taskStrategy }}</td>
+        <td>
+          @if (group.scope === "tasks") {
+            {{ group.taskStrategy }}
+          }
+        </td>
       </tr>
     }
   </tbody>

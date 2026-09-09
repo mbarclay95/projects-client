@@ -15,7 +15,13 @@ export interface UserGroup {
 
 export type TaskStrategy = 'per task' | 'per task point';
 
-export type UserGroupScope = 'tasks';
+export type UserGroupScope = 'tasks' | 'grocery';
+
+export const USER_GROUP_SCOPES: UserGroupScope[] = ['tasks', 'grocery'];
+export const USER_GROUP_SCOPE_LABELS: Record<UserGroupScope, string> = {
+  tasks: 'Family',
+  grocery: 'Grocery Group',
+};
 
 export function createUserGroup(params: Partial<UserGroup>) {
   return {

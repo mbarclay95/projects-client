@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { UserGroup } from '../../../shared/models/user-group.model';
+import { USER_GROUP_SCOPE_LABELS, USER_GROUP_SCOPES, UserGroup } from '../../../shared/models/user-group.model';
 import { faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
 import { User } from '../../../users/models/user.model';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
@@ -33,15 +33,21 @@ import { UpdatingTaskPointColorsPipe } from '../../../tasks/pipes/updating-task-
   ],
 })
 export class CreateEditUserGroupModalComponent extends DefaultModalSignalComponent<UserGroup> {
-  @Input() showFamilyMembers = false;
+  @Input() showMembers = false;
   @Input() users: User[] = [];
 
   save = faSave;
   edit = faEdit;
   listOfPoints: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  scopes = USER_GROUP_SCOPES;
+  scopeLabels = USER_GROUP_SCOPE_LABELS;
 
   readonly familiesStore = inject(UserGroupsSignalStore);
   readonly nzMessageService = inject(NzMessageService);
+
+  get scopeLabel(): string {
+    return USER_GROUP_SCOPE_LABELS[this.model?.scope ?? 'tasks'];
+  }
 
   saveFamily() {
     if (!this.model) {
@@ -51,7 +57,7 @@ export class CreateEditUserGroupModalComponent extends DefaultModalSignalCompone
   }
 
   private familySaved(): void {
-    this.nzMessageService.success('Family Saved!');
+    this.nzMessageService.success(`${this.scopeLabel} Saved!`);
     this.familiesStore.clearCreateEditEntity();
   }
 

@@ -38,7 +38,7 @@ export type AppTitle =
   | 'Users'
   | 'My Profile'
   | 'Goals'
-  | 'Grocery';
+  | 'Groceries';
 
 export const routes = (isMobile: boolean): Route[] => [
   {
@@ -86,7 +86,13 @@ export const routes = (isMobile: boolean): Route[] => [
     queryParams: {},
   },
   { icon: faCalendarDays, url: 'app/events', permission: Permissions.EVENTS_PAGE, title: 'Events', queryParams: {} },
-  { icon: faCartShopping, url: 'app/grocery', permission: Permissions.GROCERY_PAGE, title: 'Grocery', queryParams: {} },
+  {
+    icon: faCartShopping,
+    url: 'app/grocery',
+    permission: Permissions.GROCERY_PAGE,
+    title: 'Groceries',
+    queryParams: {},
+  },
   { icon: faCalendarDays, url: 'app/drafts', permission: Permissions.DRAFTS_PAGE, title: 'Drafts', queryParams: {} },
   { icon: faDatabase, url: 'app/logging', permission: Permissions.LOGGING_PAGE, title: 'Logging', queryParams: {} },
   { icon: faUsers, url: 'app/users', permission: Permissions.USERS_PAGE, title: 'Users', queryParams: {} },

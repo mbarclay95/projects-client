@@ -1,6 +1,6 @@
 @if (!isMobile) {
   <app-page-header
-    title="Grocery"
+    title="Groceries"
     [buttonText]="authStore.auth()?.groupIds?.grocery === null ? undefined : 'Create Item'"
     (createButtonClicked)="createItem()"
   ></app-page-header>

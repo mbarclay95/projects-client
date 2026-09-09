@@ -30,7 +30,7 @@ export class TasksLayoutComponent {
         this.tasksStore.loadAll({});
       }
     });
-    const taskGroupId = this.authStore.auth()?.taskGroupId;
+    const taskGroupId = this.authStore.auth()?.groupIds.tasks;
     if (taskGroupId) {
       effect(() => {
         const queryString = this.taskUserConfigsStore.buildQueryString();

@@ -80,7 +80,7 @@ satisfy, and the failure only appears on a clean install, not an incremental one
 | `auth`          | `/app/auth`          | Login, password change                                                                                                                                                                                                                                                                          |
 | `users`         | `/app/users`         | User admin                                                                                                                                                                                                                                                                                      |
 | `tasks`         | `/app/tasks`         | `My Family`; `UserGroup` shared, `UserGroupsSignalStore` in `shared/services/user-groups-signal-store.ts`, `TagsSignalStore` shared and scoped — one list per `TagScope`, `taskTags` here; owns `TaskPointColorsService` and the task-point pipes, which the user-groups modal reaches back for |
-| `user-groups`   | `/app/user-groups`   | Admin user-groups table with a Scope column; `CreateEditUserGroupModalComponent`, shared with Tasks for `My Family`                                                                                                                                                                             |
+| `user-groups`   | `/app/user-groups`   | Admin user-groups table with a Scope column; `CreateEditUserGroupModalComponent`, shared with Tasks for `My Family`, driven by `USER_GROUP_SCOPE_LABELS`                                                                                                                                        |
 | `events`        | `/app/events`        | Events + participants                                                                                                                                                                                                                                                                           |
 | `goals`         | `/app/goals`         | Goal tracking                                                                                                                                                                                                                                                                                   |
 | `dashboard`     | `/app/dashboard`     | Main dashboard                                                                                                                                                                                                                                                                                  |
@@ -91,10 +91,21 @@ satisfy, and the failure only appears on a clean install, not an incremental one
 | `logging`       | `/app/logging`       | Event logs                                                                                                                                                                                                                                                                                      |
 | `event-signup`  | `/events`            | Public, no auth required                                                                                                                                                                                                                                                                        |
 
-Inside Tasks, the UI still says Family on purpose — the task owner radio, the
-`My Family` tab, and `CreateEditUserGroupModalComponent`'s own copy
-(`Create Family`, `Family Name:`, `Family Members:`) are unchanged. That copy
-becomes scope-driven in a later milestone, not this one.
+Inside Tasks, the UI still says Family on purpose — the task owner radio and
+the `My Family` tab are unchanged. `CreateEditUserGroupModalComponent`'s own
+copy (`Create Family`, `Family Name:`, `Family Members:`) is now driven by
+`USER_GROUP_SCOPE_LABELS` (`shared/models/user-group.model.ts`), a
+`UserGroupScope → string` map; the tasks scope's label is `Family`, so the My
+Family tab reads byte-for-byte the same as before while the admin
+`/app/user-groups` page's modal follows whichever scope is selected. The scope
+radio the admin page adds is create-only — scope is immutable — and rendered
+only when `model.id === 0`.
+
+`createUserGroup()` deliberately defaults all six task-shaped fields
+regardless of scope, so a non-tasks group's payload can omit them and the
+`UserGroup` interface's fields stay required. The one place that default
+would otherwise show through is the admin table's Task Strategy cell, which is
+gated on `group.scope === 'tasks'` for that reason.
 
 ### Testing
 

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { isMobile } from '../../../app.component';
 import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
 import { GroceryItemsSignalStore } from '../../services/grocery-items-signal-store';
+import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-signal-store';
 import { NoGroceryGroupComponent } from '../../components/no-grocery-group/no-grocery-group.component';
 import { GroceryItemsFiltersComponent } from '../../components/grocery-items-filters/grocery-items-filters.component';
 import { GroceryItemsTableComponent } from '../../components/grocery-items-table/grocery-items-table.component';
@@ -27,4 +28,9 @@ export class GroceryItemsPageComponent {
 
   readonly authStore = inject(AuthSignalStore);
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
+  readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);
+
+  deleteItem(id: number): void {
+    this.groceryItemsStore.remove({ id, onSuccess: () => this.groceryListItemsStore.loadAll({}) });
+  }
 }

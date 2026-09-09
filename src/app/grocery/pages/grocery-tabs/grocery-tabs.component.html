@@ -12,5 +12,7 @@
 <ng-template #createButton>
   @if (selectedTab === "Master List") {
     <button nz-button nzType="primary" (click)="createItem()">Create Item</button>
+  } @else {
+    <button nz-button nzType="primary" (click)="addItems()">Add Items</button>
   }
 </ng-template>

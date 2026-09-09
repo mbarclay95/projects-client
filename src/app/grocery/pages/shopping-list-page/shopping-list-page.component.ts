@@ -5,12 +5,20 @@ import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-s
 import { NoGroceryGroupComponent } from '../../components/no-grocery-group/no-grocery-group.component';
 import { ShoppingListTableComponent } from '../../components/shopping-list-table/shopping-list-table.component';
 import { ShoppingListTableMobileComponent } from '../../components/shopping-list-table-mobile/shopping-list-table-mobile.component';
+import { AddItemsPickerModalComponent } from '../../components/add-items-picker-modal/add-items-picker-modal.component';
+import { EditGroceryListItemModalComponent } from '../../components/edit-grocery-list-item-modal/edit-grocery-list-item-modal.component';
 
 @Component({
   selector: 'app-shopping-list-page',
   templateUrl: './shopping-list-page.component.html',
   styleUrls: ['./shopping-list-page.component.scss'],
-  imports: [NoGroceryGroupComponent, ShoppingListTableComponent, ShoppingListTableMobileComponent],
+  imports: [
+    NoGroceryGroupComponent,
+    ShoppingListTableComponent,
+    ShoppingListTableMobileComponent,
+    AddItemsPickerModalComponent,
+    EditGroceryListItemModalComponent,
+  ],
 })
 export class ShoppingListPageComponent {
   isMobile = isMobile;

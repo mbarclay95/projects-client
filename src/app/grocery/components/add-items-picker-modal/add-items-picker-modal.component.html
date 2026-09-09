@@ -1,0 +1,51 @@
+<nz-modal
+  [nzVisible]="isVisible()"
+  nzTitle="Add Items"
+  [nzWidth]="modalWidth"
+  [nzStyle]="modalStyle"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="groceryListItemsStore.closePicker()"
+>
+  <ng-container *nzModalContent>
+    <div class="filter-container">
+      <input nz-input placeholder="Search" [ngModel]="search()" (ngModelChange)="updateSearch($event)" class="filter-boxes" />
+
+      <nz-select nzMode="multiple" [ngModel]="tags()" (ngModelChange)="tags.set($event)" nzPlaceHolder="Tags" class="filter-boxes">
+        @for (tag of tagsStore.groceryTags(); track $index) {
+          <nz-option [nzLabel]="tag" [nzValue]="tag"></nz-option>
+        }
+      </nz-select>
+    </div>
+
+    <div class="picker-list">
+      @for (item of filteredItems(); track item.id) {
+        <div class="picker-row">
+          <div class="picker-info">
+            <div class="title">{{ item.name }}</div>
+            @if (item.tags.length > 0) {
+              <div class="tags">
+                @for (tag of item.tags; track tag) {
+                  <nz-tag>{{ tag }}</nz-tag>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="amount">{{ formatGroceryItemAmount(item) }}</div>
+
+          <button nz-button class="ant-btn-icon-only" nzType="text" (click)="toggle(item)">
+            @if (groceryListItemsStore.entryByGroceryItemId().has(item.id)) {
+              <fa-icon [icon]="added" class="text-success"></fa-icon>
+            } @else {
+              <fa-icon [icon]="plus" class="text-primary"></fa-icon>
+            }
+          </button>
+        </div>
+      }
+    </div>
+  </ng-container>
+
+  <div *nzModalFooter>
+    <button nz-button nzType="primary" (click)="groceryListItemsStore.closePicker()">Done</button>
+  </div>
+</nz-modal>

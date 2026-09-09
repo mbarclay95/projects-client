@@ -9,7 +9,11 @@ export const GROCERY_ROUTES: TypedRoute[] = [
     data: { footerButtons: 'grocery' },
     children: [
       { path: '', component: GroceryTabsComponent },
-      { path: 'shopping-list', data: { headerTitle: 'Shopping List' }, component: ShoppingListPageComponent },
+      {
+        path: 'shopping-list',
+        data: { headerTitle: 'Shopping List', createButtonAction: 'grocery-list' },
+        component: ShoppingListPageComponent,
+      },
       {
         path: 'master-list',
         data: { headerTitle: 'Master List', createButtonAction: 'grocery' },

@@ -3,6 +3,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { GROCERY_ITEM_UNIT_LABELS, GroceryItem, GroceryItemUnit } from '../../models/grocery-item.model';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { GroceryItemsSignalStore } from '../../services/grocery-items-signal-store';
+import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-signal-store';
 import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
 import { NzModalComponent, NzModalContentDirective, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzInputDirective } from 'ng-zorro-antd/input';
@@ -34,6 +35,7 @@ export class CreateEditGroceryItemModalComponent extends DefaultModalSignalCompo
   deleting = false;
 
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
+  readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);
   readonly tagsStore = inject(TagsSignalStore);
   readonly nzMessageService = inject(NzMessageService);
 
@@ -75,6 +77,7 @@ export class CreateEditGroceryItemModalComponent extends DefaultModalSignalCompo
         this.nzMessageService.success('Item Deleted!');
         this.deleting = false;
         this.groceryItemsStore.clearCreateEditEntity();
+        this.groceryListItemsStore.loadAll({});
       },
     });
   }

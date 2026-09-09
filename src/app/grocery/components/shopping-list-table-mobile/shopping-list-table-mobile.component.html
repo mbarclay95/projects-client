@@ -1,11 +1,20 @@
 <div class="w-100 grocery-item-border">
   @for (entry of entries(); track entry.id) {
-    <div class="grocery-item-box">
+    <div class="grocery-item-box" (click)="editEntry.emit(entry.id)">
       <div class="first-row">
         <div class="title">{{ entry.groceryItem.name }}</div>
-        @if (formatGroceryListItemAmount(entry)) {
-          <div class="amount">{{ formatGroceryListItemAmount(entry) }}</div>
-        }
+        <div class="d-flex align-items-center">
+          @if (formatGroceryListItemAmount(entry)) {
+            <div class="amount me-2">{{ formatGroceryListItemAmount(entry) }}</div>
+          }
+          <label
+            nz-checkbox
+            style="transform: scale(1.6)"
+            [ngModel]="entry.bought"
+            (ngModelChange)="markBought.emit(entry)"
+            (click)="$event.stopPropagation()"
+          ></label>
+        </div>
       </div>
 
       @if (entry.groceryItem.tags.length > 0) {

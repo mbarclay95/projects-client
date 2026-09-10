@@ -14,6 +14,7 @@ import { ShoppingListGroup } from '../../models/shopping-list-sort';
 })
 export class ShoppingListTableMobileComponent {
   groups = input.required<ShoppingListGroup[]>();
+  pendingIds = input.required<number[]>();
 
   markBought = output<GroceryListItem>();
   editEntry = output<number>();

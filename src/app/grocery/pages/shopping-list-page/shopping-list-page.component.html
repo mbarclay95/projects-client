@@ -18,12 +18,14 @@
     @if (isMobile) {
       <app-shopping-list-table-mobile
         [groups]="groups()"
+        [pendingIds]="groceryListItemsStore.pendingIds()"
         (markBought)="groceryListItemsStore.markBought($event)"
         (editEntry)="groceryListItemsStore.editEntity($event)"
       ></app-shopping-list-table-mobile>
     } @else {
       <app-shopping-list-table
         [groups]="groups()"
+        [pendingIds]="groceryListItemsStore.pendingIds()"
         (markBought)="groceryListItemsStore.markBought($event)"
         (editEntry)="groceryListItemsStore.editEntity($event)"
       ></app-shopping-list-table>

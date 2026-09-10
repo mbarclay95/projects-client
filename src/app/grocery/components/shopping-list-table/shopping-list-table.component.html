@@ -18,7 +18,14 @@
       }
       @for (entry of group.entries; track entry.id) {
         <tr>
-          <td><label nz-checkbox [ngModel]="entry.bought" (ngModelChange)="markBought.emit(entry)"></label></td>
+          <td>
+            <label
+              nz-checkbox
+              [ngModel]="entry.bought || pendingIds().includes(entry.id)"
+              [nzDisabled]="pendingIds().includes(entry.id)"
+              (ngModelChange)="markBought.emit(entry)"
+            ></label>
+          </td>
           <td>{{ entry.groceryItem.name }}</td>
           <td>
             @for (tag of entry.groceryItem.tags; track tag) {

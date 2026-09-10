@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { patchState, signalStoreFeature, withMethods, withState } from '@ngrx/signals';
 import { addEntity, removeEntity, setAllEntities, updateEntity, upsertEntity, withEntities } from '@ngrx/signals/entities';
-import { catchError, of, pipe, switchMap, tap } from 'rxjs';
+import { catchError, finalize, of, pipe, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { map } from 'rxjs/operators';
@@ -170,7 +170,7 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
         }),
       );
 
-      const update = rxMethod<{ entity: T; removeFromStore?: boolean; onSuccess?: (updated: T) => void }>(
+      const update = rxMethod<{ entity: T; removeFromStore?: boolean; onSuccess?: (updated: T) => void; onSettled?: () => void }>(
         switchMap((data) => {
           setLoadingOne(data.entity.id);
           return httpClient.put<T>(`${apiUrl}/${options.pluralEntityName}/${data.entity.id}`, data.entity).pipe(
@@ -197,6 +197,11 @@ export function withCrudEntities<T extends HasId>(options: CrudEntitiesHttpOptio
 
               setLoadingOne();
               return of(undefined);
+            }),
+            finalize(() => {
+              if (data.onSettled) {
+                data.onSettled();
+              }
             }),
           );
         }),

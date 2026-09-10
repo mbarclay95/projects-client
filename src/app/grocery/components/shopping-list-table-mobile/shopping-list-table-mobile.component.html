@@ -9,7 +9,8 @@
           <label
             nz-checkbox
             class="me-2"
-            [ngModel]="entry.bought"
+            [ngModel]="entry.bought || pendingIds().includes(entry.id)"
+            [nzDisabled]="pendingIds().includes(entry.id)"
             (ngModelChange)="markBought.emit(entry)"
             (click)="$event.stopPropagation()"
           ></label>

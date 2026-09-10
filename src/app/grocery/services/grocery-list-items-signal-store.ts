@@ -15,13 +15,20 @@ export const GroceryListItemsSignalStore = signalStore(
     createEntity: createGroceryListItem,
   }),
   withUi<ShoppingListUiState>({ storeId: null }),
-  withState({ pickerOpen: false }),
+  withState({ pickerOpen: false, pendingIds: [] as number[] }),
   withComputed(({ entities }) => ({
     entryByGroceryItemId: computed(() => new Map(entities().map((entry) => [entry.groceryItemId, entry]))),
   })),
   withMethods((store) => ({
     openPicker: () => patchState(store, { pickerOpen: true }),
     closePicker: () => patchState(store, { pickerOpen: false }),
-    markBought: (entry: GroceryListItem) => store.update({ entity: { ...entry, bought: true }, removeFromStore: true }),
+    markBought: (entry: GroceryListItem) => {
+      patchState(store, { pendingIds: [...store.pendingIds(), entry.id] });
+      store.update({
+        entity: { ...entry, bought: true },
+        removeFromStore: true,
+        onSettled: () => patchState(store, { pendingIds: store.pendingIds().filter((id) => id !== entry.id) }),
+      });
+    },
   })),
 );

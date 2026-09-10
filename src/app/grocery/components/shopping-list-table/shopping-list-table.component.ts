@@ -1,4 +1,4 @@
-import { Component, input, output, ViewChild } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import {
   NzTableComponent,
   NzTheadComponent,
@@ -14,6 +14,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { formatGroceryListItemAmount, GroceryListItem } from '../../models/grocery-list-item.model';
+import { ShoppingListGroup } from '../../models/shopping-list-sort';
 
 @Component({
   selector: 'app-shopping-list-table',
@@ -34,9 +35,7 @@ import { formatGroceryListItemAmount, GroceryListItem } from '../../models/groce
   ],
 })
 export class ShoppingListTableComponent {
-  @ViewChild('shoppingListTableTag', { static: true }) shoppingListTable: NzTableComponent<GroceryListItem> | undefined;
-
-  entries = input.required<GroceryListItem[]>();
+  groups = input.required<ShoppingListGroup[]>();
 
   markBought = output<GroceryListItem>();
   editEntry = output<number>();
@@ -44,4 +43,6 @@ export class ShoppingListTableComponent {
   edit = faEdit;
 
   formatGroceryListItemAmount = formatGroceryListItemAmount;
+
+  flatEntries = computed(() => this.groups().flatMap((group) => group.entries));
 }

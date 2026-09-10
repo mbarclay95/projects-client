@@ -4,6 +4,7 @@ import { NzEmptyComponent } from 'ng-zorro-antd/empty';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { FormsModule } from '@angular/forms';
 import { formatGroceryListItemAmount, GroceryListItem } from '../../models/grocery-list-item.model';
+import { ShoppingListGroup } from '../../models/shopping-list-sort';
 
 @Component({
   selector: 'app-shopping-list-table-mobile',
@@ -12,7 +13,7 @@ import { formatGroceryListItemAmount, GroceryListItem } from '../../models/groce
   imports: [NzTagComponent, NzEmptyComponent, NzCheckboxComponent, FormsModule],
 })
 export class ShoppingListTableMobileComponent {
-  entries = input.required<GroceryListItem[]>();
+  groups = input.required<ShoppingListGroup[]>();
 
   markBought = output<GroceryListItem>();
   editEntry = output<number>();

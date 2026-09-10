@@ -2,15 +2,28 @@
   <app-no-grocery-group></app-no-grocery-group>
 } @else {
   <div class="w-100 grocery-page-container p-2">
+    @if (groceryStoresStore.entities().length > 0) {
+      <nz-select
+        [ngModel]="groceryListItemsStore.ui().storeId"
+        class="store-select mb-2"
+        (ngModelChange)="groceryListItemsStore.updateUiState({ storeId: $event }, false)"
+      >
+        <nz-option nzLabel="A-Z" [nzValue]="null"></nz-option>
+        @for (store of groceryStoresStore.entities(); track store.id) {
+          <nz-option [nzLabel]="store.name" [nzValue]="store.id"></nz-option>
+        }
+      </nz-select>
+    }
+
     @if (isMobile) {
       <app-shopping-list-table-mobile
-        [entries]="groceryListItemsStore.entities()"
+        [groups]="groups()"
         (markBought)="groceryListItemsStore.markBought($event)"
         (editEntry)="groceryListItemsStore.editEntity($event)"
       ></app-shopping-list-table-mobile>
     } @else {
       <app-shopping-list-table
-        [entries]="groceryListItemsStore.entities()"
+        [groups]="groups()"
         (markBought)="groceryListItemsStore.markBought($event)"
         (editEntry)="groceryListItemsStore.editEntity($event)"
       ></app-shopping-list-table>

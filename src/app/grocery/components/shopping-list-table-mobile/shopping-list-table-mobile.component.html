@@ -1,34 +1,39 @@
 <div class="w-100 grocery-item-border">
-  @for (entry of entries(); track entry.id) {
-    <div class="grocery-item-box" (click)="editEntry.emit(entry.id)">
-      <div class="first-row">
-        <label
-          nz-checkbox
-          class="me-2"
-          [ngModel]="entry.bought"
-          (ngModelChange)="markBought.emit(entry)"
-          (click)="$event.stopPropagation()"
-        ></label>
+  @for (group of groups(); track $index) {
+    @if (group.name) {
+      <div class="group-heading">{{ group.name }}</div>
+    }
+    @for (entry of group.entries; track entry.id) {
+      <div class="grocery-item-box" (click)="editEntry.emit(entry.id)">
+        <div class="first-row">
+          <label
+            nz-checkbox
+            class="me-2"
+            [ngModel]="entry.bought"
+            (ngModelChange)="markBought.emit(entry)"
+            (click)="$event.stopPropagation()"
+          ></label>
 
-        <div class="title">
-          {{ entry.groceryItem.name }}
-          @if (formatGroceryListItemAmount(entry)) {
-            <span class="amount">({{ formatGroceryListItemAmount(entry) }})</span>
-          }
-        </div>
-
-        @if (entry.groceryItem.tags.length > 0) {
-          <div class="tags">
-            @for (tag of entry.groceryItem.tags; track tag) {
-              <nz-tag>{{ tag }}</nz-tag>
+          <div class="title">
+            {{ entry.groceryItem.name }}
+            @if (formatGroceryListItemAmount(entry)) {
+              <span class="amount">({{ formatGroceryListItemAmount(entry) }})</span>
             }
           </div>
-        }
+
+          @if (entry.groceryItem.tags.length > 0) {
+            <div class="tags">
+              @for (tag of entry.groceryItem.tags; track tag) {
+                <nz-tag>{{ tag }}</nz-tag>
+              }
+            </div>
+          }
+        </div>
       </div>
-    </div>
+    }
   }
 
-  @if (entries().length === 0) {
+  @if (groups().length === 0) {
     <nz-empty class="my-4" nzNotFoundContent="Nothing on the list"></nz-empty>
   }
 </div>

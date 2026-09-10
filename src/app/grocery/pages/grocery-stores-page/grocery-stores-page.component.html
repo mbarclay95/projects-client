@@ -23,6 +23,10 @@
                   <fa-icon [icon]="edit" class="text-primary"></fa-icon>
                 </button>
 
+                <button nz-button class="ant-btn-icon-only" nzType="text" (click)="exceptionsForStore.set(store)">
+                  <fa-icon [icon]="exceptionsIcon" class="text-primary"></fa-icon>
+                </button>
+
                 <button
                   nz-button
                   class="ant-btn-icon-only"
@@ -42,4 +46,9 @@
   </div>
 
   <app-create-edit-grocery-store-modal [openModal]="groceryStoresStore.createEditEntity()"></app-create-edit-grocery-store-modal>
+
+  <app-grocery-store-exceptions-modal
+    [openModal]="exceptionsForStore()"
+    (closed)="exceptionsForStore.set(undefined)"
+  ></app-grocery-store-exceptions-modal>
 }

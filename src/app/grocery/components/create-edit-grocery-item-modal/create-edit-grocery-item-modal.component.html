@@ -30,6 +30,18 @@
       </div>
 
       <div class="w-100 mb-4">
+        <div class="mb-2">Category:</div>
+
+        <input nz-input [(ngModel)]="model.category" class="w-100" [nzAutocomplete]="categoryAutocomplete" />
+
+        <nz-autocomplete #categoryAutocomplete [nzDefaultActiveFirstOption]="false">
+          @for (category of groceryCategoriesStore.entities(); track category.id) {
+            <nz-auto-option [nzValue]="category.name" [nzLabel]="category.name">{{ category.name }}</nz-auto-option>
+          }
+        </nz-autocomplete>
+      </div>
+
+      <div class="w-100 mb-4">
         <div class="mb-2">Unit:</div>
 
         <nz-select class="w-100" [ngModel]="model.unit" (ngModelChange)="onUnitChange($event)">

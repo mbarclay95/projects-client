@@ -1,14 +1,15 @@
-<nz-table #groceryItemsTableTag [nzData]="items()" nzSize="default" [nzFrontPagination]="false">
+<nz-table [nzData]="items()" nzSize="default" [nzFrontPagination]="false">
   <thead>
     <tr>
       <th>Name</th>
       <th>Tags</th>
+      <th>Category</th>
       <th>Amount</th>
       <th nzWidth="100px"></th>
     </tr>
   </thead>
   <tbody>
-    @for (item of groceryItemsTable?.data; track item.id) {
+    @for (item of items(); track item.id) {
       <tr>
         <td>{{ item.name }}</td>
         <td>
@@ -16,6 +17,7 @@
             <nz-tag>{{ tag }}</nz-tag>
           }
         </td>
+        <td>{{ item.category }}</td>
         <td>{{ formatGroceryItemAmount(item) }}</td>
         <td>
           <button nz-button class="ant-btn-icon-only" nzType="text" (click)="editItem.emit(item.id)">

@@ -1,4 +1,4 @@
-import { Component, input, output, ViewChild } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import {
   NzTableComponent,
   NzTheadComponent,
@@ -32,8 +32,6 @@ import { formatGroceryItemAmount, GroceryItem } from '../../models/grocery-item.
   ],
 })
 export class GroceryItemsTableComponent {
-  @ViewChild('groceryItemsTableTag', { static: true }) groceryItemsTable: NzTableComponent<GroceryItem> | undefined;
-
   items = input.required<GroceryItem[]>();
 
   editItem = output<number>();

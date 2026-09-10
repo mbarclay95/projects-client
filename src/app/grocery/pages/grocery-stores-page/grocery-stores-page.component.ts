@@ -16,6 +16,7 @@ import {
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faEdit, faList, faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -36,6 +37,7 @@ import { faEdit, faList, faTrash } from '@fortawesome/free-solid-svg-icons';
     NzButtonComponent,
     NzPopconfirmDirective,
     NzEmptyComponent,
+    NzModalModule,
     FaIconComponent,
   ],
 })

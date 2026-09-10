@@ -1,0 +1,45 @@
+@if (authStore.auth()?.groupIds?.grocery === null) {
+  <app-no-grocery-group></app-no-grocery-group>
+} @else {
+  <div class="w-100 grocery-page-container p-2">
+    @if (groceryStoresStore.entities().length === 0) {
+      <nz-empty nzNotFoundContent="No stores yet"></nz-empty>
+    } @else {
+      <nz-table [nzData]="groceryStoresStore.entities()" nzSize="default" [nzFrontPagination]="false">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Categories</th>
+            <th nzWidth="100px"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (store of groceryStoresStore.entities(); track store.id) {
+            <tr>
+              <td>{{ store.name }}</td>
+              <td>{{ store.categoryOrder.length }}</td>
+              <td>
+                <button nz-button class="ant-btn-icon-only" nzType="text" (click)="groceryStoresStore.editEntity(store.id)">
+                  <fa-icon [icon]="edit" class="text-primary"></fa-icon>
+                </button>
+
+                <button
+                  nz-button
+                  class="ant-btn-icon-only"
+                  nzType="text"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Are you sure?"
+                  (nzOnConfirm)="deleteStore(store.id)"
+                >
+                  <fa-icon [icon]="trash" class="text-danger"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </nz-table>
+    }
+  </div>
+
+  <app-create-edit-grocery-store-modal [openModal]="groceryStoresStore.createEditEntity()"></app-create-edit-grocery-store-modal>
+}

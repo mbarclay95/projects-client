@@ -4,8 +4,10 @@ import { NzTabsComponent, NzTabComponent, NzTabLinkTemplateDirective, NzTabLinkD
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { GroceryItemsSignalStore } from '../../services/grocery-items-signal-store';
 import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-signal-store';
+import { GroceryStoresSignalStore } from '../../services/grocery-stores-signal-store';
 import { ShoppingListPageComponent } from '../shopping-list-page/shopping-list-page.component';
 import { GroceryItemsPageComponent } from '../grocery-items-page/grocery-items-page.component';
+import { GroceryStoresPageComponent } from '../grocery-stores-page/grocery-stores-page.component';
 
 @Component({
   selector: 'app-grocery-tabs',
@@ -20,13 +22,15 @@ import { GroceryItemsPageComponent } from '../grocery-items-page/grocery-items-p
     NzButtonComponent,
     ShoppingListPageComponent,
     GroceryItemsPageComponent,
+    GroceryStoresPageComponent,
   ],
 })
 export class GroceryTabsComponent {
-  selectedTab: 'Shopping List' | 'Master List' = 'Shopping List';
+  selectedTab: 'Shopping List' | 'Master List' | 'Stores' = 'Shopping List';
 
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
   readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);
+  readonly groceryStoresStore = inject(GroceryStoresSignalStore);
 
   createItem(): void {
     this.groceryItemsStore.createEntity();
@@ -34,5 +38,9 @@ export class GroceryTabsComponent {
 
   addItems(): void {
     this.groceryListItemsStore.openPicker();
+  }
+
+  createStore(): void {
+    this.groceryStoresStore.createEntity();
   }
 }

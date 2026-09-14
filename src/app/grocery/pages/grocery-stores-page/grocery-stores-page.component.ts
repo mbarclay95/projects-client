@@ -5,6 +5,7 @@ import { GroceryStore } from '../../models/grocery-store.model';
 import { NoGroceryGroupComponent } from '../../components/no-grocery-group/no-grocery-group.component';
 import { CreateEditGroceryStoreModalComponent } from '../../components/create-edit-grocery-store-modal/create-edit-grocery-store-modal.component';
 import { GroceryStoreExceptionsModalComponent } from '../../components/grocery-store-exceptions-modal/grocery-store-exceptions-modal.component';
+import { GroceryStoreUnavailableItemsModalComponent } from '../../components/grocery-store-unavailable-items-modal/grocery-store-unavailable-items-modal.component';
 import {
   NzTableComponent,
   NzTheadComponent,
@@ -18,7 +19,7 @@ import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faEdit, faList, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faBan, faEdit, faList, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-grocery-stores-page',
@@ -28,6 +29,7 @@ import { faEdit, faList, faTrash } from '@fortawesome/free-solid-svg-icons';
     NoGroceryGroupComponent,
     CreateEditGroceryStoreModalComponent,
     GroceryStoreExceptionsModalComponent,
+    GroceryStoreUnavailableItemsModalComponent,
     NzTableComponent,
     NzTheadComponent,
     NzTrDirective,
@@ -46,10 +48,12 @@ export class GroceryStoresPageComponent {
   readonly groceryStoresStore = inject(GroceryStoresSignalStore);
 
   readonly exceptionsForStore = signal<GroceryStore | undefined>(undefined);
+  readonly unavailableForStore = signal<GroceryStore | undefined>(undefined);
 
   edit = faEdit;
   trash = faTrash;
   exceptionsIcon = faList;
+  unavailableIcon = faBan;
 
   deleteStore(id: number): void {
     this.groceryStoresStore.remove({ id });

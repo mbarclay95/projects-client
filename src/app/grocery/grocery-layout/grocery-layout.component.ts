@@ -6,6 +6,7 @@ import { GroceryListItemsSignalStore } from '../services/grocery-list-items-sign
 import { GroceryCategoriesSignalStore } from '../services/grocery-categories-signal-store';
 import { GroceryStoresSignalStore } from '../services/grocery-stores-signal-store';
 import { GroceryStoreItemCategoriesSignalStore } from '../services/grocery-store-item-categories-signal-store';
+import { GroceryStoreUnavailableItemsSignalStore } from '../services/grocery-store-unavailable-items-signal-store';
 import { TagsSignalStore } from '../../shared/services/tags-signal-store';
 
 @Component({
@@ -20,6 +21,7 @@ export class GroceryLayoutComponent {
   readonly groceryCategoriesStore = inject(GroceryCategoriesSignalStore);
   readonly groceryStoresStore = inject(GroceryStoresSignalStore);
   readonly groceryStoreItemCategoriesStore = inject(GroceryStoreItemCategoriesSignalStore);
+  readonly groceryStoreUnavailableItemsStore = inject(GroceryStoreUnavailableItemsSignalStore);
   readonly tagsStore = inject(TagsSignalStore);
 
   constructor() {
@@ -28,6 +30,7 @@ export class GroceryLayoutComponent {
     this.groceryCategoriesStore.loadAll({});
     this.groceryStoresStore.loadAll({});
     this.groceryStoreItemCategoriesStore.loadAll({});
+    this.groceryStoreUnavailableItemsStore.loadAll({});
     this.tagsStore.loadAll('grocery');
   }
 }

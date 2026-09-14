@@ -1,0 +1,42 @@
+<nz-modal
+  [nzVisible]="isVisible()"
+  [nzTitle]="(openModal()?.name ?? '') + ' Unavailable Items'"
+  nzWidth="500px"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="closed.emit()"
+>
+  <ng-container *nzModalContent>
+    <div class="exceptions-list mb-3">
+      @for (item of unavailableItems(); track item.id) {
+        <div class="exception-row">
+          <div class="exception-names">
+            {{ itemName(item.groceryItemId) }}
+          </div>
+          <button nz-button class="ant-btn-icon-only" nzType="text" (click)="removeItem(item.id)">
+            <fa-icon [icon]="minus" class="text-danger"></fa-icon>
+          </button>
+        </div>
+      } @empty {
+        <div class="empty-text">No unavailable items yet.</div>
+      }
+    </div>
+
+    <div class="mb-2">Add item:</div>
+
+    <div class="add-exception-row">
+      <nz-select [ngModel]="newItemId()" (ngModelChange)="newItemId.set($event)" nzPlaceHolder="Item" class="item-select">
+        @for (item of availableItems(); track item.id) {
+          <nz-option [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+        }
+      </nz-select>
+
+      <button nz-button class="ant-btn-icon-only" nzType="primary" (click)="addItem()" [disabled]="newItemId() === null">
+        <fa-icon [icon]="plus"></fa-icon>
+      </button>
+    </div>
+  </ng-container>
+
+  <div *nzModalFooter>
+    <button nz-button nzType="primary" (click)="closed.emit()">Done</button>
+  </div>
+</nz-modal>

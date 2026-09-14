@@ -15,6 +15,7 @@ export function groupShoppingList(
   store: GroceryStore | null,
   exceptionsByStoreAndItem: Map<string, GroceryStoreItemCategory>,
   categories: GroceryCategory[],
+  unavailableByStoreAndItem: Set<string>,
 ): ShoppingListGroup[] {
   if (!store) {
     return [{ name: '', entries: sortByNameThenId(entries) }];
@@ -25,6 +26,10 @@ export function groupShoppingList(
   const other: GroceryListItem[] = [];
 
   for (const entry of entries) {
+    if (unavailableByStoreAndItem.has(`${store.id}:${entry.groceryItemId}`)) {
+      continue;
+    }
+
     const categoryId =
       exceptionsByStoreAndItem.get(`${store.id}:${entry.groceryItemId}`)?.groceryCategoryId ?? entry.groceryItem.groceryCategoryId;
     const rank = categoryId === null ? -1 : store.categoryOrder.indexOf(categoryId);

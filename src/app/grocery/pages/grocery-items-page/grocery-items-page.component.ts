@@ -3,6 +3,8 @@ import { isMobile } from '../../../app.component';
 import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
 import { GroceryItemsSignalStore } from '../../services/grocery-items-signal-store';
 import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-signal-store';
+import { GroceryStoreItemCategoriesSignalStore } from '../../services/grocery-store-item-categories-signal-store';
+import { GroceryStoreUnavailableItemsSignalStore } from '../../services/grocery-store-unavailable-items-signal-store';
 import { NoGroceryGroupComponent } from '../../components/no-grocery-group/no-grocery-group.component';
 import { GroceryItemsFiltersComponent } from '../../components/grocery-items-filters/grocery-items-filters.component';
 import { GroceryItemsTableComponent } from '../../components/grocery-items-table/grocery-items-table.component';
@@ -29,8 +31,17 @@ export class GroceryItemsPageComponent {
   readonly authStore = inject(AuthSignalStore);
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
   readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);
+  readonly groceryStoreItemCategoriesStore = inject(GroceryStoreItemCategoriesSignalStore);
+  readonly groceryStoreUnavailableItemsStore = inject(GroceryStoreUnavailableItemsSignalStore);
 
   deleteItem(id: number): void {
-    this.groceryItemsStore.remove({ id, onSuccess: () => this.groceryListItemsStore.loadAll({}) });
+    this.groceryItemsStore.remove({
+      id,
+      onSuccess: () => {
+        this.groceryListItemsStore.loadAll({});
+        this.groceryStoreItemCategoriesStore.loadAll({});
+        this.groceryStoreUnavailableItemsStore.loadAll({});
+      },
+    });
   }
 }

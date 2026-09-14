@@ -7,6 +7,7 @@ import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-s
 import { GroceryStoresSignalStore } from '../../services/grocery-stores-signal-store';
 import { GroceryCategoriesSignalStore } from '../../services/grocery-categories-signal-store';
 import { GroceryStoreItemCategoriesSignalStore } from '../../services/grocery-store-item-categories-signal-store';
+import { GroceryStoreUnavailableItemsSignalStore } from '../../services/grocery-store-unavailable-items-signal-store';
 import { groupShoppingList } from '../../models/shopping-list-sort';
 import { NoGroceryGroupComponent } from '../../components/no-grocery-group/no-grocery-group.component';
 import { ShoppingListTableComponent } from '../../components/shopping-list-table/shopping-list-table.component';
@@ -39,6 +40,7 @@ export class ShoppingListPageComponent {
   readonly groceryStoresStore = inject(GroceryStoresSignalStore);
   readonly groceryCategoriesStore = inject(GroceryCategoriesSignalStore);
   readonly groceryStoreItemCategoriesStore = inject(GroceryStoreItemCategoriesSignalStore);
+  readonly groceryStoreUnavailableItemsStore = inject(GroceryStoreUnavailableItemsSignalStore);
 
   selectedStore = computed(
     () => this.groceryStoresStore.entities().find((store) => store.id === this.groceryListItemsStore.ui().storeId) ?? null,
@@ -50,6 +52,7 @@ export class ShoppingListPageComponent {
       this.selectedStore(),
       this.groceryStoreItemCategoriesStore.byStoreAndItem(),
       this.groceryCategoriesStore.entities(),
+      this.groceryStoreUnavailableItemsStore.unavailableKeys(),
     ),
   );
 }

@@ -21,7 +21,7 @@ describe('groupShoppingList', () => {
   it('gives a null store one unnamed group in name order', () => {
     const entries = [entry(1, 'Zucchini', produce.id), entry(2, 'Apples', produce.id)];
 
-    expect(groupShoppingList(entries, null, new Map(), categories)).toEqual([{ name: '', entries: [entries[1], entries[0]] }]);
+    expect(groupShoppingList(entries, null, new Map(), categories, new Set())).toEqual([{ name: '', entries: [entries[1], entries[0]] }]);
   });
 
   it('groups and orders by the store categoryOrder', () => {
@@ -29,7 +29,7 @@ describe('groupShoppingList', () => {
     const apples = entry(2, 'Apples', produce.id);
     const store: GroceryStore = createGroceryStore({ id: 1, categoryOrder: [bakery.id, produce.id] });
 
-    expect(groupShoppingList([apples, bread], store, new Map(), categories)).toEqual([
+    expect(groupShoppingList([apples, bread], store, new Map(), categories, new Set())).toEqual([
       { name: 'Bakery', entries: [bread] },
       { name: 'Produce', entries: [apples] },
     ]);
@@ -47,8 +47,8 @@ describe('groupShoppingList', () => {
     });
     const exceptions = new Map([[`${store1.id}:${tortillas.groceryItemId}`, exceptionAtStore1]]);
 
-    expect(groupShoppingList([tortillas], store1, exceptions, categories)).toEqual([{ name: 'Produce', entries: [tortillas] }]);
-    expect(groupShoppingList([tortillas], store2, exceptions, categories)).toEqual([{ name: 'Bakery', entries: [tortillas] }]);
+    expect(groupShoppingList([tortillas], store1, exceptions, categories, new Set())).toEqual([{ name: 'Produce', entries: [tortillas] }]);
+    expect(groupShoppingList([tortillas], store2, exceptions, categories, new Set())).toEqual([{ name: 'Bakery', entries: [tortillas] }]);
   });
 
   it('puts an uncategorised entry and one whose category the store does not order both in Other', () => {
@@ -56,7 +56,7 @@ describe('groupShoppingList', () => {
     const unordered = entry(2, 'Bread', bakery.id);
     const store: GroceryStore = createGroceryStore({ id: 1, categoryOrder: [produce.id] });
 
-    expect(groupShoppingList([unordered, uncategorised], store, new Map(), categories)).toEqual([
+    expect(groupShoppingList([unordered, uncategorised], store, new Map(), categories, new Set())).toEqual([
       { name: 'Other', entries: [unordered, uncategorised] },
     ]);
   });
@@ -65,7 +65,7 @@ describe('groupShoppingList', () => {
     const apples = entry(1, 'Apples', produce.id);
     const store: GroceryStore = createGroceryStore({ id: 1, categoryOrder: [produce.id, bakery.id] });
 
-    expect(groupShoppingList([apples], store, new Map(), categories)).toEqual([{ name: 'Produce', entries: [apples] }]);
+    expect(groupShoppingList([apples], store, new Map(), categories, new Set())).toEqual([{ name: 'Produce', entries: [apples] }]);
   });
 
   it('orders two entries in one group by name regardless of input order', () => {
@@ -73,6 +73,35 @@ describe('groupShoppingList', () => {
     const apples = entry(2, 'Apples', produce.id);
     const store: GroceryStore = createGroceryStore({ id: 1, categoryOrder: [produce.id] });
 
-    expect(groupShoppingList([zucchini, apples], store, new Map(), categories)).toEqual([{ name: 'Produce', entries: [apples, zucchini] }]);
+    expect(groupShoppingList([zucchini, apples], store, new Map(), categories, new Set())).toEqual([
+      { name: 'Produce', entries: [apples, zucchini] },
+    ]);
+  });
+
+  it('drops an entry unavailable at the selected store from every group', () => {
+    const apples = entry(1, 'Apples', produce.id);
+    const bread = entry(2, 'Bread', bakery.id);
+    const store: GroceryStore = createGroceryStore({ id: 1, categoryOrder: [produce.id, bakery.id] });
+    const unavailable = new Set([`${store.id}:${apples.groceryItemId}`]);
+
+    expect(groupShoppingList([apples, bread], store, new Map(), categories, unavailable)).toEqual([{ name: 'Bakery', entries: [bread] }]);
+  });
+
+  it('keeps an entry unavailable at another store, and with no store selected', () => {
+    const apples = entry(1, 'Apples', produce.id);
+    const store1: GroceryStore = createGroceryStore({ id: 1, categoryOrder: [produce.id] });
+    const store2: GroceryStore = createGroceryStore({ id: 2, categoryOrder: [produce.id] });
+    const unavailable = new Set([`${store1.id}:${apples.groceryItemId}`]);
+
+    expect(groupShoppingList([apples], store2, new Map(), categories, unavailable)).toEqual([{ name: 'Produce', entries: [apples] }]);
+    expect(groupShoppingList([apples], null, new Map(), categories, unavailable)).toEqual([{ name: '', entries: [apples] }]);
+  });
+
+  it('produces no group at all when a category loses its only entry to the unavailable filter', () => {
+    const apples = entry(1, 'Apples', produce.id);
+    const store: GroceryStore = createGroceryStore({ id: 1, categoryOrder: [produce.id, bakery.id] });
+    const unavailable = new Set([`${store.id}:${apples.groceryItemId}`]);
+
+    expect(groupShoppingList([apples], store, new Map(), categories, unavailable)).toEqual([]);
   });
 });

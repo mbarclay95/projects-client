@@ -9,7 +9,6 @@
         <thead>
           <tr>
             <th>Name</th>
-            <th>Categories</th>
             <th nzWidth="100px"></th>
           </tr>
         </thead>
@@ -17,7 +16,6 @@
           @for (store of groceryStoresStore.entities(); track store.id) {
             <tr>
               <td>{{ store.name }}</td>
-              <td>{{ store.categoryOrder.length }}</td>
               <td>
                 <button nz-button class="ant-btn-icon-only" nzType="text" (click)="groceryStoresStore.editEntity(store.id)">
                   <fa-icon [icon]="edit" class="text-primary"></fa-icon>

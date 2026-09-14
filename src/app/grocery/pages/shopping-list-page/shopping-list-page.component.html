@@ -4,11 +4,13 @@
   <div class="w-100 grocery-page-container p-2">
     @if (groceryStoresStore.entities().length > 0) {
       <nz-select
-        [ngModel]="groceryListItemsStore.ui().storeId"
+        [ngModel]="groceryListItemsStore.ui().storeId ?? 0"
         class="store-select mb-2"
-        (ngModelChange)="groceryListItemsStore.updateUiState({ storeId: $event }, false)"
+        (ngModelChange)="groceryListItemsStore.updateUiState({ storeId: $event === 0 ? null : $event }, false)"
       >
-        <nz-option nzLabel="A-Z" [nzValue]="null"></nz-option>
+        <!-- nz-select's writeValue treats a null/undefined model as "nothing selected" and empties its
+             internal selection list, so an option can never render as selected against nzValue null. -->
+        <nz-option nzLabel="A-Z" [nzValue]="0"></nz-option>
         @for (store of groceryStoresStore.entities(); track store.id) {
           <nz-option [nzLabel]="store.name" [nzValue]="store.id"></nz-option>
         }

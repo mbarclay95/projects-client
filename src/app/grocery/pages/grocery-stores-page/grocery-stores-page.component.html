@@ -10,7 +10,7 @@
           <tr>
             <th>Name</th>
             <th>Categories</th>
-            <th nzWidth="100px"></th>
+            <th nzWidth="130px"></th>
           </tr>
         </thead>
         <tbody>
@@ -25,6 +25,10 @@
 
                 <button nz-button class="ant-btn-icon-only" nzType="text" (click)="exceptionsForStore.set(store)">
                   <fa-icon [icon]="exceptionsIcon" class="text-primary"></fa-icon>
+                </button>
+
+                <button nz-button class="ant-btn-icon-only" nzType="text" (click)="unavailableForStore.set(store)">
+                  <fa-icon [icon]="unavailableIcon" class="text-primary"></fa-icon>
                 </button>
 
                 <button
@@ -51,4 +55,9 @@
     [openModal]="exceptionsForStore()"
     (closed)="exceptionsForStore.set(undefined)"
   ></app-grocery-store-exceptions-modal>
+
+  <app-grocery-store-unavailable-items-modal
+    [openModal]="unavailableForStore()"
+    (closed)="unavailableForStore.set(undefined)"
+  ></app-grocery-store-unavailable-items-modal>
 }

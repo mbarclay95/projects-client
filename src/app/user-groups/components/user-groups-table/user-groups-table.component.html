@@ -1,7 +1,7 @@
 <nz-table #groupsTableTag [nzData]="_groups">
   <thead>
     <tr>
-      <th nzWidth="60px"></th>
+      <th nzWidth="100px"></th>
       <th>Name</th>
       <th>Scope</th>
       <th>Number of Members</th>
@@ -14,6 +14,17 @@
         <td>
           <button nz-button class="ant-btn-icon-only" nzType="text" (click)="openUserGroupModal.emit(group.id)">
             <fa-icon [icon]="edit" size="1x" class="text-primary"></fa-icon>
+          </button>
+
+          <button
+            nz-button
+            class="ant-btn-icon-only"
+            nzType="text"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure?"
+            (nzOnConfirm)="deleteUserGroup.emit(group.id)"
+          >
+            <fa-icon [icon]="trash" size="1x" class="text-danger"></fa-icon>
           </button>
         </td>
         <td>{{ group.name }}</td>

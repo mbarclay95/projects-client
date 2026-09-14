@@ -15,6 +15,7 @@
     <app-user-groups-table
       [groups]="familiesStore.entities()"
       (openUserGroupModal)="familiesStore.editEntity($event)"
+      (deleteUserGroup)="familiesStore.remove({ id: $event })"
     ></app-user-groups-table>
   }
 </div>

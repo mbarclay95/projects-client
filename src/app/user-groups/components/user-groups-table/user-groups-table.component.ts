@@ -8,9 +8,10 @@ import {
   NzTbodyComponent,
 } from 'ng-zorro-antd/table';
 import { UserGroup } from '../../../shared/models/user-group.model';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 
 @Component({
   selector: 'app-user-groups-table',
@@ -25,6 +26,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     NzTbodyComponent,
     NzButtonComponent,
     FaIconComponent,
+    NzPopconfirmDirective,
   ],
 })
 export class UserGroupsTableComponent {
@@ -35,7 +37,9 @@ export class UserGroupsTableComponent {
     }
   }
   @Output() openUserGroupModal: EventEmitter<number> = new EventEmitter<number>();
+  @Output() deleteUserGroup: EventEmitter<number> = new EventEmitter<number>();
 
   _groups: UserGroup[] = [];
   edit = faEdit;
+  trash = faTrash;
 }

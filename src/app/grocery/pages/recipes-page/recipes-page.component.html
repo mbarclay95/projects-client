@@ -1,0 +1,50 @@
+@if (authStore.auth()?.groupIds?.grocery === null) {
+  <app-no-grocery-group></app-no-grocery-group>
+} @else {
+  <div class="w-100 grocery-page-container p-2">
+    @if (recipesStore.entities().length === 0) {
+      <nz-empty nzNotFoundContent="No recipes yet"></nz-empty>
+    } @else {
+      <nz-table [nzData]="recipesStore.entities()" nzSize="default" [nzFrontPagination]="false">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Ingredients</th>
+            <th nzWidth="120px"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (recipe of recipesStore.entities(); track recipe.id) {
+            <tr>
+              <td>
+                {{ recipe.name }}
+                @if (recipe.description) {
+                  <div class="text-muted">{{ recipe.description }}</div>
+                }
+              </td>
+              <td>{{ recipe.ingredients.length }}</td>
+              <td>
+                <button nz-button class="ant-btn-icon-only" nzType="text" (click)="recipesStore.editEntity(recipe.id)">
+                  <fa-icon [icon]="edit" class="text-primary"></fa-icon>
+                </button>
+
+                <button
+                  nz-button
+                  class="ant-btn-icon-only"
+                  nzType="text"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Are you sure?"
+                  (nzOnConfirm)="deleteRecipe(recipe.id)"
+                >
+                  <fa-icon [icon]="trash" class="text-danger"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </nz-table>
+    }
+  </div>
+
+  <app-create-edit-recipe-modal [openModal]="recipesStore.createEditEntity()"></app-create-edit-recipe-modal>
+}

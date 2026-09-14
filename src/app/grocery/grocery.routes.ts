@@ -3,6 +3,7 @@ import { GroceryTabsComponent } from './pages/grocery-tabs/grocery-tabs.componen
 import { ShoppingListPageComponent } from './pages/shopping-list-page/shopping-list-page.component';
 import { GroceryItemsPageComponent } from './pages/grocery-items-page/grocery-items-page.component';
 import { GroceryStoresPageComponent } from './pages/grocery-stores-page/grocery-stores-page.component';
+import { RecipesPageComponent } from './pages/recipes-page/recipes-page.component';
 
 export const GROCERY_ROUTES: TypedRoute[] = [
   {
@@ -24,6 +25,11 @@ export const GROCERY_ROUTES: TypedRoute[] = [
         path: 'stores',
         data: { headerTitle: 'Stores', createButtonAction: 'grocery-store' },
         component: GroceryStoresPageComponent,
+      },
+      {
+        path: 'recipes',
+        data: { headerTitle: 'Recipes', createButtonAction: 'grocery-recipe' },
+        component: RecipesPageComponent,
       },
     ],
   },

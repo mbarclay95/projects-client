@@ -1,0 +1,34 @@
+.ingredients-list {
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.ingredient-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ingredient-name {
+  flex: 1;
+}
+
+.amount {
+  width: 100px;
+}
+
+.add-ingredient-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.item-select {
+  flex: 1;
+}
+
+.empty-text {
+  color: rgba(255, 255, 255, 0.7);
+}

@@ -15,6 +15,7 @@ import { DraftsSignalStore } from '../../drafts-admin/services/drafts-signal-sto
 import { GroceryItemsSignalStore } from '../../grocery/services/grocery-items-signal-store';
 import { GroceryListItemsSignalStore } from '../../grocery/services/grocery-list-items-signal-store';
 import { GroceryStoresSignalStore } from '../../grocery/services/grocery-stores-signal-store';
+import { RecipesSignalStore } from '../../grocery/services/recipes-signal-store';
 
 @Injectable({
   providedIn: 'root',
@@ -54,6 +55,7 @@ export class MobileDisplayService {
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
   readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);
   readonly groceryStoresStore = inject(GroceryStoresSignalStore);
+  readonly recipesStore = inject(RecipesSignalStore);
 
   constructor() {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
@@ -117,6 +119,9 @@ export class MobileDisplayService {
       case 'grocery-store':
         this.groceryStoresStore.createEntity();
         break;
+      case 'grocery-recipe':
+        this.recipesStore.createEntity();
+        break;
       default:
         this.clickedButtonSubject.next();
     }
@@ -135,5 +140,6 @@ export type CreateButtonAction =
   | 'drafts'
   | 'grocery'
   | 'grocery-list'
-  | 'grocery-store';
+  | 'grocery-store'
+  | 'grocery-recipe';
 export type MobileFooterButtons = 'tasks' | 'grocery';

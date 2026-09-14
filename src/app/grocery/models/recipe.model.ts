@@ -27,3 +27,26 @@ export function createRecipe(params: Partial<Recipe>) {
     ingredients: (params.ingredients ?? []).map((ingredient) => createRecipeIngredient(ingredient)),
   } as Recipe;
 }
+
+export interface AddRecipeToListResult {
+  added: number;
+  alreadyOnList: number;
+}
+
+export function addRecipeToListMessage(result: AddRecipeToListResult): string {
+  const { added, alreadyOnList } = result;
+
+  if (added === 0 && alreadyOnList === 0) {
+    return 'Nothing to add.';
+  }
+  if (added === 0) {
+    return 'Everything was already on the list.';
+  }
+
+  let message = `Added ${added} item${added === 1 ? '' : 's'} to the list.`;
+  if (alreadyOnList > 0) {
+    message += ` ${alreadyOnList} ${alreadyOnList === 1 ? 'was' : 'were'} already on it.`;
+  }
+
+  return message;
+}

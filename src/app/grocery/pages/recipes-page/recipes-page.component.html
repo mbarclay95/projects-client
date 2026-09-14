@@ -24,6 +24,17 @@
               </td>
               <td>{{ recipe.ingredients.length }}</td>
               <td>
+                <button
+                  nz-button
+                  class="ant-btn-icon-only"
+                  nzType="text"
+                  [nzLoading]="recipesStore.addingRecipeIds().includes(recipe.id)"
+                  [disabled]="recipe.ingredients.length === 0"
+                  (click)="addToList(recipe.id)"
+                >
+                  <fa-icon [icon]="cartPlus" class="text-primary"></fa-icon>
+                </button>
+
                 <button nz-button class="ant-btn-icon-only" nzType="text" (click)="recipesStore.editEntity(recipe.id)">
                   <fa-icon [icon]="edit" class="text-primary"></fa-icon>
                 </button>

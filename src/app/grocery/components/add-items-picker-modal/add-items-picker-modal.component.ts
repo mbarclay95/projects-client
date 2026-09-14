@@ -11,6 +11,7 @@ import { faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { GroceryItemsSignalStore } from '../../services/grocery-items-signal-store';
 import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-signal-store';
+import { GroceryStoreUnavailableItemsSignalStore } from '../../services/grocery-store-unavailable-items-signal-store';
 import { createGroceryListItem } from '../../models/grocery-list-item.model';
 import { filterGroceryItems, GroceryItem, GroceryItemUnit } from '../../models/grocery-item.model';
 
@@ -32,10 +33,24 @@ import { filterGroceryItems, GroceryItem, GroceryItemUnit } from '../../models/g
 export class AddItemsPickerModalComponent extends DefaultModalSignalComponent implements OnInit, OnDestroy {
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
   readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);
+  readonly groceryStoreUnavailableItemsStore = inject(GroceryStoreUnavailableItemsSignalStore);
 
   readonly search = signal('');
   readonly filteredItems = computed(() => filterGroceryItems(this.groceryItemsStore.entities(), this.search(), []));
   readonly quantities = signal<Map<number, number>>(new Map());
+
+  readonly unavailableHere = computed(() => {
+    const storeId = this.groceryListItemsStore.ui().storeId;
+    if (storeId === null) {
+      return new Set<number>();
+    }
+    return new Set(
+      this.groceryStoreUnavailableItemsStore
+        .entities()
+        .filter((row) => row.groceryStoreId === storeId)
+        .map((row) => row.groceryItemId),
+    );
+  });
 
   readonly groceryItemUnit = GroceryItemUnit;
   readonly plus = faPlus;

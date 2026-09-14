@@ -1,0 +1,70 @@
+<nz-modal
+  [nzVisible]="isVisible()"
+  [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Store'"
+  nzWidth="500px"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="groceryStoresStore.clearCreateEditEntity()"
+>
+  <ng-container *nzModalContent>
+    @if (model) {
+      <div class="w-100 mb-4">
+        <div class="mb-2">Name: <span class="text-danger">*</span></div>
+
+        <input nz-input [(ngModel)]="model.name" class="w-100" />
+      </div>
+
+      <div class="w-100 mb-4">
+        <div class="mb-2">Aisle Order:</div>
+
+        @if (orderedCategories().length === 0) {
+          <nz-empty nzNotFoundContent="No categories ordered yet"></nz-empty>
+        } @else {
+          <div cdkDropList (cdkDropListDropped)="drop($event)" class="order-list">
+            @for (category of orderedCategories(); track category.id) {
+              <div class="order-row" cdkDrag>
+                <button class="grip-handle" cdkDragHandle>
+                  <fa-icon [icon]="grip"></fa-icon>
+                </button>
+                <div class="order-name">{{ category.name }}</div>
+                <button nz-button class="ant-btn-icon-only" nzType="text" (click)="removeCategory(category.id)">
+                  <fa-icon [icon]="minus" class="text-danger"></fa-icon>
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      @if (unorderedCategories().length > 0) {
+        <div class="w-100 mb-4">
+          <div class="mb-2">Other Categories:</div>
+
+          @for (category of unorderedCategories(); track category.id) {
+            <div class="unordered-row">
+              <div class="order-name">{{ category.name }}</div>
+              <button nz-button class="ant-btn-icon-only" nzType="text" (click)="addCategory(category.id)">
+                <fa-icon [icon]="plus" class="text-primary"></fa-icon>
+              </button>
+            </div>
+          }
+        </div>
+      }
+    }
+  </ng-container>
+
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="groceryStoresStore.clearCreateEditEntity()" [disabled]="groceryStoresStore.loadingOne()">
+      Cancel
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      (click)="saveStore()"
+      [nzLoading]="groceryStoresStore.loadingOne()"
+      [disabled]="groceryStoresStore.loadingOne()"
+    >
+      Save
+    </button>
+  </div>
+</nz-modal>

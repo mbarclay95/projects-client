@@ -2,6 +2,7 @@ import { TypedRoute } from '../app.routes';
 import { GroceryTabsComponent } from './pages/grocery-tabs/grocery-tabs.component';
 import { ShoppingListPageComponent } from './pages/shopping-list-page/shopping-list-page.component';
 import { GroceryItemsPageComponent } from './pages/grocery-items-page/grocery-items-page.component';
+import { GroceryStoresPageComponent } from './pages/grocery-stores-page/grocery-stores-page.component';
 
 export const GROCERY_ROUTES: TypedRoute[] = [
   {
@@ -18,6 +19,11 @@ export const GROCERY_ROUTES: TypedRoute[] = [
         path: 'master-list',
         data: { headerTitle: 'Master List', createButtonAction: 'grocery' },
         component: GroceryItemsPageComponent,
+      },
+      {
+        path: 'stores',
+        data: { headerTitle: 'Stores', createButtonAction: 'grocery-store' },
+        component: GroceryStoresPageComponent,
       },
     ],
   },

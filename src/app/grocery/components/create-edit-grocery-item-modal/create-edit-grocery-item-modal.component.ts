@@ -4,12 +4,14 @@ import { GROCERY_ITEM_UNIT_LABELS, GroceryItem, GroceryItemUnit } from '../../mo
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { GroceryItemsSignalStore } from '../../services/grocery-items-signal-store';
 import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-signal-store';
+import { GroceryCategoriesSignalStore } from '../../services/grocery-categories-signal-store';
 import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
 import { NzModalComponent, NzModalContentDirective, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
+import { NzAutocompleteComponent, NzAutocompleteOptionComponent, NzAutocompleteTriggerDirective } from 'ng-zorro-antd/auto-complete';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 
@@ -26,6 +28,9 @@ import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
     FormsModule,
     NzSelectComponent,
     NzOptionComponent,
+    NzAutocompleteComponent,
+    NzAutocompleteOptionComponent,
+    NzAutocompleteTriggerDirective,
     NzModalFooterDirective,
     NzButtonComponent,
     NzPopconfirmDirective,
@@ -36,6 +41,7 @@ export class CreateEditGroceryItemModalComponent extends DefaultModalSignalCompo
 
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
   readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);
+  readonly groceryCategoriesStore = inject(GroceryCategoriesSignalStore);
   readonly tagsStore = inject(TagsSignalStore);
   readonly nzMessageService = inject(NzMessageService);
 
@@ -63,6 +69,7 @@ export class CreateEditGroceryItemModalComponent extends DefaultModalSignalCompo
   itemSaved(): void {
     this.nzMessageService.success('Item Saved!');
     this.tagsStore.loadAll('grocery');
+    this.groceryCategoriesStore.loadAll({});
     this.groceryItemsStore.clearCreateEditEntity();
   }
 

@@ -17,6 +17,8 @@ export interface GroceryItem {
   tags: string[];
   unit: GroceryItemUnit;
   defaultQuantity: number | null;
+  groceryCategoryId: number | null;
+  category: string | null;
 }
 
 export function createGroceryItem(params: Partial<GroceryItem>) {
@@ -27,6 +29,8 @@ export function createGroceryItem(params: Partial<GroceryItem>) {
     tags: params.tags ?? [],
     unit: params.unit ?? GroceryItemUnit.none,
     defaultQuantity: params.defaultQuantity ?? null,
+    groceryCategoryId: params.groceryCategoryId ?? null,
+    category: params.category ?? null,
   } as GroceryItem;
 }
 

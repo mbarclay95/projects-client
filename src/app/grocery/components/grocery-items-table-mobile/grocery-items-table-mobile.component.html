@@ -8,8 +8,11 @@
         }
       </div>
 
-      @if (item.tags.length > 0) {
+      @if (item.category || item.tags.length > 0) {
         <div class="second-row">
+          @if (item.category) {
+            <nz-tag>{{ item.category }}</nz-tag>
+          }
           @for (tag of item.tags; track tag) {
             <nz-tag>{{ tag }}</nz-tag>
           }

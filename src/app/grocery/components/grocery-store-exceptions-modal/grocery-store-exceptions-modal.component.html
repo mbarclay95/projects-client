@@ -1,0 +1,54 @@
+<nz-modal
+  [nzVisible]="isVisible()"
+  [nzTitle]="(openModal()?.name ?? '') + ' Exceptions'"
+  nzWidth="500px"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="closed.emit()"
+>
+  <ng-container *nzModalContent>
+    <div class="exceptions-list mb-3">
+      @for (exception of exceptions(); track exception.id) {
+        <div class="exception-row">
+          <div class="exception-names">
+            {{ itemName(exception.groceryItemId) }} <fa-icon [icon]="arrow"></fa-icon> {{ categoryName(exception.groceryCategoryId) }}
+          </div>
+          <button nz-button class="ant-btn-icon-only" nzType="text" (click)="removeException(exception.id)">
+            <fa-icon [icon]="minus" class="text-danger"></fa-icon>
+          </button>
+        </div>
+      } @empty {
+        <div class="text-muted">No exceptions yet.</div>
+      }
+    </div>
+
+    <div class="mb-2">Add exception:</div>
+
+    <div class="add-exception-row">
+      <nz-select [ngModel]="newItemId()" (ngModelChange)="newItemId.set($event)" nzPlaceHolder="Item" class="item-select">
+        @for (item of availableItems(); track item.id) {
+          <nz-option [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+        }
+      </nz-select>
+
+      <nz-select [ngModel]="newCategoryId()" (ngModelChange)="newCategoryId.set($event)" nzPlaceHolder="Category" class="category-select">
+        @for (category of groceryCategoriesStore.entities(); track category.id) {
+          <nz-option [nzLabel]="category.name" [nzValue]="category.id"></nz-option>
+        }
+      </nz-select>
+
+      <button
+        nz-button
+        class="ant-btn-icon-only"
+        nzType="primary"
+        (click)="addException()"
+        [disabled]="newItemId() === null || newCategoryId() === null"
+      >
+        <fa-icon [icon]="plus"></fa-icon>
+      </button>
+    </div>
+  </ng-container>
+
+  <div *nzModalFooter>
+    <button nz-button nzType="primary" (click)="closed.emit()">Done</button>
+  </div>
+</nz-modal>

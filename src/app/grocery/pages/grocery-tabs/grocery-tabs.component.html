@@ -7,11 +7,17 @@
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'master-list' }" queryParamsHandling="merge"> Master List </a>
     <app-grocery-items-page></app-grocery-items-page>
   </nz-tab>
+  <nz-tab (nzSelect)="selectedTab = 'Stores'">
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'stores' }" queryParamsHandling="merge"> Stores </a>
+    <app-grocery-stores-page></app-grocery-stores-page>
+  </nz-tab>
 </nz-tabs>
 
 <ng-template #createButton>
   @if (selectedTab === "Master List") {
     <button nz-button nzType="primary" (click)="createItem()">Create Item</button>
+  } @else if (selectedTab === "Stores") {
+    <button nz-button nzType="primary" (click)="createStore()">Create Store</button>
   } @else {
     <button nz-button nzType="primary" (click)="addItems()">Add Items</button>
   }

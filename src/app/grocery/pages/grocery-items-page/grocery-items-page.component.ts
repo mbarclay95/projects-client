@@ -5,6 +5,7 @@ import { GroceryItemsSignalStore } from '../../services/grocery-items-signal-sto
 import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-signal-store';
 import { GroceryStoreItemCategoriesSignalStore } from '../../services/grocery-store-item-categories-signal-store';
 import { GroceryStoreUnavailableItemsSignalStore } from '../../services/grocery-store-unavailable-items-signal-store';
+import { RecipesSignalStore } from '../../services/recipes-signal-store';
 import { NoGroceryGroupComponent } from '../../components/no-grocery-group/no-grocery-group.component';
 import { GroceryItemsFiltersComponent } from '../../components/grocery-items-filters/grocery-items-filters.component';
 import { GroceryItemsTableComponent } from '../../components/grocery-items-table/grocery-items-table.component';
@@ -33,6 +34,7 @@ export class GroceryItemsPageComponent {
   readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);
   readonly groceryStoreItemCategoriesStore = inject(GroceryStoreItemCategoriesSignalStore);
   readonly groceryStoreUnavailableItemsStore = inject(GroceryStoreUnavailableItemsSignalStore);
+  readonly recipesStore = inject(RecipesSignalStore);
 
   deleteItem(id: number): void {
     this.groceryItemsStore.remove({
@@ -41,6 +43,7 @@ export class GroceryItemsPageComponent {
         this.groceryListItemsStore.loadAll({});
         this.groceryStoreItemCategoriesStore.loadAll({});
         this.groceryStoreUnavailableItemsStore.loadAll({});
+        this.recipesStore.loadAll({});
       },
     });
   }

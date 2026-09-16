@@ -7,6 +7,7 @@ import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-s
 import { GroceryCategoriesSignalStore } from '../../services/grocery-categories-signal-store';
 import { GroceryStoreItemCategoriesSignalStore } from '../../services/grocery-store-item-categories-signal-store';
 import { GroceryStoreUnavailableItemsSignalStore } from '../../services/grocery-store-unavailable-items-signal-store';
+import { RecipesSignalStore } from '../../services/recipes-signal-store';
 import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
 import { NzModalComponent, NzModalContentDirective, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzInputDirective } from 'ng-zorro-antd/input';
@@ -46,6 +47,7 @@ export class CreateEditGroceryItemModalComponent extends DefaultModalSignalCompo
   readonly groceryCategoriesStore = inject(GroceryCategoriesSignalStore);
   readonly groceryStoreItemCategoriesStore = inject(GroceryStoreItemCategoriesSignalStore);
   readonly groceryStoreUnavailableItemsStore = inject(GroceryStoreUnavailableItemsSignalStore);
+  readonly recipesStore = inject(RecipesSignalStore);
   readonly tagsStore = inject(TagsSignalStore);
   readonly nzMessageService = inject(NzMessageService);
 
@@ -91,6 +93,7 @@ export class CreateEditGroceryItemModalComponent extends DefaultModalSignalCompo
         this.groceryListItemsStore.loadAll({});
         this.groceryStoreItemCategoriesStore.loadAll({});
         this.groceryStoreUnavailableItemsStore.loadAll({});
+        this.recipesStore.loadAll({});
       },
     });
   }

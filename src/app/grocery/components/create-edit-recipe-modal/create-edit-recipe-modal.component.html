@@ -1,0 +1,86 @@
+<nz-modal
+  [nzVisible]="isVisible()"
+  [nzTitle]="(model?.id === 0 ? 'Create' : 'Edit') + ' Recipe'"
+  nzWidth="500px"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="recipesStore.clearCreateEditEntity()"
+>
+  <ng-container *nzModalContent>
+    @if (model) {
+      <div class="w-100 mb-4">
+        <div class="mb-2">Name: <span class="text-danger">*</span></div>
+
+        <input nz-input [(ngModel)]="model.name" class="w-100" />
+      </div>
+
+      <div class="w-100 mb-4">
+        <div class="mb-2">Description:</div>
+
+        <textarea nz-input [(ngModel)]="model.description" class="w-100"></textarea>
+      </div>
+
+      <div class="w-100 mb-4">
+        <div class="mb-2">Ingredients:</div>
+
+        <div class="ingredients-list">
+          @for (ingredient of ingredients(); track ingredient.groceryItemId) {
+            @if (itemFor(ingredient.groceryItemId); as item) {
+              <div class="ingredient-row">
+                <div class="ingredient-name">{{ item.name }}</div>
+
+                @if (item.unit !== groceryItemUnit.none) {
+                  <nz-input-number
+                    class="amount"
+                    [ngModel]="ingredient.quantity"
+                    (ngModelChange)="setQuantity(ingredient.groceryItemId, $event)"
+                    [nzMin]="minFor(item)"
+                    [nzStep]="stepFor(item)"
+                    [nzPlaceHolder]="placeholderFor(item)"
+                  ></nz-input-number>
+                }
+
+                <button nz-button class="ant-btn-icon-only" nzType="text" (click)="removeIngredient(ingredient.groceryItemId)">
+                  <fa-icon [icon]="minus" class="text-danger"></fa-icon>
+                </button>
+              </div>
+            }
+          } @empty {
+            <div class="empty-text">No ingredients yet.</div>
+          }
+        </div>
+      </div>
+
+      <div class="w-100 mb-4">
+        <div class="mb-2">Add ingredient:</div>
+
+        <div class="add-ingredient-row">
+          <nz-select [ngModel]="newItemId()" (ngModelChange)="newItemId.set($event)" nzShowSearch nzPlaceHolder="Item" class="item-select">
+            @for (item of availableItems(); track item.id) {
+              <nz-option [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+            }
+          </nz-select>
+
+          <button nz-button class="ant-btn-icon-only" nzType="primary" (click)="addIngredient()" [disabled]="newItemId() === null">
+            <fa-icon [icon]="plus"></fa-icon>
+          </button>
+        </div>
+      </div>
+    }
+  </ng-container>
+
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="recipesStore.clearCreateEditEntity()" [disabled]="recipesStore.loadingOne() !== undefined">
+      Cancel
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      (click)="saveRecipe()"
+      [nzLoading]="recipesStore.loadingOne() !== undefined"
+      [disabled]="recipesStore.loadingOne() !== undefined"
+    >
+      Save
+    </button>
+  </div>
+</nz-modal>

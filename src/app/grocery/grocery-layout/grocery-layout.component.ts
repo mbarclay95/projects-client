@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { NzContentComponent } from 'ng-zorro-antd/layout';
 import { RouterOutlet } from '@angular/router';
 import { GroceryItemsSignalStore } from '../services/grocery-items-signal-store';
@@ -8,6 +8,7 @@ import { GroceryStoresSignalStore } from '../services/grocery-stores-signal-stor
 import { GroceryStoreItemCategoriesSignalStore } from '../services/grocery-store-item-categories-signal-store';
 import { GroceryStoreUnavailableItemsSignalStore } from '../services/grocery-store-unavailable-items-signal-store';
 import { RecipesSignalStore } from '../services/recipes-signal-store';
+import { MealsSignalStore } from '../services/meals-signal-store';
 import { TagsSignalStore } from '../../shared/services/tags-signal-store';
 
 @Component({
@@ -24,6 +25,7 @@ export class GroceryLayoutComponent {
   readonly groceryStoreItemCategoriesStore = inject(GroceryStoreItemCategoriesSignalStore);
   readonly groceryStoreUnavailableItemsStore = inject(GroceryStoreUnavailableItemsSignalStore);
   readonly recipesStore = inject(RecipesSignalStore);
+  readonly mealsStore = inject(MealsSignalStore);
   readonly tagsStore = inject(TagsSignalStore);
 
   constructor() {
@@ -35,5 +37,9 @@ export class GroceryLayoutComponent {
     this.groceryStoreUnavailableItemsStore.loadAll({});
     this.recipesStore.loadAll({});
     this.tagsStore.loadAll('grocery');
+    effect(() => {
+      this.mealsStore.setQueryString(this.mealsStore.buildQueryString());
+      this.mealsStore.loadAll({});
+    });
   }
 }

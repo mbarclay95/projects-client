@@ -68,19 +68,43 @@
     }
   </ng-container>
 
-  <div *nzModalFooter>
-    <button nz-button nzType="default" (click)="recipesStore.clearCreateEditEntity()" [disabled]="recipesStore.loadingOne() !== undefined">
-      Cancel
-    </button>
+  <div *nzModalFooter class="d-flex justify-content-between">
+    <div>
+      @if (model?.id !== 0) {
+        <button
+          nz-button
+          nzType="primary"
+          nzDanger
+          nz-popconfirm
+          (nzOnConfirm)="deleteRecipe()"
+          nzPopconfirmTitle="Are you sure?"
+          [nzLoading]="deleting()"
+          [disabled]="deleting() || recipesStore.loadingOne() !== undefined"
+        >
+          Delete
+        </button>
+      }
+    </div>
 
-    <button
-      nz-button
-      nzType="primary"
-      (click)="saveRecipe()"
-      [nzLoading]="recipesStore.loadingOne() !== undefined"
-      [disabled]="recipesStore.loadingOne() !== undefined"
-    >
-      Save
-    </button>
+    <div>
+      <button
+        nz-button
+        nzType="default"
+        (click)="recipesStore.clearCreateEditEntity()"
+        [disabled]="recipesStore.loadingOne() !== undefined || deleting()"
+      >
+        Cancel
+      </button>
+
+      <button
+        nz-button
+        nzType="primary"
+        (click)="saveRecipe()"
+        [nzLoading]="recipesStore.loadingOne() !== undefined"
+        [disabled]="recipesStore.loadingOne() !== undefined || deleting()"
+      >
+        Save
+      </button>
+    </div>
   </div>
 </nz-modal>

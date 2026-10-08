@@ -1,0 +1,15 @@
+<div class="row-text">
+  <div class="row-title-line">
+    <div class="row-title"><ng-content /></div>
+    @if (aside()) {
+      <div class="row-aside">{{ aside() }}</div>
+    }
+  </div>
+  @if (meta()) {
+    <div class="row-meta">{{ meta() }}</div>
+  }
+</div>
+
+<div class="row-actions" (click)="$event.stopPropagation()">
+  <ng-content select="[actions]" />
+</div>

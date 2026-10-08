@@ -8,7 +8,6 @@
       <app-grocery-items-table-mobile
         [items]="groceryItemsStore.filteredItems()"
         (editItem)="groceryItemsStore.editEntity($event)"
-        (deleteItem)="deleteItem($event)"
       ></app-grocery-items-table-mobile>
     } @else {
       <app-grocery-items-table

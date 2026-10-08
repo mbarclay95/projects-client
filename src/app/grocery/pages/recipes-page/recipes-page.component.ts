@@ -1,4 +1,6 @@
 import { Component, inject } from '@angular/core';
+import { isMobile } from '../../../app.component';
+import { MobileListComponent, MobileListRowComponent } from '../../../shared/components/mobile-list/mobile-list.component';
 import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
 import { RecipesSignalStore } from '../../services/recipes-signal-store';
 import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-signal-store';
@@ -19,7 +21,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faCartPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { addRecipeToListMessage } from '../../models/recipe.model';
+import { addRecipeToListMessage, Recipe } from '../../models/recipe.model';
 
 @Component({
   selector: 'app-recipes-page',
@@ -39,9 +41,13 @@ import { addRecipeToListMessage } from '../../models/recipe.model';
     NzEmptyComponent,
     NzModalModule,
     FaIconComponent,
+    MobileListComponent,
+    MobileListRowComponent,
   ],
 })
 export class RecipesPageComponent {
+  isMobile = isMobile;
+
   readonly authStore = inject(AuthSignalStore);
   readonly recipesStore = inject(RecipesSignalStore);
   readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);
@@ -59,6 +65,11 @@ export class RecipesPageComponent {
         this.groceryListItemsStore.loadAll({});
       },
     });
+  }
+
+  detailsFor(recipe: Recipe): string {
+    const count = recipe.ingredients.length;
+    return [`${count} ${count === 1 ? 'ingredient' : 'ingredients'}`, recipe.description].filter(Boolean).join(' · ');
   }
 
   deleteRecipe(id: number): void {

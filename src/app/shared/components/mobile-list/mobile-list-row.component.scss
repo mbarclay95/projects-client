@@ -1,0 +1,56 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 52px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+:host(:not(:first-child)) {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.row-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.row-title-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.row-title {
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row-aside {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.row-meta {
+  margin-top: 2px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  &:empty {
+    display: none;
+  }
+}

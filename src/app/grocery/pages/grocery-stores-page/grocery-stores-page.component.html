@@ -4,6 +4,24 @@
   <div class="w-100 grocery-page-container p-2">
     @if (groceryStoresStore.entities().length === 0) {
       <nz-empty nzNotFoundContent="No stores yet"></nz-empty>
+    } @else if (isMobile) {
+      <app-mobile-list>
+        @for (store of groceryStoresStore.entities(); track store.id) {
+          <app-mobile-list-row (rowClick)="groceryStoresStore.editEntity(store.id)">
+            {{ store.name }}
+
+            <div actions>
+              <button nz-button class="ant-btn-icon-only" nzType="text" (click)="exceptionsForStore.set(store)">
+                <fa-icon [icon]="exceptionsIcon" class="text-primary"></fa-icon>
+              </button>
+
+              <button nz-button class="ant-btn-icon-only" nzType="text" (click)="unavailableForStore.set(store)">
+                <fa-icon [icon]="unavailableIcon" class="text-primary"></fa-icon>
+              </button>
+            </div>
+          </app-mobile-list-row>
+        }
+      </app-mobile-list>
     } @else {
       <nz-table [nzData]="groceryStoresStore.entities()" nzSize="default" [nzFrontPagination]="false">
         <thead>

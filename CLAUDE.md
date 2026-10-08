@@ -71,6 +71,16 @@ satisfy, and the failure only appears on a clean install, not an incremental one
 
 `isMobile` constant (screen < 900px) gates layout differences. `MobileDisplayService` coordinates header title, create button visibility, and footer buttons across components.
 
+**New features never render `nz-table` on mobile.** A list page branches on `isMobile` and
+renders `<app-mobile-list>` / `<app-mobile-list-row>` (`src/app/shared/components/mobile-list/`)
+instead; the desktop `nz-table` stays as is. A row shows the entity's name, an optional
+`aside` (a short value on the right of the name, e.g. an amount) and an optional one-line
+`meta` beneath it. Tapping the row opens the edit modal, so a row carries no Edit button, and
+Delete lives in that modal's footer rather than on the row. Only a genuine quick action (e.g.
+a recipe's Add to list) goes on the row, projected through the `actions` slot — clicks inside
+it don't reach `rowClick`. The older features' hand-built mobile tables (tasks, events, goals,
+drafts, the shopping list) predate this and aren't converted on sight.
+
 ### Permissions
 
 `Permissions` enum drives role-based access. Route guards and computed signals on `AuthSignalStore` filter available routes and features per user.

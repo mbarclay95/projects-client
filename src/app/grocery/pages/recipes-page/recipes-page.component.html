@@ -4,6 +4,27 @@
   <div class="w-100 grocery-page-container p-2">
     @if (recipesStore.entities().length === 0) {
       <nz-empty nzNotFoundContent="No recipes yet"></nz-empty>
+    } @else if (isMobile) {
+      <app-mobile-list>
+        @for (recipe of recipesStore.entities(); track recipe.id) {
+          <app-mobile-list-row [meta]="detailsFor(recipe)" (rowClick)="recipesStore.editEntity(recipe.id)">
+            {{ recipe.name }}
+
+            <div actions>
+              <button
+                nz-button
+                class="ant-btn-icon-only"
+                nzType="text"
+                [nzLoading]="recipesStore.addingRecipeIds().includes(recipe.id)"
+                [disabled]="recipe.ingredients.length === 0"
+                (click)="addToList(recipe.id)"
+              >
+                <fa-icon [icon]="cartPlus" class="text-primary"></fa-icon>
+              </button>
+            </div>
+          </app-mobile-list-row>
+        }
+      </app-mobile-list>
     } @else {
       <nz-table [nzData]="recipesStore.entities()" nzSize="default" [nzFrontPagination]="false">
         <thead>

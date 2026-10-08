@@ -1,4 +1,4 @@
-import { Component, computed, inject, linkedSignal } from '@angular/core';
+import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { GroceryStore } from '../../models/grocery-store.model';
@@ -11,6 +11,7 @@ import { NzModalComponent, NzModalContentDirective, NzModalFooterDirective } fro
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
 
 @Component({
@@ -24,6 +25,7 @@ import { NzEmptyComponent } from 'ng-zorro-antd/empty';
     NzInputDirective,
     FormsModule,
     NzButtonComponent,
+    NzPopconfirmDirective,
     NzEmptyComponent,
     CdkDropList,
     CdkDragHandle,
@@ -32,6 +34,8 @@ import { NzEmptyComponent } from 'ng-zorro-antd/empty';
   ],
 })
 export class CreateEditGroceryStoreModalComponent extends DefaultModalSignalComponent<GroceryStore> {
+  readonly deleting = signal(false);
+
   readonly groceryStoresStore = inject(GroceryStoresSignalStore);
   readonly groceryCategoriesStore = inject(GroceryCategoriesSignalStore);
   readonly nzMessageService = inject(NzMessageService);
@@ -59,6 +63,10 @@ export class CreateEditGroceryStoreModalComponent extends DefaultModalSignalComp
     return this.groceryCategoriesStore.entities().filter((category) => !ordered.has(category.id));
   });
 
+  override onCloseModal(): void {
+    this.deleting.set(false);
+  }
+
   drop(event: CdkDragDrop<number[]>): void {
     const ids = [...this.orderedCategoryIds()];
     moveItemInArray(ids, event.previousIndex, event.currentIndex);
@@ -84,5 +92,19 @@ export class CreateEditGroceryStoreModalComponent extends DefaultModalSignalComp
   storeSaved(): void {
     this.nzMessageService.success('Store Saved!');
     this.groceryStoresStore.clearCreateEditEntity();
+  }
+
+  deleteStore(): void {
+    if (!this.model) {
+      return;
+    }
+    this.deleting.set(true);
+    this.groceryStoresStore.remove({
+      id: this.model.id,
+      onSuccess: () => {
+        this.nzMessageService.success('Store Deleted!');
+        this.groceryStoresStore.clearCreateEditEntity();
+      },
+    });
   }
 }

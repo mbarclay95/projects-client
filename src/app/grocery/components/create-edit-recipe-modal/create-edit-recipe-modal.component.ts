@@ -11,6 +11,7 @@ import { NzInputNumberComponent } from 'ng-zorro-antd/input-number';
 import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
 import { FormsModule } from '@angular/forms';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -28,10 +29,13 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
     NzOptionComponent,
     FormsModule,
     NzButtonComponent,
+    NzPopconfirmDirective,
     FaIconComponent,
   ],
 })
 export class CreateEditRecipeModalComponent extends DefaultModalSignalComponent<Recipe> {
+  readonly deleting = signal(false);
+
   readonly recipesStore = inject(RecipesSignalStore);
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
   readonly nzMessageService = inject(NzMessageService);
@@ -50,6 +54,7 @@ export class CreateEditRecipeModalComponent extends DefaultModalSignalComponent<
   });
 
   override onCloseModal(): void {
+    this.deleting.set(false);
     this.newItemId.set(null);
   }
 
@@ -99,5 +104,19 @@ export class CreateEditRecipeModalComponent extends DefaultModalSignalComponent<
   recipeSaved(): void {
     this.nzMessageService.success('Recipe Saved!');
     this.recipesStore.clearCreateEditEntity();
+  }
+
+  deleteRecipe(): void {
+    if (!this.model) {
+      return;
+    }
+    this.deleting.set(true);
+    this.recipesStore.remove({
+      id: this.model.id,
+      onSuccess: () => {
+        this.nzMessageService.success('Recipe Deleted!');
+        this.recipesStore.clearCreateEditEntity();
+      },
+    });
   }
 }

@@ -1,4 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
+import { isMobile } from '../../../app.component';
+import { MobileListComponent, MobileListRowComponent } from '../../../shared/components/mobile-list/mobile-list.component';
 import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
 import { GroceryStoresSignalStore } from '../../services/grocery-stores-signal-store';
 import { GroceryStore } from '../../models/grocery-store.model';
@@ -41,9 +43,13 @@ import { faBan, faEdit, faList, faTrash } from '@fortawesome/free-solid-svg-icon
     NzEmptyComponent,
     NzModalModule,
     FaIconComponent,
+    MobileListComponent,
+    MobileListRowComponent,
   ],
 })
 export class GroceryStoresPageComponent {
+  isMobile = isMobile;
+
   readonly authStore = inject(AuthSignalStore);
   readonly groceryStoresStore = inject(GroceryStoresSignalStore);
 

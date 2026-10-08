@@ -1,0 +1,20 @@
+<div class="heading">
+  {{ heading() }}
+  @if (isToday()) {
+    <span class="today-label">Today</span>
+  }
+</div>
+
+@for (group of groups(); track group.slot) {
+  <div class="slot-label">{{ slotLabels[group.slot] }}</div>
+  @for (meal of group.meals; track meal.id) {
+    <div class="dish">
+      @if (linkedRecipe(meal, recipesStore.entities())) {
+        <fa-icon class="dish-icon" [icon]="recipeIcon"></fa-icon>
+      }
+      {{ mealName(meal, recipesStore.entities()) }}
+    </div>
+  }
+} @empty {
+  <div class="nothing-planned">Nothing planned</div>
+}

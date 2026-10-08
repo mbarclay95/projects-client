@@ -7,6 +7,7 @@ import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-s
 import { GroceryStoresSignalStore } from '../../services/grocery-stores-signal-store';
 import { RecipesSignalStore } from '../../services/recipes-signal-store';
 import { ShoppingListPageComponent } from '../shopping-list-page/shopping-list-page.component';
+import { MealsPageComponent } from '../meals-page/meals-page.component';
 import { GroceryItemsPageComponent } from '../grocery-items-page/grocery-items-page.component';
 import { GroceryStoresPageComponent } from '../grocery-stores-page/grocery-stores-page.component';
 import { RecipesPageComponent } from '../recipes-page/recipes-page.component';
@@ -23,13 +24,14 @@ import { RecipesPageComponent } from '../recipes-page/recipes-page.component';
     RouterLink,
     NzButtonComponent,
     ShoppingListPageComponent,
+    MealsPageComponent,
     GroceryItemsPageComponent,
     GroceryStoresPageComponent,
     RecipesPageComponent,
   ],
 })
 export class GroceryTabsComponent {
-  selectedTab: 'Shopping List' | 'Master List' | 'Stores' | 'Recipes' = 'Shopping List';
+  selectedTab: 'Shopping List' | 'Meals' | 'Master List' | 'Stores' | 'Recipes' = 'Shopping List';
 
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
   readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);

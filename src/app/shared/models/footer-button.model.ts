@@ -1,5 +1,14 @@
 import { IconDefinition } from '@fortawesome/free-brands-svg-icons';
-import { faBookOpen, faCartShopping, faChartPie, faPeopleRoof, faStore, faTableList, faTasks } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBookOpen,
+  faCartShopping,
+  faChartPie,
+  faPeopleRoof,
+  faStore,
+  faTableList,
+  faTasks,
+  faUtensils,
+} from '@fortawesome/free-solid-svg-icons';
 
 export interface FooterButton {
   path: string;
@@ -35,6 +44,11 @@ export const defaultGroceryButtons = [
     icon: faCartShopping,
     title: 'Shopping List',
     path: '/app/grocery/shopping-list',
+  },
+  {
+    icon: faUtensils,
+    title: 'Meals',
+    path: '/app/grocery/meals',
   },
   {
     icon: faTableList,

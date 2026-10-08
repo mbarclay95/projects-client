@@ -2,6 +2,7 @@ import { Component, computed, inject, linkedSignal, signal } from '@angular/core
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
 import { createRecipeIngredient, Recipe } from '../../models/recipe.model';
+import { MealsSignalStore } from '../../services/meals-signal-store';
 import { RecipesSignalStore } from '../../services/recipes-signal-store';
 import { GroceryItem, GroceryItemUnit } from '../../models/grocery-item.model';
 import { GroceryItemsSignalStore } from '../../services/grocery-items-signal-store';
@@ -38,6 +39,7 @@ export class CreateEditRecipeModalComponent extends DefaultModalSignalComponent<
 
   readonly recipesStore = inject(RecipesSignalStore);
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
+  readonly mealsStore = inject(MealsSignalStore);
   readonly nzMessageService = inject(NzMessageService);
 
   readonly groceryItemUnit = GroceryItemUnit;
@@ -115,6 +117,7 @@ export class CreateEditRecipeModalComponent extends DefaultModalSignalComponent<
       id: this.model.id,
       onSuccess: () => {
         this.nzMessageService.success('Recipe Deleted!');
+        this.mealsStore.loadAll({});
         this.recipesStore.clearCreateEditEntity();
       },
     });

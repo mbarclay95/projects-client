@@ -15,9 +15,8 @@
                 nz-button
                 class="ant-btn-icon-only"
                 nzType="text"
-                [nzLoading]="recipesStore.addingRecipeIds().includes(recipe.id)"
                 [disabled]="recipe.ingredients.length === 0"
-                (click)="addToList(recipe.id)"
+                (click)="recipesStore.openIngredients(recipe.id)"
               >
                 <fa-icon [icon]="cartPlus" class="text-primary"></fa-icon>
               </button>
@@ -49,9 +48,8 @@
                   nz-button
                   class="ant-btn-icon-only"
                   nzType="text"
-                  [nzLoading]="recipesStore.addingRecipeIds().includes(recipe.id)"
                   [disabled]="recipe.ingredients.length === 0"
-                  (click)="addToList(recipe.id)"
+                  (click)="recipesStore.openIngredients(recipe.id)"
                 >
                   <fa-icon [icon]="cartPlus" class="text-primary"></fa-icon>
                 </button>
@@ -79,4 +77,5 @@
   </div>
 
   <app-create-edit-recipe-modal [openModal]="recipesStore.createEditEntity()"></app-create-edit-recipe-modal>
+  <app-add-recipe-ingredients-modal [openModal]="recipesStore.ingredientsRecipeId()"></app-add-recipe-ingredients-modal>
 }

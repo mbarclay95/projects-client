@@ -8,11 +8,19 @@
 @for (group of groups(); track group.slot) {
   <div class="slot-label">{{ slotLabels[group.slot] }}</div>
   @for (meal of group.meals; track meal.id) {
+    @let recipe = linkedRecipe(meal, recipesStore.entities());
     <div class="dish">
-      @if (linkedRecipe(meal, recipesStore.entities())) {
-        <fa-icon class="dish-icon" [icon]="recipeIcon"></fa-icon>
+      <div class="dish-name">
+        @if (recipe) {
+          <fa-icon class="dish-icon" [icon]="recipeIcon"></fa-icon>
+        }
+        {{ mealName(meal, recipesStore.entities()) }}
+      </div>
+      @if (recipe && recipe.ingredients.length > 0) {
+        <button nz-button nzType="text" class="ant-btn-icon-only" (click)="addIngredients($event, recipe.id)">
+          <fa-icon [icon]="cartIcon" class="text-primary"></fa-icon>
+        </button>
       }
-      {{ mealName(meal, recipesStore.entities()) }}
     </div>
   }
 } @empty {

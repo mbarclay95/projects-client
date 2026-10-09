@@ -1,0 +1,50 @@
+<nz-modal
+  [nzVisible]="isVisible()"
+  [nzTitle]="recipe()?.name ?? ''"
+  [nzWidth]="modalWidth"
+  [nzStyle]="modalStyle"
+  [nzMaskClosable]="false"
+  (nzOnCancel)="recipesStore.closeIngredients()"
+>
+  <ng-container *nzModalContent>
+    <button nz-button nzType="primary" nzBlock [nzLoading]="addingAll()" [disabled]="rows().length === 0" (click)="addAll()">
+      Add all
+    </button>
+
+    <div class="picker-list">
+      @for (row of rows(); track row.item.id) {
+        <div class="picker-row">
+          <div class="picker-info">
+            <div class="title">{{ row.item.name }}</div>
+            @if (onListNote(groceryListItemsStore.entryByGroceryItemId().get(row.item.id)); as note) {
+              <div class="unavailable-label">{{ note }}</div>
+            }
+          </div>
+
+          @if (row.item.unit !== groceryItemUnit.none) {
+            <nz-input-number
+              class="amount"
+              [ngModel]="amounts()[row.item.id]"
+              (ngModelChange)="setAmount(row.item, $event)"
+              [nzMin]="minFor(row.item)"
+              [nzStep]="stepFor(row.item)"
+            ></nz-input-number>
+          }
+
+          <button
+            nz-button
+            [nzLoading]="groceryListItemsStore.addingItemIds().includes(row.item.id)"
+            [disabled]="addingAll()"
+            (click)="add(row.item)"
+          >
+            Add
+          </button>
+        </div>
+      }
+    </div>
+  </ng-container>
+
+  <div *nzModalFooter>
+    <button nz-button nzType="primary" (click)="recipesStore.closeIngredients()">Done</button>
+  </div>
+</nz-modal>

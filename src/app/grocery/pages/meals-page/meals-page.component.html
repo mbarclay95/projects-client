@@ -1,0 +1,17 @@
+@if (authStore.auth()?.groupIds?.grocery === null) {
+  <app-no-grocery-group></app-no-grocery-group>
+} @else {
+  <div class="w-100 grocery-page-container p-2">
+    <div class="meals-column">
+      <app-meal-week-selector></app-meal-week-selector>
+
+      <nz-spin [nzSpinning]="mealsStore.loadingAll()">
+        @for (date of mealsStore.weekDates(); track date) {
+          <app-meal-day-card [date]="date"></app-meal-day-card>
+        }
+      </nz-spin>
+    </div>
+  </div>
+
+  <app-edit-meal-day-modal [openModal]="mealsStore.editingDate()"></app-edit-meal-day-modal>
+}

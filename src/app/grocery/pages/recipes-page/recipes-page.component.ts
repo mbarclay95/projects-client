@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { isMobile } from '../../../app.component';
 import { MobileListComponent, MobileListRowComponent } from '../../../shared/components/mobile-list/mobile-list.component';
 import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
+import { MealsSignalStore } from '../../services/meals-signal-store';
 import { RecipesSignalStore } from '../../services/recipes-signal-store';
 import { GroceryListItemsSignalStore } from '../../services/grocery-list-items-signal-store';
 import { NoGroceryGroupComponent } from '../../components/no-grocery-group/no-grocery-group.component';
@@ -51,6 +52,7 @@ export class RecipesPageComponent {
   readonly authStore = inject(AuthSignalStore);
   readonly recipesStore = inject(RecipesSignalStore);
   readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);
+  private readonly mealsStore = inject(MealsSignalStore);
   private readonly nzMessageService = inject(NzMessageService);
 
   cartPlus = faCartPlus;
@@ -73,6 +75,6 @@ export class RecipesPageComponent {
   }
 
   deleteRecipe(id: number): void {
-    this.recipesStore.remove({ id });
+    this.recipesStore.remove({ id, onSuccess: () => this.mealsStore.loadAll({}) });
   }
 }

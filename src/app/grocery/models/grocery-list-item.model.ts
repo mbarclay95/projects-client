@@ -27,3 +27,13 @@ export function formatGroceryListItemAmount(entry: GroceryListItem): string {
 
   return entry.groceryItem.unit === GroceryItemUnit.weight ? `${entry.quantity} lb` : `${entry.quantity}`;
 }
+
+export function onListNote(entry: GroceryListItem | undefined): string | null {
+  if (!entry) {
+    return null;
+  }
+
+  const amount = formatGroceryListItemAmount(entry);
+
+  return amount ? `Already on list · ${amount}` : 'Already on list';
+}

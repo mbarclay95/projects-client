@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSpinComponent } from 'ng-zorro-antd/spin';
 import { AuthSignalStore } from '../../../auth/services/auth-signal-store';
 import { MealsSignalStore } from '../../services/meals-signal-store';
@@ -11,7 +12,14 @@ import { MealDayCardComponent } from '../../components/meal-day-card/meal-day-ca
   selector: 'app-meals-page',
   templateUrl: './meals-page.component.html',
   styleUrls: ['./meals-page.component.scss'],
-  imports: [NoGroceryGroupComponent, MealWeekSelectorComponent, MealDayCardComponent, EditMealDayModalComponent, NzSpinComponent],
+  imports: [
+    NoGroceryGroupComponent,
+    MealWeekSelectorComponent,
+    MealDayCardComponent,
+    EditMealDayModalComponent,
+    NzSpinComponent,
+    NzModalModule,
+  ],
 })
 export class MealsPageComponent {
   readonly authStore = inject(AuthSignalStore);

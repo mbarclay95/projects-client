@@ -31,7 +31,7 @@ import { RecipesPageComponent } from '../recipes-page/recipes-page.component';
   ],
 })
 export class GroceryTabsComponent {
-  selectedTab: 'Shopping List' | 'Meals' | 'Master List' | 'Stores' | 'Recipes' = 'Shopping List';
+  selectedTab: 'Shopping List' | 'Meals' | 'Recipes' | 'Master List' | 'Stores' = 'Shopping List';
 
   readonly groceryItemsStore = inject(GroceryItemsSignalStore);
   readonly groceryListItemsStore = inject(GroceryListItemsSignalStore);

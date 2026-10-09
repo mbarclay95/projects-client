@@ -51,6 +51,11 @@ export const defaultGroceryButtons = [
     path: '/app/grocery/meals',
   },
   {
+    icon: faBookOpen,
+    title: 'Recipes',
+    path: '/app/grocery/recipes',
+  },
+  {
     icon: faTableList,
     title: 'Master List',
     path: '/app/grocery/master-list',
@@ -59,10 +64,5 @@ export const defaultGroceryButtons = [
     icon: faStore,
     title: 'Stores',
     path: '/app/grocery/stores',
-  },
-  {
-    icon: faBookOpen,
-    title: 'Recipes',
-    path: '/app/grocery/recipes',
   },
 ];

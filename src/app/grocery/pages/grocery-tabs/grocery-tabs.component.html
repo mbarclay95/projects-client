@@ -7,6 +7,10 @@
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'meals' }" queryParamsHandling="merge"> Meals </a>
     <app-meals-page></app-meals-page>
   </nz-tab>
+  <nz-tab (nzSelect)="selectedTab = 'Recipes'">
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'recipes' }" queryParamsHandling="merge"> Recipes </a>
+    <app-recipes-page></app-recipes-page>
+  </nz-tab>
   <nz-tab (nzSelect)="selectedTab = 'Master List'">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'master-list' }" queryParamsHandling="merge"> Master List </a>
     <app-grocery-items-page></app-grocery-items-page>
@@ -14,10 +18,6 @@
   <nz-tab (nzSelect)="selectedTab = 'Stores'">
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'stores' }" queryParamsHandling="merge"> Stores </a>
     <app-grocery-stores-page></app-grocery-stores-page>
-  </nz-tab>
-  <nz-tab (nzSelect)="selectedTab = 'Recipes'">
-    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'recipes' }" queryParamsHandling="merge"> Recipes </a>
-    <app-recipes-page></app-recipes-page>
   </nz-tab>
 </nz-tabs>
 

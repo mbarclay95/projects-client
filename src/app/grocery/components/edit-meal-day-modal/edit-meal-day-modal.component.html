@@ -9,31 +9,40 @@
   <ng-container *nzModalContent>
     @for (slot of slots; track slot) {
       <div class="w-100 mb-4">
-        <div class="slot-label mb-2">{{ slotLabels[slot] }}</div>
-
-        @for (row of drafts()[slot]; track row.key) {
-          <div class="dish-row">
-            <input
-              nz-input
-              nzSize="large"
-              class="dish-input"
-              [ngModel]="row.name"
-              (ngModelChange)="setName(slot, row.key, $event)"
-              [nzAutocomplete]="suggestions"
-            />
-            <nz-autocomplete #suggestions [nzDefaultActiveFirstOption]="false">
-              @for (recipe of suggestionsFor(row.name); track recipe.id) {
-                <nz-auto-option [nzValue]="recipe.name">{{ recipe.name }}</nz-auto-option>
-              }
-            </nz-autocomplete>
-
-            <button nz-button class="ant-btn-icon-only" nzType="text" (click)="removeRow(slot, row.key)">
-              <fa-icon [icon]="xmark" class="text-danger"></fa-icon>
-            </button>
-          </div>
+        @if (slot === "dinner") {
+          <div class="slot-label mb-2">{{ slotLabels[slot] }}</div>
+        } @else {
+          <button type="button" class="slot-toggle mb-2" (click)="toggleSlot(slot)">
+            <span class="slot-label">{{ slotLabels[slot] }}</span>
+            <span class="slot-hint">{{ expanded()[slot] ? "Hide" : "Add" }}</span>
+          </button>
         }
 
-        <button nz-button nzType="dashed" nzBlock (click)="addRow(slot)">Add dish</button>
+        @if (expanded()[slot]) {
+          @for (row of drafts()[slot]; track row.key) {
+            <div class="dish-row">
+              <input
+                nz-input
+                nzSize="large"
+                class="dish-input"
+                [ngModel]="row.name"
+                (ngModelChange)="setName(slot, row.key, $event)"
+                [nzAutocomplete]="suggestions"
+              />
+              <nz-autocomplete #suggestions [nzDefaultActiveFirstOption]="false">
+                @for (recipe of suggestionsFor(row.name); track recipe.id) {
+                  <nz-auto-option [nzValue]="recipe.name">{{ recipe.name }}</nz-auto-option>
+                }
+              </nz-autocomplete>
+
+              <button nz-button class="ant-btn-icon-only" nzType="text" (click)="removeRow(slot, row.key)">
+                <fa-icon [icon]="xmark" class="text-danger"></fa-icon>
+              </button>
+            </div>
+          }
+
+          <button nz-button nzType="dashed" nzBlock (click)="addRow(slot)">Add dish</button>
+        }
       </div>
     }
   </ng-container>

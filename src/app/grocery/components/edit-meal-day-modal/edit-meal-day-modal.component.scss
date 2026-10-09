@@ -14,3 +14,19 @@
 .dish-input {
   flex: 1;
 }
+
+.slot-toggle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.slot-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+}

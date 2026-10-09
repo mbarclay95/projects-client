@@ -48,6 +48,7 @@ export class EditMealDayModalComponent extends DefaultModalSignalComponent<strin
   readonly xmark = faXmark;
 
   readonly drafts = signal<Drafts>(this.emptyDrafts());
+  readonly expanded = signal<Record<MealSlot, boolean>>({ breakfast: false, lunch: false, dinner: true });
 
   private nextKey = 0;
 
@@ -66,18 +67,25 @@ export class EditMealDayModalComponent extends DefaultModalSignalComponent<strin
       const recipes = this.recipesStore.entities();
       const groups = mealsBySlot(meals, date);
       const drafts = this.emptyDrafts();
+      const expanded: Record<MealSlot, boolean> = { breakfast: false, lunch: false, dinner: true };
       for (const slot of MEAL_SLOTS) {
         const group = groups.find((candidate) => candidate.slot === slot);
         const rows = (group?.meals ?? []).map((meal) => this.newRow(mealName(meal, recipes)));
         drafts[slot] = rows.length > 0 ? rows : [this.newRow('')];
+        expanded[slot] = slot === 'dinner' || rows.length > 0;
       }
       this.drafts.set(drafts);
+      this.expanded.set(expanded);
     });
   }
 
   suggestionsFor(text: string): Recipe[] {
     const needle = text.trim().toLowerCase();
     return this.recipesStore.entities().filter((recipe) => recipe.name.toLowerCase().includes(needle));
+  }
+
+  toggleSlot(slot: MealSlot): void {
+    this.expanded.update((expanded) => ({ ...expanded, [slot]: !expanded[slot] }));
   }
 
   setName(slot: MealSlot, key: number, name: string): void {

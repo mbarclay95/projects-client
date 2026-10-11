@@ -12,7 +12,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
-import { formatGroceryItemAmount, GroceryItem } from '../../models/grocery-item.model';
+import { formatGroceryItemAmount, GROCERY_TAGS_ENABLED, GroceryItem } from '../../models/grocery-item.model';
 
 @Component({
   selector: 'app-grocery-items-table',
@@ -41,4 +41,5 @@ export class GroceryItemsTableComponent {
   trash = faTrash;
 
   formatGroceryItemAmount = formatGroceryItemAmount;
+  tagsEnabled = GROCERY_TAGS_ENABLED;
 }

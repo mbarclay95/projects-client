@@ -8,10 +8,38 @@
 >
   <ng-container *nzModalContent>
     <div class="filter-container">
-      <input nz-input placeholder="Search" [ngModel]="search()" (ngModelChange)="updateSearch($event)" class="filter-boxes" />
+      <nz-input-group class="filter-boxes" [nzSuffix]="clearSearchButton">
+        <input nz-input placeholder="Search" [ngModel]="searchText()" (ngModelChange)="updateSearch($event)" />
+      </nz-input-group>
+
+      <ng-template #clearSearchButton>
+        @if (searchText()) {
+          <fa-icon [icon]="clear" class="clear-search" (click)="clearSearch()"></fa-icon>
+        }
+      </ng-template>
     </div>
 
     <div class="picker-list">
+      @if (newItemName(); as name) {
+        <div class="picker-row">
+          <div class="picker-info">
+            <div class="title">{{ name }}</div>
+            <div class="unavailable-label">Not on the master list</div>
+          </div>
+
+          <button
+            nz-button
+            nzType="primary"
+            nzSize="small"
+            [nzLoading]="creatingItem()"
+            [disabled]="creatingItem()"
+            (click)="createAndAdd(name)"
+          >
+            Add to master list
+          </button>
+        </div>
+      }
+
       @for (item of filteredItems(); track item.id) {
         <div class="picker-row">
           <div class="picker-info">

@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
 import { MobileListComponent, MobileListRowComponent } from '../../../shared/components/mobile-list/mobile-list.component';
-import { formatGroceryItemAmount, GroceryItem } from '../../models/grocery-item.model';
+import { formatGroceryItemAmount, GROCERY_TAGS_ENABLED, GroceryItem } from '../../models/grocery-item.model';
 
 @Component({
   selector: 'app-grocery-items-table-mobile',
@@ -16,6 +16,7 @@ export class GroceryItemsTableMobileComponent {
   formatGroceryItemAmount = formatGroceryItemAmount;
 
   detailsFor(item: GroceryItem): string {
-    return [item.category, ...item.tags].filter(Boolean).join(' · ');
+    const tags = GROCERY_TAGS_ENABLED ? item.tags : [];
+    return [item.category, ...tags].filter(Boolean).join(' · ');
   }
 }

@@ -2,7 +2,9 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Tags</th>
+      @if (tagsEnabled) {
+        <th>Tags</th>
+      }
       <th>Category</th>
       <th>Amount</th>
       <th nzWidth="100px"></th>
@@ -12,11 +14,13 @@
     @for (item of items(); track item.id) {
       <tr>
         <td>{{ item.name }}</td>
-        <td>
-          @for (tag of item.tags; track tag) {
-            <nz-tag>{{ tag }}</nz-tag>
-          }
-        </td>
+        @if (tagsEnabled) {
+          <td>
+            @for (tag of item.tags; track tag) {
+              <nz-tag>{{ tag }}</nz-tag>
+            }
+          </td>
+        }
         <td>{{ item.category }}</td>
         <td>{{ formatGroceryItemAmount(item) }}</td>
         <td>

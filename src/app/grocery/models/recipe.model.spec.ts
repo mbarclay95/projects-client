@@ -1,4 +1,4 @@
-import { addRecipeToListMessage } from './recipe.model';
+import { addRecipeToListMessage, normaliseRecipeUrl } from './recipe.model';
 
 describe('addRecipeToListMessage', () => {
   it('pluralizes items added with none already on the list', () => {
@@ -19,5 +19,21 @@ describe('addRecipeToListMessage', () => {
 
   it('is a fixed sentence when there was nothing to add', () => {
     expect(addRecipeToListMessage({ added: 0, alreadyOnList: 0 })).toEqual('Nothing to add.');
+  });
+});
+
+describe('normaliseRecipeUrl', () => {
+  it('is null for a blank url', () => {
+    expect(normaliseRecipeUrl('   ')).toBeNull();
+    expect(normaliseRecipeUrl(null)).toBeNull();
+  });
+
+  it('keeps an http or https url as typed, trimmed', () => {
+    expect(normaliseRecipeUrl(' http://example.com/a ')).toEqual('http://example.com/a');
+    expect(normaliseRecipeUrl('HTTPS://example.com')).toEqual('HTTPS://example.com');
+  });
+
+  it('prefixes https when no scheme was typed', () => {
+    expect(normaliseRecipeUrl('example.com/tacos')).toEqual('https://example.com/tacos');
   });
 });

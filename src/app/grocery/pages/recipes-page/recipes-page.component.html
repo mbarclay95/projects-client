@@ -11,6 +11,12 @@
             {{ recipe.name }}
 
             <div actions>
+              @if (recipe.url) {
+                <a nz-button class="ant-btn-icon-only" nzType="text" [href]="recipe.url" target="_blank" rel="noopener noreferrer">
+                  <fa-icon [icon]="externalLink" class="text-primary"></fa-icon>
+                </a>
+              }
+
               <button
                 nz-button
                 class="ant-btn-icon-only"
@@ -30,7 +36,7 @@
           <tr>
             <th>Name</th>
             <th>Ingredients</th>
-            <th nzWidth="130px"></th>
+            <th nzWidth="170px"></th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +50,12 @@
               </td>
               <td>{{ recipe.ingredients.length }}</td>
               <td>
+                @if (recipe.url) {
+                  <a nz-button class="ant-btn-icon-only" nzType="text" [href]="recipe.url" target="_blank" rel="noopener noreferrer">
+                    <fa-icon [icon]="externalLink" class="text-primary"></fa-icon>
+                  </a>
+                }
+
                 <button
                   nz-button
                   class="ant-btn-icon-only"

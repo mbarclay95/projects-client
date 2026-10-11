@@ -10,6 +10,8 @@ export const GROCERY_ITEM_UNIT_LABELS: Record<GroceryItemUnit, string> = {
   [GroceryItemUnit.count]: 'Count',
 };
 
+export const GROCERY_TAGS_ENABLED = false;
+
 export interface GroceryItem {
   id: number;
   name: string;
@@ -58,4 +60,13 @@ export function filterGroceryItems(items: GroceryItem[], search: string, tags: s
   }
 
   return filtered;
+}
+
+export function newGroceryItemName(items: GroceryItem[], search: string): string | null {
+  const name = search.trim();
+  if (!name) {
+    return null;
+  }
+  const lowerName = name.toLowerCase();
+  return items.some((item) => item.name.toLowerCase() === lowerName) ? null : name;
 }

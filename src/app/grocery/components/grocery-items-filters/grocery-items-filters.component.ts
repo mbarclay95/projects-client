@@ -3,6 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { GroceryItemsSignalStore, GroceryUiState } from '../../services/grocery-items-signal-store';
 import { TagsSignalStore } from '../../../shared/services/tags-signal-store';
+import { GROCERY_TAGS_ENABLED } from '../../models/grocery-item.model';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
 import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
@@ -15,6 +16,8 @@ import { NzSelectComponent, NzOptionComponent } from 'ng-zorro-antd/select';
 })
 export class GroceryItemsFiltersComponent implements OnInit, OnDestroy {
   ui = input.required<GroceryUiState>();
+
+  readonly tagsEnabled = GROCERY_TAGS_ENABLED;
 
   search$: Subject<string> = new Subject<string>();
 

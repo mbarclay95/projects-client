@@ -1,10 +1,10 @@
 import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { DefaultModalSignalComponent } from '../../../shared/components/default-modal-signal/default-modal-signal.component';
-import { createRecipeIngredient, Recipe } from '../../models/recipe.model';
+import { createRecipeIngredient, normaliseRecipeUrl, Recipe } from '../../models/recipe.model';
 import { MealsSignalStore } from '../../services/meals-signal-store';
 import { RecipesSignalStore } from '../../services/recipes-signal-store';
-import { GroceryItem, GroceryItemUnit } from '../../models/grocery-item.model';
+import { createGroceryItem, GroceryItem, GroceryItemUnit, newGroceryItemName } from '../../models/grocery-item.model';
 import { GroceryItemsSignalStore } from '../../services/grocery-items-signal-store';
 import { NzModalComponent, NzModalContentDirective, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzInputDirective } from 'ng-zorro-antd/input';
@@ -47,6 +47,9 @@ export class CreateEditRecipeModalComponent extends DefaultModalSignalComponent<
   readonly plus = faPlus;
 
   readonly newItemId = signal<number | null>(null);
+  readonly ingredientSearch = signal('');
+  readonly newItemName = computed(() => newGroceryItemName(this.groceryItemsStore.entities(), this.ingredientSearch()));
+  readonly creatingItem = computed(() => this.groceryItemsStore.loadingOne() === 0);
 
   readonly ingredients = linkedSignal(() => [...(this.openModal()?.ingredients ?? [])]);
 
@@ -58,6 +61,7 @@ export class CreateEditRecipeModalComponent extends DefaultModalSignalComponent<
   override onCloseModal(): void {
     this.deleting.set(false);
     this.newItemId.set(null);
+    this.ingredientSearch.set('');
   }
 
   itemFor(groceryItemId: number): GroceryItem | undefined {
@@ -86,13 +90,34 @@ export class CreateEditRecipeModalComponent extends DefaultModalSignalComponent<
     this.ingredients.set(this.ingredients().filter((ingredient) => ingredient.groceryItemId !== groceryItemId));
   }
 
+  newItemLabel(name: string): string {
+    return `+ Add "${name}" to master list`;
+  }
+
+  selectNewItem(value: number | string | null): void {
+    if (typeof value !== 'string') {
+      this.newItemId.set(value);
+      return;
+    }
+    this.newItemId.set(null);
+    this.ingredientSearch.set('');
+    this.groceryItemsStore.create({
+      entity: createGroceryItem({ name: value }),
+      onSuccess: (item) => this.appendIngredient(item.id),
+    });
+  }
+
   addIngredient(): void {
     const itemId = this.newItemId();
     if (itemId === null) {
       return;
     }
-    this.ingredients.set([...this.ingredients(), createRecipeIngredient({ groceryItemId: itemId })]);
+    this.appendIngredient(itemId);
     this.newItemId.set(null);
+  }
+
+  private appendIngredient(groceryItemId: number): void {
+    this.ingredients.set([...this.ingredients(), createRecipeIngredient({ groceryItemId })]);
   }
 
   saveRecipe(): void {
@@ -100,6 +125,7 @@ export class CreateEditRecipeModalComponent extends DefaultModalSignalComponent<
       return;
     }
     this.model.ingredients = this.ingredients();
+    this.model.url = normaliseRecipeUrl(this.model.url);
     this.recipesStore.upsert({ entity: this.model, onSuccess: () => this.recipeSaved() });
   }
 

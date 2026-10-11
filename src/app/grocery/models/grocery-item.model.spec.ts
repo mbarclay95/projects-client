@@ -1,4 +1,11 @@
-import { createGroceryItem, filterGroceryItems, formatGroceryItemAmount, GroceryItem, GroceryItemUnit } from './grocery-item.model';
+import {
+  createGroceryItem,
+  filterGroceryItems,
+  formatGroceryItemAmount,
+  GroceryItem,
+  GroceryItemUnit,
+  newGroceryItemName,
+} from './grocery-item.model';
 
 describe('filterGroceryItems', () => {
   const items: GroceryItem[] = [
@@ -43,5 +50,21 @@ describe('formatGroceryItemAmount', () => {
 
   it('falls back to the unit label when a count has no default quantity', () => {
     expect(formatGroceryItemAmount(createGroceryItem({ unit: GroceryItemUnit.count }))).toEqual('Count');
+  });
+});
+
+describe('newGroceryItemName', () => {
+  const items = [createGroceryItem({ id: 1, name: 'Milk' })];
+
+  it('is null for a blank search', () => {
+    expect(newGroceryItemName(items, '   ')).toBeNull();
+  });
+
+  it('is null when an item already has that name, ignoring case and padding', () => {
+    expect(newGroceryItemName(items, ' mILK ')).toBeNull();
+  });
+
+  it('is the trimmed search when nothing matches it exactly', () => {
+    expect(newGroceryItemName(items, ' Almond Milk ')).toEqual('Almond Milk');
   });
 });

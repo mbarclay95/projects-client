@@ -19,15 +19,17 @@
         <textarea nz-input [(ngModel)]="model.notes" class="w-100"></textarea>
       </div>
 
-      <div class="w-100 mb-4">
-        <div class="mb-2">Tags:</div>
+      @if (tagsEnabled) {
+        <div class="w-100 mb-4">
+          <div class="mb-2">Tags:</div>
 
-        <nz-select class="w-100" nzMode="tags" [(ngModel)]="model.tags">
-          @for (tag of tagsStore.groceryTags(); track $index) {
-            <nz-option [nzLabel]="tag" [nzValue]="tag"></nz-option>
-          }
-        </nz-select>
-      </div>
+          <nz-select class="w-100" nzMode="tags" [(ngModel)]="model.tags">
+            @for (tag of tagsStore.groceryTags(); track $index) {
+              <nz-option [nzLabel]="tag" [nzValue]="tag"></nz-option>
+            }
+          </nz-select>
+        </div>
+      }
 
       <div class="w-100 mb-4">
         <div class="mb-2">Category:</div>

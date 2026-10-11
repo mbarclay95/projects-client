@@ -20,7 +20,7 @@ import { NzPopconfirmDirective } from 'ng-zorro-antd/popconfirm';
 import { NzEmptyComponent } from 'ng-zorro-antd/empty';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faCartPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpRightFromSquare, faCartPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Recipe } from '../../models/recipe.model';
 
 @Component({
@@ -54,6 +54,7 @@ export class RecipesPageComponent {
   private readonly mealsStore = inject(MealsSignalStore);
 
   cartPlus = faCartPlus;
+  externalLink = faArrowUpRightFromSquare;
   edit = faEdit;
   trash = faTrash;
 

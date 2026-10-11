@@ -11,6 +11,15 @@
   margin: 0 0.25rem;
 }
 
+.clear-search {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.45);
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.85);
+  }
+}
+
 .picker-list {
   max-height: 50vh;
   overflow-y: auto;

@@ -14,9 +14,9 @@
       </div>
 
       <div class="w-100 mb-4">
-        <div class="mb-2">Description:</div>
+        <div class="mb-2">URL:</div>
 
-        <textarea nz-input [(ngModel)]="model.description" class="w-100"></textarea>
+        <input nz-input [(ngModel)]="model.url" placeholder="https://" class="w-100" />
       </div>
 
       <div class="w-100 mb-4">
@@ -54,16 +54,40 @@
         <div class="mb-2">Add ingredient:</div>
 
         <div class="add-ingredient-row">
-          <nz-select [ngModel]="newItemId()" (ngModelChange)="newItemId.set($event)" nzShowSearch nzPlaceHolder="Item" class="item-select">
+          <nz-select
+            [ngModel]="newItemId()"
+            (ngModelChange)="selectNewItem($event)"
+            (nzOnSearch)="ingredientSearch.set($event)"
+            nzShowSearch
+            nzPlaceHolder="Item"
+            class="item-select"
+            [nzLoading]="creatingItem()"
+            [nzDisabled]="creatingItem()"
+          >
             @for (item of availableItems(); track item.id) {
               <nz-option [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
             }
+            @if (newItemName(); as name) {
+              <nz-option [nzLabel]="newItemLabel(name)" [nzValue]="name"></nz-option>
+            }
           </nz-select>
 
-          <button nz-button class="ant-btn-icon-only" nzType="primary" (click)="addIngredient()" [disabled]="newItemId() === null">
+          <button
+            nz-button
+            class="ant-btn-icon-only"
+            nzType="primary"
+            (click)="addIngredient()"
+            [disabled]="newItemId() === null || creatingItem()"
+          >
             <fa-icon [icon]="plus"></fa-icon>
           </button>
         </div>
+      </div>
+
+      <div class="w-100 mb-4">
+        <div class="mb-2">Description:</div>
+
+        <textarea nz-input [(ngModel)]="model.description" class="w-100"></textarea>
       </div>
     }
   </ng-container>

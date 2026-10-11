@@ -8,6 +8,7 @@ export interface Recipe {
   id: number;
   name: string;
   description: string | null;
+  url: string | null;
   ingredients: RecipeIngredient[];
 }
 
@@ -24,8 +25,17 @@ export function createRecipe(params: Partial<Recipe>) {
     id: params.id ?? 0,
     name: params.name ?? '',
     description: params.description ?? null,
+    url: params.url ?? null,
     ingredients: (params.ingredients ?? []).map((ingredient) => createRecipeIngredient(ingredient)),
   } as Recipe;
+}
+
+export function normaliseRecipeUrl(url: string | null): string | null {
+  const trimmed = url?.trim() ?? '';
+  if (!trimmed) {
+    return null;
+  }
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
 }
 
 export interface AddRecipeToListResult {

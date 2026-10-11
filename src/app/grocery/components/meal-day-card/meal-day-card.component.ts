@@ -2,7 +2,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { Component, computed, inject, input } from '@angular/core';
 import { format, lightFormat, parseISO } from 'date-fns';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faBookOpen, faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpRightFromSquare, faBookOpen, faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { MealsSignalStore } from '../../services/meals-signal-store';
 import { RecipesSignalStore } from '../../services/recipes-signal-store';
 import { linkedRecipe, MEAL_SLOT_LABELS, mealName, mealsBySlot } from '../../models/meal.model';
@@ -25,6 +25,7 @@ export class MealDayCardComponent {
 
   readonly recipeIcon = faBookOpen;
   readonly cartIcon = faCartPlus;
+  readonly externalLinkIcon = faArrowUpRightFromSquare;
   readonly slotLabels = MEAL_SLOT_LABELS;
   readonly linkedRecipe = linkedRecipe;
   readonly mealName = mealName;

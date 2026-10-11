@@ -16,6 +16,19 @@
         }
         {{ mealName(meal, recipesStore.entities()) }}
       </div>
+      @if (recipe?.url; as url) {
+        <a
+          nz-button
+          nzType="text"
+          class="ant-btn-icon-only"
+          [href]="url"
+          target="_blank"
+          rel="noopener noreferrer"
+          (click)="$event.stopPropagation()"
+        >
+          <fa-icon [icon]="externalLinkIcon" class="text-primary"></fa-icon>
+        </a>
+      }
       @if (recipe && recipe.ingredients.length > 0) {
         <button nz-button nzType="text" class="ant-btn-icon-only" (click)="addIngredients($event, recipe.id)">
           <fa-icon [icon]="cartIcon" class="text-primary"></fa-icon>

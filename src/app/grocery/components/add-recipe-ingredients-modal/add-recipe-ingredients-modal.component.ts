@@ -71,6 +71,10 @@ export class AddRecipeIngredientsModalComponent extends DefaultModalSignalCompon
     return item.unit === GroceryItemUnit.weight ? 0.1 : 1;
   }
 
+  isUnchangeable(item: GroceryItem): boolean {
+    return item.unit === GroceryItemUnit.none && this.groceryListItemsStore.entryByGroceryItemId().has(item.id);
+  }
+
   private requestFor(item: GroceryItem) {
     return { groceryItemId: item.id, quantity: item.unit === GroceryItemUnit.none ? null : (this.amounts()[item.id] ?? null) };
   }

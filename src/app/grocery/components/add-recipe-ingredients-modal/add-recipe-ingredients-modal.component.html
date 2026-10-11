@@ -34,7 +34,7 @@
           <button
             nz-button
             [nzLoading]="groceryListItemsStore.addingItemIds().includes(row.item.id)"
-            [disabled]="addingAll()"
+            [disabled]="addingAll() || isUnchangeable(row.item)"
             (click)="add(row.item)"
           >
             Add

@@ -24,13 +24,19 @@
     <div class="mb-2">Add exception:</div>
 
     <div class="add-exception-row">
-      <nz-select [ngModel]="newItemId()" (ngModelChange)="newItemId.set($event)" nzPlaceHolder="Item" class="item-select">
+      <nz-select [ngModel]="newItemId()" (ngModelChange)="newItemId.set($event)" nzShowSearch nzPlaceHolder="Item" class="item-select">
         @for (item of availableItems(); track item.id) {
           <nz-option [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
         }
       </nz-select>
 
-      <nz-select [ngModel]="newCategoryId()" (ngModelChange)="newCategoryId.set($event)" nzPlaceHolder="Category" class="category-select">
+      <nz-select
+        [ngModel]="newCategoryId()"
+        (ngModelChange)="newCategoryId.set($event)"
+        nzShowSearch
+        nzPlaceHolder="Category"
+        class="category-select"
+      >
         @for (category of groceryCategoriesStore.entities(); track category.id) {
           <nz-option [nzLabel]="category.name" [nzValue]="category.id"></nz-option>
         }

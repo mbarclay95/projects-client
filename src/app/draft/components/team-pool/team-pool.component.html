@@ -8,7 +8,7 @@
 <div class="team-grid" [class.mobile]="isMobile">
   @for (team of filteredTeams(); track team.id) {
     @let takenBy = pickedBy(team);
-    <div class="team-tile" [class.taken]="!!takenBy">
+    <div class="team-tile" [class.taken]="!!takenBy" [class.just-taken]="flashTeamIds().has(team.id)">
       @if (takenBy) {
         <div class="team-taken-banner">
           {{ takenBy }}

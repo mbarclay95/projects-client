@@ -41,6 +41,7 @@ export class TeamPoolComponent {
    * a filter that can only subtract from that is too.
    */
   pickedOnly = input(false);
+  flashTeamIds = input<Set<number>>(new Set());
 
   isMobile = isMobile;
   picking = false;

@@ -77,6 +77,7 @@ export class CreateEditGroceryItemModalComponent extends DefaultModalSignalCompo
     this.nzMessageService.success('Item Saved!');
     this.tagsStore.loadAll('grocery');
     this.groceryCategoriesStore.loadAll({});
+    this.groceryListItemsStore.loadAll({});
     this.groceryItemsStore.clearCreateEditEntity();
   }
 

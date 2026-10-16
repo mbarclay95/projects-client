@@ -1,13 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { filter, pairwise, withLatestFrom } from 'rxjs';
+import { distinctUntilChanged, filter, pairwise, withLatestFrom } from 'rxjs';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { DraftService } from '../../services/draft.service';
 import { draftNotices } from '../../services/draft-notices';
@@ -47,6 +47,8 @@ export class DraftPageComponent {
   draftService = inject(DraftService);
   draftCacheService = inject(DraftCacheService);
   private nzMessageService = inject(NzMessageService);
+  private nzModalService = inject(NzModalService);
+  private myTurnModal?: NzModalRef;
 
   draftStatus = DraftStatus;
   moreIcon = faEllipsisV;
@@ -83,6 +85,10 @@ export class DraftPageComponent {
         }
       });
 
+    this.draftCacheService.isMyTurn$
+      .pipe(distinctUntilChanged(), takeUntilDestroyed())
+      .subscribe((isMyTurn) => this.onMyTurnChanged(isMyTurn));
+
     this.draftService.draft$.pipe(takeUntilDestroyed()).subscribe((draft) => {
       if (!draft) {
         return;
@@ -100,6 +106,30 @@ export class DraftPageComponent {
       this.draftCacheService.markCelebrated(draft.id);
       this.celebrating.set(true);
     });
+  }
+
+  onMyTurnChanged(isMyTurn: boolean): void {
+    if (isMyTurn) {
+      if (this.myTurnModal) {
+        return;
+      }
+
+      const ref = this.nzModalService.info({
+        nzTitle: "It's your turn!",
+        nzContent: 'Pick a team from the pool.',
+        nzOkText: 'Got it',
+      });
+      this.myTurnModal = ref;
+      ref.afterClose.subscribe(() => {
+        if (this.myTurnModal === ref) {
+          this.myTurnModal = undefined;
+        }
+      });
+      return;
+    }
+
+    this.myTurnModal?.close();
+    this.myTurnModal = undefined;
   }
 
   /**

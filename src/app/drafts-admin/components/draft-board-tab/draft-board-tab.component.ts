@@ -48,9 +48,8 @@ export class DraftBoardTabComponent {
   pickerTarget = signal<DraftPickTarget | undefined>(undefined);
 
   /**
-   * Polls only while in_progress, mirroring the public page's own poll —
-   * without it the admin's board silently lies whenever a participant is the
-   * one picking. loadOne() upserts the whole draft entity, which is safe to
+   * Polls only while in_progress — without it the admin's board silently lies
+   * whenever a participant is the one picking. loadOne() upserts the whole draft entity, which is safe to
    * do from here specifically because canEditOrder is false during
    * in_progress: DraftOrderTabComponent.orderedMembers holds unsaved drag
    * state in a linkedSignal that this same upsert would otherwise reset out

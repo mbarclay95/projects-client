@@ -71,4 +71,43 @@ describe('TeamPoolComponent', () => {
 
     expect(draftServiceSpy.makePick).toHaveBeenCalledWith(5, 'aB3');
   });
+
+  describe('filteredTeams', () => {
+    const teams = [
+      createDraftTeam({ id: 1, name: 'zebra' }),
+      createDraftTeam({ id: 2, name: 'Alpha' }),
+      createDraftTeam({ id: 3, name: 'team 10' }),
+      createDraftTeam({ id: 4, name: 'team 9' }),
+    ];
+
+    beforeEach(() => {
+      fixture.componentRef.setInput(
+        'draft',
+        createDraft({
+          id: 1,
+          draftTeams: teams,
+          draftPicks: [
+            createDraftPick({ id: 1, draftTeamId: 1, draftMemberId: 99, pickNumber: 1 }),
+            createDraftPick({ id: 2, draftTeamId: 4, draftMemberId: 99, pickNumber: 2 }),
+          ],
+        }),
+      );
+    });
+
+    it('sorts all teams by name, ignoring case and comparing numbers numerically', () => {
+      expect(component.filteredTeams().map((t) => t.name)).toEqual(['Alpha', 'team 9', 'team 10', 'zebra']);
+    });
+
+    it('sorts the picked teams by name', () => {
+      component.filter.set('Picked');
+
+      expect(component.filteredTeams().map((t) => t.name)).toEqual(['team 9', 'zebra']);
+    });
+
+    it('leaves the draft teams in their original order', () => {
+      component.filteredTeams();
+
+      expect(component.draft().draftTeams.map((t) => t.name)).toEqual(['zebra', 'Alpha', 'team 10', 'team 9']);
+    });
+  });
 });

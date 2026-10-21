@@ -28,30 +28,54 @@ describe('DraftService', () => {
     vi.useRealTimers();
   });
 
-  it('polls every 2s while in_progress and stops once the status leaves in_progress', async () => {
+  it('polls every 2s through signup, locked and in_progress and stops at complete', async () => {
     const loaded = service.getDraft('12', 'tok');
-    httpMock.expectOne(url).flush(inProgressDraft());
+    httpMock.expectOne(url).flush(draftWith(DraftStatus.signup));
     await loaded;
 
-    // timer(0, 2000)'s immediate tick, fired by the status transition to in_progress.
     await vi.advanceTimersByTimeAsync(0);
-    httpMock.expectOne(url).flush(inProgressDraft());
+    httpMock.expectOne(url).flush(draftWith(DraftStatus.signup));
 
-    // The next 2s tick.
+    // A status change restarts the timer, so its immediate tick follows.
     await vi.advanceTimersByTimeAsync(2000);
-    httpMock.expectOne(url).flush(completeDraft());
+    httpMock.expectOne(url).flush(draftWith(DraftStatus.locked));
+    await vi.advanceTimersByTimeAsync(0);
+    httpMock.expectOne(url).flush(draftWith(DraftStatus.locked));
+
+    await vi.advanceTimersByTimeAsync(2000);
+    httpMock.expectOne(url).flush(draftWith(DraftStatus.inProgress));
+    await vi.advanceTimersByTimeAsync(0);
+    httpMock.expectOne(url).flush(draftWith(DraftStatus.inProgress));
+
+    await vi.advanceTimersByTimeAsync(2000);
+    httpMock.expectOne(url).flush(draftWith(DraftStatus.complete));
     await vi.advanceTimersByTimeAsync(0);
 
-    // No further request once status has left in_progress.
     await vi.advanceTimersByTimeAsync(2000);
     httpMock.expectNone(url);
   });
 
-  function inProgressDraft() {
+  it('makes no request of its own before the first load resolves', async () => {
+    const loaded = service.getDraft('12', 'tok');
+    await vi.advanceTimersByTimeAsync(4000);
+    httpMock.expectOne(url).flush(draftWith(DraftStatus.complete));
+    await loaded;
+  });
+
+  it('does not poll after the first load fails', async () => {
+    const loaded = service.getDraft('12', 'tok').catch(() => undefined);
+    httpMock.expectOne(url).flush(null, { status: 404, statusText: 'Not Found' });
+    await loaded;
+
+    await vi.advanceTimersByTimeAsync(4000);
+    httpMock.expectNone(url);
+  });
+
+  function draftWith(status: DraftStatus) {
     return {
       id: 12,
       name: 'Summer Cup Draft',
-      status: DraftStatus.inProgress,
+      status,
       totalRounds: 1,
       currentRound: 1,
       currentPickNumber: 1,
@@ -59,9 +83,5 @@ describe('DraftService', () => {
       draftMembers: [],
       draftPicks: [],
     };
-  }
-
-  function completeDraft() {
-    return { ...inProgressDraft(), status: DraftStatus.complete };
   }
 });

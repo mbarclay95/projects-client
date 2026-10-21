@@ -1,13 +1,16 @@
 import { Component, inject, signal } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { distinctUntilChanged, filter, pairwise, withLatestFrom } from 'rxjs';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { DraftService } from '../../services/draft.service';
+import { draftNotices } from '../../services/draft-notices';
 import { DraftCacheService } from '../../services/draft-cache.service';
 import { Draft, DraftStatus } from '../../models/draft.model';
 import { DraftSignupModalComponent } from '../../components/draft-signup-modal/draft-signup-modal.component';
@@ -43,12 +46,16 @@ import { environment } from '../../../../environments/environment';
 export class DraftPageComponent {
   draftService = inject(DraftService);
   draftCacheService = inject(DraftCacheService);
+  private nzMessageService = inject(NzMessageService);
+  private nzModalService = inject(NzModalService);
+  private myTurnModal?: NzModalRef;
 
   draftStatus = DraftStatus;
   moreIcon = faEllipsisV;
   openSignupModal = signal(false);
   openClaimModal = signal(false);
   celebrating = signal(false);
+  flashTeamIds = signal<Set<number>>(new Set());
 
   // The real trigger needs a draft to actually finish, which isn't something
   // you can stage on demand. Dev builds only — `ng build` swaps in
@@ -66,6 +73,22 @@ export class DraftPageComponent {
    * second time rather than going silent for good.
    */
   constructor() {
+    this.draftService.draft$
+      .pipe(filter(Boolean), pairwise(), withLatestFrom(this.draftCacheService.me$), takeUntilDestroyed())
+      .subscribe(([[previous, current], me]) => {
+        for (const notice of draftNotices(previous, current, me?.draftMemberId)) {
+          this.nzMessageService.info(`${notice.memberName} took ${notice.teamName}`, { nzDuration: 4000 });
+          this.flashTeamIds.update((ids) => new Set([...ids, notice.teamId]));
+          setTimeout(() => {
+            this.flashTeamIds.update((ids) => new Set([...ids].filter((id) => id !== notice.teamId)));
+          }, 2000);
+        }
+      });
+
+    this.draftCacheService.isMyTurn$
+      .pipe(distinctUntilChanged(), takeUntilDestroyed())
+      .subscribe((isMyTurn) => this.onMyTurnChanged(isMyTurn));
+
     this.draftService.draft$.pipe(takeUntilDestroyed()).subscribe((draft) => {
       if (!draft) {
         return;
@@ -83,6 +106,30 @@ export class DraftPageComponent {
       this.draftCacheService.markCelebrated(draft.id);
       this.celebrating.set(true);
     });
+  }
+
+  onMyTurnChanged(isMyTurn: boolean): void {
+    if (isMyTurn) {
+      if (this.myTurnModal) {
+        return;
+      }
+
+      const ref = this.nzModalService.info({
+        nzTitle: "It's your turn!",
+        nzContent: 'Pick a team from the pool.',
+        nzOkText: 'Got it',
+      });
+      this.myTurnModal = ref;
+      ref.afterClose.subscribe(() => {
+        if (this.myTurnModal === ref) {
+          this.myTurnModal = undefined;
+        }
+      });
+      return;
+    }
+
+    this.myTurnModal?.close();
+    this.myTurnModal = undefined;
   }
 
   /**

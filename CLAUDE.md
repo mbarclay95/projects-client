@@ -161,7 +161,7 @@ caching, state transitions, time-dependent behavior, non-obvious edge cases. The
 tests are the shape to copy:
 
 - `draft-cache.service.spec.ts` — localStorage round-trip, per-draft isolation, stale-identity detection
-- `draft.service.spec.ts` — polls every 2s while `in_progress`, stops when the status leaves it
+- `draft.service.spec.ts` — polls every 2s in `signup`, `locked` and `in_progress`, stops at `complete`, and doesn't poll before the first load or after a failed one
 - `team-pool.component.spec.ts` — pick guards (not your turn / already taken), calling the method directly
 
 Note the last one: it tests a **component method**, never the rendered DOM. Prefer that. If

@@ -41,6 +41,7 @@ export class TeamPoolComponent {
    * a filter that can only subtract from that is too.
    */
   pickedOnly = input(false);
+  flashTeamIds = input<Set<number>>(new Set());
 
   isMobile = isMobile;
   picking = false;
@@ -50,15 +51,14 @@ export class TeamPoolComponent {
   filter = signal<TeamPoolFilter>('All');
 
   filteredTeams(): DraftTeam[] {
-    if (this.pickedOnly()) {
-      return this.draft().draftTeams.filter((team) => !!this.pickedBy(team));
-    }
-
     const filter = this.filter();
-    if (filter === 'All') {
-      return this.draft().draftTeams;
-    }
-    return this.draft().draftTeams.filter((team) => !!this.pickedBy(team) === (filter === 'Picked'));
+    const teams = this.draft().draftTeams.filter((team) => {
+      if (this.pickedOnly()) {
+        return !!this.pickedBy(team);
+      }
+      return filter === 'All' || !!this.pickedBy(team) === (filter === 'Picked');
+    });
+    return teams.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base', numeric: true }));
   }
 
   isMyPick(team: DraftTeam, myMemberId?: number): boolean {

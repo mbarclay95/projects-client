@@ -27,15 +27,17 @@ export class DraftService {
   private token?: string;
 
   constructor() {
-    // Polls only while in_progress: signup and locked have nothing to poll
-    // for, and complete never changes again. distinctUntilChanged on the
-    // status alone (not the whole draft) means a poll tick that returns the
-    // same status doesn't restart timer(0, 2000) at zero every 2s.
+    // Polls in every status but complete, which never changes again. The
+    // subject starts undefined, and a failed getDraft() leaves it that way, so
+    // the undefined check keeps an unloaded service from polling.
+    // distinctUntilChanged on the status alone (not the whole draft) means a
+    // poll tick that returns the same status doesn't restart timer(0, 2000)
+    // at zero every 2s.
     this.draft$
       .pipe(
         map((draft) => draft?.status),
         distinctUntilChanged(),
-        switchMap((status) => (status === DraftStatus.inProgress ? timer(0, 2000) : EMPTY)),
+        switchMap((status) => (status !== undefined && status !== DraftStatus.complete ? timer(0, 2000) : EMPTY)),
         switchMap(() => this.fetchDraft()),
         takeUntilDestroyed(),
       )
@@ -61,7 +63,9 @@ export class DraftService {
     // The response carries no `claimed` field — it's the signup endpoint,
     // not the read — but a name just signed up is claimed by definition.
     const draft = createDraft(this.draftSubject.value ?? {});
-    draft.draftMembers.push(createDraftMember({ ...claimed, claimed: true }));
+    if (!draft.draftMembers.some((m) => m.id === claimed.id)) {
+      draft.draftMembers.push(createDraftMember({ ...claimed, claimed: true }));
+    }
     this.draftSubject.next(draft);
 
     return claimed;
@@ -113,7 +117,7 @@ export class DraftService {
    * Re-fetches outside the 2s poll — used after a failed claim, where the
    * member list shown might already be stale (someone else claimed the same
    * row in the interim) and the next poll tick could be seconds away, or
-   * never arrive at all outside in_progress.
+   * never arrive at all once the draft is complete.
    */
   async refreshDraft(): Promise<void> {
     const draft = await firstValueFrom(this.fetchDraft());

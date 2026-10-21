@@ -73,3 +73,21 @@
   min-height: 32px;
   margin-top: 0.5rem;
 }
+
+.team-tile.just-taken {
+  animation: just-taken-pulse 0.5s ease-in-out 3;
+}
+
+@keyframes just-taken-pulse {
+  50% {
+    border-color: #ffc53d;
+    background-color: rgba(255, 197, 61, 0.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-tile.just-taken {
+    animation: none;
+    border-color: #ffc53d;
+  }
+}
